@@ -1,0 +1,621 @@
+[2019-10-02T10:51:35.846907+00:00] main_logger.EMERGENCY: Exception Guzaba2\Base\Exceptions\InvalidArgumentException: Invalid option document_root provided to server configuration. in /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Swoole/Server.php#218
+#0 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Swoole/Server.php(123): Guzaba2\Swoole\Server->validate_server_configuration_options(Array)
+#1 guzaba.source:///home/local/PROJECTS/azonmedia.com/azon.media/v3/app/src/Azonmedia/Azonmedia/Application/Azonmedia.php(90): Guzaba2\Swoole\Server->__construct('0.0.0.0', 8081, Array)
+#2 guzaba.source:///home/local/PROJECTS/azonmedia.com/azon.media/v3/app/src/Azonmedia/Azonmedia/Application/Azonmedia.php(68): Azonmedia\Azonmedia\Application\Azonmedia->execute()
+#3 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Kernel/Kernel.php(240): Azonmedia\Azonmedia\Application\Azonmedia->__invoke()
+#4 guzaba.source:///home/local/PROJECTS/azonmedia.com/azon.media/v3/app/src/Azonmedia/Azonmedia/Application/Azonmedia.php(63): Guzaba2\Kernel\Kernel::run(Object(Azonmedia\Azonmedia\Application\Azonmedia))
+#5 /home/local/PROJECTS/azonmedia.com/azon.media/v3/app/bin/start_server.php(85): Azonmedia\Azonmedia\Application\Azonmedia->__construct('/home/local/PRO...')
+#6 /home/local/PROJECTS/azonmedia.com/azon.media/v3/app/bin/start_server.php(88): Azonmedia\Glog\{closure}()
+#7 {main}  
+[2019-10-02T11:17:58.749339+00:00] main_logger.INFO: Worker #15: Request of 0 bytes served by worker 15 in 0.0048708915710449 seconds with response: code: 200 response content length: 40026
+  
+[2019-10-02T11:17:58.774882+00:00] main_logger.INFO: Worker #15: Request of 0 bytes served by worker 15 in 0.00043296813964844 seconds with response: code: 404 response content length: 69
+  
+[2019-10-02T11:17:58.778462+00:00] main_logger.INFO: Worker #15: Request of 0 bytes served by worker 15 in 0.00041508674621582 seconds with response: code: 404 response content length: 69
+  
+[2019-10-02T11:17:58.780799+00:00] main_logger.INFO: Worker #15: Request of 0 bytes served by worker 15 in 0.00038695335388184 seconds with response: code: 404 response content length: 69
+  
+[2019-10-02T11:17:58.782700+00:00] main_logger.INFO: Worker #15: Request of 0 bytes served by worker 15 in 0.00034904479980469 seconds with response: code: 404 response content length: 69
+  
+[2019-10-02T11:17:58.784525+00:00] main_logger.INFO: Worker #15: Request of 0 bytes served by worker 15 in 0.00033807754516602 seconds with response: code: 404 response content length: 69
+  
+[2019-10-02T11:18:34.667644+00:00] main_logger.INFO: Worker #15: Request of 0 bytes served by worker 15 in 0.0024030208587646 seconds with response: code: 200 response content length: 4
+  
+[2019-10-02T11:21:22.018751+00:00] main_logger.INFO: Worker #15: Request of 0 bytes served by worker 15 in 0.0021829605102539 seconds with response: code: 200 response content length: 4
+  
+[2019-10-02T11:21:33.899617+00:00] main_logger.INFO: Worker #15: Request of 0 bytes served by worker 15 in 0.0017740726470947 seconds with response: code: 200 response content length: 172
+  
+[2019-10-02T11:21:35.128582+00:00] main_logger.INFO: Worker #15: Request of 0 bytes served by worker 15 in 0.0004570484161377 seconds with response: code: 200 response content length: 172
+  
+[2019-10-02T11:26:21.348050+00:00] main_logger.INFO: Worker #15: Request of 0 bytes served by worker 15 in 0.0022299289703369 seconds with response: code: 200 response content length: 297
+  
+[2019-10-02T11:26:42.330495+00:00] main_logger.INFO: Worker #15: Request of 0 bytes served by worker 15 in 0.001471996307373 seconds with response: code: 200 response content length: 298
+  
+[2019-10-02T11:26:43.737858+00:00] main_logger.INFO: Worker #15: Request of 0 bytes served by worker 15 in 0.00052094459533691 seconds with response: code: 200 response content length: 298
+  
+[2019-10-03T17:01:44.000760+00:00] main_logger.EMERGENCY: Worker #15: Exception Guzaba2\Kernel\Exceptions\ErrorException: Attempt to assign property 'company' of non-object in /home/local/PROJECTS/azonmedia.com/azon.media/v3/app/src/Azonmedia/Azonmedia/Home/Controllers/Home.php#19
+#0 /home/local/PROJECTS/azonmedia.com/azon.media/v3/app/src/Azonmedia/Azonmedia/Home/Controllers/Home.php(19): Guzaba2\Kernel\Kernel::error_handler(2, 'Attempt to assi...', '/home/local/PRO...', 19, Array)
+#1 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/ExecutorMiddleware.php(117): Azonmedia\Azonmedia\Home\Controllers\Home->main()
+#2 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Http/QueueRequestHandler.php(47): Guzaba2\Mvc\ExecutorMiddleware->process(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\QueueRequestHandler))
+#3 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/RoutingMiddleware.php(61): Guzaba2\Http\QueueRequestHandler->handle(Object(Guzaba2\Http\Request))
+#4 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Http/QueueRequestHandler.php(47): Guzaba2\Mvc\RoutingMiddleware->process(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\QueueRequestHandler))
+#5 guzaba.source:///home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Swoole/Handlers/Http/Request.php(82): Guzaba2\Http\QueueRequestHandler->handle(Object(Guzaba2\Http\Request))
+#6 guzaba.source:///home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Swoole/Handlers/Http/Request.php(117): Guzaba2\Swoole\Handlers\Http\Request->handle(Object(Swoole\Http\Request), Object(Swoole\Http\Response))
+#7 {main}  
+[2019-10-03T17:02:00.812395+00:00] main_logger.EMERGENCY: Worker #15: Exception Guzaba2\Kernel\Exceptions\AutoloadException: Class Azonmedia\Azonmedia\Home\Views\Home (path /home/local/PROJECTS/azonmedia.com/azon.media/v3/app/src/Azonmedia/Azonmedia/Home/Views/Home.php) is not found (or not readable). in /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Kernel/Kernel.php#581
+#0 [internal function]: Guzaba2\Kernel\Kernel::autoloader('Azonmedia\\Azonm...')
+#1 [internal function]: spl_autoload_call('Azonmedia\\Azonm...')
+#2 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/ExecutorMiddleware.php(207): class_exists('Azonmedia\\Azonm...')
+#3 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/ExecutorMiddleware.php(177): Guzaba2\Mvc\ExecutorMiddleware->per_controller_php_view_handler(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\Response))
+#4 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/ExecutorMiddleware.php(122): Guzaba2\Mvc\ExecutorMiddleware->html_handler(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\Response))
+#5 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Http/QueueRequestHandler.php(47): Guzaba2\Mvc\ExecutorMiddleware->process(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\QueueRequestHandler))
+#6 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/RoutingMiddleware.php(61): Guzaba2\Http\QueueRequestHandler->handle(Object(Guzaba2\Http\Request))
+#7 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Http/QueueRequestHandler.php(47): Guzaba2\Mvc\RoutingMiddleware->process(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\QueueRequestHandler))
+#8 guzaba.source:///home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Swoole/Handlers/Http/Request.php(82): Guzaba2\Http\QueueRequestHandler->handle(Object(Guzaba2\Http\Request))
+#9 guzaba.source:///home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Swoole/Handlers/Http/Request.php(117): Guzaba2\Swoole\Handlers\Http\Request->handle(Object(Swoole\Http\Request), Object(Swoole\Http\Response))
+#10 {main}  
+[2019-10-03T17:03:49.163331+00:00] main_logger.INFO: Worker #16: Request of 0 bytes served by worker 16 in 0.0016820430755615 seconds with response: code: 404 response content length: 69
+  
+[2019-10-03T17:26:54.864981+00:00] main_logger.INFO: Worker #15: Request of 0 bytes served by worker 15 in 0.00026798248291016 seconds with response: code: 404 response content length: 69
+  
+[2019-10-03T17:27:05.218772+00:00] main_logger.INFO: Worker #16: Request of 0 bytes served by worker 16 in 0.00025296211242676 seconds with response: code: 404 response content length: 69
+  
+[2019-10-03T17:27:27.125538+00:00] main_logger.INFO: Worker #17: Request of 0 bytes served by worker 17 in 0.0025711059570312 seconds with response: code: 404 response content length: 69
+  
+[2019-10-03T17:27:27.663396+00:00] main_logger.INFO: Worker #17: Request of 0 bytes served by worker 17 in 0.00024604797363281 seconds with response: code: 404 response content length: 69
+  
+[2019-10-03T17:27:32.981717+00:00] main_logger.EMERGENCY: Worker #17: Exception Guzaba2\Kernel\Exceptions\AutoloadException: Class Azonmedia\Azonmedia\Home\Views\Home (path /home/local/PROJECTS/azonmedia.com/azon.media/v3/app/src/Azonmedia/Azonmedia/Home/Views/Home.php) is not found (or not readable). in /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Kernel/Kernel.php#581
+#0 [internal function]: Guzaba2\Kernel\Kernel::autoloader('Azonmedia\\Azonm...')
+#1 [internal function]: spl_autoload_call('Azonmedia\\Azonm...')
+#2 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/ExecutorMiddleware.php(207): class_exists('Azonmedia\\Azonm...')
+#3 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/ExecutorMiddleware.php(177): Guzaba2\Mvc\ExecutorMiddleware->per_controller_php_view_handler(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\Response))
+#4 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/ExecutorMiddleware.php(122): Guzaba2\Mvc\ExecutorMiddleware->html_handler(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\Response))
+#5 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Http/QueueRequestHandler.php(47): Guzaba2\Mvc\ExecutorMiddleware->process(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\QueueRequestHandler))
+#6 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/RoutingMiddleware.php(61): Guzaba2\Http\QueueRequestHandler->handle(Object(Guzaba2\Http\Request))
+#7 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Http/QueueRequestHandler.php(47): Guzaba2\Mvc\RoutingMiddleware->process(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\QueueRequestHandler))
+#8 guzaba.source:///home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Swoole/Handlers/Http/Request.php(82): Guzaba2\Http\QueueRequestHandler->handle(Object(Guzaba2\Http\Request))
+#9 guzaba.source:///home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Swoole/Handlers/Http/Request.php(117): Guzaba2\Swoole\Handlers\Http\Request->handle(Object(Swoole\Http\Request), Object(Swoole\Http\Response))
+#10 {main}  
+[2019-10-03T17:27:42.060610+00:00] main_logger.INFO: Worker #16: Request of 0 bytes served by worker 16 in 0.00053811073303223 seconds with response: code: 200 response content length: 23
+  
+[2019-10-03T17:27:48.759920+00:00] main_logger.INFO: Worker #16: Request of 0 bytes served by worker 16 in 0.00039100646972656 seconds with response: code: 200 response content length: 23
+  
+[2019-10-03T17:30:12.209461+00:00] main_logger.INFO: Worker #16: Request of 0 bytes served by worker 16 in 0.00024604797363281 seconds with response: code: 404 response content length: 69
+  
+[2019-10-03T17:30:21.650906+00:00] main_logger.INFO: Worker #16: Request of 0 bytes served by worker 16 in 0.00034594535827637 seconds with response: code: 404 response content length: 69
+  
+[2019-10-03T17:30:31.232059+00:00] main_logger.EMERGENCY: Worker #17: Exception Guzaba2\Kernel\Exceptions\AutoloadException: Class Azonmedia\Azonmedia\Home\Views\Home (path /home/local/PROJECTS/azonmedia.com/azon.media/v3/app/src/Azonmedia/Azonmedia/Home/Views/Home.php) is not found (or not readable). in /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Kernel/Kernel.php#581
+#0 [internal function]: Guzaba2\Kernel\Kernel::autoloader('Azonmedia\\Azonm...')
+#1 [internal function]: spl_autoload_call('Azonmedia\\Azonm...')
+#2 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/ExecutorMiddleware.php(207): class_exists('Azonmedia\\Azonm...')
+#3 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/ExecutorMiddleware.php(177): Guzaba2\Mvc\ExecutorMiddleware->per_controller_php_view_handler(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\Response))
+#4 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/ExecutorMiddleware.php(122): Guzaba2\Mvc\ExecutorMiddleware->html_handler(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\Response))
+#5 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Http/QueueRequestHandler.php(47): Guzaba2\Mvc\ExecutorMiddleware->process(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\QueueRequestHandler))
+#6 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/RoutingMiddleware.php(61): Guzaba2\Http\QueueRequestHandler->handle(Object(Guzaba2\Http\Request))
+#7 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Http/QueueRequestHandler.php(47): Guzaba2\Mvc\RoutingMiddleware->process(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\QueueRequestHandler))
+#8 guzaba.source:///home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Swoole/Handlers/Http/Request.php(82): Guzaba2\Http\QueueRequestHandler->handle(Object(Guzaba2\Http\Request))
+#9 guzaba.source:///home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Swoole/Handlers/Http/Request.php(117): Guzaba2\Swoole\Handlers\Http\Request->handle(Object(Swoole\Http\Request), Object(Swoole\Http\Response))
+#10 {main}  
+[2019-10-03T17:30:35.239688+00:00] main_logger.EMERGENCY: Worker #17: Exception Guzaba2\Kernel\Exceptions\AutoloadException: Class Azonmedia\Azonmedia\Home\Views\Home (path /home/local/PROJECTS/azonmedia.com/azon.media/v3/app/src/Azonmedia/Azonmedia/Home/Views/Home.php) is not found (or not readable). in /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Kernel/Kernel.php#581
+#0 [internal function]: Guzaba2\Kernel\Kernel::autoloader('Azonmedia\\Azonm...')
+#1 [internal function]: spl_autoload_call('Azonmedia\\Azonm...')
+#2 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/ExecutorMiddleware.php(207): class_exists('Azonmedia\\Azonm...')
+#3 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/ExecutorMiddleware.php(177): Guzaba2\Mvc\ExecutorMiddleware->per_controller_php_view_handler(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\Response))
+#4 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/ExecutorMiddleware.php(122): Guzaba2\Mvc\ExecutorMiddleware->html_handler(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\Response))
+#5 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Http/QueueRequestHandler.php(47): Guzaba2\Mvc\ExecutorMiddleware->process(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\QueueRequestHandler))
+#6 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/RoutingMiddleware.php(61): Guzaba2\Http\QueueRequestHandler->handle(Object(Guzaba2\Http\Request))
+#7 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Http/QueueRequestHandler.php(47): Guzaba2\Mvc\RoutingMiddleware->process(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\QueueRequestHandler))
+#8 guzaba.source:///home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Swoole/Handlers/Http/Request.php(82): Guzaba2\Http\QueueRequestHandler->handle(Object(Guzaba2\Http\Request))
+#9 guzaba.source:///home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Swoole/Handlers/Http/Request.php(117): Guzaba2\Swoole\Handlers\Http\Request->handle(Object(Swoole\Http\Request), Object(Swoole\Http\Response))
+#10 {main}  
+[2019-10-03T17:30:47.379417+00:00] main_logger.INFO: Worker #16: Request of 0 bytes served by worker 16 in 0.00029492378234863 seconds with response: code: 200 response content length: 23
+  
+[2019-10-03T17:31:11.612634+00:00] main_logger.INFO: Worker #16: Request of 0 bytes served by worker 16 in 0.00029206275939941 seconds with response: code: 200 response content length: 23
+  
+[2019-10-03T17:31:15.630206+00:00] main_logger.INFO: Worker #16: Request of 0 bytes served by worker 16 in 0.00026392936706543 seconds with response: code: 404 response content length: 69
+  
+[2019-10-03T17:31:15.655413+00:00] main_logger.INFO: Worker #16: Request of 0 bytes served by worker 16 in 0.00034499168395996 seconds with response: code: 404 response content length: 69
+  
+[2019-10-03T17:31:19.959676+00:00] main_logger.INFO: Worker #16: Request of 0 bytes served by worker 16 in 0.00029301643371582 seconds with response: code: 404 response content length: 69
+  
+[2019-10-03T17:32:20.486480+00:00] main_logger.INFO: Worker #16: Request of 0 bytes served by worker 16 in 0.00042891502380371 seconds with response: code: 200 response content length: 23
+  
+[2019-10-03T17:32:20.631651+00:00] main_logger.INFO: Worker #16: Request of 0 bytes served by worker 16 in 0.00044798851013184 seconds with response: code: 200 response content length: 23
+  
+[2019-10-03T17:35:17.695265+00:00] main_logger.INFO: Worker #16: Request of 0 bytes served by worker 16 in 0.00034117698669434 seconds with response: code: 200 response content length: 23
+  
+[2019-10-03T17:37:26.681076+00:00] main_logger.INFO: Worker #16: Request of 0 bytes served by worker 16 in 0.00030517578125 seconds with response: code: 200 response content length: 23
+  
+[2019-10-03T17:37:30.005596+00:00] main_logger.EMERGENCY: Worker #-1: Exception ArgumentCountError: Too few arguments to function Guzaba2\Http\CorsMiddleware::__construct(), 0 passed in guzaba.source:///home/local/PROJECTS/azonmedia.com/azon.media/v3/app/src/Azonmedia/Azonmedia/Application/Azonmedia.php on line 113 and exactly 1 expected in /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Http/CorsMiddleware.php#35
+#0 guzaba.source:///home/local/PROJECTS/azonmedia.com/azon.media/v3/app/src/Azonmedia/Azonmedia/Application/Azonmedia.php(113): Guzaba2\Http\CorsMiddleware->__construct()
+#1 guzaba.source:///home/local/PROJECTS/azonmedia.com/azon.media/v3/app/src/Azonmedia/Azonmedia/Application/Azonmedia.php(69): Azonmedia\Azonmedia\Application\Azonmedia->execute()
+#2 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Kernel/Kernel.php(240): Azonmedia\Azonmedia\Application\Azonmedia->__invoke()
+#3 guzaba.source:///home/local/PROJECTS/azonmedia.com/azon.media/v3/app/src/Azonmedia/Azonmedia/Application/Azonmedia.php(64): Guzaba2\Kernel\Kernel::run(Object(Azonmedia\Azonmedia\Application\Azonmedia))
+#4 /home/local/PROJECTS/azonmedia.com/azon.media/v3/app/bin/start_server.php(85): Azonmedia\Azonmedia\Application\Azonmedia->__construct('/home/local/PRO...')
+#5 /home/local/PROJECTS/azonmedia.com/azon.media/v3/app/bin/start_server.php(88): Azonmedia\Glog\{closure}()
+#6 {main}  
+[2019-10-03T17:37:50.560803+00:00] main_logger.INFO: Worker #15: Request of 0 bytes served by worker 15 in 0.00124192237854 seconds with response: code: 200 response content length: 23
+  
+[2019-10-03T17:38:02.869921+00:00] main_logger.EMERGENCY: Worker #16: Exception Guzaba2\Kernel\Exceptions\AutoloadException: Class Azonmedia\Azonmedia\Home\Views\Home (path /home/local/PROJECTS/azonmedia.com/azon.media/v3/app/src/Azonmedia/Azonmedia/Home/Views/Home.php) is not found (or not readable). in /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Kernel/Kernel.php#581
+#0 [internal function]: Guzaba2\Kernel\Kernel::autoloader('Azonmedia\\Azonm...')
+#1 [internal function]: spl_autoload_call('Azonmedia\\Azonm...')
+#2 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/ExecutorMiddleware.php(207): class_exists('Azonmedia\\Azonm...')
+#3 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/ExecutorMiddleware.php(177): Guzaba2\Mvc\ExecutorMiddleware->per_controller_php_view_handler(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\Response))
+#4 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/ExecutorMiddleware.php(122): Guzaba2\Mvc\ExecutorMiddleware->html_handler(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\Response))
+#5 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Http/QueueRequestHandler.php(47): Guzaba2\Mvc\ExecutorMiddleware->process(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\QueueRequestHandler))
+#6 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/RoutingMiddleware.php(61): Guzaba2\Http\QueueRequestHandler->handle(Object(Guzaba2\Http\Request))
+#7 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Http/QueueRequestHandler.php(47): Guzaba2\Mvc\RoutingMiddleware->process(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\QueueRequestHandler))
+#8 guzaba.source:///home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Swoole/Handlers/Http/Request.php(82): Guzaba2\Http\QueueRequestHandler->handle(Object(Guzaba2\Http\Request))
+#9 guzaba.source:///home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Swoole/Handlers/Http/Request.php(117): Guzaba2\Swoole\Handlers\Http\Request->handle(Object(Swoole\Http\Request), Object(Swoole\Http\Response))
+#10 {main}  
+[2019-10-03T17:38:36.773376+00:00] main_logger.INFO: Worker #15: Request of 0 bytes served by worker 15 in 0.0012030601501465 seconds with response: code: 200 response content length: 16
+  
+[2019-10-03T17:38:39.279292+00:00] main_logger.INFO: Worker #15: Request of 0 bytes served by worker 15 in 0.00031805038452148 seconds with response: code: 200 response content length: 16
+  
+[2019-10-03T17:38:43.449774+00:00] main_logger.INFO: Worker #15: Request of 0 bytes served by worker 15 in 0.00038909912109375 seconds with response: code: 200 response content length: 16
+  
+[2019-10-03T17:38:51.828929+00:00] main_logger.INFO: Worker #16: Request of 0 bytes served by worker 16 in 0.0011639595031738 seconds with response: code: 200 response content length: 16
+  
+[2019-10-03T17:39:21.999056+00:00] main_logger.INFO: Worker #15: Request of 0 bytes served by worker 15 in 0.001215934753418 seconds with response: code: 200 response content length: 16
+  
+[2019-10-03T17:39:34.594705+00:00] main_logger.INFO: Worker #15: Request of 0 bytes served by worker 15 in 0.0014979839324951 seconds with response: code: 200 response content length: 16
+  
+[2019-10-03T17:39:36.539393+00:00] main_logger.INFO: Worker #15: Request of 0 bytes served by worker 15 in 0.00027680397033691 seconds with response: code: 200 response content length: 16
+  
+[2019-10-03T17:41:54.740079+00:00] main_logger.INFO: Worker #15: Request of 0 bytes served by worker 15 in 0.0012500286102295 seconds with response: code: 200 response content length: 16
+  
+[2019-10-03T17:42:03.450156+00:00] main_logger.INFO: Worker #15: Request of 0 bytes served by worker 15 in 0.0012731552124023 seconds with response: code: 200 response content length: 16
+  
+[2019-10-03T17:42:28.162541+00:00] main_logger.INFO: Worker #15: Request of 0 bytes served by worker 15 in 0.0015509128570557 seconds with response: code: 200 response content length: 16
+  
+[2019-10-03T17:43:41.244838+00:00] main_logger.INFO: Worker #16: Request of 0 bytes served by worker 16 in 0.0012209415435791 seconds with response: code: 200 response content length: 16
+  
+[2019-10-03T17:43:48.709401+00:00] main_logger.INFO: Worker #16: Request of 0 bytes served by worker 16 in 0.00030016899108887 seconds with response: code: 200 response content length: 16
+  
+[2019-10-03T17:46:05.735709+00:00] main_logger.INFO: Worker #16: Request of 0 bytes served by worker 16 in 0.00034594535827637 seconds with response: code: 200 response content length: 16
+  
+[2019-10-03T17:46:10.206533+00:00] main_logger.INFO: Worker #16: Request of 0 bytes served by worker 16 in 0.00029397010803223 seconds with response: code: 200 response content length: 16
+  
+[2019-10-03T17:46:27.527447+00:00] main_logger.INFO: Worker #16: Request of 0 bytes served by worker 16 in 0.00029087066650391 seconds with response: code: 200 response content length: 16
+  
+[2019-10-04T12:50:32.407444+00:00] main_logger.INFO: Worker #15: Request of 0 bytes served by worker 15 in 0.00081992149353027 seconds with response: code: 200 response content length: 16
+  
+[2019-10-04T12:50:33.826196+00:00] main_logger.INFO: Worker #15: Request of 0 bytes served by worker 15 in 0.00047993659973145 seconds with response: code: 200 response content length: 16
+  
+[2019-10-04T12:50:37.459093+00:00] main_logger.INFO: Worker #17: Request of 0 bytes served by worker 17 in 0.0017721652984619 seconds with response: code: 200 response content length: 16
+  
+[2019-10-04T12:50:46.788579+00:00] main_logger.INFO: Worker #17: Request of 0 bytes served by worker 17 in 0.00030684471130371 seconds with response: code: 200 response content length: 16
+  
+[2019-10-04T12:50:52.679774+00:00] main_logger.INFO: Worker #17: Request of 0 bytes served by worker 17 in 0.00028896331787109 seconds with response: code: 200 response content length: 16
+  
+[2019-10-04T12:50:55.931576+00:00] main_logger.INFO: Worker #17: Request of 0 bytes served by worker 17 in 0.00029301643371582 seconds with response: code: 200 response content length: 16
+  
+[2019-10-04T12:54:14.015801+00:00] main_logger.INFO: Worker #15: Request of 0 bytes served by worker 15 in 0.0012609958648682 seconds with response: code: 200 response content length: 16
+  
+[2019-10-04T12:55:29.377910+00:00] main_logger.INFO: Worker #15: Request of 0 bytes served by worker 15 in 0.0012509822845459 seconds with response: code: 200 response content length: 23
+  
+[2019-10-04T13:13:19.461989+00:00] main_logger.INFO: Worker #20: Request of 0 bytes served by worker 20 in 0.0017321109771729 seconds with response: code: 200 response content length: 23
+  
+[2019-10-04T13:15:02.234477+00:00] main_logger.INFO: Worker #20: Request of 0 bytes served by worker 20 in 0.00029182434082031 seconds with response: code: 200 response content length: 23
+  
+[2019-10-04T14:41:41.561401+00:00] main_logger.INFO: Worker #15: Request of 0 bytes served by worker 15 in 0.00048208236694336 seconds with response: code: 200 response content length: 23
+  
+[2019-10-04T14:41:41.565750+00:00] main_logger.INFO: Worker #15: Request of 0 bytes served by worker 15 in 0.00033378601074219 seconds with response: code: 200 response content length: 23
+  
+[2019-10-04T14:41:41.571088+00:00] main_logger.INFO: Worker #15: Request of 0 bytes served by worker 15 in 0.0005800724029541 seconds with response: code: 200 response content length: 23
+  
+[2019-10-04T14:41:42.688353+00:00] main_logger.INFO: Worker #15: Request of 0 bytes served by worker 15 in 0.00028586387634277 seconds with response: code: 200 response content length: 23
+  
+[2019-10-04T14:41:53.370746+00:00] main_logger.EMERGENCY: Worker #16: Exception Guzaba2\Kernel\Exceptions\AutoloadException: Class Azonmedia\Azonmedia\Home\Views\Home (path /home/local/PROJECTS/azonmedia.com/azon.media/v3/app/src/Azonmedia/Azonmedia/Home/Views/Home.php) is not found (or not readable). in /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Kernel/Kernel.php#581
+#0 [internal function]: Guzaba2\Kernel\Kernel::autoloader('Azonmedia\\Azonm...')
+#1 [internal function]: spl_autoload_call('Azonmedia\\Azonm...')
+#2 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/ExecutorMiddleware.php(207): class_exists('Azonmedia\\Azonm...')
+#3 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/ExecutorMiddleware.php(177): Guzaba2\Mvc\ExecutorMiddleware->per_controller_php_view_handler(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\Response))
+#4 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/ExecutorMiddleware.php(122): Guzaba2\Mvc\ExecutorMiddleware->html_handler(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\Response))
+#5 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Http/QueueRequestHandler.php(47): Guzaba2\Mvc\ExecutorMiddleware->process(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\QueueRequestHandler))
+#6 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Http/CorsMiddleware.php(39): Guzaba2\Http\QueueRequestHandler->handle(Object(Guzaba2\Http\Request))
+#7 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Http/QueueRequestHandler.php(47): Guzaba2\Http\CorsMiddleware->process(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\QueueRequestHandler))
+#8 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/RoutingMiddleware.php(61): Guzaba2\Http\QueueRequestHandler->handle(Object(Guzaba2\Http\Request))
+#9 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Http/QueueRequestHandler.php(47): Guzaba2\Mvc\RoutingMiddleware->process(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\QueueRequestHandler))
+#10 guzaba.source:///home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Swoole/Handlers/Http/Request.php(82): Guzaba2\Http\QueueRequestHandler->handle(Object(Guzaba2\Http\Request))
+#11 guzaba.source:///home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Swoole/Handlers/Http/Request.php(117): Guzaba2\Swoole\Handlers\Http\Request->handle(Object(Swoole\Http\Request), Object(Swoole\Http\Response))
+#12 {main}  
+[2019-10-04T14:41:53.449151+00:00] main_logger.INFO: Worker #16: Request of 0 bytes served by worker 16 in 0.00028800964355469 seconds with response: code: 404 response content length: 69
+  
+[2019-10-04T14:41:53.471998+00:00] main_logger.INFO: Worker #16: Request of 0 bytes served by worker 16 in 0.00039887428283691 seconds with response: code: 404 response content length: 69
+  
+[2019-10-04T14:43:51.171395+00:00] main_logger.INFO: Worker #16: Request of 0 bytes served by worker 16 in 0.00030994415283203 seconds with response: code: 404 response content length: 69
+  
+[2019-10-04T14:44:04.423856+00:00] main_logger.INFO: Worker #16: Request of 0 bytes served by worker 16 in 0.00042486190795898 seconds with response: code: 200 response content length: 23
+  
+[2019-10-04T14:44:12.243089+00:00] main_logger.INFO: Worker #15: Request of 0 bytes served by worker 15 in 0.0017638206481934 seconds with response: code: 200 response content length: 66
+  
+[2019-10-04T14:44:18.764185+00:00] main_logger.INFO: Worker #15: Request of 0 bytes served by worker 15 in 0.00050592422485352 seconds with response: code: 200 response content length: 66
+  
+[2019-10-04T14:54:20.659171+00:00] main_logger.INFO: Worker #15: Request of 0 bytes served by worker 15 in 0.00047612190246582 seconds with response: code: 200 response content length: 66
+  
+[2019-10-04T14:54:20.661377+00:00] main_logger.INFO: Worker #15: Request of 0 bytes served by worker 15 in 0.00030303001403809 seconds with response: code: 200 response content length: 66
+  
+[2019-10-04T14:54:20.662810+00:00] main_logger.INFO: Worker #15: Request of 0 bytes served by worker 15 in 0.00026917457580566 seconds with response: code: 200 response content length: 66
+  
+[2019-10-04T14:58:15.343441+00:00] main_logger.INFO: Worker #15: Request of 0 bytes served by worker 15 in 0.00033116340637207 seconds with response: code: 200 response content length: 66
+  
+[2019-10-04T14:59:17.180300+00:00] main_logger.INFO: Worker #15: Request of 0 bytes served by worker 15 in 0.00031208992004395 seconds with response: code: 200 response content length: 66
+  
+[2019-10-04T14:59:17.257649+00:00] main_logger.INFO: Worker #15: Request of 0 bytes served by worker 15 in 0.00034403800964355 seconds with response: code: 200 response content length: 66
+  
+[2019-10-04T14:59:17.265664+00:00] main_logger.INFO: Worker #15: Request of 0 bytes served by worker 15 in 0.00041413307189941 seconds with response: code: 200 response content length: 66
+  
+[2019-10-04T14:59:24.503395+00:00] main_logger.INFO: Worker #15: Request of 0 bytes served by worker 15 in 0.00033402442932129 seconds with response: code: 200 response content length: 66
+  
+[2019-10-04T14:59:27.994083+00:00] main_logger.INFO: Worker #15: Request of 0 bytes served by worker 15 in 0.00045895576477051 seconds with response: code: 200 response content length: 66
+  
+[2019-10-04T14:59:36.598774+00:00] main_logger.INFO: Worker #15: Request of 0 bytes served by worker 15 in 0.00043916702270508 seconds with response: code: 200 response content length: 66
+  
+[2019-10-04T14:59:36.605393+00:00] main_logger.INFO: Worker #15: Request of 0 bytes served by worker 15 in 0.00042104721069336 seconds with response: code: 200 response content length: 66
+  
+[2019-10-04T14:59:36.607426+00:00] main_logger.INFO: Worker #15: Request of 0 bytes served by worker 15 in 0.00044107437133789 seconds with response: code: 200 response content length: 66
+  
+[2019-10-04T14:59:37.944386+00:00] main_logger.INFO: Worker #15: Request of 0 bytes served by worker 15 in 0.00030398368835449 seconds with response: code: 200 response content length: 66
+  
+[2019-10-04T15:00:51.926616+00:00] main_logger.INFO: Worker #15: Request of 0 bytes served by worker 15 in 0.00032186508178711 seconds with response: code: 200 response content length: 66
+  
+[2019-10-04T15:00:51.928803+00:00] main_logger.INFO: Worker #15: Request of 0 bytes served by worker 15 in 0.00026583671569824 seconds with response: code: 200 response content length: 66
+  
+[2019-10-04T15:00:52.103423+00:00] main_logger.INFO: Worker #15: Request of 0 bytes served by worker 15 in 0.00031685829162598 seconds with response: code: 200 response content length: 66
+  
+[2019-10-04T15:01:00.036722+00:00] main_logger.INFO: Worker #15: Request of 0 bytes served by worker 15 in 0.00038599967956543 seconds with response: code: 200 response content length: 66
+  
+[2019-10-04T15:09:49.333345+00:00] main_logger.EMERGENCY: Worker #15: Exception Guzaba2\Kernel\Exceptions\AutoloadException: Class Azonmedia\Azonmedia\Home\Views\Home (path /home/local/PROJECTS/azonmedia.com/azon.media/v3/app/src/Azonmedia/Azonmedia/Home/Views/Home.php) is not found (or not readable). in /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Kernel/Kernel.php#581
+#0 [internal function]: Guzaba2\Kernel\Kernel::autoloader('Azonmedia\\Azonm...')
+#1 [internal function]: spl_autoload_call('Azonmedia\\Azonm...')
+#2 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/ExecutorMiddleware.php(207): class_exists('Azonmedia\\Azonm...')
+#3 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/ExecutorMiddleware.php(177): Guzaba2\Mvc\ExecutorMiddleware->per_controller_php_view_handler(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\Response))
+#4 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/ExecutorMiddleware.php(166): Guzaba2\Mvc\ExecutorMiddleware->html_handler(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\Response))
+#5 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/ExecutorMiddleware.php(122): Guzaba2\Mvc\ExecutorMiddleware->default_handler(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\Response))
+#6 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Http/QueueRequestHandler.php(47): Guzaba2\Mvc\ExecutorMiddleware->process(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\QueueRequestHandler))
+#7 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Http/CorsMiddleware.php(39): Guzaba2\Http\QueueRequestHandler->handle(Object(Guzaba2\Http\Request))
+#8 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Http/QueueRequestHandler.php(47): Guzaba2\Http\CorsMiddleware->process(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\QueueRequestHandler))
+#9 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/RoutingMiddleware.php(61): Guzaba2\Http\QueueRequestHandler->handle(Object(Guzaba2\Http\Request))
+#10 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Http/QueueRequestHandler.php(47): Guzaba2\Mvc\RoutingMiddleware->process(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\QueueRequestHandler))
+#11 guzaba.source:///home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Swoole/Handlers/Http/Request.php(82): Guzaba2\Http\QueueRequestHandler->handle(Object(Guzaba2\Http\Request))
+#12 guzaba.source:///home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Swoole/Handlers/Http/Request.php(117): Guzaba2\Swoole\Handlers\Http\Request->handle(Object(Swoole\Http\Request), Object(Swoole\Http\Response))
+#13 {main}  
+[2019-10-04T15:09:49.335968+00:00] main_logger.EMERGENCY: Worker #15: Exception Guzaba2\Kernel\Exceptions\AutoloadException: Class Azonmedia\Azonmedia\Home\Views\Home (path /home/local/PROJECTS/azonmedia.com/azon.media/v3/app/src/Azonmedia/Azonmedia/Home/Views/Home.php) is not found (or not readable). in /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Kernel/Kernel.php#581
+#0 [internal function]: Guzaba2\Kernel\Kernel::autoloader('Azonmedia\\Azonm...')
+#1 [internal function]: spl_autoload_call('Azonmedia\\Azonm...')
+#2 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/ExecutorMiddleware.php(207): class_exists('Azonmedia\\Azonm...')
+#3 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/ExecutorMiddleware.php(177): Guzaba2\Mvc\ExecutorMiddleware->per_controller_php_view_handler(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\Response))
+#4 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/ExecutorMiddleware.php(166): Guzaba2\Mvc\ExecutorMiddleware->html_handler(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\Response))
+#5 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/ExecutorMiddleware.php(122): Guzaba2\Mvc\ExecutorMiddleware->default_handler(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\Response))
+#6 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Http/QueueRequestHandler.php(47): Guzaba2\Mvc\ExecutorMiddleware->process(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\QueueRequestHandler))
+#7 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Http/CorsMiddleware.php(39): Guzaba2\Http\QueueRequestHandler->handle(Object(Guzaba2\Http\Request))
+#8 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Http/QueueRequestHandler.php(47): Guzaba2\Http\CorsMiddleware->process(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\QueueRequestHandler))
+#9 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/RoutingMiddleware.php(61): Guzaba2\Http\QueueRequestHandler->handle(Object(Guzaba2\Http\Request))
+#10 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Http/QueueRequestHandler.php(47): Guzaba2\Mvc\RoutingMiddleware->process(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\QueueRequestHandler))
+#11 guzaba.source:///home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Swoole/Handlers/Http/Request.php(82): Guzaba2\Http\QueueRequestHandler->handle(Object(Guzaba2\Http\Request))
+#12 guzaba.source:///home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Swoole/Handlers/Http/Request.php(117): Guzaba2\Swoole\Handlers\Http\Request->handle(Object(Swoole\Http\Request), Object(Swoole\Http\Response))
+#13 {main}  
+[2019-10-04T15:09:49.339347+00:00] main_logger.EMERGENCY: Worker #15: Exception Guzaba2\Kernel\Exceptions\AutoloadException: Class Azonmedia\Azonmedia\Home\Views\Home (path /home/local/PROJECTS/azonmedia.com/azon.media/v3/app/src/Azonmedia/Azonmedia/Home/Views/Home.php) is not found (or not readable). in /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Kernel/Kernel.php#581
+#0 [internal function]: Guzaba2\Kernel\Kernel::autoloader('Azonmedia\\Azonm...')
+#1 [internal function]: spl_autoload_call('Azonmedia\\Azonm...')
+#2 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/ExecutorMiddleware.php(207): class_exists('Azonmedia\\Azonm...')
+#3 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/ExecutorMiddleware.php(177): Guzaba2\Mvc\ExecutorMiddleware->per_controller_php_view_handler(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\Response))
+#4 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/ExecutorMiddleware.php(166): Guzaba2\Mvc\ExecutorMiddleware->html_handler(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\Response))
+#5 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/ExecutorMiddleware.php(122): Guzaba2\Mvc\ExecutorMiddleware->default_handler(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\Response))
+#6 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Http/QueueRequestHandler.php(47): Guzaba2\Mvc\ExecutorMiddleware->process(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\QueueRequestHandler))
+#7 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Http/CorsMiddleware.php(39): Guzaba2\Http\QueueRequestHandler->handle(Object(Guzaba2\Http\Request))
+#8 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Http/QueueRequestHandler.php(47): Guzaba2\Http\CorsMiddleware->process(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\QueueRequestHandler))
+#9 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/RoutingMiddleware.php(61): Guzaba2\Http\QueueRequestHandler->handle(Object(Guzaba2\Http\Request))
+#10 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Http/QueueRequestHandler.php(47): Guzaba2\Mvc\RoutingMiddleware->process(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\QueueRequestHandler))
+#11 guzaba.source:///home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Swoole/Handlers/Http/Request.php(82): Guzaba2\Http\QueueRequestHandler->handle(Object(Guzaba2\Http\Request))
+#12 guzaba.source:///home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Swoole/Handlers/Http/Request.php(117): Guzaba2\Swoole\Handlers\Http\Request->handle(Object(Swoole\Http\Request), Object(Swoole\Http\Response))
+#13 {main}  
+[2019-10-04T15:12:04.760951+00:00] main_logger.EMERGENCY: Worker #15: Exception Guzaba2\Kernel\Exceptions\AutoloadException: Class Azonmedia\Azonmedia\Home\Views\Home (path /home/local/PROJECTS/azonmedia.com/azon.media/v3/app/src/Azonmedia/Azonmedia/Home/Views/Home.php) is not found (or not readable). in /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Kernel/Kernel.php#581
+#0 [internal function]: Guzaba2\Kernel\Kernel::autoloader('Azonmedia\\Azonm...')
+#1 [internal function]: spl_autoload_call('Azonmedia\\Azonm...')
+#2 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/ExecutorMiddleware.php(207): class_exists('Azonmedia\\Azonm...')
+#3 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/ExecutorMiddleware.php(177): Guzaba2\Mvc\ExecutorMiddleware->per_controller_php_view_handler(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\Response))
+#4 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/ExecutorMiddleware.php(166): Guzaba2\Mvc\ExecutorMiddleware->html_handler(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\Response))
+#5 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/ExecutorMiddleware.php(122): Guzaba2\Mvc\ExecutorMiddleware->default_handler(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\Response))
+#6 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Http/QueueRequestHandler.php(47): Guzaba2\Mvc\ExecutorMiddleware->process(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\QueueRequestHandler))
+#7 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Http/CorsMiddleware.php(39): Guzaba2\Http\QueueRequestHandler->handle(Object(Guzaba2\Http\Request))
+#8 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Http/QueueRequestHandler.php(47): Guzaba2\Http\CorsMiddleware->process(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\QueueRequestHandler))
+#9 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/RoutingMiddleware.php(61): Guzaba2\Http\QueueRequestHandler->handle(Object(Guzaba2\Http\Request))
+#10 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Http/QueueRequestHandler.php(47): Guzaba2\Mvc\RoutingMiddleware->process(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\QueueRequestHandler))
+#11 guzaba.source:///home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Swoole/Handlers/Http/Request.php(82): Guzaba2\Http\QueueRequestHandler->handle(Object(Guzaba2\Http\Request))
+#12 guzaba.source:///home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Swoole/Handlers/Http/Request.php(117): Guzaba2\Swoole\Handlers\Http\Request->handle(Object(Swoole\Http\Request), Object(Swoole\Http\Response))
+#13 {main}  
+[2019-10-04T15:12:04.763929+00:00] main_logger.EMERGENCY: Worker #15: Exception Guzaba2\Kernel\Exceptions\AutoloadException: Class Azonmedia\Azonmedia\Home\Views\Home (path /home/local/PROJECTS/azonmedia.com/azon.media/v3/app/src/Azonmedia/Azonmedia/Home/Views/Home.php) is not found (or not readable). in /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Kernel/Kernel.php#581
+#0 [internal function]: Guzaba2\Kernel\Kernel::autoloader('Azonmedia\\Azonm...')
+#1 [internal function]: spl_autoload_call('Azonmedia\\Azonm...')
+#2 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/ExecutorMiddleware.php(207): class_exists('Azonmedia\\Azonm...')
+#3 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/ExecutorMiddleware.php(177): Guzaba2\Mvc\ExecutorMiddleware->per_controller_php_view_handler(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\Response))
+#4 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/ExecutorMiddleware.php(166): Guzaba2\Mvc\ExecutorMiddleware->html_handler(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\Response))
+#5 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/ExecutorMiddleware.php(122): Guzaba2\Mvc\ExecutorMiddleware->default_handler(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\Response))
+#6 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Http/QueueRequestHandler.php(47): Guzaba2\Mvc\ExecutorMiddleware->process(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\QueueRequestHandler))
+#7 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Http/CorsMiddleware.php(39): Guzaba2\Http\QueueRequestHandler->handle(Object(Guzaba2\Http\Request))
+#8 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Http/QueueRequestHandler.php(47): Guzaba2\Http\CorsMiddleware->process(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\QueueRequestHandler))
+#9 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/RoutingMiddleware.php(61): Guzaba2\Http\QueueRequestHandler->handle(Object(Guzaba2\Http\Request))
+#10 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Http/QueueRequestHandler.php(47): Guzaba2\Mvc\RoutingMiddleware->process(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\QueueRequestHandler))
+#11 guzaba.source:///home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Swoole/Handlers/Http/Request.php(82): Guzaba2\Http\QueueRequestHandler->handle(Object(Guzaba2\Http\Request))
+#12 guzaba.source:///home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Swoole/Handlers/Http/Request.php(117): Guzaba2\Swoole\Handlers\Http\Request->handle(Object(Swoole\Http\Request), Object(Swoole\Http\Response))
+#13 {main}  
+[2019-10-04T15:12:04.765814+00:00] main_logger.EMERGENCY: Worker #15: Exception Guzaba2\Kernel\Exceptions\AutoloadException: Class Azonmedia\Azonmedia\Home\Views\Home (path /home/local/PROJECTS/azonmedia.com/azon.media/v3/app/src/Azonmedia/Azonmedia/Home/Views/Home.php) is not found (or not readable). in /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Kernel/Kernel.php#581
+#0 [internal function]: Guzaba2\Kernel\Kernel::autoloader('Azonmedia\\Azonm...')
+#1 [internal function]: spl_autoload_call('Azonmedia\\Azonm...')
+#2 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/ExecutorMiddleware.php(207): class_exists('Azonmedia\\Azonm...')
+#3 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/ExecutorMiddleware.php(177): Guzaba2\Mvc\ExecutorMiddleware->per_controller_php_view_handler(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\Response))
+#4 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/ExecutorMiddleware.php(166): Guzaba2\Mvc\ExecutorMiddleware->html_handler(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\Response))
+#5 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/ExecutorMiddleware.php(122): Guzaba2\Mvc\ExecutorMiddleware->default_handler(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\Response))
+#6 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Http/QueueRequestHandler.php(47): Guzaba2\Mvc\ExecutorMiddleware->process(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\QueueRequestHandler))
+#7 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Http/CorsMiddleware.php(39): Guzaba2\Http\QueueRequestHandler->handle(Object(Guzaba2\Http\Request))
+#8 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Http/QueueRequestHandler.php(47): Guzaba2\Http\CorsMiddleware->process(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\QueueRequestHandler))
+#9 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/RoutingMiddleware.php(61): Guzaba2\Http\QueueRequestHandler->handle(Object(Guzaba2\Http\Request))
+#10 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Http/QueueRequestHandler.php(47): Guzaba2\Mvc\RoutingMiddleware->process(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\QueueRequestHandler))
+#11 guzaba.source:///home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Swoole/Handlers/Http/Request.php(82): Guzaba2\Http\QueueRequestHandler->handle(Object(Guzaba2\Http\Request))
+#12 guzaba.source:///home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Swoole/Handlers/Http/Request.php(117): Guzaba2\Swoole\Handlers\Http\Request->handle(Object(Swoole\Http\Request), Object(Swoole\Http\Response))
+#13 {main}  
+[2019-10-04T15:12:06.085438+00:00] main_logger.EMERGENCY: Worker #15: Exception Guzaba2\Kernel\Exceptions\AutoloadException: Class Azonmedia\Azonmedia\Home\Views\Home (path /home/local/PROJECTS/azonmedia.com/azon.media/v3/app/src/Azonmedia/Azonmedia/Home/Views/Home.php) is not found (or not readable). in /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Kernel/Kernel.php#581
+#0 [internal function]: Guzaba2\Kernel\Kernel::autoloader('Azonmedia\\Azonm...')
+#1 [internal function]: spl_autoload_call('Azonmedia\\Azonm...')
+#2 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/ExecutorMiddleware.php(207): class_exists('Azonmedia\\Azonm...')
+#3 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/ExecutorMiddleware.php(177): Guzaba2\Mvc\ExecutorMiddleware->per_controller_php_view_handler(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\Response))
+#4 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/ExecutorMiddleware.php(166): Guzaba2\Mvc\ExecutorMiddleware->html_handler(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\Response))
+#5 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/ExecutorMiddleware.php(122): Guzaba2\Mvc\ExecutorMiddleware->default_handler(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\Response))
+#6 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Http/QueueRequestHandler.php(47): Guzaba2\Mvc\ExecutorMiddleware->process(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\QueueRequestHandler))
+#7 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Http/CorsMiddleware.php(39): Guzaba2\Http\QueueRequestHandler->handle(Object(Guzaba2\Http\Request))
+#8 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Http/QueueRequestHandler.php(47): Guzaba2\Http\CorsMiddleware->process(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\QueueRequestHandler))
+#9 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/RoutingMiddleware.php(61): Guzaba2\Http\QueueRequestHandler->handle(Object(Guzaba2\Http\Request))
+#10 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Http/QueueRequestHandler.php(47): Guzaba2\Mvc\RoutingMiddleware->process(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\QueueRequestHandler))
+#11 guzaba.source:///home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Swoole/Handlers/Http/Request.php(82): Guzaba2\Http\QueueRequestHandler->handle(Object(Guzaba2\Http\Request))
+#12 guzaba.source:///home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Swoole/Handlers/Http/Request.php(117): Guzaba2\Swoole\Handlers\Http\Request->handle(Object(Swoole\Http\Request), Object(Swoole\Http\Response))
+#13 {main}  
+[2019-10-09T07:20:51.761634+00:00] main_logger.EMERGENCY: Worker #15: Exception Guzaba2\Kernel\Exceptions\AutoloadException: Class Azonmedia\Azonmedia\Home\Views\Home (path /home/local/PROJECTS/azonmedia.com/azon.media/v3/app/src/Azonmedia/Azonmedia/Home/Views/Home.php) is not found (or not readable). in /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Kernel/Kernel.php#581
+#0 [internal function]: Guzaba2\Kernel\Kernel::autoloader('Azonmedia\\Azonm...')
+#1 [internal function]: spl_autoload_call('Azonmedia\\Azonm...')
+#2 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/ExecutorMiddleware.php(207): class_exists('Azonmedia\\Azonm...')
+#3 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/ExecutorMiddleware.php(177): Guzaba2\Mvc\ExecutorMiddleware->per_controller_php_view_handler(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\Response))
+#4 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/ExecutorMiddleware.php(166): Guzaba2\Mvc\ExecutorMiddleware->html_handler(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\Response))
+#5 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/ExecutorMiddleware.php(122): Guzaba2\Mvc\ExecutorMiddleware->default_handler(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\Response))
+#6 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Http/QueueRequestHandler.php(47): Guzaba2\Mvc\ExecutorMiddleware->process(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\QueueRequestHandler))
+#7 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Http/CorsMiddleware.php(39): Guzaba2\Http\QueueRequestHandler->handle(Object(Guzaba2\Http\Request))
+#8 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Http/QueueRequestHandler.php(47): Guzaba2\Http\CorsMiddleware->process(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\QueueRequestHandler))
+#9 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/RoutingMiddleware.php(61): Guzaba2\Http\QueueRequestHandler->handle(Object(Guzaba2\Http\Request))
+#10 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Http/QueueRequestHandler.php(47): Guzaba2\Mvc\RoutingMiddleware->process(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\QueueRequestHandler))
+#11 guzaba.source:///home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Swoole/Handlers/Http/Request.php(82): Guzaba2\Http\QueueRequestHandler->handle(Object(Guzaba2\Http\Request))
+#12 guzaba.source:///home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Swoole/Handlers/Http/Request.php(117): Guzaba2\Swoole\Handlers\Http\Request->handle(Object(Swoole\Http\Request), Object(Swoole\Http\Response))
+#13 {main}  
+[2019-10-09T07:20:51.763473+00:00] main_logger.EMERGENCY: Worker #15: Exception Guzaba2\Kernel\Exceptions\AutoloadException: Class Azonmedia\Azonmedia\Home\Views\Home (path /home/local/PROJECTS/azonmedia.com/azon.media/v3/app/src/Azonmedia/Azonmedia/Home/Views/Home.php) is not found (or not readable). in /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Kernel/Kernel.php#581
+#0 [internal function]: Guzaba2\Kernel\Kernel::autoloader('Azonmedia\\Azonm...')
+#1 [internal function]: spl_autoload_call('Azonmedia\\Azonm...')
+#2 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/ExecutorMiddleware.php(207): class_exists('Azonmedia\\Azonm...')
+#3 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/ExecutorMiddleware.php(177): Guzaba2\Mvc\ExecutorMiddleware->per_controller_php_view_handler(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\Response))
+#4 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/ExecutorMiddleware.php(166): Guzaba2\Mvc\ExecutorMiddleware->html_handler(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\Response))
+#5 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/ExecutorMiddleware.php(122): Guzaba2\Mvc\ExecutorMiddleware->default_handler(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\Response))
+#6 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Http/QueueRequestHandler.php(47): Guzaba2\Mvc\ExecutorMiddleware->process(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\QueueRequestHandler))
+#7 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Http/CorsMiddleware.php(39): Guzaba2\Http\QueueRequestHandler->handle(Object(Guzaba2\Http\Request))
+#8 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Http/QueueRequestHandler.php(47): Guzaba2\Http\CorsMiddleware->process(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\QueueRequestHandler))
+#9 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/RoutingMiddleware.php(61): Guzaba2\Http\QueueRequestHandler->handle(Object(Guzaba2\Http\Request))
+#10 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Http/QueueRequestHandler.php(47): Guzaba2\Mvc\RoutingMiddleware->process(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\QueueRequestHandler))
+#11 guzaba.source:///home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Swoole/Handlers/Http/Request.php(82): Guzaba2\Http\QueueRequestHandler->handle(Object(Guzaba2\Http\Request))
+#12 guzaba.source:///home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Swoole/Handlers/Http/Request.php(117): Guzaba2\Swoole\Handlers\Http\Request->handle(Object(Swoole\Http\Request), Object(Swoole\Http\Response))
+#13 {main}  
+[2019-10-09T07:20:51.780008+00:00] main_logger.EMERGENCY: Worker #15: Exception Guzaba2\Kernel\Exceptions\AutoloadException: Class Azonmedia\Azonmedia\Home\Views\Home (path /home/local/PROJECTS/azonmedia.com/azon.media/v3/app/src/Azonmedia/Azonmedia/Home/Views/Home.php) is not found (or not readable). in /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Kernel/Kernel.php#581
+#0 [internal function]: Guzaba2\Kernel\Kernel::autoloader('Azonmedia\\Azonm...')
+#1 [internal function]: spl_autoload_call('Azonmedia\\Azonm...')
+#2 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/ExecutorMiddleware.php(207): class_exists('Azonmedia\\Azonm...')
+#3 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/ExecutorMiddleware.php(177): Guzaba2\Mvc\ExecutorMiddleware->per_controller_php_view_handler(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\Response))
+#4 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/ExecutorMiddleware.php(166): Guzaba2\Mvc\ExecutorMiddleware->html_handler(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\Response))
+#5 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/ExecutorMiddleware.php(122): Guzaba2\Mvc\ExecutorMiddleware->default_handler(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\Response))
+#6 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Http/QueueRequestHandler.php(47): Guzaba2\Mvc\ExecutorMiddleware->process(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\QueueRequestHandler))
+#7 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Http/CorsMiddleware.php(39): Guzaba2\Http\QueueRequestHandler->handle(Object(Guzaba2\Http\Request))
+#8 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Http/QueueRequestHandler.php(47): Guzaba2\Http\CorsMiddleware->process(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\QueueRequestHandler))
+#9 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/RoutingMiddleware.php(61): Guzaba2\Http\QueueRequestHandler->handle(Object(Guzaba2\Http\Request))
+#10 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Http/QueueRequestHandler.php(47): Guzaba2\Mvc\RoutingMiddleware->process(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\QueueRequestHandler))
+#11 guzaba.source:///home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Swoole/Handlers/Http/Request.php(82): Guzaba2\Http\QueueRequestHandler->handle(Object(Guzaba2\Http\Request))
+#12 guzaba.source:///home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Swoole/Handlers/Http/Request.php(117): Guzaba2\Swoole\Handlers\Http\Request->handle(Object(Swoole\Http\Request), Object(Swoole\Http\Response))
+#13 {main}  
+[2019-10-09T07:20:51.817528+00:00] main_logger.EMERGENCY: Worker #15: Exception Guzaba2\Kernel\Exceptions\AutoloadException: Class Azonmedia\Azonmedia\Home\Views\Home (path /home/local/PROJECTS/azonmedia.com/azon.media/v3/app/src/Azonmedia/Azonmedia/Home/Views/Home.php) is not found (or not readable). in /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Kernel/Kernel.php#581
+#0 [internal function]: Guzaba2\Kernel\Kernel::autoloader('Azonmedia\\Azonm...')
+#1 [internal function]: spl_autoload_call('Azonmedia\\Azonm...')
+#2 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/ExecutorMiddleware.php(207): class_exists('Azonmedia\\Azonm...')
+#3 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/ExecutorMiddleware.php(177): Guzaba2\Mvc\ExecutorMiddleware->per_controller_php_view_handler(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\Response))
+#4 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/ExecutorMiddleware.php(166): Guzaba2\Mvc\ExecutorMiddleware->html_handler(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\Response))
+#5 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/ExecutorMiddleware.php(122): Guzaba2\Mvc\ExecutorMiddleware->default_handler(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\Response))
+#6 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Http/QueueRequestHandler.php(47): Guzaba2\Mvc\ExecutorMiddleware->process(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\QueueRequestHandler))
+#7 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Http/CorsMiddleware.php(39): Guzaba2\Http\QueueRequestHandler->handle(Object(Guzaba2\Http\Request))
+#8 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Http/QueueRequestHandler.php(47): Guzaba2\Http\CorsMiddleware->process(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\QueueRequestHandler))
+#9 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/RoutingMiddleware.php(61): Guzaba2\Http\QueueRequestHandler->handle(Object(Guzaba2\Http\Request))
+#10 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Http/QueueRequestHandler.php(47): Guzaba2\Mvc\RoutingMiddleware->process(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\QueueRequestHandler))
+#11 guzaba.source:///home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Swoole/Handlers/Http/Request.php(82): Guzaba2\Http\QueueRequestHandler->handle(Object(Guzaba2\Http\Request))
+#12 guzaba.source:///home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Swoole/Handlers/Http/Request.php(117): Guzaba2\Swoole\Handlers\Http\Request->handle(Object(Swoole\Http\Request), Object(Swoole\Http\Response))
+#13 {main}  
+[2019-10-09T07:20:52.868083+00:00] main_logger.EMERGENCY: Worker #15: Exception Guzaba2\Kernel\Exceptions\AutoloadException: Class Azonmedia\Azonmedia\Home\Views\Home (path /home/local/PROJECTS/azonmedia.com/azon.media/v3/app/src/Azonmedia/Azonmedia/Home/Views/Home.php) is not found (or not readable). in /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Kernel/Kernel.php#581
+#0 [internal function]: Guzaba2\Kernel\Kernel::autoloader('Azonmedia\\Azonm...')
+#1 [internal function]: spl_autoload_call('Azonmedia\\Azonm...')
+#2 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/ExecutorMiddleware.php(207): class_exists('Azonmedia\\Azonm...')
+#3 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/ExecutorMiddleware.php(177): Guzaba2\Mvc\ExecutorMiddleware->per_controller_php_view_handler(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\Response))
+#4 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/ExecutorMiddleware.php(166): Guzaba2\Mvc\ExecutorMiddleware->html_handler(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\Response))
+#5 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/ExecutorMiddleware.php(122): Guzaba2\Mvc\ExecutorMiddleware->default_handler(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\Response))
+#6 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Http/QueueRequestHandler.php(47): Guzaba2\Mvc\ExecutorMiddleware->process(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\QueueRequestHandler))
+#7 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Http/CorsMiddleware.php(39): Guzaba2\Http\QueueRequestHandler->handle(Object(Guzaba2\Http\Request))
+#8 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Http/QueueRequestHandler.php(47): Guzaba2\Http\CorsMiddleware->process(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\QueueRequestHandler))
+#9 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/RoutingMiddleware.php(61): Guzaba2\Http\QueueRequestHandler->handle(Object(Guzaba2\Http\Request))
+#10 /home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Http/QueueRequestHandler.php(47): Guzaba2\Mvc\RoutingMiddleware->process(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\QueueRequestHandler))
+#11 guzaba.source:///home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Swoole/Handlers/Http/Request.php(82): Guzaba2\Http\QueueRequestHandler->handle(Object(Guzaba2\Http\Request))
+#12 guzaba.source:///home/local/PROJECTS/azonmedia.com/azon.media/v3/vendor/azonmedia/guzaba2/src/Guzaba2/Swoole/Handlers/Http/Request.php(117): Guzaba2\Swoole\Handlers\Http\Request->handle(Object(Swoole\Http\Request), Object(Swoole\Http\Response))
+#13 {main}  
+[2019-10-09T07:21:27.197982+00:00] main_logger.INFO: Worker #16: Request of 0 bytes served by worker 16 in 0.0024309158325195 seconds with response: code: 200 response content length: 66
+  
+[2019-10-09T07:21:27.360126+00:00] main_logger.INFO: Worker #16: Request of 0 bytes served by worker 16 in 0.00031590461730957 seconds with response: code: 200 response content length: 66
+  
+[2019-10-09T07:21:27.769435+00:00] main_logger.INFO: Worker #16: Request of 0 bytes served by worker 16 in 0.00029897689819336 seconds with response: code: 200 response content length: 66
+  
+[2019-10-09T07:21:28.054827+00:00] main_logger.INFO: Worker #16: Request of 0 bytes served by worker 16 in 0.0003209114074707 seconds with response: code: 200 response content length: 66
+  
+[2019-10-09T07:24:23.450503+00:00] main_logger.INFO: Worker #16: Request of 0 bytes served by worker 16 in 0.00040602684020996 seconds with response: code: 200 response content length: 66
+  
+[2019-10-09T07:24:23.461599+00:00] main_logger.INFO: Worker #16: Request of 0 bytes served by worker 16 in 0.00060009956359863 seconds with response: code: 200 response content length: 66
+  
+[2019-10-09T07:24:23.464767+00:00] main_logger.INFO: Worker #16: Request of 0 bytes served by worker 16 in 0.00051784515380859 seconds with response: code: 200 response content length: 66
+  
+[2019-10-09T07:24:23.495655+00:00] main_logger.INFO: Worker #16: Request of 0 bytes served by worker 16 in 0.00039005279541016 seconds with response: code: 200 response content length: 66
+  
+[2019-10-09T07:24:24.878910+00:00] main_logger.INFO: Worker #16: Request of 0 bytes served by worker 16 in 0.00043201446533203 seconds with response: code: 200 response content length: 66
+  
+[2019-10-09T07:24:24.882614+00:00] main_logger.INFO: Worker #16: Request of 0 bytes served by worker 16 in 0.00028610229492188 seconds with response: code: 200 response content length: 66
+  
+[2019-10-09T07:24:24.884781+00:00] main_logger.INFO: Worker #16: Request of 0 bytes served by worker 16 in 0.00033402442932129 seconds with response: code: 200 response content length: 66
+  
+[2019-10-09T07:24:24.890059+00:00] main_logger.INFO: Worker #16: Request of 0 bytes served by worker 16 in 0.00033807754516602 seconds with response: code: 200 response content length: 66
+  
+[2019-10-09T07:24:28.246335+00:00] main_logger.INFO: Worker #16: Request of 0 bytes served by worker 16 in 0.00031709671020508 seconds with response: code: 200 response content length: 66
+  
+[2019-10-09T07:24:57.268505+00:00] main_logger.INFO: Worker #16: Request of 0 bytes served by worker 16 in 0.00042295455932617 seconds with response: code: 200 response content length: 66
+  
+[2019-10-09T07:24:57.271937+00:00] main_logger.INFO: Worker #16: Request of 0 bytes served by worker 16 in 0.00027990341186523 seconds with response: code: 200 response content length: 66
+  
+[2019-10-09T07:24:57.285117+00:00] main_logger.INFO: Worker #16: Request of 0 bytes served by worker 16 in 0.00046300888061523 seconds with response: code: 200 response content length: 66
+  
+[2019-10-09T07:24:57.312282+00:00] main_logger.INFO: Worker #16: Request of 0 bytes served by worker 16 in 0.00045990943908691 seconds with response: code: 200 response content length: 66
+  
+[2019-10-09T07:25:00.818552+00:00] main_logger.INFO: Worker #16: Request of 0 bytes served by worker 16 in 0.00030398368835449 seconds with response: code: 200 response content length: 66
+  
+[2019-10-09T07:25:15.714733+00:00] main_logger.INFO: Worker #16: Request of 0 bytes served by worker 16 in 0.00043296813964844 seconds with response: code: 200 response content length: 66
+  
+[2019-10-09T07:25:15.717658+00:00] main_logger.INFO: Worker #16: Request of 0 bytes served by worker 16 in 0.00034093856811523 seconds with response: code: 200 response content length: 66
+  
+[2019-10-09T07:25:15.722111+00:00] main_logger.INFO: Worker #16: Request of 0 bytes served by worker 16 in 0.00030183792114258 seconds with response: code: 200 response content length: 66
+  
+[2019-10-09T07:25:15.740247+00:00] main_logger.INFO: Worker #16: Request of 0 bytes served by worker 16 in 0.00030803680419922 seconds with response: code: 200 response content length: 66
+  
+[2019-10-09T07:25:16.934796+00:00] main_logger.INFO: Worker #16: Request of 0 bytes served by worker 16 in 0.00037407875061035 seconds with response: code: 200 response content length: 66
+  
+[2019-10-09T07:25:38.275380+00:00] main_logger.INFO: Worker #16: Request of 0 bytes served by worker 16 in 0.0003819465637207 seconds with response: code: 200 response content length: 66
+  
+[2019-10-09T07:25:38.277404+00:00] main_logger.INFO: Worker #16: Request of 0 bytes served by worker 16 in 0.00028705596923828 seconds with response: code: 200 response content length: 66
+  
+[2019-10-09T07:25:38.285366+00:00] main_logger.INFO: Worker #16: Request of 0 bytes served by worker 16 in 0.00045299530029297 seconds with response: code: 200 response content length: 66
+  
+[2019-10-09T07:25:38.306605+00:00] main_logger.INFO: Worker #16: Request of 0 bytes served by worker 16 in 0.00032782554626465 seconds with response: code: 200 response content length: 66
+  
+[2019-10-09T07:25:39.351462+00:00] main_logger.INFO: Worker #16: Request of 0 bytes served by worker 16 in 0.00032806396484375 seconds with response: code: 200 response content length: 66
+  
+[2019-10-09T07:25:47.463917+00:00] main_logger.INFO: Worker #16: Request of 0 bytes served by worker 16 in 0.00032997131347656 seconds with response: code: 200 response content length: 66
+  
+[2019-10-09T07:25:47.466370+00:00] main_logger.INFO: Worker #16: Request of 0 bytes served by worker 16 in 0.00032615661621094 seconds with response: code: 200 response content length: 66
+  
+[2019-10-09T07:25:47.475550+00:00] main_logger.INFO: Worker #16: Request of 0 bytes served by worker 16 in 0.00037693977355957 seconds with response: code: 200 response content length: 66
+  
+[2019-10-09T07:25:47.480144+00:00] main_logger.INFO: Worker #16: Request of 0 bytes served by worker 16 in 0.00042080879211426 seconds with response: code: 200 response content length: 66
+  
+[2019-10-09T07:25:49.187658+00:00] main_logger.INFO: Worker #16: Request of 0 bytes served by worker 16 in 0.00046110153198242 seconds with response: code: 200 response content length: 66
+  
+[2019-10-09T07:25:54.947042+00:00] main_logger.INFO: Worker #16: Request of 0 bytes served by worker 16 in 0.00044894218444824 seconds with response: code: 200 response content length: 66
+  
+[2019-10-09T07:25:54.950589+00:00] main_logger.INFO: Worker #16: Request of 0 bytes served by worker 16 in 0.00044703483581543 seconds with response: code: 200 response content length: 66
+  
+[2019-10-09T07:25:54.971617+00:00] main_logger.INFO: Worker #16: Request of 0 bytes served by worker 16 in 0.00038981437683105 seconds with response: code: 200 response content length: 66
+  
+[2019-10-09T07:25:54.982674+00:00] main_logger.INFO: Worker #16: Request of 0 bytes served by worker 16 in 0.00034093856811523 seconds with response: code: 200 response content length: 66
+  
+[2019-10-09T07:26:02.074814+00:00] main_logger.INFO: Worker #16: Request of 0 bytes served by worker 16 in 0.00029087066650391 seconds with response: code: 200 response content length: 66
+  
+[2019-10-09T08:28:39.352518+00:00] main_logger.INFO: Worker #15: Request of 0 bytes served by worker 15 in 0.0003049373626709 seconds with response: code: 200 response content length: 66
+  
+[2019-10-09T08:28:39.712747+00:00] main_logger.INFO: Worker #15: Request of 0 bytes served by worker 15 in 0.00034308433532715 seconds with response: code: 200 response content length: 66
+  
+[2019-10-09T08:28:39.769967+00:00] main_logger.INFO: Worker #15: Request of 0 bytes served by worker 15 in 0.00029778480529785 seconds with response: code: 200 response content length: 66
+  
+[2019-10-09T08:28:39.957449+00:00] main_logger.INFO: Worker #15: Request of 0 bytes served by worker 15 in 0.00040388107299805 seconds with response: code: 200 response content length: 66
+  
+[2019-10-09T08:28:46.136210+00:00] main_logger.INFO: Worker #15: Request of 0 bytes served by worker 15 in 0.00031089782714844 seconds with response: code: 200 response content length: 66
+  
+[2019-10-09T08:28:46.175397+00:00] main_logger.INFO: Worker #15: Request of 0 bytes served by worker 15 in 0.00029778480529785 seconds with response: code: 200 response content length: 66
+  
+[2019-10-09T08:28:46.560326+00:00] main_logger.INFO: Worker #15: Request of 0 bytes served by worker 15 in 0.00033187866210938 seconds with response: code: 200 response content length: 66
+  
+[2019-10-09T08:28:46.850821+00:00] main_logger.INFO: Worker #15: Request of 0 bytes served by worker 15 in 0.00030803680419922 seconds with response: code: 200 response content length: 66
+  
+[2019-10-09T08:43:15.519279+00:00] main_logger.EMERGENCY: Exception Error: Class 'Azonmedia\Azonmedia\Application\Azonmedia' not found in /home/local/PROJECTS/guzaba2-platform/app/bin/start_server.php#85
+#0 /home/local/PROJECTS/guzaba2-platform/app/bin/start_server.php(88): Azonmedia\Glog\{closure}()
+#1 {main}  
+[2019-10-09T08:43:37.315232+00:00] main_logger.EMERGENCY: Exception Guzaba2\Kernel\Exceptions\AutoloadException: Class Guzaba2\Platform\Platform (path /home/local/PROJECTS/guzaba2-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Platform/Platform.php) is not found (or not readable). in /home/local/PROJECTS/guzaba2-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Kernel/Kernel.php#581
+#0 [internal function]: Guzaba2\Kernel\Kernel::autoloader('Guzaba2\\Platfor...')
+#1 /home/local/PROJECTS/guzaba2-platform/app/bin/start_server.php(85): spl_autoload_call('Guzaba2\\Platfor...')
+#2 /home/local/PROJECTS/guzaba2-platform/app/bin/start_server.php(88): Guzaba2\Platform\{closure}()
+#3 {main}  
+[2019-10-09T08:43:49.700763+00:00] main_logger.EMERGENCY: Exception Guzaba2\Kernel\Exceptions\AutoloadException: Class Guzaba2\Platform\Platform (path /home/local/PROJECTS/guzaba2-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Platform/Platform.php) is not found (or not readable). in /home/local/PROJECTS/guzaba2-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Kernel/Kernel.php#581
+#0 [internal function]: Guzaba2\Kernel\Kernel::autoloader('Guzaba2\\Platfor...')
+#1 /home/local/PROJECTS/guzaba2-platform/app/bin/start_server.php(85): spl_autoload_call('Guzaba2\\Platfor...')
+#2 /home/local/PROJECTS/guzaba2-platform/app/bin/start_server.php(88): Guzaba2\Platform\{closure}()
+#3 {main}  
+[2019-10-09T08:44:28.328301+00:00] main_logger.EMERGENCY: Exception Guzaba2\Kernel\Exceptions\AutoloadException: Class Guzaba2\Platform\Application\Platform (path /home/local/PROJECTS/guzaba2-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Platform/Application/Platform.php) is not found (or not readable). in /home/local/PROJECTS/guzaba2-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Kernel/Kernel.php#581
+#0 [internal function]: Guzaba2\Kernel\Kernel::autoloader('Guzaba2\\Platfor...')
+#1 /home/local/PROJECTS/guzaba2-platform/app/bin/start_server.php(85): spl_autoload_call('Guzaba2\\Platfor...')
+#2 /home/local/PROJECTS/guzaba2-platform/app/bin/start_server.php(88): Guzaba2\Platform\{closure}()
+#3 {main}  
+[2019-10-09T08:46:41.474217+00:00] main_logger.EMERGENCY: Exception Guzaba2\Kernel\Exceptions\AutoloadException: Class Guzaba2\Platform\Application\Platform (path /home/local/PROJECTS/guzaba2-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Platform/Application/Platform.php) is not found (or not readable). in /home/local/PROJECTS/guzaba2-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Kernel/Kernel.php#582
+#0 [internal function]: Guzaba2\Kernel\Kernel::autoloader('Guzaba2\\Platfor...')
+#1 /home/local/PROJECTS/guzaba2-platform/app/bin/start_server.php(85): spl_autoload_call('Guzaba2\\Platfor...')
+#2 /home/local/PROJECTS/guzaba2-platform/app/bin/start_server.php(88): Guzaba2\Platform\{closure}()
+#3 {main}  
+[2019-10-09T08:53:35.242202+00:00] main_logger.EMERGENCY: Exception Guzaba2\Kernel\Exceptions\AutoloadException: The file /home/local/PROJECTS/guzaba2-platform/app/src/GuzabaPlatform/Platform/Home/Controllers/Home.php is readable but does not contain the class/interface/trait GuzabaPlatform\Platform\Home\Controllers\Home. Please check the class and namespace declarations. in /home/local/PROJECTS/guzaba2-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Kernel/Kernel.php#572
+#0 [internal function]: Guzaba2\Kernel\Kernel::autoloader('GuzabaPlatform\\...')
+#1 [internal function]: spl_autoload_call('GuzabaPlatform\\...')
+#2 /home/local/PROJECTS/guzaba2-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Kernel/Kernel.php(570): class_exists('GuzabaPlatform\\...')
+#3 /home/local/PROJECTS/guzaba2-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Kernel/Kernel.php(542): Guzaba2\Kernel\Kernel::autoloader('GuzabaPlatform\\...')
+#4 /home/local/PROJECTS/guzaba2-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Kernel/Kernel.php(238): Guzaba2\Kernel\Kernel::load_all_classes()
+#5 guzaba.source:///home/local/PROJECTS/guzaba2-platform/app/src/GuzabaPlatform/Platform/Application/GuzabaPlatform.php(64): Guzaba2\Kernel\Kernel::run(Object(GuzabaPlatform\Platform\Application\GuzabaPlatform))
+#6 /home/local/PROJECTS/guzaba2-platform/app/bin/start_server.php(85): GuzabaPlatform\Platform\Application\GuzabaPlatform->__construct('/home/local/PRO...')
+#7 /home/local/PROJECTS/guzaba2-platform/app/bin/start_server.php(88): Guzaba2\Platform\{closure}()
+#8 {main}  
+[2019-10-09T08:53:58.625918+00:00] main_logger.EMERGENCY: Exception Swoole\Exception: failed to listen server port[0.0.0.0:8081], Error: Address already in use[98] in /home/local/PROJECTS/guzaba2-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Swoole/Server.php#134
+#0 /home/local/PROJECTS/guzaba2-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Swoole/Server.php(134): Swoole\Server->__construct('0.0.0.0', 8081, 2)
+#1 guzaba.source:///home/local/PROJECTS/guzaba2-platform/app/src/GuzabaPlatform/Platform/Application/GuzabaPlatform.php(91): Guzaba2\Swoole\Server->__construct('0.0.0.0', 8081, Array)
+#2 guzaba.source:///home/local/PROJECTS/guzaba2-platform/app/src/GuzabaPlatform/Platform/Application/GuzabaPlatform.php(69): GuzabaPlatform\Platform\Application\GuzabaPlatform->execute()
+#3 /home/local/PROJECTS/guzaba2-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Kernel/Kernel.php(240): GuzabaPlatform\Platform\Application\GuzabaPlatform->__invoke()
+#4 guzaba.source:///home/local/PROJECTS/guzaba2-platform/app/src/GuzabaPlatform/Platform/Application/GuzabaPlatform.php(64): Guzaba2\Kernel\Kernel::run(Object(GuzabaPlatform\Platform\Application\GuzabaPlatform))
+#5 /home/local/PROJECTS/guzaba2-platform/app/bin/start_server.php(85): GuzabaPlatform\Platform\Application\GuzabaPlatform->__construct('/home/local/PRO...')
+#6 /home/local/PROJECTS/guzaba2-platform/app/bin/start_server.php(88): Guzaba2\Platform\{closure}()
+#7 {main}  
+[2019-10-09T09:00:05.970696+00:00] main_logger.EMERGENCY: Worker #16: Exception Azonmedia\Routing\Exceptions\RoutingConfigurationException: The class configured as controller for route / does not exist. in /home/local/PROJECTS/guzaba2-platform/vendor/azonmedia/routing/src/RoutingMapArray.php#171
+#0 /home/local/PROJECTS/guzaba2-platform/vendor/azonmedia/routing/src/Router.php(84): Azonmedia\Routing\RoutingMapArray->match_request(Object(Guzaba2\Http\Request))
+#1 /home/local/PROJECTS/guzaba2-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/RoutingMiddleware.php(60): Azonmedia\Routing\Router->match_request(Object(Guzaba2\Http\Request))
+#2 /home/local/PROJECTS/guzaba2-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Http/QueueRequestHandler.php(47): Guzaba2\Mvc\RoutingMiddleware->process(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\QueueRequestHandler))
+#3 guzaba.source:///home/local/PROJECTS/guzaba2-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Swoole/Handlers/Http/Request.php(82): Guzaba2\Http\QueueRequestHandler->handle(Object(Guzaba2\Http\Request))
+#4 guzaba.source:///home/local/PROJECTS/guzaba2-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Swoole/Handlers/Http/Request.php(117): Guzaba2\Swoole\Handlers\Http\Request->handle(Object(Swoole\Http\Request), Object(Swoole\Http\Response))
+#5 {main}  
+[2019-10-09T09:00:06.548642+00:00] main_logger.INFO: Worker #16: Request of 0 bytes served by worker 16 in 0.00028109550476074 seconds with response: code: 404 response content length: 69
+  
+[2019-10-09T09:00:50.105118+00:00] main_logger.EMERGENCY: Worker #15: Exception Azonmedia\Routing\Exceptions\RoutingConfigurationException: The class configured as controller for route / does not exist. in /home/local/PROJECTS/guzaba2-platform/vendor/azonmedia/routing/src/RoutingMapArray.php#171
+#0 /home/local/PROJECTS/guzaba2-platform/vendor/azonmedia/routing/src/Router.php(84): Azonmedia\Routing\RoutingMapArray->match_request(Object(Guzaba2\Http\Request))
+#1 /home/local/PROJECTS/guzaba2-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/RoutingMiddleware.php(60): Azonmedia\Routing\Router->match_request(Object(Guzaba2\Http\Request))
+#2 /home/local/PROJECTS/guzaba2-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Http/QueueRequestHandler.php(47): Guzaba2\Mvc\RoutingMiddleware->process(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\QueueRequestHandler))
+#3 guzaba.source:///home/local/PROJECTS/guzaba2-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Swoole/Handlers/Http/Request.php(82): Guzaba2\Http\QueueRequestHandler->handle(Object(Guzaba2\Http\Request))
+#4 guzaba.source:///home/local/PROJECTS/guzaba2-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Swoole/Handlers/Http/Request.php(117): Guzaba2\Swoole\Handlers\Http\Request->handle(Object(Swoole\Http\Request), Object(Swoole\Http\Response))
+#5 {main}  
+[2019-10-09T09:02:15.673938+00:00] main_logger.EMERGENCY: Worker #15: Exception Azonmedia\Routing\Exceptions\RoutingConfigurationException: The class GuzabaPlatofrm\Platform\Home\Controllers\Home configured as controller for route / does not exist. in /home/local/PROJECTS/guzaba2-platform/vendor/azonmedia/routing/src/RoutingMapArray.php#171
+#0 /home/local/PROJECTS/guzaba2-platform/vendor/azonmedia/routing/src/Router.php(84): Azonmedia\Routing\RoutingMapArray->match_request(Object(Guzaba2\Http\Request))
+#1 /home/local/PROJECTS/guzaba2-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/RoutingMiddleware.php(60): Azonmedia\Routing\Router->match_request(Object(Guzaba2\Http\Request))
+#2 /home/local/PROJECTS/guzaba2-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Http/QueueRequestHandler.php(47): Guzaba2\Mvc\RoutingMiddleware->process(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\QueueRequestHandler))
+#3 guzaba.source:///home/local/PROJECTS/guzaba2-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Swoole/Handlers/Http/Request.php(82): Guzaba2\Http\QueueRequestHandler->handle(Object(Guzaba2\Http\Request))
+#4 guzaba.source:///home/local/PROJECTS/guzaba2-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Swoole/Handlers/Http/Request.php(117): Guzaba2\Swoole\Handlers\Http\Request->handle(Object(Swoole\Http\Request), Object(Swoole\Http\Response))
+#5 {main}  
+[2019-10-09T09:02:35.704920+00:00] main_logger.EMERGENCY: Worker #15: Exception Guzaba2\Kernel\Exceptions\AutoloadException: Class GuzabaPlatform\Platform\Home\Views\Home (path /home/local/PROJECTS/guzaba2-platform/app/src/GuzabaPlatform/Platform/Home/Views/Home.php) is not found (or not readable). in /home/local/PROJECTS/guzaba2-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Kernel/Kernel.php#582
+#0 [internal function]: Guzaba2\Kernel\Kernel::autoloader('GuzabaPlatform\\...')
+#1 [internal function]: spl_autoload_call('GuzabaPlatform\\...')
+#2 /home/local/PROJECTS/guzaba2-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/ExecutorMiddleware.php(209): class_exists('GuzabaPlatform\\...')
+#3 /home/local/PROJECTS/guzaba2-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/ExecutorMiddleware.php(179): Guzaba2\Mvc\ExecutorMiddleware->per_controller_php_view_handler(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\Response))
+#4 /home/local/PROJECTS/guzaba2-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/ExecutorMiddleware.php(124): Guzaba2\Mvc\ExecutorMiddleware->html_handler(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\Response))
+#5 /home/local/PROJECTS/guzaba2-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Http/QueueRequestHandler.php(47): Guzaba2\Mvc\ExecutorMiddleware->process(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\QueueRequestHandler))
+#6 /home/local/PROJECTS/guzaba2-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Http/CorsMiddleware.php(39): Guzaba2\Http\QueueRequestHandler->handle(Object(Guzaba2\Http\Request))
+#7 /home/local/PROJECTS/guzaba2-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Http/QueueRequestHandler.php(47): Guzaba2\Http\CorsMiddleware->process(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\QueueRequestHandler))
+#8 /home/local/PROJECTS/guzaba2-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/RoutingMiddleware.php(61): Guzaba2\Http\QueueRequestHandler->handle(Object(Guzaba2\Http\Request))
+#9 /home/local/PROJECTS/guzaba2-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Http/QueueRequestHandler.php(47): Guzaba2\Mvc\RoutingMiddleware->process(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\QueueRequestHandler))
+#10 guzaba.source:///home/local/PROJECTS/guzaba2-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Swoole/Handlers/Http/Request.php(82): Guzaba2\Http\QueueRequestHandler->handle(Object(Guzaba2\Http\Request))
+#11 guzaba.source:///home/local/PROJECTS/guzaba2-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Swoole/Handlers/Http/Request.php(117): Guzaba2\Swoole\Handlers\Http\Request->handle(Object(Swoole\Http\Request), Object(Swoole\Http\Response))
+#12 {main}  
+[2019-10-09T09:03:11.069893+00:00] main_logger.INFO: Worker #16: Request of 0 bytes served by worker 16 in 0.0020670890808105 seconds with response: code: 200 response content length: 66
+  
