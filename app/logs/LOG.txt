@@ -619,3 +619,75 @@
 #12 {main}  
 [2019-10-09T09:03:11.069893+00:00] main_logger.INFO: Worker #16: Request of 0 bytes served by worker 16 in 0.0020670890808105 seconds with response: code: 200 response content length: 66
   
+[2019-10-09T09:06:54.476145+00:00] main_logger.EMERGENCY: Worker #15: Exception Guzaba2\Kernel\Exceptions\AutoloadException: Class GuzabaPlatform\Platform\Home\Views\Home (path /home/local/PROJECTS/guzaba2-platform/guzaba-platform/app/src/GuzabaPlatform/Platform/Home/Views/Home.php) is not found (or not readable). in /home/local/PROJECTS/guzaba2-platform/guzaba-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Kernel/Kernel.php#582
+#0 [internal function]: Guzaba2\Kernel\Kernel::autoloader('GuzabaPlatform\\...')
+#1 [internal function]: spl_autoload_call('GuzabaPlatform\\...')
+#2 /home/local/PROJECTS/guzaba2-platform/guzaba-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/ExecutorMiddleware.php(209): class_exists('GuzabaPlatform\\...')
+#3 /home/local/PROJECTS/guzaba2-platform/guzaba-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/ExecutorMiddleware.php(179): Guzaba2\Mvc\ExecutorMiddleware->per_controller_php_view_handler(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\Response))
+#4 /home/local/PROJECTS/guzaba2-platform/guzaba-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/ExecutorMiddleware.php(124): Guzaba2\Mvc\ExecutorMiddleware->html_handler(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\Response))
+#5 /home/local/PROJECTS/guzaba2-platform/guzaba-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Http/QueueRequestHandler.php(47): Guzaba2\Mvc\ExecutorMiddleware->process(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\QueueRequestHandler))
+#6 /home/local/PROJECTS/guzaba2-platform/guzaba-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Http/CorsMiddleware.php(39): Guzaba2\Http\QueueRequestHandler->handle(Object(Guzaba2\Http\Request))
+#7 /home/local/PROJECTS/guzaba2-platform/guzaba-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Http/QueueRequestHandler.php(47): Guzaba2\Http\CorsMiddleware->process(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\QueueRequestHandler))
+#8 /home/local/PROJECTS/guzaba2-platform/guzaba-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/RoutingMiddleware.php(61): Guzaba2\Http\QueueRequestHandler->handle(Object(Guzaba2\Http\Request))
+#9 /home/local/PROJECTS/guzaba2-platform/guzaba-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Http/QueueRequestHandler.php(47): Guzaba2\Mvc\RoutingMiddleware->process(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\QueueRequestHandler))
+#10 guzaba.source:///home/local/PROJECTS/guzaba2-platform/guzaba-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Swoole/Handlers/Http/Request.php(82): Guzaba2\Http\QueueRequestHandler->handle(Object(Guzaba2\Http\Request))
+#11 guzaba.source:///home/local/PROJECTS/guzaba2-platform/guzaba-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Swoole/Handlers/Http/Request.php(117): Guzaba2\Swoole\Handlers\Http\Request->handle(Object(Swoole\Http\Request), Object(Swoole\Http\Response))
+#12 {main}  
+[2019-10-09T09:08:30.908440+00:00] main_logger.EMERGENCY: Worker #15: Exception Guzaba2\Kernel\Exceptions\AutoloadException: Class GuzabaPlatform\Platform\Home\Views\Home (path /home/local/PROJECTS/guzaba2-platform/guzaba-platform/app/src/GuzabaPlatform/Platform/Home/Views/Home.php) is not found (or not readable). in /home/local/PROJECTS/guzaba2-platform/guzaba-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Kernel/Kernel.php#582
+#0 [internal function]: Guzaba2\Kernel\Kernel::autoloader('GuzabaPlatform\\...')
+#1 [internal function]: spl_autoload_call('GuzabaPlatform\\...')
+#2 /home/local/PROJECTS/guzaba2-platform/guzaba-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/ExecutorMiddleware.php(209): class_exists('GuzabaPlatform\\...')
+#3 /home/local/PROJECTS/guzaba2-platform/guzaba-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/ExecutorMiddleware.php(179): Guzaba2\Mvc\ExecutorMiddleware->per_controller_php_view_handler(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\Response))
+#4 /home/local/PROJECTS/guzaba2-platform/guzaba-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/ExecutorMiddleware.php(124): Guzaba2\Mvc\ExecutorMiddleware->html_handler(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\Response))
+#5 /home/local/PROJECTS/guzaba2-platform/guzaba-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Http/QueueRequestHandler.php(47): Guzaba2\Mvc\ExecutorMiddleware->process(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\QueueRequestHandler))
+#6 /home/local/PROJECTS/guzaba2-platform/guzaba-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Http/CorsMiddleware.php(39): Guzaba2\Http\QueueRequestHandler->handle(Object(Guzaba2\Http\Request))
+#7 /home/local/PROJECTS/guzaba2-platform/guzaba-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Http/QueueRequestHandler.php(47): Guzaba2\Http\CorsMiddleware->process(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\QueueRequestHandler))
+#8 /home/local/PROJECTS/guzaba2-platform/guzaba-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/RoutingMiddleware.php(61): Guzaba2\Http\QueueRequestHandler->handle(Object(Guzaba2\Http\Request))
+#9 /home/local/PROJECTS/guzaba2-platform/guzaba-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Http/QueueRequestHandler.php(47): Guzaba2\Mvc\RoutingMiddleware->process(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\QueueRequestHandler))
+#10 guzaba.source:///home/local/PROJECTS/guzaba2-platform/guzaba-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Swoole/Handlers/Http/Request.php(82): Guzaba2\Http\QueueRequestHandler->handle(Object(Guzaba2\Http\Request))
+#11 guzaba.source:///home/local/PROJECTS/guzaba2-platform/guzaba-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Swoole/Handlers/Http/Request.php(117): Guzaba2\Swoole\Handlers\Http\Request->handle(Object(Swoole\Http\Request), Object(Swoole\Http\Response))
+#12 {main}  
+[2019-10-09T09:09:06.528815+00:00] main_logger.EMERGENCY: Worker #15: Exception Guzaba2\Kernel\Exceptions\AutoloadException: Class GuzabaPlatform\Platform\Home\Views\Home (path /home/local/PROJECTS/guzaba2-platform/guzaba-platform/app/src/GuzabaPlatform/Platform/Home/Views/Home.php) is not found (or not readable). in /home/local/PROJECTS/guzaba2-platform/guzaba-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Kernel/Kernel.php#582
+#0 [internal function]: Guzaba2\Kernel\Kernel::autoloader('GuzabaPlatform\\...')
+#1 [internal function]: spl_autoload_call('GuzabaPlatform\\...')
+#2 /home/local/PROJECTS/guzaba2-platform/guzaba-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/ExecutorMiddleware.php(209): class_exists('GuzabaPlatform\\...')
+#3 /home/local/PROJECTS/guzaba2-platform/guzaba-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/ExecutorMiddleware.php(179): Guzaba2\Mvc\ExecutorMiddleware->per_controller_php_view_handler(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\Response))
+#4 /home/local/PROJECTS/guzaba2-platform/guzaba-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/ExecutorMiddleware.php(124): Guzaba2\Mvc\ExecutorMiddleware->html_handler(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\Response))
+#5 /home/local/PROJECTS/guzaba2-platform/guzaba-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Http/QueueRequestHandler.php(47): Guzaba2\Mvc\ExecutorMiddleware->process(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\QueueRequestHandler))
+#6 /home/local/PROJECTS/guzaba2-platform/guzaba-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Http/CorsMiddleware.php(39): Guzaba2\Http\QueueRequestHandler->handle(Object(Guzaba2\Http\Request))
+#7 /home/local/PROJECTS/guzaba2-platform/guzaba-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Http/QueueRequestHandler.php(47): Guzaba2\Http\CorsMiddleware->process(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\QueueRequestHandler))
+#8 /home/local/PROJECTS/guzaba2-platform/guzaba-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/RoutingMiddleware.php(61): Guzaba2\Http\QueueRequestHandler->handle(Object(Guzaba2\Http\Request))
+#9 /home/local/PROJECTS/guzaba2-platform/guzaba-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Http/QueueRequestHandler.php(47): Guzaba2\Mvc\RoutingMiddleware->process(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\QueueRequestHandler))
+#10 guzaba.source:///home/local/PROJECTS/guzaba2-platform/guzaba-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Swoole/Handlers/Http/Request.php(82): Guzaba2\Http\QueueRequestHandler->handle(Object(Guzaba2\Http\Request))
+#11 guzaba.source:///home/local/PROJECTS/guzaba2-platform/guzaba-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Swoole/Handlers/Http/Request.php(117): Guzaba2\Swoole\Handlers\Http\Request->handle(Object(Swoole\Http\Request), Object(Swoole\Http\Response))
+#12 {main}  
+[2019-10-09T09:09:20.636447+00:00] main_logger.EMERGENCY: Worker #15: Exception Guzaba2\Kernel\Exceptions\AutoloadException: Class GuzabaPlatform\Platform\Home\Views\Home (path /home/local/PROJECTS/guzaba2-platform/guzaba-platform/app/src/GuzabaPlatform/Platform/Home/Views/Home.php) is not found (or not readable). in /home/local/PROJECTS/guzaba2-platform/guzaba-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Kernel/Kernel.php#581
+#0 [internal function]: Guzaba2\Kernel\Kernel::autoloader('GuzabaPlatform\\...')
+#1 [internal function]: spl_autoload_call('GuzabaPlatform\\...')
+#2 /home/local/PROJECTS/guzaba2-platform/guzaba-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/ExecutorMiddleware.php(209): class_exists('GuzabaPlatform\\...')
+#3 /home/local/PROJECTS/guzaba2-platform/guzaba-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/ExecutorMiddleware.php(179): Guzaba2\Mvc\ExecutorMiddleware->per_controller_php_view_handler(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\Response))
+#4 /home/local/PROJECTS/guzaba2-platform/guzaba-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/ExecutorMiddleware.php(124): Guzaba2\Mvc\ExecutorMiddleware->html_handler(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\Response))
+#5 /home/local/PROJECTS/guzaba2-platform/guzaba-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Http/QueueRequestHandler.php(47): Guzaba2\Mvc\ExecutorMiddleware->process(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\QueueRequestHandler))
+#6 /home/local/PROJECTS/guzaba2-platform/guzaba-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Http/CorsMiddleware.php(39): Guzaba2\Http\QueueRequestHandler->handle(Object(Guzaba2\Http\Request))
+#7 /home/local/PROJECTS/guzaba2-platform/guzaba-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Http/QueueRequestHandler.php(47): Guzaba2\Http\CorsMiddleware->process(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\QueueRequestHandler))
+#8 /home/local/PROJECTS/guzaba2-platform/guzaba-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/RoutingMiddleware.php(61): Guzaba2\Http\QueueRequestHandler->handle(Object(Guzaba2\Http\Request))
+#9 /home/local/PROJECTS/guzaba2-platform/guzaba-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Http/QueueRequestHandler.php(47): Guzaba2\Mvc\RoutingMiddleware->process(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\QueueRequestHandler))
+#10 guzaba.source:///home/local/PROJECTS/guzaba2-platform/guzaba-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Swoole/Handlers/Http/Request.php(82): Guzaba2\Http\QueueRequestHandler->handle(Object(Guzaba2\Http\Request))
+#11 guzaba.source:///home/local/PROJECTS/guzaba2-platform/guzaba-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Swoole/Handlers/Http/Request.php(117): Guzaba2\Swoole\Handlers\Http\Request->handle(Object(Swoole\Http\Request), Object(Swoole\Http\Response))
+#12 {main}  
+[2019-10-09T09:11:25.307236+00:00] main_logger.EMERGENCY: Worker #15: Exception Guzaba2\Kernel\Exceptions\AutoloadException: Class GuzabaPlatform\Platform\Home\Views\Home (path /home/local/PROJECTS/guzaba2-platform/guzaba-platform/app/src/GuzabaPlatform/Platform/Home/Views/Home.php) is not found (or not readable). in /home/local/PROJECTS/guzaba2-platform/guzaba-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Kernel/Kernel.php#581
+#0 [internal function]: Guzaba2\Kernel\Kernel::autoloader('GuzabaPlatform\\...')
+#1 [internal function]: spl_autoload_call('GuzabaPlatform\\...')
+#2 /home/local/PROJECTS/guzaba2-platform/guzaba-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/ExecutorMiddleware.php(209): class_exists('GuzabaPlatform\\...')
+#3 /home/local/PROJECTS/guzaba2-platform/guzaba-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/ExecutorMiddleware.php(179): Guzaba2\Mvc\ExecutorMiddleware->per_controller_php_view_handler(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\Response))
+#4 /home/local/PROJECTS/guzaba2-platform/guzaba-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/ExecutorMiddleware.php(124): Guzaba2\Mvc\ExecutorMiddleware->html_handler(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\Response))
+#5 /home/local/PROJECTS/guzaba2-platform/guzaba-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Http/QueueRequestHandler.php(47): Guzaba2\Mvc\ExecutorMiddleware->process(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\QueueRequestHandler))
+#6 /home/local/PROJECTS/guzaba2-platform/guzaba-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Http/CorsMiddleware.php(39): Guzaba2\Http\QueueRequestHandler->handle(Object(Guzaba2\Http\Request))
+#7 /home/local/PROJECTS/guzaba2-platform/guzaba-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Http/QueueRequestHandler.php(47): Guzaba2\Http\CorsMiddleware->process(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\QueueRequestHandler))
+#8 /home/local/PROJECTS/guzaba2-platform/guzaba-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Mvc/RoutingMiddleware.php(61): Guzaba2\Http\QueueRequestHandler->handle(Object(Guzaba2\Http\Request))
+#9 /home/local/PROJECTS/guzaba2-platform/guzaba-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Http/QueueRequestHandler.php(47): Guzaba2\Mvc\RoutingMiddleware->process(Object(Guzaba2\Http\Request), Object(Guzaba2\Http\QueueRequestHandler))
+#10 guzaba.source:///home/local/PROJECTS/guzaba2-platform/guzaba-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Swoole/Handlers/Http/Request.php(82): Guzaba2\Http\QueueRequestHandler->handle(Object(Guzaba2\Http\Request))
+#11 guzaba.source:///home/local/PROJECTS/guzaba2-platform/guzaba-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Swoole/Handlers/Http/Request.php(117): Guzaba2\Swoole\Handlers\Http\Request->handle(Object(Swoole\Http\Request), Object(Swoole\Http\Response))
+#12 {main}  
+[2019-10-09T09:11:25.947094+00:00] main_logger.INFO: Worker #15: Request of 0 bytes served by worker 15 in 0.00039005279541016 seconds with response: code: 404 response content length: 69
+  
