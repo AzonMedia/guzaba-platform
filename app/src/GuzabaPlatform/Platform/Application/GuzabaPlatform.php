@@ -3,6 +3,10 @@
 namespace GuzabaPlatform\Platform\Application;
 
 use GuzabaPlatform\Platform\Home\Controllers\Home;
+use GuzabaPlatform\Platform\Authentication\Controllers\Login;
+use GuzabaPlatform\Platform\Authentication\Controllers\ManageProfile;
+use GuzabaPlatform\Platform\Authentication\Controllers\PasswordReset;
+use GuzabaPlatform\Platform\Application\PlatformMiddleware;
 use Azonmedia\Routing\Router;
 use Azonmedia\Routing\RoutingMapArray;
 use Azonmedia\UrlRewriting\Rewriter;
@@ -35,9 +39,9 @@ class GuzabaPlatform extends Application
     protected const CONFIG_DEFAULTS = [
         'swoole' => [ //this array will be passed to $SwooleHttpServer->set()
             'host'                      => '0.0.0.0',
-            'port'                      => 8082,
+            'port'                      => 8081,
             'server_options'            => [
-                'worker_num'                => 24,//http workers
+                'worker_num'                => 4,//http workers
                 //Swoole\Coroutine::create(): Unable to use async-io in task processes, please set `task_enable_coroutine` to true.
                 //'task_worker_num'   => 8,//tasks workers
                 'task_worker_num'           => 0,//tasks workers,
@@ -80,7 +84,7 @@ class GuzabaPlatform extends Application
 
         $server_options = self::CONFIG_RUNTIME['swoole']['server_options'];
         if (!empty($server_options['enable_static_handler']) && empty($server_options['document_root'])) {
-            $server_options['document_root'] = $this->app_directory.'public/';
+            $server_options['document_root'] = $this->app_directory;//.'public/';
         }
 
         //doesnt seem to work properly
@@ -101,20 +105,44 @@ class GuzabaPlatform extends Application
 
         $routing_table = [
             '/'                                     => [
+                Method::HTTP_OPTIONS                    => [Home::class, 'main'],
                 Method::HTTP_GET                        => [Home::class, 'main'],
             ],
             '/lets-talk'                            => [
                 Method::HTTP_GET                        => [Home::class, 'talk'],
+            ],
+            '/login'                                => [
+                Method::HTTP_OPTIONS                    => [Login::class, 'main'],
+                Method::HTTP_GET                        => [Login::class, 'main'],
+                Method::HTTP_POST                       => [Login::class, 'login'],
+            ],
+            '/manage-profile'                       => [
+                Method::HTTP_OPTIONS                    => [ManageProfile::class, 'main'],
+                Method::HTTP_GET                        => [ManageProfile::class, 'main'],
+                Method::HTTP_POST                       => [ManageProfile::class, 'save'],
+            ],
+            '/password-reset'                       => [
+                Method::HTTP_OPTIONS                    => [PasswordReset::class, 'main'],
+                Method::HTTP_GET                        => [PasswordReset::class, 'main'],
+                Method::HTTP_POST                       => [PasswordReset::class, 'save'],
             ]
         ];
         $Router = new Router(new RoutingMapArray($routing_table));
         $RoutingMiddleware = new RoutingMiddleware($HttpServer, $Router);
 
-        $CorsMiddleware = new CorsMiddleware();
+        $headers = [
+            'Access-Control-Allow-Origin'       => 'http://192.168.0.102:8080',
+            'Access-Control-Allow-Credentials'  => 'true',
+            'Access-Control-Allow-Methods'      => 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+            'Access-Control-Expose-Headers'     => 'token',
+            'Access-Control-Allow-Headers'      => 'token'
+        ];
+
+        $CorsMiddleware = new CorsMiddleware($headers);
 
         //custom middleware for the app
         //$ServingMiddleware = new ServingMiddleware($HttpServer, []);//this serves all requests
-        //$GlogMiddleware = new GlogMiddleware($this, $HttpServer);
+        $PlatformMiddleware = new PlatformMiddleware($this, $HttpServer);
 
         $ExecutorMiddleware = new ExecutorMiddleware($HttpServer);
 
@@ -122,10 +150,10 @@ class GuzabaPlatform extends Application
         //$middlewares[] = $RestMiddleware;
         //$middlewares[] = $ApplicationMiddleware;
         //$middlewares[] = $RewritingMiddleware;
-        $middlewares[] = $RoutingMiddleware;
         //$middlewares[] = $ServingMiddleware;//this is a custom middleware
-        //$middlewares[] = $GlogMiddleware;//custom middleware used by this app - disables locking on ActiveRecord on read (get) requests
 
+        $middlewares[] = $RoutingMiddleware;
+        $middlewares[] = $PlatformMiddleware;
         $middlewares[] = $CorsMiddleware;
         $middlewares[] = $ExecutorMiddleware;
 
