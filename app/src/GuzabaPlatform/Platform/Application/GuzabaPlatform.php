@@ -47,6 +47,9 @@ class GuzabaPlatform extends Application
                 'task_worker_num'           => 0,//tasks workers,
                 'document_root'             => NULL,//to be set dynamically
                 'enable_static_handler'     => TRUE,
+                'open_http2_protocol'       => FALSE,
+                'ssl_cert_file'             => NULL,
+                'ssl_key_file'              => NULL,
             ],
 
         ],
@@ -84,7 +87,13 @@ class GuzabaPlatform extends Application
 
         $server_options = self::CONFIG_RUNTIME['swoole']['server_options'];
         if (!empty($server_options['enable_static_handler']) && empty($server_options['document_root'])) {
-            $server_options['document_root'] = $this->app_directory;//.'public/';
+            $server_options['document_root'] = $this->app_directory.'public/';
+        }
+
+
+        if (!empty($server_options['open_http2_protocol'])) {
+            $server_options['ssl_cert_file'] = $this->app_directory.'certificates/localhost.crt';
+            $server_options['ssl_key_file'] = $this->app_directory.'certificates/localhost.key';
         }
 
         //doesnt seem to work properly
@@ -105,8 +114,7 @@ class GuzabaPlatform extends Application
 
         $routing_table = [
             '/'                                     => [
-                Method::HTTP_OPTIONS                    => [Home::class, 'main'],
-                Method::HTTP_GET                        => [Home::class, 'main'],
+                Method::HTTP_GET | Method::HTTP_HEAD | Method::HTTP_OPTIONS                     => [Home::class, 'main'],
             ],
             '/lets-talk'                            => [
                 Method::HTTP_GET                        => [Home::class, 'talk'],

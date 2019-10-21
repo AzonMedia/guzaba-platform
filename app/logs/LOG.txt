@@ -691,3 +691,143 @@
 #12 {main}  
 [2019-10-09T09:11:25.947094+00:00] main_logger.INFO: Worker #15: Request of 0 bytes served by worker 15 in 0.00039005279541016 seconds with response: code: 404 response content length: 69
   
+[2019-10-21T12:08:56.770482+00:00] main_logger.INFO: Worker #0: Request of 0 bytes served by worker 0 in 0.0015099048614502 seconds with response: code: 200 response content length: 4
+  
+[2019-10-21T12:09:03.235849+00:00] main_logger.INFO: Worker #1: Request of 0 bytes served by worker 1 in 0.0015180110931396 seconds with response: code: 200 response content length: 4
+  
+[2019-10-21T12:09:03.381053+00:00] main_logger.INFO: Worker #1: Request of 0 bytes served by worker 1 in 0.00026798248291016 seconds with response: code: 404 response content length: 69
+  
+[2019-10-21T12:09:03.402343+00:00] main_logger.INFO: Worker #1: Request of 0 bytes served by worker 1 in 0.00028491020202637 seconds with response: code: 404 response content length: 69
+  
+[2019-10-21T12:09:05.817155+00:00] main_logger.INFO: Worker #1: Request of 0 bytes served by worker 1 in 0.00031304359436035 seconds with response: code: 200 response content length: 4
+  
+[2019-10-21T12:09:08.579530+00:00] main_logger.INFO: Worker #1: Request of 0 bytes served by worker 1 in 0.00034809112548828 seconds with response: code: 200 response content length: 4
+  
+[2019-10-21T12:09:13.677314+00:00] main_logger.INFO: Worker #0: Request of 0 bytes served by worker 0 in 0.00037217140197754 seconds with response: code: 200 response content length: 4
+  
+[2019-10-21T12:09:16.823178+00:00] main_logger.INFO: Worker #0: Request of 0 bytes served by worker 0 in 0.00040817260742188 seconds with response: code: 200 response content length: 4
+  
+[2019-10-21T12:09:20.392768+00:00] main_logger.INFO: Worker #0: Request of 0 bytes served by worker 0 in 0.0003819465637207 seconds with response: code: 200 response content length: 4
+  
+[2019-10-21T12:27:44.730987+00:00] main_logger.INFO: Worker #3: Request of 0 bytes served by worker 3 in 0.0024271011352539 seconds with response: code: 200 response content length: 4
+  
+[2019-10-21T12:28:02.911121+00:00] main_logger.INFO: Worker #1: Request of 0 bytes served by worker 1 in 0.00038409233093262 seconds with response: code: 200 response content length: 4
+  
+[2019-10-21T12:30:59.547052+00:00] main_logger.INFO: Worker #0: Request of 0 bytes served by worker 0 in 0.00033211708068848 seconds with response: code: 200 response content length: 4
+  
+[2019-10-21T12:31:00.925537+00:00] main_logger.INFO: Worker #0: Request of 0 bytes served by worker 0 in 0.00029492378234863 seconds with response: code: 200 response content length: 4
+  
+[2019-10-21T12:32:08.188646+00:00] main_logger.INFO: Worker #1: Request of 0 bytes served by worker 1 in 0.00031590461730957 seconds with response: code: 404 response content length: 69
+  
+[2019-10-21T12:32:15.580397+00:00] main_logger.INFO: Worker #0: Request of 0 bytes served by worker 0 in 0.00032520294189453 seconds with response: code: 200 response content length: 4
+  
+[2019-10-21T12:32:30.071215+00:00] main_logger.INFO: Worker #1: Request of 0 bytes served by worker 1 in 0.00034403800964355 seconds with response: code: 404 response content length: 69
+  
+[2019-10-21T12:33:20.979971+00:00] main_logger.INFO: Worker #1: Request of 0 bytes served by worker 1 in 0.00033712387084961 seconds with response: code: 404 response content length: 69
+  
+[2019-10-21T12:33:45.792873+00:00] main_logger.INFO: Worker #1: Request of 0 bytes served by worker 1 in 0.00031900405883789 seconds with response: code: 404 response content length: 69
+  
+[2019-10-21T12:34:05.325651+00:00] main_logger.INFO: Worker #0: Request of 0 bytes served by worker 0 in 0.00036287307739258 seconds with response: code: 200 response content length: 4
+  
+[2019-10-21T12:34:34.626805+00:00] main_logger.INFO: Worker #3: Request of 0 bytes served by worker 3 in 0.0018460750579834 seconds with response: code: 200 response content length: 6
+  
+[2019-10-21T12:34:38.595842+00:00] main_logger.INFO: Worker #3: Request of 0 bytes served by worker 3 in 0.00040102005004883 seconds with response: code: 200 response content length: 6
+  
+[2019-10-21T12:35:32.649211+00:00] main_logger.INFO: Worker #1: Request of 0 bytes served by worker 1 in 0.0011301040649414 seconds with response: code: 200 response content length: 6
+  
+[2019-10-21T12:35:38.020180+00:00] main_logger.INFO: Worker #1: Request of 0 bytes served by worker 1 in 0.00034594535827637 seconds with response: code: 404 response content length: 69
+  
+[2019-10-21T12:36:43.597726+00:00] main_logger.INFO: Worker #3: Request of 0 bytes served by worker 3 in 0.0027110576629639 seconds with response: code: 200 response content length: 6
+  
+[2019-10-21T12:36:46.862703+00:00] main_logger.INFO: Worker #0: Request of 0 bytes served by worker 0 in 0.0019919872283936 seconds with response: code: 200 response content length: 6
+  
+[2019-10-21T12:36:48.714029+00:00] main_logger.INFO: Worker #0: Request of 0 bytes served by worker 0 in 0.00030708312988281 seconds with response: code: 200 response content length: 6
+  
+[2019-10-21T12:36:57.188858+00:00] main_logger.INFO: Worker #0: Request of 0 bytes served by worker 0 in 0.00036382675170898 seconds with response: code: 200 response content length: 6
+  
+[2019-10-21T13:06:28.380153+00:00] main_logger.EMERGENCY: Exception Guzaba2\Base\Exceptions\InvalidArgumentException: Invalid option "ssl_key_file" provided to server configuration. in /home/local/PROJECTS/guzaba2-platform/guzaba-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Swoole/Server.php#240
+#0 /home/local/PROJECTS/guzaba2-platform/guzaba-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Swoole/Server.php(136): Guzaba2\Swoole\Server->validate_server_configuration_options(Array)
+#1 guzaba.source:///home/local/PROJECTS/guzaba2-platform/guzaba-platform/app/src/GuzabaPlatform/Platform/Application/GuzabaPlatform.php(104): Guzaba2\Swoole\Server->__construct('0.0.0.0', 8081, Array)
+#2 guzaba.source:///home/local/PROJECTS/guzaba2-platform/guzaba-platform/app/src/GuzabaPlatform/Platform/Application/GuzabaPlatform.php(76): GuzabaPlatform\Platform\Application\GuzabaPlatform->execute()
+#3 /home/local/PROJECTS/guzaba2-platform/guzaba-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Kernel/Kernel.php(247): GuzabaPlatform\Platform\Application\GuzabaPlatform->__invoke()
+#4 guzaba.source:///home/local/PROJECTS/guzaba2-platform/guzaba-platform/app/src/GuzabaPlatform/Platform/Application/GuzabaPlatform.php(71): Guzaba2\Kernel\Kernel::run(Object(GuzabaPlatform\Platform\Application\GuzabaPlatform))
+#5 /home/local/PROJECTS/guzaba2-platform/guzaba-platform/app/bin/start_server.php(85): GuzabaPlatform\Platform\Application\GuzabaPlatform->__construct('/home/local/PRO...')
+#6 /home/local/PROJECTS/guzaba2-platform/guzaba-platform/app/bin/start_server.php(88): Guzaba2\Platform\{closure}()
+#7 {main}  
+[2019-10-21T13:07:42.687976+00:00] main_logger.INFO: Worker #3: Request of 0 bytes served by worker 3 in 0.0012078285217285 seconds with response: code: 200 response content length: 6
+  
+[2019-10-21T13:08:01.786769+00:00] main_logger.INFO: Worker #1: Request of 0 bytes served by worker 1 in 0.0022561550140381 seconds with response: code: 200 response content length: 6
+  
+[2019-10-21T13:15:01.048759+00:00] main_logger.EMERGENCY: Exception Swoole\Exception: failed to listen server port[0.0.0.0:8081], Error: Address already in use[98] in /home/local/PROJECTS/guzaba2-platform/guzaba-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Swoole/Server.php#138
+#0 /home/local/PROJECTS/guzaba2-platform/guzaba-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Swoole/Server.php(138): Swoole\Server->__construct('0.0.0.0', 8081, 2)
+#1 guzaba.source:///home/local/PROJECTS/guzaba2-platform/guzaba-platform/app/src/GuzabaPlatform/Platform/Application/GuzabaPlatform.php(104): Guzaba2\Swoole\Server->__construct('0.0.0.0', 8081, Array)
+#2 guzaba.source:///home/local/PROJECTS/guzaba2-platform/guzaba-platform/app/src/GuzabaPlatform/Platform/Application/GuzabaPlatform.php(76): GuzabaPlatform\Platform\Application\GuzabaPlatform->execute()
+#3 /home/local/PROJECTS/guzaba2-platform/guzaba-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Kernel/Kernel.php(247): GuzabaPlatform\Platform\Application\GuzabaPlatform->__invoke()
+#4 guzaba.source:///home/local/PROJECTS/guzaba2-platform/guzaba-platform/app/src/GuzabaPlatform/Platform/Application/GuzabaPlatform.php(71): Guzaba2\Kernel\Kernel::run(Object(GuzabaPlatform\Platform\Application\GuzabaPlatform))
+#5 /home/local/PROJECTS/guzaba2-platform/guzaba-platform/app/bin/start_server.php(85): GuzabaPlatform\Platform\Application\GuzabaPlatform->__construct('/home/local/PRO...')
+#6 /home/local/PROJECTS/guzaba2-platform/guzaba-platform/app/bin/start_server.php(88): Guzaba2\Platform\{closure}()
+#7 {main}  
+[2019-10-21T13:15:27.578229+00:00] main_logger.EMERGENCY: Exception Guzaba2\Base\Exceptions\InvalidArgumentException: Invalid option "ssl_key_file" provided to server configuration. in /home/local/PROJECTS/guzaba2-platform/guzaba-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Swoole/Server.php#244
+#0 /home/local/PROJECTS/guzaba2-platform/guzaba-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Swoole/Server.php(140): Guzaba2\Swoole\Server->validate_server_configuration_options(Array)
+#1 guzaba.source:///home/local/PROJECTS/guzaba2-platform/guzaba-platform/app/src/GuzabaPlatform/Platform/Application/GuzabaPlatform.php(104): Guzaba2\Swoole\Server->__construct('0.0.0.0', 8081, Array)
+#2 guzaba.source:///home/local/PROJECTS/guzaba2-platform/guzaba-platform/app/src/GuzabaPlatform/Platform/Application/GuzabaPlatform.php(76): GuzabaPlatform\Platform\Application\GuzabaPlatform->execute()
+#3 /home/local/PROJECTS/guzaba2-platform/guzaba-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Kernel/Kernel.php(247): GuzabaPlatform\Platform\Application\GuzabaPlatform->__invoke()
+#4 guzaba.source:///home/local/PROJECTS/guzaba2-platform/guzaba-platform/app/src/GuzabaPlatform/Platform/Application/GuzabaPlatform.php(71): Guzaba2\Kernel\Kernel::run(Object(GuzabaPlatform\Platform\Application\GuzabaPlatform))
+#5 /home/local/PROJECTS/guzaba2-platform/guzaba-platform/app/bin/start_server.php(85): GuzabaPlatform\Platform\Application\GuzabaPlatform->__construct('/home/local/PRO...')
+#6 /home/local/PROJECTS/guzaba2-platform/guzaba-platform/app/bin/start_server.php(88): Guzaba2\Platform\{closure}()
+#7 {main}  
+[2019-10-21T13:15:48.545024+00:00] main_logger.INFO: Worker #3: Request of 0 bytes served by worker 3 in 0.0014829635620117 seconds with response: code: 200 response content length: 6
+  
+[2019-10-21T13:18:35.739208+00:00] main_logger.EMERGENCY: Exception Swoole\Exception: failed to listen server port[0.0.0.0:8081], Error: Success[0] in /home/local/PROJECTS/guzaba2-platform/guzaba-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Swoole/Server.php#138
+#0 /home/local/PROJECTS/guzaba2-platform/guzaba-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Swoole/Server.php(138): Swoole\Server->__construct('0.0.0.0', 8081, 2, 512)
+#1 guzaba.source:///home/local/PROJECTS/guzaba2-platform/guzaba-platform/app/src/GuzabaPlatform/Platform/Application/GuzabaPlatform.php(104): Guzaba2\Swoole\Server->__construct('0.0.0.0', 8081, Array)
+#2 guzaba.source:///home/local/PROJECTS/guzaba2-platform/guzaba-platform/app/src/GuzabaPlatform/Platform/Application/GuzabaPlatform.php(76): GuzabaPlatform\Platform\Application\GuzabaPlatform->execute()
+#3 /home/local/PROJECTS/guzaba2-platform/guzaba-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Kernel/Kernel.php(247): GuzabaPlatform\Platform\Application\GuzabaPlatform->__invoke()
+#4 guzaba.source:///home/local/PROJECTS/guzaba2-platform/guzaba-platform/app/src/GuzabaPlatform/Platform/Application/GuzabaPlatform.php(71): Guzaba2\Kernel\Kernel::run(Object(GuzabaPlatform\Platform\Application\GuzabaPlatform))
+#5 /home/local/PROJECTS/guzaba2-platform/guzaba-platform/app/bin/start_server.php(85): GuzabaPlatform\Platform\Application\GuzabaPlatform->__construct('/home/local/PRO...')
+#6 /home/local/PROJECTS/guzaba2-platform/guzaba-platform/app/bin/start_server.php(88): Guzaba2\Platform\{closure}()
+#7 {main}  
+[2019-10-21T13:18:55.488408+00:00] main_logger.EMERGENCY: Exception Swoole\Exception: failed to listen server port[0.0.0.0:8081], Error: Success[0] in /home/local/PROJECTS/guzaba2-platform/guzaba-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Swoole/Server.php#138
+#0 /home/local/PROJECTS/guzaba2-platform/guzaba-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Swoole/Server.php(138): Swoole\Server->__construct('0.0.0.0', 8081, 2, 512)
+#1 guzaba.source:///home/local/PROJECTS/guzaba2-platform/guzaba-platform/app/src/GuzabaPlatform/Platform/Application/GuzabaPlatform.php(104): Guzaba2\Swoole\Server->__construct('0.0.0.0', 8081, Array)
+#2 guzaba.source:///home/local/PROJECTS/guzaba2-platform/guzaba-platform/app/src/GuzabaPlatform/Platform/Application/GuzabaPlatform.php(76): GuzabaPlatform\Platform\Application\GuzabaPlatform->execute()
+#3 /home/local/PROJECTS/guzaba2-platform/guzaba-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Kernel/Kernel.php(247): GuzabaPlatform\Platform\Application\GuzabaPlatform->__invoke()
+#4 guzaba.source:///home/local/PROJECTS/guzaba2-platform/guzaba-platform/app/src/GuzabaPlatform/Platform/Application/GuzabaPlatform.php(71): Guzaba2\Kernel\Kernel::run(Object(GuzabaPlatform\Platform\Application\GuzabaPlatform))
+#5 /home/local/PROJECTS/guzaba2-platform/guzaba-platform/app/bin/start_server.php(85): GuzabaPlatform\Platform\Application\GuzabaPlatform->__construct('/home/local/PRO...')
+#6 /home/local/PROJECTS/guzaba2-platform/guzaba-platform/app/bin/start_server.php(88): Guzaba2\Platform\{closure}()
+#7 {main}  
+[2019-10-21T13:19:26.656916+00:00] main_logger.INFO: Worker #3: Request of 0 bytes served by worker 3 in 0.0022389888763428 seconds with response: code: 200 response content length: 6
+  
+[2019-10-21T13:19:26.694424+00:00] main_logger.INFO: Worker #3: Request of 0 bytes served by worker 3 in 0.00056910514831543 seconds with response: code: 404 response content length: 69
+  
+[2019-10-21T13:19:52.973304+00:00] main_logger.INFO: Worker #0: Request of 0 bytes served by worker 0 in 0.0018570423126221 seconds with response: code: 200 response content length: 6
+  
+[2019-10-21T13:22:24.300478+00:00] main_logger.EMERGENCY: Worker #-1: Exception Guzaba2\Base\Exceptions\RunTimeException: HTTP2 is enabled but no SSL is configured. ssl_cert_file or ssl_key_file is not set. in /home/local/PROJECTS/guzaba2-platform/guzaba-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Swoole/Server.php#175
+#0 guzaba.source:///home/local/PROJECTS/guzaba2-platform/guzaba-platform/app/src/GuzabaPlatform/Platform/Application/GuzabaPlatform.php(187): Guzaba2\Swoole\Server->start()
+#1 guzaba.source:///home/local/PROJECTS/guzaba2-platform/guzaba-platform/app/src/GuzabaPlatform/Platform/Application/GuzabaPlatform.php(76): GuzabaPlatform\Platform\Application\GuzabaPlatform->execute()
+#2 /home/local/PROJECTS/guzaba2-platform/guzaba-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Kernel/Kernel.php(247): GuzabaPlatform\Platform\Application\GuzabaPlatform->__invoke()
+#3 guzaba.source:///home/local/PROJECTS/guzaba2-platform/guzaba-platform/app/src/GuzabaPlatform/Platform/Application/GuzabaPlatform.php(71): Guzaba2\Kernel\Kernel::run(Object(GuzabaPlatform\Platform\Application\GuzabaPlatform))
+#4 /home/local/PROJECTS/guzaba2-platform/guzaba-platform/app/bin/start_server.php(85): GuzabaPlatform\Platform\Application\GuzabaPlatform->__construct('/home/local/PRO...')
+#5 /home/local/PROJECTS/guzaba2-platform/guzaba-platform/app/bin/start_server.php(88): Guzaba2\Platform\{closure}()
+#6 {main}  
+[2019-10-21T13:23:07.607256+00:00] main_logger.EMERGENCY: Exception Guzaba2\Base\Exceptions\InvalidArgumentException: Invalid option "ssl_key_file" provided to server configuration. in /home/local/PROJECTS/guzaba2-platform/guzaba-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Swoole/Server.php#252
+#0 /home/local/PROJECTS/guzaba2-platform/guzaba-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Swoole/Server.php(144): Guzaba2\Swoole\Server->validate_server_configuration_options(Array)
+#1 guzaba.source:///home/local/PROJECTS/guzaba2-platform/guzaba-platform/app/src/GuzabaPlatform/Platform/Application/GuzabaPlatform.php(104): Guzaba2\Swoole\Server->__construct('0.0.0.0', 8081, Array)
+#2 guzaba.source:///home/local/PROJECTS/guzaba2-platform/guzaba-platform/app/src/GuzabaPlatform/Platform/Application/GuzabaPlatform.php(76): GuzabaPlatform\Platform\Application\GuzabaPlatform->execute()
+#3 /home/local/PROJECTS/guzaba2-platform/guzaba-platform/vendor/azonmedia/guzaba2/src/Guzaba2/Kernel/Kernel.php(247): GuzabaPlatform\Platform\Application\GuzabaPlatform->__invoke()
+#4 guzaba.source:///home/local/PROJECTS/guzaba2-platform/guzaba-platform/app/src/GuzabaPlatform/Platform/Application/GuzabaPlatform.php(71): Guzaba2\Kernel\Kernel::run(Object(GuzabaPlatform\Platform\Application\GuzabaPlatform))
+#5 /home/local/PROJECTS/guzaba2-platform/guzaba-platform/app/bin/start_server.php(85): GuzabaPlatform\Platform\Application\GuzabaPlatform->__construct('/home/local/PRO...')
+#6 /home/local/PROJECTS/guzaba2-platform/guzaba-platform/app/bin/start_server.php(88): Guzaba2\Platform\{closure}()
+#7 {main}  
+[2019-10-21T13:24:35.659067+00:00] main_logger.INFO: Worker #3: Request of 0 bytes served by worker 3 in 0.0014169216156006 seconds with response: code: 200 response content length: 6
+  
+[2019-10-21T13:25:26.920130+00:00] main_logger.INFO: Worker #3: Request of 0 bytes served by worker 3 in 0.0022549629211426 seconds with response: code: 200 response content length: 6
+  
+[2019-10-21T13:25:37.625225+00:00] main_logger.INFO: Worker #0: Request of 0 bytes served by worker 0 in 0.0017569065093994 seconds with response: code: 200 response content length: 6
+  
+[2019-10-21T13:25:48.398527+00:00] main_logger.INFO: Worker #3: Request of 0 bytes served by worker 3 in 0.00040912628173828 seconds with response: code: 200 response content length: 6
+  
+[2019-10-21T13:25:48.572230+00:00] main_logger.INFO: Worker #3: Request of 0 bytes served by worker 3 in 0.00033402442932129 seconds with response: code: 404 response content length: 69
+  
+[2019-10-21T13:25:48.625602+00:00] main_logger.INFO: Worker #3: Request of 0 bytes served by worker 3 in 0.00029301643371582 seconds with response: code: 404 response content length: 69
+  
