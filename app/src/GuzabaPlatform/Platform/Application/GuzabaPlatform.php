@@ -37,7 +37,7 @@ use Guzaba2\Http\CorsMiddleware;
 class GuzabaPlatform extends Application
 {
     protected const CONFIG_DEFAULTS = [
-        'swoole' => [ //this array will be passed to $SwooleHttpServer->set()
+        'swoole'        => [ //this array will be passed to $SwooleHttpServer->set()
             'host'                      => '0.0.0.0',
             'port'                      => 8081,
             'server_options'            => [
@@ -53,6 +53,9 @@ class GuzabaPlatform extends Application
             ],
 
         ],
+        'version'       => 'dev',
+        'cors-origin'   => 'http://192.168.0.102:8080',
+
     ];
 
     protected const CONFIG_RUNTIME = [];
@@ -114,39 +117,34 @@ class GuzabaPlatform extends Application
 
         $routing_table = [
             '/'                                     => [
-                Method::HTTP_GET | Method::HTTP_HEAD | Method::HTTP_OPTIONS                     => [Home::class, 'main'],
-            ],
-            '/lets-talk'                            => [
-                Method::HTTP_GET                        => [Home::class, 'talk'],
+                Method::HTTP_GET_HEAD_OPT                       => [Home::class, 'main'],
             ],
             '/login'                                => [
-                Method::HTTP_OPTIONS                    => [Login::class, 'main'],
-                Method::HTTP_GET                        => [Login::class, 'main'],
-                Method::HTTP_POST                       => [Login::class, 'login'],
+                Method::HTTP_GET_HEAD_OPT                       => [Login::class, 'main'],
+                Method::HTTP_POST                               => [Login::class, 'login'],
             ],
             '/manage-profile'                       => [
-                Method::HTTP_OPTIONS                    => [ManageProfile::class, 'main'],
-                Method::HTTP_GET                        => [ManageProfile::class, 'main'],
-                Method::HTTP_POST                       => [ManageProfile::class, 'save'],
+                Method::HTTP_GET_HEAD_OPT                       => [ManageProfile::class, 'main'],
+                Method::HTTP_POST                               => [ManageProfile::class, 'save'],
             ],
             '/password-reset'                       => [
-                Method::HTTP_OPTIONS                    => [PasswordReset::class, 'main'],
-                Method::HTTP_GET                        => [PasswordReset::class, 'main'],
-                Method::HTTP_POST                       => [PasswordReset::class, 'save'],
+                Method::HTTP_GET_HEAD_OPT                       => [PasswordReset::class, 'main'],
+                Method::HTTP_POST                               => [PasswordReset::class, 'save'],
             ]
         ];
         $Router = new Router(new RoutingMapArray($routing_table));
         $RoutingMiddleware = new RoutingMiddleware($HttpServer, $Router);
 
-        $headers = [
-            'Access-Control-Allow-Origin'       => 'http://192.168.0.102:8080',
+        $cors_headers = [
+            //'Access-Control-Allow-Origin'       => 'http://192.168.0.102:8080',
+            'Access-Control-Allow-Origin'       => self::CONFIG_RUNTIME['cors-origin'],
             'Access-Control-Allow-Credentials'  => 'true',
             'Access-Control-Allow-Methods'      => 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
             'Access-Control-Expose-Headers'     => 'token',
             'Access-Control-Allow-Headers'      => 'token'
         ];
 
-        $CorsMiddleware = new CorsMiddleware($headers);
+        $CorsMiddleware = new CorsMiddleware($cors_headers);
 
         //custom middleware for the app
         //$ServingMiddleware = new ServingMiddleware($HttpServer, []);//this serves all requests
@@ -183,6 +181,8 @@ class GuzabaPlatform extends Application
         $HttpServer->on('WorkerStart', $WorkerHandler);
         $HttpServer->on('Request', $RequestHandler);
 
+        Kernel::printk(PHP_EOL);
+        Kernel::printk(sprintf('GuzabaPlatform %s at %s', self::CONFIG_RUNTIME['version'], $this->app_directory).PHP_EOL);
 
         $HttpServer->start();
 
