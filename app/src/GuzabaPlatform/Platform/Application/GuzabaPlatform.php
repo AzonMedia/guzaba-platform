@@ -38,7 +38,7 @@ use GuzabaPlatform\Platform\Application\AuthCheckMiddleware;
 class GuzabaPlatform extends Application
 {
     protected const CONFIG_DEFAULTS = [
-        'swoole' => [ //this array will be passed to $SwooleHttpServer->set()
+        'swoole'        => [ //this array will be passed to $SwooleHttpServer->set()
             'host'                      => '0.0.0.0',
             'port'                      => 8081,
             'server_options'            => [
@@ -48,9 +48,15 @@ class GuzabaPlatform extends Application
                 'task_worker_num'           => 0,//tasks workers,
                 'document_root'             => NULL,//to be set dynamically
                 'enable_static_handler'     => TRUE,
+                'open_http2_protocol'       => FALSE,
+                'ssl_cert_file'             => NULL,
+                'ssl_key_file'              => NULL,
             ],
 
         ],
+        'version'       => 'dev',
+        'cors-origin'   => 'http://192.168.0.102:8080',
+
     ];
 
     protected const CONFIG_RUNTIME = [];
@@ -85,7 +91,13 @@ class GuzabaPlatform extends Application
 
         $server_options = self::CONFIG_RUNTIME['swoole']['server_options'];
         if (!empty($server_options['enable_static_handler']) && empty($server_options['document_root'])) {
-            $server_options['document_root'] = $this->app_directory;//.'public/';
+            $server_options['document_root'] = $this->app_directory.'public/';
+        }
+
+
+        if (!empty($server_options['open_http2_protocol'])) {
+            $server_options['ssl_cert_file'] = $this->app_directory.'certificates/localhost.crt';
+            $server_options['ssl_key_file'] = $this->app_directory.'certificates/localhost.key';
         }
 
         //doesnt seem to work properly
@@ -106,26 +118,19 @@ class GuzabaPlatform extends Application
 
         $routing_table = [
             '/'                                     => [
-                Method::HTTP_OPTIONS                    => [Home::class, 'main'],
-                Method::HTTP_GET                        => [Home::class, 'main'],
-            ],
-            '/lets-talk'                            => [
-                Method::HTTP_GET                        => [Home::class, 'talk'],
+                Method::HTTP_GET_HEAD_OPT                       => [Home::class, 'main'],
             ],
             '/login'                                => [
-                Method::HTTP_OPTIONS                    => [Login::class, 'main'],
-                Method::HTTP_GET                        => [Login::class, 'main'],
-                Method::HTTP_POST                       => [Login::class, 'login'],
+                Method::HTTP_GET_HEAD_OPT                       => [Login::class, 'main'],
+                Method::HTTP_POST                               => [Login::class, 'login'],
             ],
             '/manage-profile'                       => [
-                Method::HTTP_OPTIONS                    => [ManageProfile::class, 'main'],
-                Method::HTTP_GET                        => [ManageProfile::class, 'main'],
-                Method::HTTP_POST                       => [ManageProfile::class, 'save'],
+                Method::HTTP_GET_HEAD_OPT                       => [ManageProfile::class, 'main'],
+                Method::HTTP_POST                               => [ManageProfile::class, 'save'],
             ],
             '/password-reset'                       => [
-                Method::HTTP_OPTIONS                    => [PasswordReset::class, 'main'],
-                Method::HTTP_GET                        => [PasswordReset::class, 'main'],
-                Method::HTTP_POST                       => [PasswordReset::class, 'save'],
+                Method::HTTP_GET_HEAD_OPT                       => [PasswordReset::class, 'main'],
+                Method::HTTP_POST                               => [PasswordReset::class, 'save'],
             ],
             '/user_login'                                => [
                 Method::HTTP_GET                        => [Auth::class, 'main'],
@@ -138,15 +143,16 @@ class GuzabaPlatform extends Application
         $Router = new Router(new RoutingMapArray($routing_table));
         $RoutingMiddleware = new RoutingMiddleware($HttpServer, $Router);
 
-        $headers = [
-            'Access-Control-Allow-Origin'       => 'http://192.168.0.102:8080',
+        $cors_headers = [
+            //'Access-Control-Allow-Origin'       => 'http://192.168.0.102:8080',
+            'Access-Control-Allow-Origin'       => self::CONFIG_RUNTIME['cors-origin'],
             'Access-Control-Allow-Credentials'  => 'true',
             'Access-Control-Allow-Methods'      => 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
             'Access-Control-Expose-Headers'     => 'token',
             'Access-Control-Allow-Headers'      => 'token'
         ];
 
-        $CorsMiddleware = new CorsMiddleware($headers);
+        $CorsMiddleware = new CorsMiddleware($cors_headers);
 
         //custom middleware for the app
         //$ServingMiddleware = new ServingMiddleware($HttpServer, []);//this serves all requests
@@ -185,6 +191,8 @@ class GuzabaPlatform extends Application
         $HttpServer->on('WorkerStart', $WorkerHandler);
         $HttpServer->on('Request', $RequestHandler);
 
+        Kernel::printk(PHP_EOL);
+        Kernel::printk(sprintf('GuzabaPlatform %s at %s', self::CONFIG_RUNTIME['version'], $this->app_directory).PHP_EOL);
 
         $HttpServer->start();
 
