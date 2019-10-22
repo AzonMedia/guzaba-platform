@@ -4,6 +4,7 @@ namespace GuzabaPlatform\Platform\Application;
 
 use GuzabaPlatform\Platform\Home\Controllers\Home;
 use GuzabaPlatform\Platform\Authentication\Controllers\Login;
+use GuzabaPlatform\Platform\Authentication\Controllers\Auth;
 use GuzabaPlatform\Platform\Authentication\Controllers\ManageProfile;
 use GuzabaPlatform\Platform\Authentication\Controllers\PasswordReset;
 use GuzabaPlatform\Platform\Application\PlatformMiddleware;
@@ -28,7 +29,7 @@ use Guzaba2\Swoole\Handlers\WorkerStart;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Guzaba2\Http\CorsMiddleware;
-
+use GuzabaPlatform\Platform\Application\AuthCheckMiddleware;
 
 /**
  * Class Azonmedia
@@ -125,7 +126,14 @@ class GuzabaPlatform extends Application
                 Method::HTTP_OPTIONS                    => [PasswordReset::class, 'main'],
                 Method::HTTP_GET                        => [PasswordReset::class, 'main'],
                 Method::HTTP_POST                       => [PasswordReset::class, 'save'],
-            ]
+            ],
+            '/user_login'                                => [
+                Method::HTTP_GET                        => [Auth::class, 'main'],
+                Method::HTTP_POST                       => [Auth::class, 'login'],
+            ],
+            '/user_register'                                => [
+                Method::HTTP_POST                       => [Auth::class, 'register'],
+            ],
         ];
         $Router = new Router(new RoutingMapArray($routing_table));
         $RoutingMiddleware = new RoutingMiddleware($HttpServer, $Router);
@@ -145,16 +153,18 @@ class GuzabaPlatform extends Application
         $PlatformMiddleware = new PlatformMiddleware($this, $HttpServer);
 
         $ExecutorMiddleware = new ExecutorMiddleware($HttpServer);
+        $Authorization = new AuthCheckMiddleware($HttpServer, []);
 
         //adding middlewares slows down significantly the processing
         //$middlewares[] = $RestMiddleware;
         //$middlewares[] = $ApplicationMiddleware;
         //$middlewares[] = $RewritingMiddleware;
         //$middlewares[] = $ServingMiddleware;//this is a custom middleware
+        $middlewares[] = $CorsMiddleware;
+        $middlewares[] = $Authorization;
 
         $middlewares[] = $RoutingMiddleware;
         $middlewares[] = $PlatformMiddleware;
-        $middlewares[] = $CorsMiddleware;
         $middlewares[] = $ExecutorMiddleware;
 
 
