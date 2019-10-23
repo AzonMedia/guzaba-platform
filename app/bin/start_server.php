@@ -37,6 +37,11 @@ const APP_CONFIG = [
 
 (function(){
 
+    if (version_compare(phpversion(),'7.4.0RC4', '<')) {
+        print 'The application requires PHP 7.4.0RC4 or higher.'.PHP_EOL;
+        exit(1);
+    }
+
     //ini_set("swoole.enable_preemptive_scheduler","1");
     //\Swoole\Coroutine::set([ 'enable_preemptive_scheduler' => 1 ]);
     //the above is available in Master branch only not released yet

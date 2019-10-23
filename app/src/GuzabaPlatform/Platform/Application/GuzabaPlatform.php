@@ -48,14 +48,16 @@ class GuzabaPlatform extends Application
                 'task_worker_num'           => 0,//tasks workers,
                 'document_root'             => NULL,//to be set dynamically
                 'enable_static_handler'     => TRUE,
-                'open_http2_protocol'       => FALSE,
+                'open_http2_protocol'       => FALSE,//depends on enable-http2 (and enable-ssl)
                 'ssl_cert_file'             => NULL,
                 'ssl_key_file'              => NULL,
             ],
 
         ],
         'version'       => 'dev',
-        'cors-origin'   => 'http://192.168.0.102:8080',
+        'cors_origin'   => 'http://192.168.0.102:8080',
+        'enable_http2'  => TRUE,
+        'enable_ssl'    => TRUE,
 
     ];
 
@@ -64,7 +66,7 @@ class GuzabaPlatform extends Application
     /**
      * @var string
      */
-    protected $app_directory;
+    protected string $app_directory = '';
 
     public function __construct($app_directory)
     {
@@ -95,9 +97,14 @@ class GuzabaPlatform extends Application
         }
 
 
-        if (!empty($server_options['open_http2_protocol'])) {
+        //if (!empty($server_options['open_http2_protocol'])) {
+        if (self::CONFIG_RUNTIME['enable_ssl']) {
             $server_options['ssl_cert_file'] = $this->app_directory.'certificates/localhost.crt';
             $server_options['ssl_key_file'] = $this->app_directory.'certificates/localhost.key';
+        }
+
+        if (self::CONFIG_RUNTIME['enable_http2']) {
+            $server_options['open_http2_protocol'] = TRUE;
         }
 
         //doesnt seem to work properly
@@ -145,7 +152,7 @@ class GuzabaPlatform extends Application
 
         $cors_headers = [
             //'Access-Control-Allow-Origin'       => 'http://192.168.0.102:8080',
-            'Access-Control-Allow-Origin'       => self::CONFIG_RUNTIME['cors-origin'],
+            'Access-Control-Allow-Origin'       => self::CONFIG_RUNTIME['cors_origin'],
             'Access-Control-Allow-Credentials'  => 'true',
             'Access-Control-Allow-Methods'      => 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
             'Access-Control-Expose-Headers'     => 'token',
