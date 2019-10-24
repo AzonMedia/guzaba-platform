@@ -1,0 +1,1 @@
+This directory contains various files generated at application started. These are not used or needed by the application but are dumped here only for debug purpose.

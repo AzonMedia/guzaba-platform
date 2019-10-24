@@ -2,6 +2,8 @@
 
 namespace GuzabaPlatform\Platform\Authentication\Controllers;
 
+use Guzaba2\Http\Method;
+use GuzabaPlatform\Platform\Application\GuzabaPlatform as GP;
 use Psr\Http\Message\ResponseInterface;
 use Guzaba2\Mvc\Controller;
 use Guzaba2\Coroutine\Coroutine;
@@ -15,28 +17,31 @@ use GuzabaPlatform\Platform\Authentication\Models\User;
 class PasswordReset extends Controller
 {
 
-    private $User = NULL;
+    public const ROUTES = [
+        GP::API_ROUTE_PREFIX.'/password-reset'   => [
+        //'/password-reset'   => [
+            Method::HTTP_GET_HEAD_OPT       => [self::class, 'main'],
+            Method::HTTP_POST               => [self::class, 'save'],
+        ],
+    ];
 
-    /**
-     * @param int $user_id
-     */
+    private User $User;
+
     public function _init(){
         $Context = Coroutine::getContext();
 
-        // TODO use $Context->current_user_id instead of 1
         $user_id = $Context->current_user_id;
-        // $user_id = 1;
 
         if (0 === $user_id) {
-            // TODO redirect to login
-            die('Please log in!');
+            $Response = self::get_structured_unauthorized_response();
+            return $Response;
         }
 
         try {
             $this->User = new User($user_id);
         } catch (RecordNotFoundException $exception) {
-            // TODO redirect to login
-            die('User not found!');
+            $Response = self::get_structured_notfound_response();
+            return $Response;
         }
     }
 

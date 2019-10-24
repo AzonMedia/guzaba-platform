@@ -26,6 +26,7 @@ implements MiddlewareInterface
      */
     public function process(ServerRequestInterface $Request, RequestHandlerInterface $Handler) : ResponseInterface
     {
+        /*
         $content_type = 'application/json';
 
         //if request method is options return ok for now
@@ -67,6 +68,7 @@ implements MiddlewareInterface
                 // self::ConnectionFactory()->free_connection($Connection);
             }
         }
+        */
 
         $Response = $Handler->handle($Request);
 

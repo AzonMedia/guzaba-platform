@@ -1,7 +1,15 @@
 <?php
 
+namespace GuzabaPlatform\Components;
 
-class Component
+
+use Guzaba2\Base\Base;
+
+class Component extends Base
 {
+    public function __construct()
+    {
+        parent::__construct();
 
+    }
 }

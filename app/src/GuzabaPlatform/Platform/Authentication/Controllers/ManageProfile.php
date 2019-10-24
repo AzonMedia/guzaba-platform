@@ -2,6 +2,8 @@
 
 namespace GuzabaPlatform\Platform\Authentication\Controllers;
 
+use Guzaba2\Http\Method;
+use GuzabaPlatform\Platform\Application\GuzabaPlatform as GP;
 use Psr\Http\Message\ResponseInterface;
 use Guzaba2\Mvc\Controller;
 use Guzaba2\Coroutine\Coroutine;
@@ -14,12 +16,19 @@ use GuzabaPlatform\Platform\Authentication\Models\User;
 class ManageProfile extends Controller
 {
 
-    private $User = NULL;
+    public const ROUTES = [
+        GP::API_ROUTE_PREFIX.'/user-login'   => [
+        //'/user-login'   => [
+            Method::HTTP_GET_HEAD_OPT       => [self::class, 'main'],
+            Method::HTTP_POST               => [self::class, 'save'],
+        ],
+    ];
 
-    /**
-     * @param int $user_id
-     */
-    public function _init(){
+    private User $User;
+
+
+    public function _init() : ResponseInterface
+    {
         $Context = Coroutine::getContext();
 
         // TODO use $Context->current_user_id instead of 1
@@ -27,15 +36,17 @@ class ManageProfile extends Controller
         // $user_id = 1;
 
         if (0 === $user_id) {
-            // TODO redirect to login
-            die('Please log in!');
+            //there is no API redirect - instead return an error
+            $Response = self::get_structured_unauthorized_response();
+            return $Response;
         }
 
         try {
             $this->User = new User($user_id);
         } catch (RecordNotFoundException $exception) {
-            // TODO redirect to login
-            die('User not found!');
+            //there is no API redirect - instead return an error
+            $Response = self::get_structured_notfound_response();
+            return $Response;
         }
     }
 

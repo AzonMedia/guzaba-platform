@@ -2,6 +2,7 @@
 
 namespace GuzabaPlatform\Platform\Authentication\Controllers;
 
+use Guzaba2\Http\Method;
 use Guzaba2\Mvc\Controller;
 use Guzaba2\Translator\Translator as t;
 use Psr\Http\Message\ResponseInterface;
@@ -10,8 +11,19 @@ use GuzabaPlatform\Platform\Authentication\Models\User;
 use GuzabaPlatform\Platform\Authentication\Models\JWT_Token as Token;
 use Guzaba2\Orm\Exceptions\RecordNotFoundException;
 
+use GuzabaPlatform\Platform\Application\GuzabaPlatform as GP;
+
 class Login extends Controller
 {
+
+    public const ROUTES = [
+        GP::API_ROUTE_PREFIX.'/login'   => [
+        //'/login'   => [
+            Method::HTTP_GET_HEAD_OPT       => [self::class, 'main'],
+            Method::HTTP_POST               => [self::class, 'login'],
+        ],
+    ];
+
     public function main() : ResponseInterface
     {
         $struct = [];

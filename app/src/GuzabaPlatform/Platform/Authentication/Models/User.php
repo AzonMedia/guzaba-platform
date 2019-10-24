@@ -11,9 +11,10 @@ use GuzabaPlatform\Platform\Authentication\Models\Token as Token;
 class User extends ActiveRecord
 {
     protected const CONFIG_DEFAULTS = [
-        'main_table'      => 'users',
-        'cost' => 12,
-        'alg' => PASSWORD_BCRYPT
+        'main_table'            => 'users',
+        'cost'                  => 12,
+        'alg'                   => PASSWORD_BCRYPT,
+        'route'                 => '/user',
 	];
 
     protected const CONFIG_RUNTIME = [];
@@ -23,7 +24,7 @@ class User extends ActiveRecord
      * @param string $new_password_2
      * @param string $old_password
      *
-     * throws ValidationFailedException
+     * @throws ValidationFailedException
      */
     public function change_password(string $new_password_1, string $new_password_2, string $old_password)
     {

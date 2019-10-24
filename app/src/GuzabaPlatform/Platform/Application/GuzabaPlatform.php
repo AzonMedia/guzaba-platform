@@ -2,6 +2,8 @@
 
 namespace GuzabaPlatform\Platform\Application;
 
+use Guzaba2\Routing\ControllerDefaultRoutingMap;
+use Guzaba2\Routing\ActiveRecordDefaultRoutingMap;
 use GuzabaPlatform\Platform\Home\Controllers\Home;
 use GuzabaPlatform\Platform\Authentication\Controllers\Login;
 use GuzabaPlatform\Platform\Authentication\Controllers\Auth;
@@ -23,7 +25,7 @@ use Guzaba2\Http\StatusCode;
 use Guzaba2\Kernel\Kernel;
 use Guzaba2\Mvc\ExecutorMiddleware;
 use Guzaba2\Mvc\RestMiddleware;
-use Guzaba2\Mvc\RoutingMiddleware;
+use Guzaba2\Routing\RoutingMiddleware;
 use Guzaba2\Swoole\ApplicationMiddleware;
 use Guzaba2\Swoole\Handlers\WorkerStart;
 use Psr\Http\Message\RequestInterface;
@@ -55,8 +57,9 @@ class GuzabaPlatform extends Application
 
         ],
         'version'       => 'dev',
+
         'cors_origin'   => 'http://localhost:8080',
-        'enable_http2'  => FALSE,
+        'enable_http2'  => FALSE,//if enabled enable_static_handler/document_root doesnt work
         'enable_ssl'    => FALSE,
 
     ];
@@ -68,11 +71,16 @@ class GuzabaPlatform extends Application
      */
     protected string $app_directory = '';
 
+    protected string $generated_files_dir = '';
+
+    public const API_ROUTE_PREFIX = '/api';
+
     public function __construct($app_directory)
     {
         parent::__construct();
 
         $this->app_directory = $app_directory;
+        $this->generated_files_dir = $this->app_directory.'/startup_generated';
 
         Kernel::run($this);
     }
@@ -117,37 +125,25 @@ class GuzabaPlatform extends Application
         // disable coroutine for debugging
         // $HttpServer->set(['enable_coroutine' => false,]);
 
-        $ApplicationMiddleware = new ApplicationMiddleware();//blocks static content
-        $RestMiddleware = new RestMiddleware();
+        //$ApplicationMiddleware = new ApplicationMiddleware();//blocks static content
+        //$RestMiddleware = new RestMiddleware();
 
-        $Rewriter = new Rewriter(new RewritingRulesArray([]));
+        //$Rewriter = new Rewriter(new RewritingRulesArray([]));
+        $Rewriter = new UrlRewritingRules('/api/');
         $RewritingMiddleware = new RewritingMiddleware($HttpServer, $Rewriter);
 
-        $routing_table = [
-            '/'                                     => [
-                Method::HTTP_GET_HEAD_OPT                       => [Home::class, 'main'],
-            ],
-            '/login'                                => [
-                Method::HTTP_GET_HEAD_OPT                       => [Login::class, 'main'],
-                Method::HTTP_POST                               => [Login::class, 'login'],
-            ],
-            '/manage-profile'                       => [
-                Method::HTTP_GET_HEAD_OPT                       => [ManageProfile::class, 'main'],
-                Method::HTTP_POST                               => [ManageProfile::class, 'save'],
-            ],
-            '/password-reset'                       => [
-                Method::HTTP_GET_HEAD_OPT                       => [PasswordReset::class, 'main'],
-                Method::HTTP_POST                               => [PasswordReset::class, 'save'],
-            ],
-            '/user_login'                                => [
-                Method::HTTP_GET                        => [Auth::class, 'main'],
-                Method::HTTP_POST                       => [Auth::class, 'login'],
-            ],
-            '/user_register'                                => [
-                Method::HTTP_POST                       => [Auth::class, 'register'],
-            ],
-        ];
-        $Router = new Router(new RoutingMapArray($routing_table));
+        //$routing_table = RoutingMap::ROUTING_MAP;
+
+        //$Router = new Router(new RoutingMapArray($routing_table));
+        $ControllersDefaultRoutingMap = new ControllerDefaultRoutingMap(array_keys(Kernel::get_registered_autoloader_paths()));
+        $ModelsDefaultRoutingMap = new ActiveRecordDefaultRoutingMap(array_keys(Kernel::get_registered_autoloader_paths()), self::API_ROUTE_PREFIX );
+        $controllers_routing_map = $ControllersDefaultRoutingMap->get_routing_map();
+        $models_routing_map = $ModelsDefaultRoutingMap->get_routing_map();
+
+        $routing_map = Router::merge_routes($controllers_routing_map, $models_routing_map);
+
+        //$Router = new Router(new RoutingMapArray($routing_map));
+        $Router = new Router(new GeneratedRoutingMap($routing_map, $this->generated_files_dir));
         $RoutingMiddleware = new RoutingMiddleware($HttpServer, $Router);
 
         $cors_headers = [
@@ -171,7 +167,7 @@ class GuzabaPlatform extends Application
         //adding middlewares slows down significantly the processing
         //$middlewares[] = $RestMiddleware;
         //$middlewares[] = $ApplicationMiddleware;
-        //$middlewares[] = $RewritingMiddleware;
+        $middlewares[] = $RewritingMiddleware;
         //$middlewares[] = $ServingMiddleware;//this is a custom middleware
         $middlewares[] = $CorsMiddleware;
         $middlewares[] = $Authorization;
