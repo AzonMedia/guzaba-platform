@@ -48,16 +48,16 @@ class GuzabaPlatform extends Application
                 'task_worker_num'           => 0,//tasks workers,
                 'document_root'             => NULL,//to be set dynamically
                 'enable_static_handler'     => TRUE,
-                'open_http2_protocol'       => FALSE,//depends on enable-http2 (and enable-ssl)
-                'ssl_cert_file'             => NULL,
-                'ssl_key_file'              => NULL,
+                // 'open_http2_protocol'       => FALSE,//depends on enable-http2 (and enable-ssl)
+                // 'ssl_cert_file'             => NULL,
+                // 'ssl_key_file'              => NULL,
             ],
 
         ],
         'version'       => 'dev',
-        'cors_origin'   => 'http://192.168.0.102:8080',
-        'enable_http2'  => TRUE,
-        'enable_ssl'    => TRUE,
+        'cors_origin'   => 'http://localhost:8080',
+        'enable_http2'  => FALSE,
+        'enable_ssl'    => FALSE,
 
     ];
 
