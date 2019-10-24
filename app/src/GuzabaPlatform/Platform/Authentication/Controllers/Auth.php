@@ -16,10 +16,13 @@ class Auth extends Controller
 {
 
     public const ROUTES = [
-        GP::API_ROUTE_PREFIX.'/user-login'   => [
+        GP::API_ROUTE_PREFIX.'/user-login'      => [
         //'/user-login'   => [
-            Method::HTTP_GET_HEAD_OPT       => [self::class, 'main'],
-            Method::HTTP_POST               => [self::class, 'login'],
+            Method::HTTP_GET_HEAD_OPT               => [self::class, 'main'],
+            Method::HTTP_POST                       => [self::class, 'login'],
+        ],
+        GP::API_ROUTE_PREFIX.'/user-register'   => [
+        Method::HTTP_POST                           => [self::class, 'register'],
         ],
     ];
 

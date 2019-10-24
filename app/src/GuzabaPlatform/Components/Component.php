@@ -3,10 +3,17 @@
 namespace GuzabaPlatform\Components;
 
 
-use Guzaba2\Base\Base;
+use Guzaba2\Orm\ActiveRecord;
 
-class Component extends Base
+class Component extends ActiveRecord
 {
+
+    protected const CONFIG_DEFAULTS = [
+        'main_table'            => 'components',
+    ];
+
+    protected const CONFIG_RUNTIME = [];
+
     public function __construct()
     {
         parent::__construct();

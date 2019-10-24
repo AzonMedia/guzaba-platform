@@ -80,7 +80,7 @@ export default {
         }
     },
     mounted() {
-        this.$http.get('user_login')
+        this.$http.get('/user-login')
     },
     methods: {
         login() {

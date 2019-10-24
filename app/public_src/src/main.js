@@ -13,7 +13,7 @@ Vue.use(BootstrapVue)
 //axios start
 import axios from 'axios'
 axios.defaults.withCredentials = true
-axios.defaults.baseURL = 'http://192.168.0.102:8081/'
+axios.defaults.baseURL = 'http://localhost:8081/api'
 Vue.prototype.$http = axios
 
 import { stringify } from 'qs'

@@ -7,7 +7,6 @@ use GuzabaPlatform\Platform\Application\GuzabaPlatform;
 use Azonmedia\Registry\Registry;
 use Azonmedia\Registry\RegistryBackendEnv;
 use Guzaba2\Kernel\Kernel;
-use Azonmedia\Glog\Middleware\ServingMiddleware;
 use Guzaba2\Registry\Interfaces\RegistryInterface;
 use Monolog\Formatter\LineFormatter;
 use Monolog\Handler\StreamHandler;
@@ -57,7 +56,7 @@ const APP_CONFIG = [
     $Registry = new Registry($RegistryBackend);
 
 
-    $Logger = new Logger('main_logger');
+    $Logger = new Logger('main_log');
     $Formatter = new LineFormatter(
         NULL, // Format of message in log, default [%datetime%] %channel%.%level_name%: %message% %context% %extra%\n
         NULL, // Datetime format
@@ -65,7 +64,7 @@ const APP_CONFIG = [
         TRUE  // ignoreEmptyContextAndExtra option, default false
     );
 
-    $FileHandler = new StreamHandler($app_directory.'logs'.DIRECTORY_SEPARATOR.'LOG.txt', $log_level);
+    $FileHandler = new StreamHandler($app_directory.'logs'.DIRECTORY_SEPARATOR.'main_log.txt', $log_level);
     $FileHandler->setFormatter($Formatter);
     $Logger->pushHandler($FileHandler);
 

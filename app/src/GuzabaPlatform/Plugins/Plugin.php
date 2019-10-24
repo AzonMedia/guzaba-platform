@@ -1,7 +1,10 @@
 <?php
 
+namespace GuzabaPlatform\Plugins;
 
-class Plugin
+use Guzaba2\Orm\ActiveRecord;
+
+class Plugin extends ActiveRecord
 {
 
 }

@@ -17,7 +17,7 @@ class ManageProfile extends Controller
 {
 
     public const ROUTES = [
-        GP::API_ROUTE_PREFIX.'/user-login'   => [
+        GP::API_ROUTE_PREFIX.'/manage-profile'   => [
         //'/user-login'   => [
             Method::HTTP_GET_HEAD_OPT       => [self::class, 'main'],
             Method::HTTP_POST               => [self::class, 'save'],

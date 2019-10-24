@@ -33,7 +33,7 @@ export default new Vuex.Store({
         register({ commit }, user) {
             return new Promise((resolve, reject) => {
                 commit('auth_request')
-                Axios.post('user_register', stringify(user))
+                Axios.post('user-register', stringify(user))
                     .then(resp => {
                         //TODO automatically login user
                         const token = resp.data.message.token
@@ -54,7 +54,7 @@ export default new Vuex.Store({
 
             return new Promise((resolve, reject) => {
               commit('auth_request')
-              Axios.post('user_login', stringify(user))
+              Axios.post('/user-login', stringify(user))
               .then(resp => {
                         const token = resp.headers.token
                         const user = {}//resp.data.message.user

@@ -44,7 +44,7 @@ class GuzabaPlatform extends Application
             'host'                      => '0.0.0.0',
             'port'                      => 8081,
             'server_options'            => [
-                'worker_num'                => 4,//http workers
+                'worker_num'                => NULL,//http workers NULL means Server will set this to swoole_cpu_num()*2
                 //Swoole\Coroutine::create(): Unable to use async-io in task processes, please set `task_enable_coroutine` to true.
                 //'task_worker_num'   => 8,//tasks workers
                 'task_worker_num'           => 0,//tasks workers,
@@ -58,9 +58,11 @@ class GuzabaPlatform extends Application
         ],
         'version'       => 'dev',
 
-        'cors_origin'   => 'http://localhost:8080',
+        'cors_origin'   => 'http://localhost:8081',
         'enable_http2'  => FALSE,//if enabled enable_static_handler/document_root doesnt work
         'enable_ssl'    => FALSE,
+
+        'override_html_content_type' => 'json',//to facilitate debugging when opening the XHR in browser
 
     ];
 
@@ -161,7 +163,7 @@ class GuzabaPlatform extends Application
         //$ServingMiddleware = new ServingMiddleware($HttpServer, []);//this serves all requests
         $PlatformMiddleware = new PlatformMiddleware($this, $HttpServer);
 
-        $ExecutorMiddleware = new ExecutorMiddleware($HttpServer);
+        $ExecutorMiddleware = new ExecutorMiddleware($HttpServer, self::CONFIG_RUNTIME['override_html_content_type']);
         $Authorization = new AuthCheckMiddleware($HttpServer, []);
 
         //adding middlewares slows down significantly the processing
