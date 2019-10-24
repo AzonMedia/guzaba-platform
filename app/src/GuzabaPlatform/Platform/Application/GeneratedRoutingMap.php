@@ -16,6 +16,36 @@ class GeneratedRoutingMap extends RoutingMapArray
     {
         parent::__construct($routing_map);
 
+        $routing_map_str = self::get_readable_map($routing_map);
+        $file_content = <<<FILE
+<?php
+declare(strict_types=1);
+
+\$routing_map = $routing_map_str; 
+
+return \$routing_map;
+FILE;
+
+
+        $file_path = $dump_dir.'/routing_map.php';
+
+
+        if (\Swoole\Coroutine::getCid() > 0) {
+            \Swoole\Coroutine\System::writeFile($file_path, $file_content );//overwrite the file on each launch
+        } else {
+            file_put_contents($file_path, $file_content);
+        }
+
+    }
+
+    /**
+     * Generates a nice representation of the provided routing map.
+     * @param iterable $routing_map
+     * @return string
+     * @throws \Symfony\Component\VarExporter\Exception\ExceptionInterface
+     */
+    public static function get_readable_map(iterable $routing_map) : string
+    {
         $routing_map_with_constants = [];
 
         foreach ($routing_map as $route=>$data) {
@@ -27,26 +57,10 @@ class GeneratedRoutingMap extends RoutingMapArray
             }
         }
 
-        $file_path = $dump_dir.'/routing_map.php';
-
         //$routing_map_str = var_export($routing_map_with_constants,TRUE);
         $routing_map_str = VarExporter::export($routing_map_with_constants);//nicer
 
-        $file_content = <<<FILE
-<?php
-declare(strict_types=1);
-
-\$routing_map = $routing_map_str; 
-
-return \$routing_map;
-FILE;
-
-        if (\Swoole\Coroutine::getCid() > 0) {
-            \Swoole\Coroutine\System::writeFile($file_path, $file_content );//overwrite the file on each launch
-        } else {
-            file_put_contents($file_path, $file_content);
-        }
-
+        return $routing_map_str;
     }
 
 }
