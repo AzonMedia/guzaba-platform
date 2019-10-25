@@ -80,7 +80,7 @@ class Login extends Controller
                 // do nothing; user is not logged
             }
 
-            $Request = $Request->withoutHeader('token');
+            $Response = $Response->withoutHeader('token');
         }
 
         try {
