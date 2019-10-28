@@ -140,12 +140,15 @@ class GuzabaPlatform extends Application
         $ControllersDefaultRoutingMap = new ControllerDefaultRoutingMap(array_keys(Kernel::get_registered_autoloader_paths()));
         $ModelsDefaultRoutingMap = new ActiveRecordDefaultRoutingMap(array_keys(Kernel::get_registered_autoloader_paths()), self::API_ROUTE_PREFIX );
         $controllers_routing_map = $ControllersDefaultRoutingMap->get_routing_map();
+        $controllers_routing_meta_data = $ControllersDefaultRoutingMap->get_all_meta_data();
         $models_routing_map = $ModelsDefaultRoutingMap->get_routing_map();
+        $models_routing_meta_data = $ModelsDefaultRoutingMap->get_all_meta_data();
 
         $routing_map = Router::merge_routes($controllers_routing_map, $models_routing_map);
+        $routing_meta_data = array_merge($controllers_routing_meta_data, $models_routing_meta_data);
 
         //$Router = new Router(new RoutingMapArray($routing_map));
-        $Router = new Router(new GeneratedRoutingMap($routing_map, $this->generated_files_dir));
+        $Router = new Router(new GeneratedRoutingMap($routing_map, $routing_meta_data, $this->generated_files_dir));
         $RoutingMiddleware = new RoutingMiddleware($HttpServer, $Router);
 
         $cors_headers = [

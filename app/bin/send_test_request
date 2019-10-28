@@ -1,7 +1,0 @@
-#curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X POST http://192.168.0.233:8081/log-entry -d '{"message":"test error message"}'
-
-
-curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET http://192.168.0.233:8081/api/login
-
-
-#curl -i -X POST http://192.168.0.233:8081/ -d '{"message":"test error message"}'
