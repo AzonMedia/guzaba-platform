@@ -1,0 +1,1 @@
+curl -i -H "Accept: application/json" -H "Content-Type: application/json" -X GET http://192.168.0.233:8081/api/component/c6b33ddd-f98c-11e9-8f16-002564a26d87

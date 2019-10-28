@@ -12,9 +12,9 @@ class GeneratedRoutingMap extends RoutingMapArray
 {
 
 
-    public function __construct(iterable $routing_map, string $dump_dir)
+    public function __construct(iterable $routing_map, iterable $routing_meta_data, string $dump_dir)
     {
-        parent::__construct($routing_map);
+        parent::__construct($routing_map, $routing_meta_data);
 
         $routing_map_str = self::get_readable_map($routing_map);
         $file_content = <<<FILE
