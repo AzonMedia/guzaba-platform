@@ -5,7 +5,7 @@ use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Output\BufferedOutput;
 use GuzabaPlatform\Platform\Application\GuzabaPlatform;
 
-function get_cli_options()
+function get_cli_options() : array
 {
 	$command = new Guzaba2\Platform\Start();
 	$output = new BufferedOutput();
@@ -18,7 +18,11 @@ function get_cli_options()
 	$app -> setDefaultCommand($command->getName());
 	$app -> run(NULL, $output);
 
-	$cli_options_mapping = [GuzabaPlatform::class => (array) $output->options];
+	if (isset($output->options)) {
+		$cli_options_mapping = [GuzabaPlatform::class => (array) $output->options];
+	} else {
+		$cli_options_mapping = [];
+	}
 
 	print_r($output->fetch());
 
