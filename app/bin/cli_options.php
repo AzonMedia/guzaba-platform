@@ -1,13 +1,15 @@
 <?php
-require_once('Start.php');
+namespace Guzaba2\Platform;
 
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Output\BufferedOutput;
 use GuzabaPlatform\Platform\Application\GuzabaPlatform;
 
+require_once('Start.php');
+
 function get_cli_options() : array
 {
-	$command = new Guzaba2\Platform\Start();
+	$command = new Start();
 	$output = new BufferedOutput();
 
 	$app = new Application();
@@ -24,6 +26,7 @@ function get_cli_options() : array
 		$cli_options_mapping = [];
 	}
 
+	// this will print out the Symfony Console result from commands (help, list, ... ), error messages, ...
 	print_r($output->fetch());
 
 	return $cli_options_mapping;
