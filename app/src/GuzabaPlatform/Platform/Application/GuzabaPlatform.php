@@ -4,34 +4,20 @@ namespace GuzabaPlatform\Platform\Application;
 
 use Guzaba2\Routing\ControllerDefaultRoutingMap;
 use Guzaba2\Routing\ActiveRecordDefaultRoutingMap;
-use GuzabaPlatform\Platform\Home\Controllers\Home;
-use GuzabaPlatform\Platform\Authentication\Controllers\Login;
-use GuzabaPlatform\Platform\Authentication\Controllers\Auth;
-use GuzabaPlatform\Platform\Authentication\Controllers\ManageProfile;
-use GuzabaPlatform\Platform\Authentication\Controllers\PasswordReset;
 use GuzabaPlatform\Platform\Application\PlatformMiddleware;
-use Azonmedia\Routing\Router;
-use Azonmedia\Routing\RoutingMapArray;
-use Azonmedia\UrlRewriting\Rewriter;
-use Azonmedia\UrlRewriting\RewritingRulesArray;
 use Guzaba2\Application\Application;
 use Guzaba2\Di\Container;
-use Guzaba2\Http\Body\Str;
 use Guzaba2\Http\Body\Stream;
-use Guzaba2\Http\Method;
 use Guzaba2\Http\Response;
 use Guzaba2\Http\RewritingMiddleware;
 use Guzaba2\Http\StatusCode;
 use Guzaba2\Kernel\Kernel;
 use Guzaba2\Mvc\ExecutorMiddleware;
-use Guzaba2\Mvc\RestMiddleware;
 use Guzaba2\Routing\RoutingMiddleware;
-use Guzaba2\Swoole\ApplicationMiddleware;
 use Guzaba2\Swoole\Handlers\WorkerStart;
-use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseInterface;
 use Guzaba2\Http\CorsMiddleware;
 use GuzabaPlatform\Platform\Application\AuthCheckMiddleware;
+use Azonmedia\Routing\Router;
 
 /**
  * Class Azonmedia
@@ -95,34 +81,33 @@ class GuzabaPlatform extends Application
     public function execute() : int
     {
 
-
         $DependencyContainer = new Container();
         Kernel::set_di_container($DependencyContainer);
 
         $middlewares = [];
 
-        $server_options = self::CONFIG_RUNTIME['swoole']['server_options'];
+        $cli_options_mapping = Kernel::get_runtime_configuration(self::class);
+        $runtime_options = array_replace_recursive(self::CONFIG_RUNTIME, $cli_options_mapping);
+        $server_options = $runtime_options['swoole']['server_options'];
+
         if (!empty($server_options['enable_static_handler']) && empty($server_options['document_root'])) {
             $server_options['document_root'] = $this->app_directory.'public/';
         }
 
-
         //if (!empty($server_options['open_http2_protocol'])) {
-        if (self::CONFIG_RUNTIME['enable_ssl']) {
+        if ($runtime_options['enable_ssl']) {
             $server_options['ssl_cert_file'] = $this->app_directory.'certificates/localhost.crt';
             $server_options['ssl_key_file'] = $this->app_directory.'certificates/localhost.key';
         }
 
-        if (self::CONFIG_RUNTIME['enable_http2']) {
+        if ($runtime_options['enable_http2']) {
             $server_options['open_http2_protocol'] = TRUE;
         }
 
         //doesnt seem to work properly
         //$swoole_config['static_handler_locations'] = [$this->app_directory.'public/img/'];
 
-
-
-        $HttpServer = new \Guzaba2\Swoole\Server(self::CONFIG_RUNTIME['swoole']['host'], self::CONFIG_RUNTIME['swoole']['port'], $server_options);
+        $HttpServer = new \Guzaba2\Swoole\Server($runtime_options['swoole']['host'], $runtime_options['swoole']['port'], $server_options);
 
         // disable coroutine for debugging
         // $HttpServer->set(['enable_coroutine' => false,]);
@@ -153,7 +138,7 @@ class GuzabaPlatform extends Application
 
         $cors_headers = [
             //'Access-Control-Allow-Origin'       => 'http://192.168.0.102:8080',
-            'Access-Control-Allow-Origin'       => self::CONFIG_RUNTIME['cors_origin'],
+            'Access-Control-Allow-Origin'       => $runtime_options['cors_origin'],
             'Access-Control-Allow-Credentials'  => 'true',
             'Access-Control-Allow-Methods'      => 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
             'Access-Control-Expose-Headers'     => 'token',
@@ -166,7 +151,7 @@ class GuzabaPlatform extends Application
         //$ServingMiddleware = new ServingMiddleware($HttpServer, []);//this serves all requests
         $PlatformMiddleware = new PlatformMiddleware($this, $HttpServer);
 
-        $ExecutorMiddleware = new ExecutorMiddleware($HttpServer, self::CONFIG_RUNTIME['override_html_content_type']);
+        $ExecutorMiddleware = new ExecutorMiddleware($HttpServer, $runtime_options['override_html_content_type']);
         $Authorization = new AuthCheckMiddleware($HttpServer, []);
 
         //adding middlewares slows down significantly the processing
@@ -187,7 +172,7 @@ class GuzabaPlatform extends Application
         $DefaultResponseBody->write('Content not found or request not understood (routing not configured).');
         //$DefaultResponseBody = new \Guzaba2\Http\Body\Str();
         //$DefaultResponseBody->write('Content not found or request not understood (routing not configured).');
-        $DefaultResponse = new \Guzaba2\Http\Response(StatusCode::HTTP_NOT_FOUND, [], $DefaultResponseBody);
+        $DefaultResponse = new Response(StatusCode::HTTP_NOT_FOUND, [], $DefaultResponseBody);
 
         $RequestHandler = new \Guzaba2\Swoole\Handlers\Http\Request($HttpServer, $middlewares, $DefaultResponse);
 
@@ -200,7 +185,7 @@ class GuzabaPlatform extends Application
         $HttpServer->on('Request', $RequestHandler);
 
         Kernel::printk(PHP_EOL);
-        Kernel::printk(sprintf('GuzabaPlatform %s at %s', self::CONFIG_RUNTIME['version'], $this->app_directory).PHP_EOL);
+        Kernel::printk(sprintf('GuzabaPlatform %s at %s', $runtime_options['version'], $this->app_directory).PHP_EOL);
 
         $HttpServer->start();
 
