@@ -33,8 +33,6 @@ class Start extends Command
             die('Just one option may be used for enabling/disabling a setting!' . PHP_EOL);
         }
 
-        print_r($input->getOptions());
-
         if ($input->getOption('public')) {
             $output->options['swoole']['server_options']['document_root'] = $input->getOption('public');
         }
