@@ -4,34 +4,20 @@ namespace GuzabaPlatform\Platform\Application;
 
 use Guzaba2\Routing\ControllerDefaultRoutingMap;
 use Guzaba2\Routing\ActiveRecordDefaultRoutingMap;
-use GuzabaPlatform\Platform\Home\Controllers\Home;
-use GuzabaPlatform\Platform\Authentication\Controllers\Login;
-use GuzabaPlatform\Platform\Authentication\Controllers\Auth;
-use GuzabaPlatform\Platform\Authentication\Controllers\ManageProfile;
-use GuzabaPlatform\Platform\Authentication\Controllers\PasswordReset;
 use GuzabaPlatform\Platform\Application\PlatformMiddleware;
-use Azonmedia\Routing\Router;
-use Azonmedia\Routing\RoutingMapArray;
-use Azonmedia\UrlRewriting\Rewriter;
-use Azonmedia\UrlRewriting\RewritingRulesArray;
 use Guzaba2\Application\Application;
 use Guzaba2\Di\Container;
-use Guzaba2\Http\Body\Str;
 use Guzaba2\Http\Body\Stream;
-use Guzaba2\Http\Method;
 use Guzaba2\Http\Response;
 use Guzaba2\Http\RewritingMiddleware;
 use Guzaba2\Http\StatusCode;
 use Guzaba2\Kernel\Kernel;
 use Guzaba2\Mvc\ExecutorMiddleware;
-use Guzaba2\Mvc\RestMiddleware;
 use Guzaba2\Routing\RoutingMiddleware;
-use Guzaba2\Swoole\ApplicationMiddleware;
 use Guzaba2\Swoole\Handlers\WorkerStart;
-use Psr\Http\Message\RequestInterface;
-use Psr\Http\Message\ResponseInterface;
 use Guzaba2\Http\CorsMiddleware;
 use GuzabaPlatform\Platform\Application\AuthCheckMiddleware;
+use Azonmedia\Routing\Router;
 
 /**
  * Class Azonmedia
@@ -95,17 +81,16 @@ class GuzabaPlatform extends Application
     public function execute() : int
     {
 
-
         $DependencyContainer = new Container();
         Kernel::set_di_container($DependencyContainer);
 
         $middlewares = [];
 
         $server_options = self::CONFIG_RUNTIME['swoole']['server_options'];
+
         if (!empty($server_options['enable_static_handler']) && empty($server_options['document_root'])) {
             $server_options['document_root'] = $this->app_directory.'public/';
         }
-
 
         //if (!empty($server_options['open_http2_protocol'])) {
         if (self::CONFIG_RUNTIME['enable_ssl']) {
@@ -119,8 +104,6 @@ class GuzabaPlatform extends Application
 
         //doesnt seem to work properly
         //$swoole_config['static_handler_locations'] = [$this->app_directory.'public/img/'];
-
-
 
         $HttpServer = new \Guzaba2\Swoole\Server(self::CONFIG_RUNTIME['swoole']['host'], self::CONFIG_RUNTIME['swoole']['port'], $server_options);
 
@@ -187,7 +170,7 @@ class GuzabaPlatform extends Application
         $DefaultResponseBody->write('Content not found or request not understood (routing not configured).');
         //$DefaultResponseBody = new \Guzaba2\Http\Body\Str();
         //$DefaultResponseBody->write('Content not found or request not understood (routing not configured).');
-        $DefaultResponse = new \Guzaba2\Http\Response(StatusCode::HTTP_NOT_FOUND, [], $DefaultResponseBody);
+        $DefaultResponse = new Response(StatusCode::HTTP_NOT_FOUND, [], $DefaultResponseBody);
 
         $RequestHandler = new \Guzaba2\Swoole\Handlers\Http\Request($HttpServer, $middlewares, $DefaultResponse);
 

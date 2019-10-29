@@ -5,6 +5,7 @@ namespace Guzaba2\Platform;
 
 use GuzabaPlatform\Platform\Application\GuzabaPlatform;
 use Azonmedia\Registry\Registry;
+use Azonmedia\Registry\RegistryBackendCli;
 use Azonmedia\Registry\RegistryBackendEnv;
 use Guzaba2\Kernel\Kernel;
 use Guzaba2\Registry\Interfaces\RegistryInterface;
@@ -15,6 +16,9 @@ use Psr\Log\LogLevel;
 
 $autoload_path = realpath(__DIR__ . '/../../vendor/autoload.php');
 require_once($autoload_path);
+
+require_once('cli_options.php');
+$cli_options_mapping = get_cli_options();
 
 //https://github.com/swoole/swoole-docs/blob/master/get-started/examples/async_task.md
 //https://www.swoole.co.uk/docs/modules/swoole-server/configuration
@@ -33,8 +37,7 @@ const APP_CONFIG = [
 ];
 */
 
-
-(function(){
+(function() use ($cli_options_mapping){
 
     if (version_compare(phpversion(),'7.4.0RC4', '<')) {
         print 'The application requires PHP 7.4.0RC4 or higher.'.PHP_EOL;
@@ -52,9 +55,10 @@ const APP_CONFIG = [
 
     chdir($app_directory);
 
-    $RegistryBackend = new RegistryBackendEnv('');
-    $Registry = new Registry($RegistryBackend);
-
+    $RegistryBackendCli = new RegistryBackendCli($cli_options_mapping);
+    $Registry = new Registry($RegistryBackendCli);
+    $RegistryBackendEnv = new RegistryBackendEnv('');
+    $Registry->add_backend($RegistryBackendEnv);
 
     $Logger = new Logger('main_log');
     $Formatter = new LineFormatter(
