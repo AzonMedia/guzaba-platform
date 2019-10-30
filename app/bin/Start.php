@@ -24,12 +24,6 @@ class Start extends Command
 
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        if ( ($input->getOption('enable-ssl') && $input->getOption('disable-ssl')) ||
-            ($input->getOption('enable-http2') && $input->getOption('disable-http2')) ||
-            ($input->getOption('enable-ssl') && $input->getOption('disable-ssl'))) {
-            die('Just one option may be used for enabling/disabling a setting!' . PHP_EOL);
-        }
-
         if ($input->getOption('document-root')) {
             $output->options['swoole']['server_options']['document_root'] = $input->getOption('document-root');
         }
