@@ -12,6 +12,7 @@ use Guzaba2\Orm\Store\Memory;
 use Guzaba2\Orm\Store\Nosql\Redis;
 use Guzaba2\Orm\Store\NullStore;
 use Guzaba2\Orm\Store\Sql\Mysql;
+use GuzabaPlatform\Platform\Application\RedisConnection;
 
 return [
     \GuzabaPlatform\Platform\Application\GuzabaPlatform::class => [
@@ -70,11 +71,11 @@ return [
                 'class'                         => Redis::class,
                 'args'                          => [
                     'FallbackStore'                 => 'MysqlOrmStore',
-                    'connection_class'              => \Guzaba2\Database\Nosql\Redis\ConnectionCoroutine::class,
+                    'connection_class'              => RedisConnection::class,
                 ],
             ],
             'RedisCo'                       => [
-                'class'                         => \Guzaba2\Database\Nosql\Redis\ConnectionCoroutine::class,
+                'class'                         => RedisConnection::class,
                 'args'                          => [
                 ],
             ],

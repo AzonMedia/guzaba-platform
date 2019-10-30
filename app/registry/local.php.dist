@@ -1,0 +1,19 @@
+<?php
+
+// Example local registry config
+// rename to local.php to use
+// can hold sensitive environment dependent data that won't be pushed to git
+
+return [
+    \GuzabaPlatform\Platform\Application\RedisConnection => [
+        'host'      => 'redis',
+        'port'      => 6379,
+        'timeout' => 1.5,
+        'password' => '',
+        'database' => 0,
+        'services' => [
+            'ConnectionFactory'
+        ],
+        'expiry_time' => 3600,
+    ],
+];
