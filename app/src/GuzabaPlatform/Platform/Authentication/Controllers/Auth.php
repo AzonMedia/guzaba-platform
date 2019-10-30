@@ -8,7 +8,6 @@ use Guzaba2\Orm\Exceptions\RecordNotFoundException;
 use Guzaba2\Translator\Translator as t;
 use GuzabaPlatform\Platform\Application\GuzabaPlatform as GP;
 use GuzabaPlatform\Platform\Authentication\Models\JWT_Token as Token;
-// use GuzabaPlatform\Platform\Authentication\Models\Token as Token;
 use GuzabaPlatform\Platform\Authentication\Models\User;
 use Psr\Http\Message\ResponseInterface;
 
@@ -16,13 +15,12 @@ class Auth extends Controller
 {
 
     public const ROUTES = [
-        GP::API_ROUTE_PREFIX.'/user-login'      => [
-        //'/user-login'   => [
-            Method::HTTP_GET_HEAD_OPT               => [self::class, 'main'],
-            Method::HTTP_POST                       => [self::class, 'login'],
+        GP::API_ROUTE_PREFIX . '/user-login' => [
+            Method::HTTP_GET_HEAD_OPT => [self::class, 'main'],
+            Method::HTTP_POST => [self::class, 'login'],
         ],
-        GP::API_ROUTE_PREFIX.'/user-register'   => [
-        Method::HTTP_POST                           => [self::class, 'register'],
+        GP::API_ROUTE_PREFIX . '/user-register' => [
+            Method::HTTP_POST => [self::class, 'register'],
         ],
     ];
 
@@ -86,6 +84,29 @@ class Auth extends Controller
             $Response = $Response->withHeader('token', $Token->token_string);
         } else {
             $Response = $Response->withStatus(\Guzaba2\Http\StatusCode::HTTP_FORBIDDEN);
+        }
+
+        return $Response;
+    }
+
+    public function register(string $email, string $username, string $password)
+    {
+        $Response = parent::get_structured_ok_response();
+        $struct = &$Response->getBody()->getStructure();
+
+        try {
+            $user = new User(['user_email' => $email]);
+            $struct['message'] = t::_('Email already exist!');
+            $Response = $Response->withStatus(\Guzaba2\Http\StatusCode::HTTP_FOUND);
+        } catch(RecordNotFoundException $e) {
+            $user = new User();
+            $user->user_email = $email;
+            $user->user_name = $username;
+            $user->user_password = $password;
+            $user->save();
+
+            $Response = $Response->withStatus(\Guzaba2\Http\StatusCode::HTTP_CREATED);
+            $struct['message'] = t::_('User was registered successful.');
         }
 
         return $Response;

@@ -37,11 +37,11 @@ class RoutingMap
             Method::HTTP_GET_HEAD_OPT                       => [PasswordReset::class, 'main'],
             Method::HTTP_POST                               => [PasswordReset::class, 'save'],
         ],
-        GP::API_ROUTE_PREFIX.'/user_login'                           => [
+        GP::API_ROUTE_PREFIX.'/user-login'                           => [
             Method::HTTP_GET                                => [Auth::class, 'main'],
             Method::HTTP_POST                               => [Auth::class, 'login'],
         ],
-        GP::API_ROUTE_PREFIX.'/user_register'                        => [
+        GP::API_ROUTE_PREFIX.'/user-register'                        => [
             Method::HTTP_POST                               => [Auth::class, 'register'],
         ],
     ];

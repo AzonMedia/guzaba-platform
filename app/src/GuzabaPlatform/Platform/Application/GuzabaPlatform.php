@@ -58,7 +58,7 @@ class GuzabaPlatform extends Application
         ],
         'version'       => 'dev',
 
-        'cors_origin'   => 'http://localhost:8081',
+        'cors_origin'   => 'http://localhost:8080',
         'enable_http2'  => FALSE,//if enabled enable_static_handler/document_root doesnt work
         'enable_ssl'    => FALSE,
 

@@ -1,3 +1,4 @@
+/* global localStorage Promise */
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
@@ -38,7 +39,7 @@ vue.$mount('#app')
 vue.$http.interceptors.response.use(
     response => { return response },
     err => {
-        return new Promise(function(resolve, reject) {
+        return new Promise(() => {
             if (
                 err.response.status === 401 &&
                 err.config &&

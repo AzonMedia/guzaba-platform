@@ -1,3 +1,5 @@
+/* global localStorage Promise axios */
+
 import Vue from 'vue'
 import Vuex from 'vuex'
 import Axios from 'axios';
@@ -71,7 +73,7 @@ export default new Vuex.Store({
             })
         },
         logout({ commit }) {
-            return new Promise((resolve, reject) => {
+            return new Promise(() => {
                 commit('logout')
                 // localStorage.removeItem('token');
                 delete Axios.defaults.headers.common['Token']

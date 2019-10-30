@@ -64,8 +64,14 @@ class User extends ActiveRecord
             throw new ValidationFailedException($messages);
         }
 
-        $this->user_password = password_hash($new_password_1, self::CONFIG_RUNTIME['alg'], ['cost' => self::CONFIG_RUNTIME['cost']]);
-
+        //$this->user_password = password_hash($new_password_1, self::CONFIG_RUNTIME['alg'], ['cost' => self::CONFIG_RUNTIME['cost']]);
+        $this->user_password = $new_password_1;
         $this->save();
+    }
+
+    public function _before_set_user_password($value)
+    {
+        $res = password_hash($value, self::CONFIG_RUNTIME['alg'], ['cost' => self::CONFIG_RUNTIME['cost']]);
+        return $res;
     }
 }

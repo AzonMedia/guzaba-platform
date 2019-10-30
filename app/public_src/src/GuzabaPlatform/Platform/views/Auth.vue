@@ -11,7 +11,7 @@ export default {
   name: "auth",
   computed: {
     componentInstance() {
-      return () => import(`@/components/auth/${this.$route.name}.vue`)
+      return () => import(`@/GuzabaPlatform/Platform/components/auth/${this.$route.name}.vue`)
     }
   }
 };
