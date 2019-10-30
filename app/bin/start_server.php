@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace Guzaba2\Platform;
 
+use Azonmedia\Registry\RegistryBackendArray;
 use GuzabaPlatform\Platform\Application\GuzabaPlatform;
 use Azonmedia\Registry\Registry;
 use Azonmedia\Registry\RegistryBackendCli;
@@ -59,6 +60,8 @@ const APP_CONFIG = [
     $Registry = new Registry($RegistryBackendCli);
     $RegistryBackendEnv = new RegistryBackendEnv('');
     $Registry->add_backend($RegistryBackendEnv);
+    $RegistryBackendArray = new RegistryBackendArray(realpath(__DIR__ . '/../registry'));
+    $Registry->add_backend($RegistryBackendArray);
 
     $Logger = new Logger('main_log');
     $Formatter = new LineFormatter(
