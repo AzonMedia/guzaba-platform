@@ -1,1 +1,4 @@
 /vendor
+/.idea
+/app/logs
+!/app/logs/README.md
