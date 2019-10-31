@@ -1,0 +1,198 @@
+{
+	"info": {
+		"_postman_id": "6dc8d076-49f1-419e-96a0-c05966fa512a",
+		"name": "Guzaba Platform",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Home",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "ef12144a-d84e-4ee2-9b94-cdb7a27a2e3f",
+						"exec": [
+							"pm.test(\"Successful home page load\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "http://{{host}}:{{port}}",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}"
+				},
+				"description": "Load home page"
+			},
+			"response": []
+		},
+		{
+			"name": "Create Component",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "659105fc-4d6a-4707-bd62-04fa155bccb3",
+						"exec": [
+							"pm.test(\"Successful component creation\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"var jsonData = pm.response.json();",
+							"pm.environment.set('uuid', jsonData.uuid);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"component_name\": \"comp1555\", \"component_url\": \"http://asdasd\"}"
+				},
+				"url": {
+					"raw": "http://{{host}}:{{port}}/api/component",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"component"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Componenet by UUID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a290f5a7-b21d-47aa-b74d-250bd6726c66",
+						"exec": [
+							"pm.test(\"Successful componenet load\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "http://{{host}}:{{port}}/api/component/{{uuid}}",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"component",
+						"{{uuid}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update component by UUID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a1f4ff74-4df6-4671-bacb-81d0ac1c7493",
+						"exec": [
+							"pm.test(\"Successful componenet update\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"component_name\": \"comp1555\", \"component_url\": \"http://asdasd5555\"}"
+				},
+				"url": {
+					"raw": "http://{{host}}:{{port}}/api/component/{{uuid}}",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"component",
+						"{{uuid}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
