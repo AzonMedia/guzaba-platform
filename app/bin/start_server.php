@@ -53,15 +53,20 @@ const APP_CONFIG = [
 
     $initial_directory = getcwd();
     $app_directory = realpath(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR).DIRECTORY_SEPARATOR;
+    $generated_files_dir = $app_directory.'startup_generated';
+    $generated_runtime_config_dir  = $generated_files_dir.'/runtime_configs';
+    $generated_runtime_config_file = $generated_files_dir.'/runtime_config.php';
 
     chdir($app_directory);
 
-    $RegistryBackendCli = new RegistryBackendCli($cli_options_mapping);
-    $Registry = new Registry($RegistryBackendCli);
     $RegistryBackendEnv = new RegistryBackendEnv('');
-    $Registry->add_backend($RegistryBackendEnv);
+    $Registry = new Registry($RegistryBackendEnv, $generated_runtime_config_file, $generated_runtime_config_dir);
+
     $RegistryBackendArray = new RegistryBackendArray(realpath(__DIR__ . '/../registry'));
     $Registry->add_backend($RegistryBackendArray);
+
+    $RegistryBackendCli = new RegistryBackendCli($cli_options_mapping);
+    $Registry->add_backend($RegistryBackendCli);
 
     $Logger = new Logger('main_log');
     $Formatter = new LineFormatter(
@@ -93,9 +98,7 @@ const APP_CONFIG = [
 
     //past this point it is possible to autoload Application specific classes
 
-    new GuzabaPlatform($app_directory);
+    new GuzabaPlatform($app_directory, $generated_files_dir);
 
     chdir($initial_directory);
 })();
-
-

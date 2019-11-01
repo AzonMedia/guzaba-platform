@@ -63,12 +63,12 @@ class GuzabaPlatform extends Application
 
     public const API_ROUTE_PREFIX = '/api';
 
-    public function __construct($app_directory)
+    public function __construct($app_directory, $generated_files_dir)
     {
         parent::__construct();
 
         $this->app_directory = $app_directory;
-        $this->generated_files_dir = $this->app_directory.'/startup_generated';
+        $this->generated_files_dir = $this->generated_files_dir;
 
         Kernel::run($this);
     }
