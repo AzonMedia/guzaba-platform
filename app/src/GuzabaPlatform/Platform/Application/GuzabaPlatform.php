@@ -68,7 +68,7 @@ class GuzabaPlatform extends Application
         parent::__construct();
 
         $this->app_directory = $app_directory;
-        $this->generated_files_dir = $this->generated_files_dir;
+        $this->generated_files_dir = $generated_files_dir;
 
         Kernel::run($this);
     }
