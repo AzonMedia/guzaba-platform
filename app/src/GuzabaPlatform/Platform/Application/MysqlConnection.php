@@ -8,12 +8,12 @@ class MysqlConnection extends ConnectionCoroutine
 {
 
     protected const CONFIG_DEFAULTS = [
-        'host'      => '192.168.0.22',
+        'host'      => 'hostname.or.ip',
         'port'      => 3306,
-        'user'      => 'root',
-        'password'  => 'rectoverso',
-        'database'  => 'guzaba2',
-        'tprefix'   => 'guzaba_',
+        'user'      => 'user',
+        'password'  => 'pass',
+        'database'  => 'db',
+        'tprefix'   => 'prefix_',
     ];
 
     //protected static $CONFIG_RUNTIME = [];

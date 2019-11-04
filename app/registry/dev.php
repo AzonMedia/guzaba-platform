@@ -37,6 +37,26 @@ return [
         'enable_ssl'    => FALSE,
         'override_html_content_type' => 'json',//to facilitate debugging when opening the XHR in browser
     ],
+    \GuzabaPlatform\Platform\Application\MysqlConnection::class => [
+        'host'      => '192.168.0.22',
+        'port'      => 3306,
+        'user'      => 'root',
+        'password'  => 'rectoverso',
+        'database'  => 'guzaba2',
+        'tprefix'   => 'guzaba_',
+    ],
+    RedisConnection::class => [
+        'host'      => 'redis',
+        'port'      => 6379,
+        'timeout' => 1.5,
+        'password' => '',
+        'database' => 0,
+        'options' => [
+            // returns saved arrays properly
+            'compatibility_mode' => true
+        ],
+        'expiry_time' => null
+    ],
     \Guzaba2\Di\Container::class => [
         'dependencies' => [
             'ConnectionFactory'             => [

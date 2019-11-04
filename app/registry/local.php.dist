@@ -16,4 +16,12 @@ return [
         ],
         'expiry_time' => 3600,
     ],
+    \GuzabaPlatform\Platform\Application\MysqlConnection::class => [
+        'host'      => 'host',
+        'port'      => 3306,
+        'user'      => 'user',
+        'password'  => 'pass',
+        'database'  => 'db',
+        'tprefix'   => 'prefix_',
+    ],
 ];
