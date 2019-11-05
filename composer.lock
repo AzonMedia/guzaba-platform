@@ -143,12 +143,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/AzonMedia/guzaba2.git",
-                "reference": "225ff54f3975c86ca571572690961ac7a6c2211c"
+                "reference": "73047687e4a399438e06e199c2c349ca0beab69b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/AzonMedia/guzaba2/zipball/225ff54f3975c86ca571572690961ac7a6c2211c",
-                "reference": "225ff54f3975c86ca571572690961ac7a6c2211c",
+                "url": "https://api.github.com/repos/AzonMedia/guzaba2/zipball/73047687e4a399438e06e199c2c349ca0beab69b",
+                "reference": "73047687e4a399438e06e199c2c349ca0beab69b",
                 "shasum": ""
             },
             "require": {
@@ -205,7 +205,7 @@
                 "framework",
                 "swoole"
             ],
-            "time": "2019-10-30T13:00:15+00:00"
+            "time": "2019-11-04T14:12:57+00:00"
         },
         {
             "name": "azonmedia/lock",
@@ -388,12 +388,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/AzonMedia/registry.git",
-                "reference": "f22f357f7e6f2561e942241867374f64a3fd826b"
+                "reference": "d69c93a4240b60be50dacfb4e76ad7c3a5289307"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/AzonMedia/registry/zipball/f22f357f7e6f2561e942241867374f64a3fd826b",
-                "reference": "f22f357f7e6f2561e942241867374f64a3fd826b",
+                "url": "https://api.github.com/repos/AzonMedia/registry/zipball/d69c93a4240b60be50dacfb4e76ad7c3a5289307",
+                "reference": "d69c93a4240b60be50dacfb4e76ad7c3a5289307",
                 "shasum": ""
             },
             "require": {
@@ -423,7 +423,7 @@
                 "registry",
                 "utility"
             ],
-            "time": "2019-10-30T11:04:36+00:00"
+            "time": "2019-11-04T15:17:54+00:00"
         },
         {
             "name": "azonmedia/routing",
@@ -695,12 +695,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/wudi/swoole-ide-helper.git",
-                "reference": "fceabb51fca645166fdc3d885bb582eb3352335e"
+                "reference": "a255daa05feffbf4b88d59897a9470696d2fe259"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wudi/swoole-ide-helper/zipball/fceabb51fca645166fdc3d885bb582eb3352335e",
-                "reference": "fceabb51fca645166fdc3d885bb582eb3352335e",
+                "url": "https://api.github.com/repos/wudi/swoole-ide-helper/zipball/a255daa05feffbf4b88d59897a9470696d2fe259",
+                "reference": "a255daa05feffbf4b88d59897a9470696d2fe259",
                 "shasum": ""
             },
             "type": "library",
@@ -727,7 +727,7 @@
                 "sublime",
                 "swoole"
             ],
-            "time": "2019-07-18T01:21:48+00:00"
+            "time": "2019-11-02T07:18:22+00:00"
         },
         {
             "name": "firebase/php-jwt",
@@ -1268,12 +1268,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/php-fig/log.git",
-                "reference": "d477130b23d419404dbd4bfea1aa557b3236bbc7"
+                "reference": "446d54b4cb6bf489fc9d75f55843658e6f25d801"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/log/zipball/d477130b23d419404dbd4bfea1aa557b3236bbc7",
-                "reference": "d477130b23d419404dbd4bfea1aa557b3236bbc7",
+                "url": "https://api.github.com/repos/php-fig/log/zipball/446d54b4cb6bf489fc9d75f55843658e6f25d801",
+                "reference": "446d54b4cb6bf489fc9d75f55843658e6f25d801",
                 "shasum": ""
             },
             "require": {
@@ -1307,7 +1307,7 @@
                 "psr",
                 "psr-3"
             ],
-            "time": "2019-10-30T09:18:31+00:00"
+            "time": "2019-11-01T11:05:21+00:00"
         },
         {
             "name": "ramsey/uuid",

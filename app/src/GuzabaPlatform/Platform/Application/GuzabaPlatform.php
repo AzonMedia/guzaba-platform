@@ -68,7 +68,7 @@ class GuzabaPlatform extends Application
         parent::__construct();
 
         $this->app_directory = $app_directory;
-        $this->generated_files_dir = $this->generated_files_dir;
+        $this->generated_files_dir = $generated_files_dir;
 
         Kernel::run($this);
     }
@@ -83,6 +83,9 @@ class GuzabaPlatform extends Application
 
         $DependencyContainer = new Container();
         Kernel::set_di_container($DependencyContainer);
+
+        $Watchdog = new \Azonmedia\Watchdog\Watchdog(new \Azonmedia\Watchdog\Backends\SwooleTableBackend());
+        Kernel::set_watchdog($Watchdog);
 
         $middlewares = [];
 

@@ -193,6 +193,100 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Delete component by UUID Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a1f4ff74-4df6-4671-bacb-81d0ac1c7493",
+						"exec": [
+							"pm.test(\"Successful componenet update\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{host}}:{{port}}/api/component/{{uuid}}",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"component",
+						"{{uuid}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get DELETED Componenet by UUID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a290f5a7-b21d-47aa-b74d-250bd6726c66",
+						"exec": [
+							"pm.test(\"Deleted component cannot be fetched\", function () {",
+							"    pm.response.to.not.have.status(200);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Accept",
+						"value": "application/json"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "http://{{host}}:{{port}}/api/component/{{uuid}}",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"component",
+						"{{uuid}}"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
