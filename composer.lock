@@ -143,12 +143,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/AzonMedia/guzaba2.git",
-                "reference": "c4707f4d473c848da454c7dc33396d8f384e62f1"
+                "reference": "73047687e4a399438e06e199c2c349ca0beab69b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/AzonMedia/guzaba2/zipball/c4707f4d473c848da454c7dc33396d8f384e62f1",
-                "reference": "c4707f4d473c848da454c7dc33396d8f384e62f1",
+                "url": "https://api.github.com/repos/AzonMedia/guzaba2/zipball/73047687e4a399438e06e199c2c349ca0beab69b",
+                "reference": "73047687e4a399438e06e199c2c349ca0beab69b",
                 "shasum": ""
             },
             "require": {
@@ -205,7 +205,7 @@
                 "framework",
                 "swoole"
             ],
-            "time": "2019-11-04T13:35:54+00:00"
+            "time": "2019-11-04T14:12:57+00:00"
         },
         {
             "name": "azonmedia/lock",
@@ -388,12 +388,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/AzonMedia/registry.git",
-                "reference": "06e9cfe80fa2de5cefa626f4b099c4526301bf3d"
+                "reference": "d69c93a4240b60be50dacfb4e76ad7c3a5289307"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/AzonMedia/registry/zipball/06e9cfe80fa2de5cefa626f4b099c4526301bf3d",
-                "reference": "06e9cfe80fa2de5cefa626f4b099c4526301bf3d",
+                "url": "https://api.github.com/repos/AzonMedia/registry/zipball/d69c93a4240b60be50dacfb4e76ad7c3a5289307",
+                "reference": "d69c93a4240b60be50dacfb4e76ad7c3a5289307",
                 "shasum": ""
             },
             "require": {
@@ -423,7 +423,7 @@
                 "registry",
                 "utility"
             ],
-            "time": "2019-11-01T07:52:19+00:00"
+            "time": "2019-11-04T15:17:54+00:00"
         },
         {
             "name": "azonmedia/routing",
