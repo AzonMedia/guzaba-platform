@@ -84,6 +84,9 @@ class GuzabaPlatform extends Application
         $DependencyContainer = new Container();
         Kernel::set_di_container($DependencyContainer);
 
+        $Watchdog = new \Azonmedia\Watchdog\Watchdog(new \Azonmedia\Watchdog\Backends\SwooleTableBackend());
+        Kernel::set_watchdog($Watchdog);
+
         $middlewares = [];
 
         $server_options = self::CONFIG_RUNTIME['swoole']['server_options'];
