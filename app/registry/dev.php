@@ -13,6 +13,8 @@ use Guzaba2\Orm\Store\Nosql\Redis;
 use Guzaba2\Orm\Store\NullStore;
 use Guzaba2\Orm\Store\Sql\Mysql;
 use GuzabaPlatform\Platform\Application\RedisConnection;
+use Guzaba2\Orm\BlockingStore\Nosql\MongoDB;
+use GuzabaPlatform\Platform\Application\MongoDbConnection;
 
 return [
     \GuzabaPlatform\Platform\Application\GuzabaPlatform::class => [
@@ -54,13 +56,21 @@ return [
                 'class'                         => Basic::class,
                 'args'                          => [],
             ],
-//        'SomeExample'                   => [
-//            'class'                         => SomeClass::class,
-//            'args'                          => [
-//                'arg1'                      => 20,
-//                'arg2'                      => 'something'
-//            ],
-//        ]
+            // MongoDBStore
+            // 'OrmStore'                      => [
+            //     'class'                         => Memory::class,//the Memory store is the first to be looked into
+            //     'args'                          => [
+            //         'FallbackStore'                 => 'MongoDbOrmStore',
+            //     ],
+            // ],
+            // 'MongoDbOrmStore'                 => [
+            //     'class'                         => MongoDB::class,
+            //     'args'                          => [
+            //         'FallbackStore'                 => 'MysqlOrmStore',
+            //         'connection_class'              => MongoDbConnection::class,
+            //     ],
+            // ],
+
             'OrmStore'                      => [
                 'class'                         => Memory::class,//the Memory store is the first to be looked into
                 'args'                          => [
