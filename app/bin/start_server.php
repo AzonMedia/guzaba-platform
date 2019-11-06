@@ -15,35 +15,20 @@ use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Psr\Log\LogLevel;
 
-$autoload_path = realpath(__DIR__ . '/../../vendor/autoload.php');
-require_once($autoload_path);
 
-require_once('cli_options.php');
-$cli_options_mapping = get_cli_options();
+(function() {
 
-//https://github.com/swoole/swoole-docs/blob/master/get-started/examples/async_task.md
-//https://www.swoole.co.uk/docs/modules/swoole-server/configuration
-//these are default values
-//but will be overriden by the env vars if they exist
-//the env vars have GLOG_ prefix and are all caps
-//GLOG_SWOOLE_HOST
-/*
-const APP_CONFIG = [
-    'swoole_host'       => '0.0.0.0',
-    'swoole_port'       => 8081,
-    'worker_num'        => 4,//http workers
-    'task_worker_num'   => 8,//tasks workers
-    'data_dir'          => './data/',
-    'log_dir'           => './logs/',
-];
-*/
 
-(function() use ($cli_options_mapping){
-
-    if (version_compare(phpversion(),'7.4.0RC4', '<')) {
-        print 'The application requires PHP 7.4.0RC4 or higher.'.PHP_EOL;
+    if (version_compare(phpversion(),'7.4.0RC5', '<')) {
+        print 'The application requires PHP 7.4.0RC5 or higher.'.PHP_EOL;
         exit(1);
     }
+
+    $autoload_path = realpath(__DIR__ . '/../../vendor/autoload.php');
+    require_once($autoload_path);
+
+    require_once('cli_options.php');
+    $cli_options_mapping = get_cli_options();
 
     //ini_set("swoole.enable_preemptive_scheduler","1");
     //\Swoole\Coroutine::set([ 'enable_preemptive_scheduler' => 1 ]);
