@@ -54,6 +54,18 @@ class GuzabaPlatform extends Application
 
     protected const CONFIG_RUNTIME = [];
 
+    //http://patorjk.com/software/taag/#p=display&f=ANSI%20Shadow&t=guzaba%20platform
+    public const PLATFORM_BANNER = <<<BANNER
+
+ ██████╗ ██╗   ██╗███████╗ █████╗ ██████╗  █████╗     ██████╗ ██╗      █████╗ ████████╗███████╗ ██████╗ ██████╗ ███╗   ███╗
+██╔════╝ ██║   ██║╚══███╔╝██╔══██╗██╔══██╗██╔══██╗    ██╔══██╗██║     ██╔══██╗╚══██╔══╝██╔════╝██╔═══██╗██╔══██╗████╗ ████║
+██║  ███╗██║   ██║  ███╔╝ ███████║██████╔╝███████║    ██████╔╝██║     ███████║   ██║   █████╗  ██║   ██║██████╔╝██╔████╔██║
+██║   ██║██║   ██║ ███╔╝  ██╔══██║██╔══██╗██╔══██║    ██╔═══╝ ██║     ██╔══██║   ██║   ██╔══╝  ██║   ██║██╔══██╗██║╚██╔╝██║
+╚██████╔╝╚██████╔╝███████╗██║  ██║██████╔╝██║  ██║    ██║     ███████╗██║  ██║   ██║   ██║     ╚██████╔╝██║  ██║██║ ╚═╝ ██║
+
+BANNER;
+
+
     /**
      * @var string
      */
@@ -185,8 +197,15 @@ class GuzabaPlatform extends Application
         $HttpServer->on('WorkerStart', $WorkerHandler);
         $HttpServer->on('Request', $RequestHandler);
 
+        Kernel::printk(self::PLATFORM_BANNER);
         Kernel::printk(PHP_EOL);
         Kernel::printk(sprintf('GuzabaPlatform %s at %s', self::CONFIG_RUNTIME['version'], $this->app_directory).PHP_EOL);
+
+        $middlewares_info = 'Enabled Middlewares:'.PHP_EOL;
+        foreach ($middlewares as $Middleware) {
+            $middlewares_info .= str_repeat(' ',4).'- '.get_class($Middleware).PHP_EOL;
+        }
+        Kernel::printk($middlewares_info);
 
         $HttpServer->start();
 

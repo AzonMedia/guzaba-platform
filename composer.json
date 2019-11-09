@@ -4,10 +4,8 @@
         "azonmedia/guzaba2": "dev-master",
         "psr/log": "^1.1",
         "monolog/monolog": "^2.0@dev",
-        "azonmedia/di": "dev-master",
-        "azonmedia/utilities": "dev-master",
         "firebase/php-jwt": "dev-master",
         "symfony/var-exporter": "^5.0@dev",
-        "symfony/console": "^5.0@dev"
+        "symfony/console": "^5.0@dev",
     }
 }

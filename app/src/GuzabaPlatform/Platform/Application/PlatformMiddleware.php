@@ -8,6 +8,7 @@ use Guzaba2\Base\Base;
 use Guzaba2\Http\Method;
 use Guzaba2\Http\Server;
 use Guzaba2\Coroutine\Coroutine;
+use Guzaba2\Orm\ActiveRecord;
 use Guzaba2\Orm\Exceptions\RecordNotFoundException;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -19,6 +20,13 @@ use GuzabaPlatform\Platform\Authentication\Models\JWT_Token as Token;
 class PlatformMiddleware extends Base
     implements MiddlewareInterface
 {
+
+    protected const CONFIG_DEFAULTS = [
+        'disable_locking_on_get'    => TRUE,
+    ];
+
+    protected const CONFIG_RUNTIME = [];
+
     /**
      * Custom logic for token
      *
@@ -29,43 +37,54 @@ class PlatformMiddleware extends Base
      */
     public function process(ServerRequestInterface $Request, RequestHandlerInterface $Handler) : ResponseInterface
     {
-        $headers = $Request->getHeaders();
+//        $headers = $Request->getHeaders();
+//
+//        $Context = Coroutine::getContext();
+//        $Context->current_user_id = 1;
+//
+//        if (isset($headers['token'])) {
+//            try {
+//
+//                $Token = new Token(['token_string' => $headers['token'][0]]);
+//
+//                if ($Token->token_expiration_time > time()) {
+//                    // update token_expiration_time
+//                    $Token->update_token();
+//                    $Context = Coroutine::getContext();
+//                    $Context->current_user_id = $Token->user_id;
+//                }  else {
+//                    unset($Token);
+//                }
+//            } catch (RecordNotFoundException $exception) {
+//                // do nothing; user is NOT logged in
+//            }
+//        }
+//
+//        if (isset($Token)) {
+//            $Request = $Request->withHeader('token', $Token->token_string);
+//        } else {
+//            $Request = $Request->withoutHeader('token');
+//        }
+//
+//        $Response = $Handler->handle($Request);
+//        $response_token = $Response->getHeaders();
+//
+//        if (isset($Token) && !isset($response_token['token'])) {
+//            $Response = $Response->withHeader('token', $Token->token_string);
+//        } else {
+//            //do NOT remove token from header!
+//        }
+//
 
-        $Context = Coroutine::getContext();
-        $Context->current_user_id = 1;
+//        $Response = $Handler->handle($Request);
 
-        if (isset($headers['token'])) {
-            try {
-                
-                $Token = new Token(['token_string' => $headers['token'][0]]);
 
-                if ($Token->token_expiration_time > time()) {
-                    // update token_expiration_time
-                    $Token->update_token();
-                    $Context = Coroutine::getContext();
-                    $Context->current_user_id = $Token->user_id;
-                }  else {
-                    unset($Token);
-                }
-            } catch (RecordNotFoundException $exception) {
-                // do nothing; user is NOT logged in
-            }
-        }
-
-        if (isset($Token)) {
-            $Request = $Request->withHeader('token', $Token->token_string);
-        } else {
-            $Request = $Request->withoutHeader('token');
+        //disable the locking if the request does not involve updates
+        if ($Request->getMethodConstant() === Method::HTTP_GET && self::CONFIG_RUNTIME['disable_locking_on_get']) {
+            ActiveRecord::disable_locking();
         }
 
         $Response = $Handler->handle($Request);
-        $response_token = $Response->getHeaders();
-
-        if (isset($Token) && !isset($response_token['token'])) {
-            $Response = $Response->withHeader('token', $Token->token_string);
-        } else {
-            //do NOT remove token from header!
-        }
         
         return $Response;
     }

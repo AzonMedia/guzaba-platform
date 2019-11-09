@@ -15,6 +15,7 @@ use Guzaba2\Orm\Store\Sql\Mysql;
 use GuzabaPlatform\Platform\Application\RedisConnection;
 use Guzaba2\Orm\BlockingStore\Nosql\MongoDB;
 use GuzabaPlatform\Platform\Application\MongoDbConnection;
+use Guzaba2\Authorization\BypassAuthorizationProvider;
 
 return [
     \GuzabaPlatform\Platform\Application\GuzabaPlatform::class => [
@@ -115,6 +116,10 @@ return [
                     'FallbackStore'                 => NULL,
                 ],
             ],
+            'BlankOrmStore'                 => [
+                'class'                         => BlankOrmStore::class,
+                'args'                          => [],
+            ],
             'QueryCache' => [
                 'class'                         => \Guzaba2\Database\QueryCache::class,
                 'args'                          => [
@@ -135,6 +140,10 @@ return [
                     'Logger'                        => [Kernel::class, 'get_logger'],
                 ],
             ],
+            'AuthorizationProvider'    => [
+                'class'                         => BypassAuthorizationProvider::class,
+                'args'                          => [],
+            ]
         ],
     ],
 ];
