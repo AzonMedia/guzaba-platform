@@ -15,6 +15,8 @@ use Guzaba2\Kernel\Kernel;
 use Guzaba2\Mvc\ExecutorMiddleware;
 use Guzaba2\Routing\RoutingMiddleware;
 use Guzaba2\Swoole\Handlers\WorkerStart;
+use Guzaba2\Swoole\Handlers\WorkerConnect;
+use Guzaba2\Authorization\Ip\IpFilter;
 use Guzaba2\Http\CorsMiddleware;
 use GuzabaPlatform\Platform\Application\AuthCheckMiddleware;
 use Azonmedia\Routing\Router;
@@ -189,11 +191,11 @@ BANNER;
 
         $RequestHandler = new \Guzaba2\Swoole\Handlers\Http\Request($HttpServer, $middlewares, $DefaultResponse);
 
+        $ConnectHandler = new WorkerConnect($HttpServer, new IpFilter());
         //$WorkerHandler = new WorkerHandler($HttpServer);
         $WorkerHandler = new WorkerStart($HttpServer);
 
-
-
+        $HttpServer->on('Connect', $ConnectHandler);
         $HttpServer->on('WorkerStart', $WorkerHandler);
         $HttpServer->on('Request', $RequestHandler);
 
