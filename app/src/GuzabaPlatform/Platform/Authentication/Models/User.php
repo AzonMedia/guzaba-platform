@@ -6,7 +6,7 @@ use Guzaba2\Orm\ActiveRecord;
 use Guzaba2\Orm\Exceptions\ValidationFailedException;
 use Guzaba2\Translator\Translator as t;
 use GuzabaPlatform\Platform\Authentication\Models\Token as Token;
-// use GuzabaPlatform\Platform\Authentication\Models\JWT_Token as Token;
+// use GuzabaPlatform\Platform\Authentication\Models\JwtToken as Token;
 
 class User extends ActiveRecord
 {

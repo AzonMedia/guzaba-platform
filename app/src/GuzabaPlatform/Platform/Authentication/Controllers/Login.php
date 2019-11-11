@@ -8,7 +8,7 @@ use Guzaba2\Translator\Translator as t;
 use Psr\Http\Message\ResponseInterface;
 use GuzabaPlatform\Platform\Authentication\Models\User;
 // use GuzabaPlatform\Platform\Authentication\Models\Token as Token;
-use GuzabaPlatform\Platform\Authentication\Models\JWT_Token as Token;
+use GuzabaPlatform\Platform\Authentication\Models\JwtToken as Token;
 use Guzaba2\Orm\Exceptions\RecordNotFoundException;
 
 use GuzabaPlatform\Platform\Application\GuzabaPlatform as GP;
