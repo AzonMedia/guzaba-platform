@@ -79,6 +79,11 @@ class PlatformMiddleware extends Base
 //        $Response = $Handler->handle($Request);
 
 
+        $current_user_id = \Guzaba2\Authorization\User::get_default_current_user_id();
+        //TODO add code that reads the current user id from JWT
+
+        $Request = $Request->withAttribute('current_user_id', $current_user_id);
+
         //disable the locking if the request does not involve updates
         if ($Request->getMethodConstant() === Method::HTTP_GET && self::CONFIG_RUNTIME['disable_locking_on_get']) {
             ActiveRecord::disable_locking();

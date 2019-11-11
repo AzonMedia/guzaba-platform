@@ -6,6 +6,6 @@
         "monolog/monolog": "^2.0@dev",
         "firebase/php-jwt": "dev-master",
         "symfony/var-exporter": "^5.0@dev",
-        "symfony/console": "^5.0@dev",
+        "symfony/console": "^5.0@dev"
     }
 }
