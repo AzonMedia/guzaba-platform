@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace GuzabaPlatform\Platform\Application;
 
 // use Guzaba2\Application\Application;
+use Guzaba2\Authorization\User;
 use Guzaba2\Base\Base;
 use Guzaba2\Http\Method;
 use Guzaba2\Http\Server;
@@ -37,6 +38,13 @@ class PlatformMiddleware extends Base
      */
     public function process(ServerRequestInterface $Request, RequestHandlerInterface $Handler) : ResponseInterface
     {
+
+        //disable the locking if the request does not involve updates
+        //this must be the very first thing
+        if ($Request->getMethodConstant() === Method::HTTP_GET && self::CONFIG_RUNTIME['disable_locking_on_get']) {
+            ActiveRecord::disable_locking();
+        }
+
 //        $headers = $Request->getHeaders();
 //
 //        $Context = Coroutine::getContext();
@@ -81,13 +89,14 @@ class PlatformMiddleware extends Base
 
         $current_user_id = \Guzaba2\Authorization\User::get_default_current_user_id();
         //TODO add code that reads the current user id from JWT
+        //$current_user_id = 0;//set here from JWT
 
-        $Request = $Request->withAttribute('current_user_id', $current_user_id);
+        $Request = $Request->withAttribute('current_user_id', $current_user_id);//not really used but can be set in case the Middleware after that needs it
+        $Context = Coroutine::getContext();
+        $User = new User($current_user_id);
+        $Context->CurrentUser->set($User);
 
-        //disable the locking if the request does not involve updates
-        if ($Request->getMethodConstant() === Method::HTTP_GET && self::CONFIG_RUNTIME['disable_locking_on_get']) {
-            ActiveRecord::disable_locking();
-        }
+
 
         $Response = $Handler->handle($Request);
         

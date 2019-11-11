@@ -31,8 +31,8 @@ class Test extends Controller
         //$struct = ['message' => 'ok'];
         //$Response = self::get_structured_ok_response($struct);
         //$Connection = static::get_service('ConnectionFactory')->get_connection(MysqlConnection::class, $CR);
-        //$Context = Coroutine::getContext();
-        //print $Context->CurrentUser->is_new();
+        $Context = Coroutine::getContext();
+        print $Context->CurrentUser->get_id();
         $str = 'asd';
         $Response = self::get_string_ok_response($str);
         return $Response;
