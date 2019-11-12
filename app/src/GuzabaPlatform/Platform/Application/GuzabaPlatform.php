@@ -4,6 +4,7 @@ namespace GuzabaPlatform\Platform\Application;
 
 use Guzaba2\Routing\ControllerDefaultRoutingMap;
 use Guzaba2\Routing\ActiveRecordDefaultRoutingMap;
+use Guzaba2\Translator\Translator as t;
 use GuzabaPlatform\Platform\Application\PlatformMiddleware;
 use Guzaba2\Application\Application;
 use Guzaba2\Di\Container;
@@ -20,6 +21,7 @@ use Guzaba2\Authorization\Ip\IpFilter;
 use Guzaba2\Http\CorsMiddleware;
 use GuzabaPlatform\Platform\Application\AuthCheckMiddleware;
 use Azonmedia\Routing\Router;
+use Psr\Log\LogLevel;
 
 /**
  * Class Azonmedia
@@ -49,8 +51,10 @@ class GuzabaPlatform extends Application
         'cors_origin'   => 'http://localhost:8080',
         'enable_http2'  => FALSE,//if enabled enable_static_handler/document_root doesnt work
         'enable_ssl'    => FALSE,
+        'log_level'     => LogLevel::DEBUG,
 
         'override_html_content_type' => 'json',//to facilitate debugging when opening the XHR in browser
+
 
     ];
 
@@ -204,7 +208,15 @@ BANNER;
         Kernel::printk(PHP_EOL);
         Kernel::printk(sprintf('GuzabaPlatform %s at %s', self::CONFIG_RUNTIME['version'], $this->app_directory).PHP_EOL);
 
-        $middlewares_info = 'Enabled Middlewares:'.PHP_EOL;
+        $Logger = Kernel::get_logger();
+        $handlers = $Logger->getHandlers();
+        $error_handlers_str = t::_('Error Handlers:').PHP_EOL;
+        foreach ($handlers as $Handler) {
+            $error_handlers_str .= str_repeat(' ',4).'- '.get_class($Handler).' : '.$Handler->getUrl().' : '.$Logger::getLevelName($Handler->getLevel()).PHP_EOL;
+        }
+        Kernel::printk($error_handlers_str);
+
+        $middlewares_info = t::_('Middlewares:').PHP_EOL;
         foreach ($middlewares as $Middleware) {
             $middlewares_info .= str_repeat(' ',4).'- '.get_class($Middleware).PHP_EOL;
         }

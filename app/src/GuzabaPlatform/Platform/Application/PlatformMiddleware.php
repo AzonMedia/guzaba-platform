@@ -74,7 +74,7 @@ class PlatformMiddleware extends Base
                 // do nothing; user is NOT logged in
             }
         }
-        
+
         if (!isset($Token)) {
             $Request = $Request->withoutHeader('token');
         }

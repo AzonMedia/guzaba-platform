@@ -18,7 +18,6 @@ use Psr\Log\LogLevel;
 
 (function() {
 
-
     if (version_compare(phpversion(),'7.4.0RC5', '<')) {
         print 'The application requires PHP 7.4.0RC5 or higher.'.PHP_EOL;
         exit(1);
@@ -34,7 +33,10 @@ use Psr\Log\LogLevel;
     //\Swoole\Coroutine::set([ 'enable_preemptive_scheduler' => 1 ]);
     //the above is available in Master branch only not released yet
 
-    $log_level = LogLevel::DEBUG;
+    $log_level = LogLevel::DEBUG;//default to Debug
+    if (isset($cli_options_mapping['GuzabaPlatform\\Platform\\Application\\GuzabaPlatform']['log_level'])) {
+        $log_level = $cli_options_mapping['GuzabaPlatform\\Platform\\Application\\GuzabaPlatform']['log_level'];
+    }
 
     $initial_directory = getcwd();
     $app_directory = realpath(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR).DIRECTORY_SEPARATOR;
@@ -65,11 +67,9 @@ use Psr\Log\LogLevel;
     $FileHandler->setFormatter($Formatter);
     $Logger->pushHandler($FileHandler);
 
-
     $StdoutHandler = new StreamHandler('php://stdout', $log_level);
     $StdoutHandler->setFormatter($Formatter);
     $Logger->pushHandler($StdoutHandler);
-
 
     Kernel::initialize($Registry, $Logger);
 
