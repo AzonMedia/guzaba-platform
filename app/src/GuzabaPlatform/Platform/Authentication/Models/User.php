@@ -8,7 +8,7 @@ use Guzaba2\Translator\Translator as t;
 use GuzabaPlatform\Platform\Authentication\Models\Token as Token;
 // use GuzabaPlatform\Platform\Authentication\Models\JwtToken as Token;
 
-class User extends ActiveRecord
+class User extends \Guzaba2\Authorization\User
 {
     protected const CONFIG_DEFAULTS = [
         'main_table'            => 'users',
