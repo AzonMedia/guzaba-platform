@@ -166,7 +166,8 @@ BANNER;
         //$ServingMiddleware = new ServingMiddleware($HttpServer, []);//this serves all requests
         $PlatformMiddleware = new PlatformMiddleware($this, $HttpServer);
 
-        $ExecutorMiddleware = new ExecutorMiddleware($HttpServer, self::CONFIG_RUNTIME['override_html_content_type']);
+        //$ExecutorMiddleware = new ExecutorMiddleware($HttpServer, self::CONFIG_RUNTIME['override_html_content_type']);
+        $ExecutorMiddleware = new ExecutorMiddleware($HttpServer);
         $Authorization = new AuthCheckMiddleware($HttpServer, []);
 
         //adding middlewares slows down significantly the processing

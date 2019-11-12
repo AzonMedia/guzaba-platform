@@ -1,10 +1,17 @@
 <?php
 
+use Azonmedia\Apm\CoroutineProfiler;
+use Azonmedia\Apm\NullBackend;
 use Azonmedia\Lock\Backends\SwooleTableBackend;
 use Azonmedia\Lock\CoroutineLockManager;
+use Guzaba2\Authorization\CurrentUser;
+use Guzaba2\Authorization\User;
 use Guzaba2\Database\ConnectionFactory;
 use Guzaba2\Database\ConnectionProviders\Basic;
 use Guzaba2\Database\ConnectionProviders\Pool;
+use Guzaba2\Database\QueryCache;
+use Guzaba2\Di\Container;
+use Guzaba2\Event\Events;
 use Guzaba2\Kernel\Kernel;
 use Guzaba2\Orm\MetaStore\NullMetaStore;
 use Guzaba2\Orm\MetaStore\SwooleTable;
@@ -12,13 +19,15 @@ use Guzaba2\Orm\Store\Memory;
 use Guzaba2\Orm\Store\Nosql\Redis;
 use Guzaba2\Orm\Store\NullStore;
 use Guzaba2\Orm\Store\Sql\Mysql;
+use GuzabaPlatform\Platform\Application\GuzabaPlatform;
+use GuzabaPlatform\Platform\Application\MysqlConnection;
 use GuzabaPlatform\Platform\Application\RedisConnection;
 use Guzaba2\Orm\BlockingStore\Nosql\MongoDB;
 use GuzabaPlatform\Platform\Application\MongoDbConnection;
 use Guzaba2\Authorization\BypassAuthorizationProvider;
 
 return [
-    \GuzabaPlatform\Platform\Application\GuzabaPlatform::class => [
+    GuzabaPlatform::class => [
         'swoole'        => [ //this array will be passed to $SwooleHttpServer->set()
             'host'                      => '0.0.0.0',
             'port'                      => 8081,
@@ -40,7 +49,7 @@ return [
         'enable_ssl'    => FALSE,
         'override_html_content_type' => 'json',//to facilitate debugging when opening the XHR in browser
     ],
-    \Guzaba2\Di\Container::class => [
+    Container::class => [
         'dependencies' => [
             'ConnectionFactory'             => [
                 'class'                         => ConnectionFactory::class,
@@ -94,7 +103,7 @@ return [
                 'class'                         => Mysql::class,
                 'args'                          => [
                     'FallbackStore'                 => 'NullOrmStore',
-                    'connection_class'              => \GuzabaPlatform\Platform\Application\MysqlConnection::class,
+                    'connection_class'              => MysqlConnection::class,
                 ]
             ],
             'NullOrmStore'                  => [
@@ -121,7 +130,7 @@ return [
                 'args'                          => [],
             ],
             'QueryCache' => [
-                'class'                         => \Guzaba2\Database\QueryCache::class,
+                'class'                         => QueryCache::class,
                 'args'                          => [
                     // TODO add required params
                 ],
@@ -140,8 +149,35 @@ return [
                     'Logger'                        => [Kernel::class, 'get_logger'],
                 ],
             ],
-            'AuthorizationProvider'    => [
+            'AuthorizationProvider'         => [
                 'class'                         => BypassAuthorizationProvider::class,
+                'args'                          => [],
+            ],
+            'CurrentUser'                   => [
+                'class'                         => CurrentUser::class,
+                'args'                          => [
+                    'User'                          => 'DefaultCurrentUser',
+                ],
+            ],
+            'DefaultCurrentUser'            => [
+                'class'                         => User::class,
+                'args'                          => [
+                    'index'                         => 0,
+                ],
+            ],
+            'Events'                        => [
+                'class'                         => Events::class,
+                'args'                          => [],
+            ],
+            'Apm'                           => [
+                'class'                         => CoroutineProfiler::class,
+                'args'                          => [
+                    'Backend'                       => 'ApmBackend',
+                    'worker_id'                     => [Kernel::class, 'get_worker_id'],
+                ],
+            ],
+            'ApmBackend'                    => [
+                'class'                         => NullBackend::class,
                 'args'                          => [],
             ]
         ],
