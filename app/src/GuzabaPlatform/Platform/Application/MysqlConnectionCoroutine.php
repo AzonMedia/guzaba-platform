@@ -2,9 +2,9 @@
 
 namespace GuzabaPlatform\Platform\Application;
 
-use Guzaba2\Database\Sql\Mysql\ConnectionMysqli;
+use Guzaba2\Database\Sql\Mysql\ConnectionCoroutine;
 
-class MysqlConnection extends ConnectionMysqli
+class MysqlConnectionCoroutine extends ConnectionCoroutine
 {
 
     protected const CONFIG_DEFAULTS = [

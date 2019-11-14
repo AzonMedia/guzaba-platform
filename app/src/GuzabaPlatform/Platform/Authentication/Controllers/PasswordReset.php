@@ -9,7 +9,7 @@ use Guzaba2\Mvc\Controller;
 use Guzaba2\Coroutine\Coroutine;
 use Guzaba2\Translator\Translator as t;
 use Guzaba2\Orm\Exceptions\RecordNotFoundException;
-use Guzaba2\Orm\Exceptions\ValidationFailedException;
+use Guzaba2\Orm\Exceptions\InstanceValidationFailedFailedException;
 use Guzaba2\Database\Exceptions\DuplicateKeyException;
 use Guzaba2\Database\Exceptions\ForeignKeyConstraintException;
 use GuzabaPlatform\Platform\Authentication\Models\User;
@@ -66,7 +66,7 @@ class PasswordReset extends Controller
             $this->User->change_password($new_password_1, $new_password_2, $old_password);
 
             $struct['message'] = t::_('Your password was changed!');
-        } catch (ValidationFailedException $exception) {
+        } catch (InstanceValidationFailedFailedException $exception) {
             $struct['message'] = t::_($exception->getMessage());
         }
 

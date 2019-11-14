@@ -1,9 +1,10 @@
 <?php
 declare(strict_types=1);
 
-namespace Guzaba2\Platform;
+namespace GuzabaPlatform\bin;
 
 use Azonmedia\Registry\RegistryBackendArray;
+use Guzaba2\Di\Container;
 use GuzabaPlatform\Platform\Application\GuzabaPlatform;
 use Azonmedia\Registry\Registry;
 use Azonmedia\Registry\RegistryBackendCli;
@@ -18,6 +19,8 @@ use Psr\Log\LogLevel;
 
 (function() {
 
+    error_reporting(E_ALL);
+
     if (version_compare(phpversion(),'7.4.0RC5', '<')) {
         print 'The application requires PHP 7.4.0RC5 or higher.'.PHP_EOL;
         exit(1);
@@ -26,8 +29,8 @@ use Psr\Log\LogLevel;
     $autoload_path = realpath(__DIR__ . '/../../vendor/autoload.php');
     require_once($autoload_path);
 
-    require_once('cli_options.php');
-    $cli_options_mapping = get_cli_options();
+    require_once('CliOptions.php');
+    $cli_options_mapping = CliOptions::get_cli_options();
 
     //ini_set("swoole.enable_preemptive_scheduler","1");
     //\Swoole\Coroutine::set([ 'enable_preemptive_scheduler' => 1 ]);
@@ -72,6 +75,9 @@ use Psr\Log\LogLevel;
     $Logger->pushHandler($StdoutHandler);
 
     Kernel::initialize($Registry, $Logger);
+
+    $DependencyContainer = new Container();
+    Kernel::set_di_container($DependencyContainer);
 
     //from this point the kernel (and most importantly the autoloader) is usable
     //up until this point no Guzaba2 classes can be autoloaded (only composer autoload works - from other packages)

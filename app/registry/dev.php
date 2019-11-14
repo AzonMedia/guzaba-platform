@@ -21,10 +21,12 @@ use Guzaba2\Orm\Store\NullStore;
 use Guzaba2\Orm\Store\Sql\Mysql;
 use GuzabaPlatform\Platform\Application\GuzabaPlatform;
 use GuzabaPlatform\Platform\Application\MysqlConnection;
+use GuzabaPlatform\Platform\Application\MysqlConnectionCoroutine;
 use GuzabaPlatform\Platform\Application\RedisConnection;
 use Guzaba2\Orm\BlockingStore\Nosql\MongoDB;
 use GuzabaPlatform\Platform\Application\MongoDbConnection;
 use Guzaba2\Authorization\BypassAuthorizationProvider;
+use Psr\Log\LogLevel;
 
 return [
     GuzabaPlatform::class => [
@@ -47,6 +49,7 @@ return [
         'cors_origin'   => 'http://localhost:8081',
         'enable_http2'  => FALSE,//if enabled enable_static_handler/document_root doesnt work
         'enable_ssl'    => FALSE,
+        'log_level'     => LogLevel::DEBUG,
         'override_html_content_type' => 'json',//to facilitate debugging when opening the XHR in browser
     ],
     Container::class => [
@@ -103,7 +106,8 @@ return [
                 'class'                         => Mysql::class,
                 'args'                          => [
                     'FallbackStore'                 => 'NullOrmStore',
-                    'connection_class'              => MysqlConnection::class,
+                    'connection_class'              => MysqlConnectionCoroutine::class,
+                    'no_coroutine_connection_class' => MysqlConnection::class,
                 ]
             ],
             'NullOrmStore'                  => [

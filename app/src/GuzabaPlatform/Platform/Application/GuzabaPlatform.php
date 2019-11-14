@@ -2,6 +2,7 @@
 
 namespace GuzabaPlatform\Platform\Application;
 
+use Guzaba2\Orm\ClassDeclarationValidation;
 use Guzaba2\Routing\ControllerDefaultRoutingMap;
 use Guzaba2\Routing\ActiveRecordDefaultRoutingMap;
 use Guzaba2\Translator\Translator as t;
@@ -30,7 +31,7 @@ use Psr\Log\LogLevel;
 class GuzabaPlatform extends Application
 {
     protected const CONFIG_DEFAULTS = [
-        'swoole'        => [ //this array will be passed to $SwooleHttpServer->set()
+        'swoole'            => [ //this array will be passed to $SwooleHttpServer->set()
             'host'                      => '0.0.0.0',
             'port'                      => 8081,
             'server_options'            => [
@@ -46,16 +47,24 @@ class GuzabaPlatform extends Application
             ],
 
         ],
-        'version'       => 'dev',
+        'version'           => 'dev',
 
-        'cors_origin'   => 'http://localhost:8080',
-        'enable_http2'  => FALSE,//if enabled enable_static_handler/document_root doesnt work
-        'enable_ssl'    => FALSE,
-        'log_level'     => LogLevel::DEBUG,
+        'cors_origin'       => 'http://localhost:8080',
+        'enable_http2'      => FALSE,//if enabled enable_static_handler/document_root doesnt work
+        'enable_ssl'        => FALSE,
+        'log_level'         => LogLevel::DEBUG,
+        'kernel'            => [
+            'disable_all_class_load'            => FALSE,
+            'disable_all_class_validation'      => FALSE,
+        ],
+
 
         'override_html_content_type' => 'json',//to facilitate debugging when opening the XHR in browser
 
 
+        'services'      => [
+            'ConnectionFactory',//needed to release all single connections before server start
+        ],
     ];
 
     protected const CONFIG_RUNTIME = [];
@@ -88,7 +97,7 @@ BANNER;
         $this->app_directory = $app_directory;
         $this->generated_files_dir = $generated_files_dir;
 
-        Kernel::run($this);
+        Kernel::run($this, self::CONFIG_RUNTIME['kernel']);
     }
 
     public function __invoke() : int
@@ -98,9 +107,6 @@ BANNER;
 
     public function execute() : int
     {
-
-        $DependencyContainer = new Container();
-        Kernel::set_di_container($DependencyContainer);
 
         $Watchdog = new \Azonmedia\Watchdog\Watchdog(new \Azonmedia\Watchdog\Backends\SwooleTableBackend());
         Kernel::set_watchdog($Watchdog);
@@ -123,8 +129,6 @@ BANNER;
             $server_options['open_http2_protocol'] = TRUE;
         }
 
-        //doesnt seem to work properly
-        //$swoole_config['static_handler_locations'] = [$this->app_directory.'public/img/'];
 
         $HttpServer = new \Guzaba2\Swoole\Server(self::CONFIG_RUNTIME['swoole']['host'], self::CONFIG_RUNTIME['swoole']['port'], $server_options);
 
@@ -170,8 +174,8 @@ BANNER;
         //$ServingMiddleware = new ServingMiddleware($HttpServer, []);//this serves all requests
         $PlatformMiddleware = new PlatformMiddleware($this, $HttpServer);
 
-        //$ExecutorMiddleware = new ExecutorMiddleware($HttpServer, self::CONFIG_RUNTIME['override_html_content_type']);
-        $ExecutorMiddleware = new ExecutorMiddleware($HttpServer);
+        $ExecutorMiddleware = new ExecutorMiddleware($HttpServer, self::CONFIG_RUNTIME['override_html_content_type']);
+        //$ExecutorMiddleware = new ExecutorMiddleware($HttpServer);
         $Authorization = new AuthCheckMiddleware($HttpServer, []);
 
         //adding middlewares slows down significantly the processing
@@ -208,13 +212,6 @@ BANNER;
         Kernel::printk(PHP_EOL);
         Kernel::printk(sprintf('GuzabaPlatform %s at %s', self::CONFIG_RUNTIME['version'], $this->app_directory).PHP_EOL);
 
-        $Logger = Kernel::get_logger();
-        $handlers = $Logger->getHandlers();
-        $error_handlers_str = t::_('Error Handlers:').PHP_EOL;
-        foreach ($handlers as $Handler) {
-            $error_handlers_str .= str_repeat(' ',4).'- '.get_class($Handler).' : '.$Handler->getUrl().' : '.$Logger::getLevelName($Handler->getLevel()).PHP_EOL;
-        }
-        Kernel::printk($error_handlers_str);
 
         $middlewares_info = t::_('Middlewares:').PHP_EOL;
         foreach ($middlewares as $Middleware) {
@@ -222,6 +219,9 @@ BANNER;
         }
         Kernel::printk($middlewares_info);
 
+        //close any single connections that may have been opened during this phase
+        self::get_service('ConnectionFactory')->close_all_connections();
+        //after the server is started new connections (Pools) will be created for each worker
         $HttpServer->start();
 
         return Kernel::EXIT_SUCCESS;

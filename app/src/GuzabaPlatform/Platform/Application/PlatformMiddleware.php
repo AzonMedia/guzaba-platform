@@ -51,10 +51,9 @@ class PlatformMiddleware extends Base
 
         //disable the locking if the request does not involve updates
         //this must be the very first thing
-
-        // if ($Request->getMethodConstant() === Method::HTTP_GET && self::CONFIG_RUNTIME['disable_locking_on_get']) {
+        if ($Request->getMethodConstant() === Method::HTTP_GET && self::CONFIG_RUNTIME['disable_locking_on_get']) {
             ActiveRecord::disable_locking();
-        // }
+        }
 
         $headers = $Request->getHeaders();
 

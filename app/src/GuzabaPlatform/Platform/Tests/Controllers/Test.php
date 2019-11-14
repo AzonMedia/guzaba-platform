@@ -7,7 +7,7 @@ use Guzaba2\Coroutine\Coroutine;
 use Guzaba2\Http\Method;
 use Guzaba2\Mvc\Controller;
 use GuzabaPlatform\Platform\Application\GuzabaPlatform as GP;
-use GuzabaPlatform\Platform\Application\MysqlConnection;
+use GuzabaPlatform\Platform\Application\MysqlConnectionCoroutine;
 
 class Test extends Controller
 {
@@ -31,7 +31,7 @@ class Test extends Controller
     {
         //$struct = ['message' => 'ok'];
         //$Response = self::get_structured_ok_response($struct);
-        $Connection = static::get_service('ConnectionFactory')->get_connection(MysqlConnection::class, $CR);
+        $Connection = static::get_service('ConnectionFactory')->get_connection(MysqlConnectionCoroutine::class, $CR);
         //$Context = Coroutine::getContext();
         //print $Context->CurrentUser->get_id();
         //print self::get_service('CurrentUser')->get()->get_id();

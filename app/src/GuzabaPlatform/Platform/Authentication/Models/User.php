@@ -3,7 +3,7 @@
 namespace GuzabaPlatform\Platform\Authentication\Models;
 
 use Guzaba2\Orm\ActiveRecord;
-use Guzaba2\Orm\Exceptions\ValidationFailedException;
+use Guzaba2\Orm\Exceptions\InstanceValidationFailedFailedException;
 use Guzaba2\Translator\Translator as t;
 use GuzabaPlatform\Platform\Authentication\Models\Token as Token;
 // use GuzabaPlatform\Platform\Authentication\Models\JwtToken as Token;
@@ -24,7 +24,7 @@ class User extends \Guzaba2\Authorization\User
      * @param string $new_password_2
      * @param string $old_password
      *
-     * @throws ValidationFailedException
+     * @throws InstanceValidationFailedFailedException
      */
     public function change_password(string $new_password_1, string $new_password_2, string $old_password)
     {
@@ -61,7 +61,7 @@ class User extends \Guzaba2\Authorization\User
         }
 
         if (!empty($messages)) {
-            throw new ValidationFailedException($messages);
+            throw new InstanceValidationFailedFailedException($messages);
         }
 
         //$this->user_password = password_hash($new_password_1, self::CONFIG_RUNTIME['alg'], ['cost' => self::CONFIG_RUNTIME['cost']]);
