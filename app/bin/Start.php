@@ -45,7 +45,6 @@ class Start extends Command
             //print $option_name.' '.$option_value;
             $options[$option_name] = $option_value;
         } elseif (is_array($option_name)) {
-            print '*';
             if (count($option_name) > 1) {
                 throw new \InvalidArgumentException(sprintf(t::_('The array provided for $option_name can contain only one entry.')));
             }

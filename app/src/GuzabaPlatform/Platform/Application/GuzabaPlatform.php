@@ -31,7 +31,7 @@ use Psr\Log\LogLevel;
 class GuzabaPlatform extends Application
 {
     protected const CONFIG_DEFAULTS = [
-        'swoole'            => [ //this array will be passed to $SwooleHttpServer->set()
+        'swoole'                    => [ //this array will be passed to $SwooleHttpServer->set()
             'host'                      => '0.0.0.0',
             'port'                      => 8081,
             'server_options'            => [
@@ -47,13 +47,14 @@ class GuzabaPlatform extends Application
             ],
 
         ],
-        'version'           => 'dev',
+        'version'                   => 'dev',
 
-        'cors_origin'       => 'http://localhost:8080',
-        'enable_http2'      => FALSE,//if enabled enable_static_handler/document_root doesnt work
-        'enable_ssl'        => FALSE,
-        'log_level'         => LogLevel::DEBUG,
-        'kernel'            => [
+        'cors_origin'               => 'http://localhost:8081',
+        'enable_http2'              => FALSE,//if enabled enable_static_handler/document_root doesnt work
+        'enable_ssl'                => FALSE,
+        'disable_static_handler'    => FALSE,
+        'log_level'                 => LogLevel::DEBUG,
+        'kernel'                    => [
             'disable_all_class_load'            => FALSE,
             'disable_all_class_validation'      => FALSE,
         ],
@@ -115,6 +116,11 @@ BANNER;
 
         $server_options = self::CONFIG_RUNTIME['swoole']['server_options'];
 
+        if (!empty(self::CONFIG_RUNTIME['disable_static_handler'])) {
+            $server_options['enable_static_handler'] = FALSE;
+            unset($server_options['document_root']);
+        }
+
         if (!empty($server_options['enable_static_handler']) && empty($server_options['document_root'])) {
             $server_options['document_root'] = $this->app_directory.'public/';
         }
@@ -128,7 +134,6 @@ BANNER;
         if (self::CONFIG_RUNTIME['enable_http2']) {
             $server_options['open_http2_protocol'] = TRUE;
         }
-
 
         $HttpServer = new \Guzaba2\Swoole\Server(self::CONFIG_RUNTIME['swoole']['host'], self::CONFIG_RUNTIME['swoole']['port'], $server_options);
 

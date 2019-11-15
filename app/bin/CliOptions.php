@@ -18,10 +18,18 @@ abstract class CliOptions
         'document-root'                 => [
             'shortcut'          => NULL,
             'input'             => InputOption::VALUE_REQUIRED,
-            'description'       => 'Add default path to project',
+            'description'       => 'Sets the DocumentRoot for the static serving (static_handler is enabled by default)',
             'default'           => NULL,//is the actual value of GuzabaPlatform::CONFIG_DEFAULTS['some_prop'] but if this is invoked will actually load the class. This class must be loaded with Kernel::autoloader()
             'class'             => GuzabaPlatform::class,
             'option'            => ['swoole' => ['server_options' => ['document_root' => NULL ] ] ],
+        ],
+        'disable-static-handler'         => [
+            'shortcut'          => NULL,
+            'input'             => InputOption::VALUE_NONE,
+            'description'       => 'Disables the handler of static content',
+            'default'           => NULL,
+            'class'             => GuzabaPlatform::class,
+            'option'            => 'disable_static_handler',
         ],
         'enable-ssl'                    => [
             'shortcut'          => NULL,
@@ -85,7 +93,7 @@ abstract class CliOptions
         // call start command without typing it in the console
         $app -> setDefaultCommand($command->getName());
         $app -> run(NULL, $output);
-        
+
         $cli_options_mapping = $command->get_parsed_options();
 
         // this will print out the Symfony Console result from commands (help, list, ... ), error messages, ...
