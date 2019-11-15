@@ -6,8 +6,6 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\BufferedOutput;
 use GuzabaPlatform\Platform\Application\GuzabaPlatform;
 
-require_once('Start.php');
-
 /**
  * Class CliOptions
  * @package GuzabaPlatform\bin

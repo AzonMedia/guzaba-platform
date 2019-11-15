@@ -30,6 +30,7 @@ use Psr\Log\LogLevel;
     require_once($autoload_path);
 
     require_once('CliOptions.php');
+    require_once('Start.php');
     $cli_options_mapping = CliOptions::get_cli_options();
 
     //ini_set("swoole.enable_preemptive_scheduler","1");
