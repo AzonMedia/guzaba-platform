@@ -26,7 +26,7 @@ class Start extends Command
         foreach (CliOptions::CLI_OPTIONS as $option_name => $option_settings) {
             if ($input->getOption($option_name)) {
                 //self::assign_value($this->options, $option_settings['option'], $input->getOption($option_name));
-                $pointer =& $this->parsed_options;
+                $pointer =& $this->parsed_options[$option_settings['class']];
                 self::assign_value($pointer, $option_settings['option'], $input->getOption($option_name));
             }
         }
