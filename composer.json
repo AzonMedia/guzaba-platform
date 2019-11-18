@@ -5,6 +5,7 @@
     "keywords": ["GuzabaPlatform", "application platform", "plugin management"],
     "homepage": "https://github.com/AzonMedia/guzaba-platform",
     "license": "BSD-3-Clause",
+    "minimum-stability": "dev",
     "authors": [
         {
             "name": "Vesko Kenashkov",
