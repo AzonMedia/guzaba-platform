@@ -1,4 +1,18 @@
 {
+    "name": "azonmedia/guzaba-platform",
+    "type": "project",
+    "description": "A plugin based platform for creating applications",
+    "keywords": ["GuzabaPlatform", "application platform", "plugin management"],
+    "homepage": "https://github.com/AzonMedia/guzaba-platform",
+    "license": "BSD-3-Clause",
+    "authors": [
+        {
+            "name": "Vesko Kenashkov",
+            "email": "kenashkov@azonmedia.com",
+            "homepage": "http://azonmedia.com",
+            "role": "Developer"
+        }
+    ],
     "minimum-stability": "dev",
     "require": {
         "azonmedia/guzaba2": "dev-master",
