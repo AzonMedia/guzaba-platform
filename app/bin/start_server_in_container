@@ -1,0 +1,2 @@
+export GUZABA_PLATFORM_HOST_DIR=`pwd`/../../
+docker-compose -f ../dockerfiles/GuzabaPlatform/docker-compose.yml up

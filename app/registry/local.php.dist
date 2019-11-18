@@ -11,9 +11,6 @@ return [
         'timeout' => 1.5,
         'password' => '',
         'database' => 0,
-        'services' => [
-            'ConnectionFactory'
-        ],
         'expiry_time' => 3600,
     ],
     \GuzabaPlatform\Platform\Application\MysqlConnection::class => [

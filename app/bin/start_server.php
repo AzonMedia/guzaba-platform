@@ -50,14 +50,25 @@ use Psr\Log\LogLevel;
 
     chdir($app_directory);
 
-    $RegistryBackendEnv = new RegistryBackendEnv('');
-    $Registry = new Registry($RegistryBackendEnv, $generated_runtime_config_file, $generated_runtime_config_dir);
+//    $RegistryBackendEnv = new RegistryBackendEnv('');
+//    $Registry = new Registry($RegistryBackendEnv, $generated_runtime_config_file, $generated_runtime_config_dir);
+//
+//    $RegistryBackendArray = new RegistryBackendArray(realpath(__DIR__ . '/../registry'));
+//    $Registry->add_backend($RegistryBackendArray);
+//
+//    $RegistryBackendCli = new RegistryBackendCli($cli_options_mapping);
+//    $Registry->add_backend($RegistryBackendCli);
 
+    //Registry Setup
+    //the priority from highest to lowest is: Cli, Env, Array
+    $RegistryBackendCli = new RegistryBackendCli($cli_options_mapping);
+    $Registry = new Registry($RegistryBackendCli, $generated_runtime_config_file, $generated_runtime_config_dir);
+    $RegistryBackendEnv = new RegistryBackendEnv('');
+    $Registry->add_backend($RegistryBackendEnv);
     $RegistryBackendArray = new RegistryBackendArray(realpath(__DIR__ . '/../registry'));
     $Registry->add_backend($RegistryBackendArray);
 
-    $RegistryBackendCli = new RegistryBackendCli($cli_options_mapping);
-    $Registry->add_backend($RegistryBackendCli);
+
 
     $Logger = new Logger('main_log');
     $Formatter = new LineFormatter(

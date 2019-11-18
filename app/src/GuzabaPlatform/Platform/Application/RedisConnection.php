@@ -15,9 +15,9 @@ class RedisConnection extends ConnectionCoroutine
         'database' => 0,
         'options' => [
             // returns saved arrays properly
-            'compatibility_mode' => true
+            'compatibility_mode' => TRUE
         ],
-        'expiry_time' => null
+        'expiry_time' => NULL
     ];
 
     protected const CONFIG_RUNTIME = [];

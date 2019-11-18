@@ -1,0 +1,65 @@
+version: '3'
+services:
+  swoole:
+    image: kenashkov/php:7.4-swoole-stretch
+    restart: always
+    ports:
+    - "8081:8081"
+    volumes:
+    #- "/home/local:/home/local"
+#    - "/home/local/PROJECTS/
+    #- "/home/local/PROJECTS/guzaba-platform/guzaba-platform:/home/local"
+    - "${GUZABA_PLATFORM_HOST_DIR}:/home/local"
+    stdin_open: true
+    tty: true
+    env_file:
+      guzaba-platform.env
+  redishost:
+    image: "redis:alpine"
+    restart: always
+    #export for debug
+    ports:
+    - "6379:6379"
+#  mongohost:
+#    image: "mongo:4.0-xenial"
+#    #exported for debug
+#    ports:
+#    - "27017:27017"
+#    restart: always
+  mysqlhost:
+    image: "mysql:8"
+    #export for DB import
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    ports:
+    - "3306:3306"
+    #volumes:
+    #- "${MYSQL_DATA_HOST_DIR}:/var/lib/mysql"
+    environment:
+      MYSQL_ROOT_PASSWORD: somerootpass
+#  adminer:
+#    image: adminer
+#    restart: always
+#    ports:
+#      - 8080:8080
+  phpmyadmin:
+    depends_on:
+        - mysqlhost
+    image: phpmyadmin/phpmyadmin
+    restart: always
+    ports:
+    - "8085:80"
+    environment:
+      PMA_HOST: mysqlhost
+      MYSQL_ROOT_PASSWORD: somerootpass
+  phpredisadmin:
+    depends_on:
+    - redishost
+    image:
+      faktiva/php-redis-admin
+    restart: always
+    ports:
+    - "8086:80"
+    environment:
+      PHPREDMIN_DATABASE_REDIS_0_HOST: redishost
+#default user & pass for phpredisadmin is admin:admin
