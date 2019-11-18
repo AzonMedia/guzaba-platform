@@ -42,8 +42,8 @@ class GuzabaPlatform extends Application
                 'document_root'             => NULL,//to be set dynamically
                 'enable_static_handler'     => TRUE,
                 // 'open_http2_protocol'       => FALSE,//depends on enable-http2 (and enable-ssl)
-                // 'ssl_cert_file'             => NULL,
-                // 'ssl_key_file'              => NULL,
+                'ssl_cert_file'             => NULL,
+                'ssl_key_file'              => NULL,
             ],
 
         ],
@@ -127,8 +127,11 @@ BANNER;
 
         //if (!empty($server_options['open_http2_protocol'])) {
         if (self::CONFIG_RUNTIME['enable_ssl']) {
-            $server_options['ssl_cert_file'] = $this->app_directory.'certificates/localhost.crt';
-            $server_options['ssl_key_file'] = $this->app_directory.'certificates/localhost.key';
+            $server_options['ssl_cert_file'] = $server_options['ssl_cert_file'] ? $server_options['ssl_cert_file'] : $this->app_directory.'certificates/localhost.crt';
+            $server_options['ssl_key_file'] = $server_options['ssl_key_file'] ? $server_options['ssl_key_file'] : $this->app_directory.'certificates/localhost.key';
+        } else {
+            unset($server_options['ssl_cert_file']);
+            unset($server_options['ssl_key_file']);
         }
 
         if (self::CONFIG_RUNTIME['enable_http2']) {

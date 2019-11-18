@@ -39,6 +39,22 @@ abstract class CliOptions
             'class'             => GuzabaPlatform::class,
             'option'            => 'enable_ssl',
         ],
+        'ssl-cert-file'                 => [
+            'shortcut'          => NULL,
+            'input'             => InputOption::VALUE_OPTIONAL,
+            'description'       => 'Sets ssl cert file',
+            'default'           => NULL,
+            'class'             => GuzabaPlatform::class,
+            'option'            => ['swoole' => ['server_options' => ['ssl_cert_file' => NULL ] ] ],
+        ],
+        'ssl-key-file'                 => [
+            'shortcut'          => NULL,
+            'input'             => InputOption::VALUE_OPTIONAL,
+            'description'       => 'Sets ssl key file',
+            'default'           => NULL,
+            'class'             => GuzabaPlatform::class,
+            'option'            => ['swoole' => ['server_options' => ['ssl_key_file' => NULL ] ] ],
+        ],
         'enable-http2'                  => [
             'shortcut'          => NULL,
             'input'             => InputOption::VALUE_NONE,
