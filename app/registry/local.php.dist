@@ -24,4 +24,14 @@ return [
         'database'  => 'db',
         'tprefix'   => 'prefix_',
     ],
+    \GuzabaPlatform\Platform\Application\MysqlConnectionCoroutine::class => [
+        'host'      => 'host',
+        'port'      => 3306,
+        'user'      => 'user',
+        'password'  => 'pass',
+        'database'  => 'db',
+        'tprefix'   => 'prefix_',
+    ],
+
+
 ];
