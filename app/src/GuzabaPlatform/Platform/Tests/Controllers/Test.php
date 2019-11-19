@@ -8,6 +8,7 @@ use Guzaba2\Http\Method;
 use Guzaba2\Mvc\Controller;
 use GuzabaPlatform\Platform\Application\GuzabaPlatform as GP;
 use GuzabaPlatform\Platform\Application\MysqlConnectionCoroutine;
+use GuzabaPlatform\Platform\Authentication\Models\User;
 
 class Test extends Controller
 {
@@ -35,7 +36,13 @@ class Test extends Controller
         //$Context = Coroutine::getContext();
         //print $Context->CurrentUser->get_id();
         //print self::get_service('CurrentUser')->get()->get_id();
-        $str = 'asd';
+
+        //$arr = \GuzabaPlatform\Platform\Tests\Models\Test::get_by( ['test_name' => 'some test value'] );
+        $o = new \GuzabaPlatform\Platform\Tests\Models\Test(72);
+        print_r(json_encode($o));
+
+        //$str = 'test records: '.count($arr);
+        $str = 'all good';
         $Response = self::get_string_ok_response($str);
         return $Response;
     }
