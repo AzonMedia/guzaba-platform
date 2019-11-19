@@ -49,7 +49,7 @@ $ composer install
 ```
 **NOTE - on first run:** The front end needs to be compiled - inside the container execute:
 ```
-$ cd /home/local/app/public_src/build_prod
+$ /home/local/app/public_src/build_prod
 ```
 
 There is no need to set up local configuration in the ./app/registry because the [environment file](https://github.com/AzonMedia/guzaba-platform/blob/master/app/dockerfiles/GuzabaPlatformDev/guzaba-platform.env) contains all the needed variables.
