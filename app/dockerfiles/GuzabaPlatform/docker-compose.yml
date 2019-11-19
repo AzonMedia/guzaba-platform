@@ -10,7 +10,7 @@ services:
 #    - "/home/local/PROJECTS/
     #- "/home/local/PROJECTS/guzaba-platform/guzaba-platform:/home/local"
     - "${GUZABA_PLATFORM_HOST_DIR}:/home/local"
-    entrypoint: /home/local/app/bin/start_server
+    entrypoint: php /home/local/app/bin/start_server.php
     env_file:
       guzaba-platform.env
   redishost:
