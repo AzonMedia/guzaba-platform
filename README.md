@@ -71,7 +71,8 @@ $ composer install
 # Create local configuration
 $ cp app/registry/local.php.dist app/registry/local.php
 
-#
+# Build the front end
+$ app/public_src/build_prod
 ```
 
 Change the settings in your ```app/registry/local.php``` so you can connect to the MySQL and to the Redis server. 
