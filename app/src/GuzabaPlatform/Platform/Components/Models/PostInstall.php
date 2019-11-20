@@ -37,22 +37,25 @@ abstract class PostInstall
 
         //print_r($Package);
         $vendor_dir = $PackageEvent->getComposer()->getConfig()->get('vendor-dir');
-        require $vendor_dir . '/autoload.php';
-        $autoload = $Package->getAutoload();
-        if (!isset($autoload['psr-4'])) {
-            throw new \RuntimeException(sprintf('The component %s does not define a "psr-4" autoloader.', $package_name));
-        }
-        $namespace = array_key_first($autoload['psr-4']);
-        $component_class = $namespace.'Component';
+        $autoloader = $vendor_dir . '/autoload.php';
+        if (file_exists($autoloader)) {
+            $autoload = $Package->getAutoload();
+            if (!isset($autoload['psr-4'])) {
+                throw new \RuntimeException(sprintf('The component %s does not define a "psr-4" autoloader.', $package_name));
+            }
+            $namespace = array_key_first($autoload['psr-4']);
+            $component_class = $namespace.'Component';
 //        if (!class_exists($component_class)) {
 //            throw new \RuntimeException(sprintf('The component %s does not have a %s class.', $package_name, $component_class));
 //        }
-        if (class_exists($component_class) && $component_class) {
-            if (method_exists($component_class,'post_installation_hook')) {
-                //Todo check is it a static method
-                $component_class::post_installation_hook($PackageEvent);
+            if (class_exists($component_class) && $component_class) {
+                if (method_exists($component_class,'post_installation_hook')) {
+                    //Todo check is it a static method
+                    $component_class::post_installation_hook($PackageEvent);
+                }
             }
         }
+
 
 
         return TRUE;
