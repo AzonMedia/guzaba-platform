@@ -49,4 +49,5 @@ class Component extends ActiveRecord
 
     protected const CONFIG_RUNTIME = [];
 
+
 }

@@ -1,5 +1,5 @@
 {
-    "name": "azonmedia/guzaba-platform",
+    "name": "guzaba-platform/guzaba-platform",
     "type": "project",
     "description": "A plugin based platform for creating applications",
     "keywords": ["GuzabaPlatform", "application platform", "plugin management"],
@@ -20,6 +20,15 @@
         "monolog/monolog": "^2.0@dev",
         "firebase/php-jwt": "dev-master",
         "symfony/var-exporter": "^5.0@dev",
-        "symfony/console": "^5.0@dev"
+        "symfony/console": "^5.0@dev",
+        "composer/composer": "^1.10@dev"
+    },
+    "autoload": {
+        "psr-4": {
+            "GuzabaPlatform\\": "app/src/GuzabaPlatform"
+        }
+    },
+    "scripts" : {
+        "post-package-install": "GuzabaPlatform\\Platform\\Components\\Models\\PostInstall::post_installation_script"
     }
 }
