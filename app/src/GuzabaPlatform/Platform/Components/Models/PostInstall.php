@@ -20,6 +20,7 @@ abstract class PostInstall
     {
 
         $Package = $PackageEvent->getOperation()->getPackage();
+
         //print 'target-dir: '.$Package->getTargetDir().PHP_EOL;
         //print 'installation source: '.$Package->getInstallationSource().PHP_EOL;
         //print 'package name: '.$Package->getName().PHP_EOL;//guzaba-platform/tags
@@ -32,6 +33,7 @@ abstract class PostInstall
 
 
         $package_name = $Package->getName();
+        print str_repeat(' ', 4).sprintf('GuzabaPlatform: Running post installation script for package %s.', $package_name).PHP_EOL;
 
         //print $vendor_dir;// /home/local/PROJECTS/guzaba2-platform/guzaba-platform/vendor
 
@@ -50,8 +52,9 @@ abstract class PostInstall
 //        }
             if (class_exists($component_class) && $component_class) {
                 if (method_exists($component_class,'post_installation_hook')) {
-                    //Todo check is it a static method
+                    //if (is_a($component_class, )
                     $component_class::post_installation_hook($PackageEvent);
+                    print str_repeat(' ',4).sprintf('GuzabaPlatform: Running post installation hook %s.', $component_class.'::post_installation_hook()');
                 }
             }
         }
