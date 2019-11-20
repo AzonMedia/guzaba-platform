@@ -1,4 +1,6 @@
+script=$0
+path=$(dirname "$0")
 npm install
 npm run build
-rm -r ../public/*
-mv ./dist/* ../public
+rm -r $path/../public/*
+mv $path/./dist/* $path/../public

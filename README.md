@@ -59,6 +59,13 @@ To start the application inside the container do:
 $ /home/local/app/bin/start_server
 ```
 
+## Direct application startup
+
+There is also a [docker-compose file](https://github.com/AzonMedia/guzaba-platform/blob/master/app/dockerfiles/GuzabaPlatform/docker-compose.yml) allowing the application to be started along with the other containers (instead of starting the swoole container in interactive mode):
+```
+$ /home/local/app/bin/start_server_in_container
+```
+
 ## Manual install
 
 ```
