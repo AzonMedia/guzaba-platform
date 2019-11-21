@@ -6,6 +6,10 @@ namespace GuzabaPlatform\Platform\Components\Models;
 
 use Composer\Installer\PackageEvent;
 
+//NOT USED
+//"scripts" : {
+//    "post-package-install": "GuzabaPlatform\\Platform\\Components\\Models\\PostInstall::post_installation_script"
+//    }
 /**
  * Class PostInstall
  * @package GuzabaPlatform\Platform\Components\Models

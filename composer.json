@@ -30,7 +30,4 @@
             "GuzabaPlatform\\": "app/src/GuzabaPlatform"
         }
     },
-    "scripts" : {
-        "post-package-install": "GuzabaPlatform\\Platform\\Components\\Models\\PostInstall::post_installation_script"
-    }
 }
