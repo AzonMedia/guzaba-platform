@@ -22,7 +22,8 @@
         "firebase/php-jwt": "dev-master",
         "symfony/var-exporter": "^5.0@dev",
         "symfony/console": "^5.0@dev",
-        "composer/composer": "^1.10@dev"
+        "composer/composer": "^1.10@dev",
+        "guzaba-platform/guzaba-platform-installer": "dev-master"
     },
     "autoload": {
         "psr-4": {
