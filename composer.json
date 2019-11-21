@@ -1,6 +1,6 @@
 {
     "name": "guzaba-platform/guzaba-platform",
-    "type": "project",
+    "type": "guzaba-platform",
     "description": "A plugin based platform for creating applications",
     "keywords": ["GuzabaPlatform", "application platform", "plugin management"],
     "homepage": "https://github.com/AzonMedia/guzaba-platform",
