@@ -41,7 +41,7 @@ vue.$http.interceptors.response.use(
     err => {
         return new Promise(() => {
             if (
-                err.response.status === 401 &&
+                err.status === 401 &&
                 err.config &&
                 !err.config.__isRetryRequest
             ) {

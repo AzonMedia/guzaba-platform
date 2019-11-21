@@ -44,5 +44,11 @@ class RoutingMap
         GP::API_ROUTE_PREFIX.'/user-register'                        => [
             Method::HTTP_POST                               => [Auth::class, 'register'],
         ],
+        GP::API_ROUTE_PREFIX.'/crud-classes'                         => [
+            Method::HTTP_GET_HEAD_OPT                       => [Crud::class, 'classes'],
+        ],
+        GP::API_ROUTE_PREFIX.'/crud-objects/{class_name}/{page}/{limit}/{search_values}/{sort_by}/{sort_desc}' => [
+            Method::HTTP_GET_HEAD_OPT                       => [Crud::class, 'objects'],
+        ],
     ];
 }

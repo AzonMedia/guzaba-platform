@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace GuzabaPlatform\Platform\Application;
 
 // use Guzaba2\Application\Application;
-use Guzaba2\Authorization\User;
+use GuzabaPlatform\Platform\Authentication\Models\User;
 use Guzaba2\Base\Base;
 use Guzaba2\Base\Exceptions\InvalidArgumentException;
 use Guzaba2\Base\Exceptions\RunTimeException;
@@ -81,7 +81,7 @@ class PlatformMiddleware extends Base
         if (isset($current_user_id)) {
             $Context = Coroutine::getContext();
             $User = new User($current_user_id);
-            $Context->CurrentUser->set($User);
+            self::get_service('CurrentUser')->set($User);
         }
 
         $Response = $Handler->handle($Request);

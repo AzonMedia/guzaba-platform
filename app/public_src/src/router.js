@@ -42,7 +42,15 @@ let router = new Router({
             path: '/logout',
             name: 'user logout',
             component: () => store.dispatch('logout')
-        }
+        },
+        {
+            path: '/crud',
+            name: 'CRUD',
+            component: () =>
+                import(
+                    './GuzabaPlatform/Platform/views/Crud.vue')
+        },
+
     ]
 })
 
