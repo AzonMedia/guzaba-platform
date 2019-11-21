@@ -94,12 +94,19 @@ use Psr\Log\LogLevel;
     //from this point the kernel (and most importantly the autoloader) is usable
     //up until this point no Guzaba2 classes can be autoloaded (only composer autoload works - from other packages)
 
-    //make the Kernela aware from where to load the components
     $root_directory = realpath($app_directory.'/../');
     $Manifest = json_decode(file_get_contents($root_directory.'/manifest.json'));
     foreach ($Manifest->components as $Component) {
         Kernel::register_autoloader_path($Component->namespace, $Component->src_dir);
     }
+    //TODO - check the composer.json for an autoload section and provide it here
+    $Composer = json_decode(file_get_contents($root_directory.'/composer.json'), TRUE);
+    if (isset($Composer['autoload']['psr-4'])) {
+        foreach ($Composer['autoload']['psr-4'] as $namespace=>$rel_path) {
+            Kernel::register_autoloader_path($namespace, $root_directory.'/'.$rel_path);
+        }
+    }
+
     //uncomment the below (and update the namespace) if the application will be committed as part of this project instead of a separate package
     //$app_class_path = realpath($app_directory.'src'.DIRECTORY_SEPARATOR);
     //registers where this application classes are located

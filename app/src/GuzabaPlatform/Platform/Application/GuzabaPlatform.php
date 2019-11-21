@@ -221,6 +221,7 @@ BANNER;
         Kernel::printk(sprintf('GuzabaPlatform %s at %s', self::CONFIG_RUNTIME['version'], $this->app_directory).PHP_EOL);
         Kernel::printk(PHP_EOL);
 
+
         $root_directory = realpath($this->app_directory.'/../');
         $Manifest = json_decode(file_get_contents($root_directory.'/manifest.json'));
         $components_info = t::_('Installed components:').PHP_EOL;
