@@ -69,7 +69,7 @@ class User extends \Guzaba2\Authorization\User
         $this->save();
     }
 
-    public function _before_set_user_password($value)
+    protected function _before_set_user_password(string $value) : string
     {
         $res = password_hash($value, self::CONFIG_RUNTIME['alg'], ['cost' => self::CONFIG_RUNTIME['cost']]);
         return $res;

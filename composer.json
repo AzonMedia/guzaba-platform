@@ -15,6 +15,7 @@
         }
     ],
     "require": {
+        "ext-json": "*",
         "guzaba/guzaba2": "dev-master",
         "guzaba-platform/components-base": "dev-master",
         "psr/log": "^1.1",
