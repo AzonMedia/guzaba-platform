@@ -79,14 +79,15 @@ abstract class CliOptions
             'class'             => GuzabaPlatform::class,
             'option'            => 'log_level',
         ],
-        'disable-all-class-load'        => [
-            'shortcut'          => NULL,
-            'input'             => InputOption::VALUE_NONE,
-            'description'       => 'Do not load all classes on startup',
-            'default'           => NULL,
-            'class'             => GuzabaPlatform::class,
-            'option'            => ['kernel' => ['disable_all_class_load' => NULL]],
-        ],
+//it is really bad idea to allow this
+//        'disable-all-class-load'        => [
+//            'shortcut'          => NULL,
+//            'input'             => InputOption::VALUE_NONE,
+//            'description'       => 'Do not load all classes on startup',
+//            'default'           => NULL,
+//            'class'             => GuzabaPlatform::class,
+//            'option'            => ['kernel' => ['disable_all_class_load' => NULL]],
+//        ],
         'disable-all-class-validation'  => [
             'shortcut'          => NULL,
             'input'             => InputOption::VALUE_NONE,

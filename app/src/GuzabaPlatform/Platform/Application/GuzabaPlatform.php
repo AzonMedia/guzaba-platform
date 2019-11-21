@@ -219,6 +219,16 @@ BANNER;
         Kernel::printk(self::PLATFORM_BANNER);
         Kernel::printk(PHP_EOL);
         Kernel::printk(sprintf('GuzabaPlatform %s at %s', self::CONFIG_RUNTIME['version'], $this->app_directory).PHP_EOL);
+        Kernel::printk(PHP_EOL);
+
+        $root_directory = realpath($this->app_directory.'/../');
+        $Manifest = json_decode(file_get_contents($root_directory.'/manifest.json'));
+        $components_info = t::_('Installed components:').PHP_EOL;
+        foreach ($Manifest->components as $Component) {
+            $components_info .= str_repeat(' ',4).'- '.$Component->name.' - '.$Component->namespace.' : '.$Component->src_dir.PHP_EOL;
+        }
+        Kernel::printk($components_info);
+        Kernel::printk(PHP_EOL);
 
 
         $middlewares_info = t::_('Middlewares:').PHP_EOL;
@@ -226,6 +236,7 @@ BANNER;
             $middlewares_info .= str_repeat(' ',4).'- '.get_class($Middleware).PHP_EOL;
         }
         Kernel::printk($middlewares_info);
+        
 
         //close any single connections that may have been opened during this phase
         self::get_service('ConnectionFactory')->close_all_connections();
