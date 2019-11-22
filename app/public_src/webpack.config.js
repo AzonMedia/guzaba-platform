@@ -23,6 +23,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
+const aliases = require('./components_config/webpack.components.config.js').aliases
+
 module.exports = {
     entry: ['./src/main.js'],
     output: {
@@ -32,15 +34,7 @@ module.exports = {
 
     resolve: {
         extensions: ['*', '.webpack.js', '.web.js', '.ts', '.vue', '.js', '.scss'],
-        alias: {
-            vue$: 'vue/dist/vue.esm.js',
-            '@': path.resolve(__dirname, 'src')
-            /*components: path.resolve(
-                __dirname,
-                'src/GuzabaPlatform/Platform/components'
-            ),
-            views: path.resolve(__dirname, 'src/views')*/
-        },
+        alias: aliases,
         modules: [
             path.resolve(__dirname, 'app'),
             path.resolve(__dirname, 'node_modules')
