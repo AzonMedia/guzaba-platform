@@ -234,7 +234,7 @@ BANNER;
 
         $middlewares_info = t::_('Middlewares:').PHP_EOL;
         foreach ($middlewares as $Middleware) {
-            $middlewares_info .= str_repeat(' ',4).'- '.get_class($Middleware).PHP_EOL;
+            $middlewares_info .= str_repeat(' ',4).'- '.get_class($Middleware).' - '.((new \ReflectionClass($Middleware))->getFileName()).PHP_EOL;
         }
         Kernel::printk($middlewares_info);
         

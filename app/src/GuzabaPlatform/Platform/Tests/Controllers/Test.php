@@ -38,8 +38,8 @@ class Test extends Controller
         //print self::get_service('CurrentUser')->get()->get_id();
 
         //$arr = \GuzabaPlatform\Platform\Tests\Models\Test::get_by( ['test_name' => 'some test value'] );
-        $o1 = new \GuzabaPlatform\Platform\Tests\Models\Test(72);
-        $o2 = new \GuzabaPlatform\Platform\Tests\Models\Test(71);
+        $o1 = new \GuzabaPlatform\Platform\Tests\Models\Test(76);
+        $o2 = new \GuzabaPlatform\Platform\Tests\Models\Test(78);
         //print_r(json_encode($o));
 
         //$str = 'test records: '.count($arr);
