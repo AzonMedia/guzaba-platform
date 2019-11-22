@@ -30,5 +30,5 @@
         "psr-4": {
             "GuzabaPlatform\\Platform\\": "app/src/GuzabaPlatform"
         }
-    },
+    }
 }
