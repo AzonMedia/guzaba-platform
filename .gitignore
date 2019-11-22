@@ -4,3 +4,4 @@
 !/app/logs/README.md
 /app/registry/*.local.php
 /app/registry/local.php
+/composer.lock

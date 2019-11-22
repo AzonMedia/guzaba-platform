@@ -196,6 +196,12 @@ BANNER;
 
         $middlewares[] = $RoutingMiddleware;
         $middlewares[] = $PlatformMiddleware;
+
+        //here more middlewares can be injected by the components
+        //the component can inject middlewares in the manifest.json in its PostInstall hook
+        //the component may also inject dependencies in the Di in the registry/dev.php
+        //TODO - read these from the manifest.json - if the component has middlewares: [] array
+
         $middlewares[] = $ExecutorMiddleware;
 
 
