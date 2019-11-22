@@ -17,7 +17,7 @@ use Monolog\Logger;
 use Psr\Log\LogLevel;
 
 
-(function() {
+$a = function() {
 
     error_reporting(E_ALL);
 
@@ -97,7 +97,11 @@ use Psr\Log\LogLevel;
     $root_directory = realpath($app_directory.'/../');
     $Manifest = json_decode(file_get_contents($root_directory.'/manifest.json'));
     foreach ($Manifest->components as $Component) {
-        Kernel::register_autoloader_path($Component->namespace, $Component->src_dir);
+	//if part of the path matches the namespace this part needs to be removed
+	$ns_as_path = str_replace('\\','/',$Component->namespace);
+	$src_dir = $Component->src_dir;
+	$src_dir = str_replace($ns_as_path,'',$src_dir);
+        Kernel::register_autoloader_path($Component->namespace, $src_dir);
     }
     //TODO - check the composer.json for an autoload section and provide it here
     $Composer = json_decode(file_get_contents($root_directory.'/composer.json'), TRUE);
@@ -117,4 +121,5 @@ use Psr\Log\LogLevel;
     new GuzabaPlatform($app_directory, $generated_files_dir);
 
     chdir($initial_directory);
-})();
+};
+$a();

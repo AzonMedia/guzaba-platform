@@ -28,7 +28,7 @@
     },
     "autoload": {
         "psr-4": {
-            "GuzabaPlatform\\Platform\\": "app/src/GuzabaPlatform/Platform"
+            "GuzabaPlatform\\Platform\\": "app/src/GuzabaPlatform/Platform/"
         }
     }
 }
