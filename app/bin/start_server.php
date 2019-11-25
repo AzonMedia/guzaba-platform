@@ -18,7 +18,7 @@ use Monolog\Logger;
 use Psr\Log\LogLevel;
 
 
-$a = function() {
+(function() {
 
     error_reporting(E_ALL);
 
@@ -50,15 +50,6 @@ $a = function() {
     $generated_runtime_config_file = $generated_files_dir.'/runtime_config.php';
 
     chdir($app_directory);
-
-//    $RegistryBackendEnv = new RegistryBackendEnv('');
-//    $Registry = new Registry($RegistryBackendEnv, $generated_runtime_config_file, $generated_runtime_config_dir);
-//
-//    $RegistryBackendArray = new RegistryBackendArray(realpath(__DIR__ . '/../registry'));
-//    $Registry->add_backend($RegistryBackendArray);
-//
-//    $RegistryBackendCli = new RegistryBackendCli($cli_options_mapping);
-//    $Registry->add_backend($RegistryBackendCli);
 
     //Registry Setup
     //the priority from highest to lowest is: Cli, Env, Array
@@ -114,17 +105,12 @@ $a = function() {
         foreach ($Composer['autoload']['psr-4'] as $namespace=>$rel_path) {
             Kernel::register_autoloader_path($namespace, $root_directory.'/'.$rel_path);
         }
-    }
-
-    //uncomment the below (and update the namespace) if the application will be committed as part of this project instead of a separate package
-    //$app_class_path = realpath($app_directory.'src'.DIRECTORY_SEPARATOR);
-    //registers where this application classes are located
-    //Kernel::register_autoloader_path('GuzabaPlatform\\Platform', $app_class_path);
+    };
+    //if there is no autoload/psr-4 section in the composer.json file then here an explicit call to Kernel::register_autoloader_path() needs to be done and the namespace prefix and path provdied.
 
     //past this point it is possible to autoload Application specific classes
 
     new GuzabaPlatform($app_directory, $generated_files_dir);
 
     chdir($initial_directory);
-};
-$a();
+})();
