@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace GuzabaPlatform\bin;
 
 use Azonmedia\Registry\RegistryBackendArray;
+use Guzaba2\Base\Exceptions\RunTimeException;
 use Guzaba2\Di\Container;
 use GuzabaPlatform\Platform\Application\GuzabaPlatform;
 use Azonmedia\Registry\Registry;
@@ -95,12 +96,16 @@ $a = function() {
     //up until this point no Guzaba2 classes can be autoloaded (only composer autoload works - from other packages)
 
     $root_directory = realpath($app_directory.'/../');
-    $Manifest = json_decode(file_get_contents($root_directory.'/manifest.json'));
+    $manifest_json_file = $root_directory.'/manifest.json';
+    if (!file_exists($manifest_json_file) || !is_readable($manifest_json_file)) {
+        throw new RunTimeException(sprintf('The file %s does not exist. This file is created when "composer require guzaba-platofrm/guzaba-platform" is executed.', $manifest_json_file));
+    }
+    $Manifest = json_decode(file_get_contents($manifest_json_file));
     foreach ($Manifest->components as $Component) {
-	//if part of the path matches the namespace this part needs to be removed
-	$ns_as_path = str_replace('\\','/',$Component->namespace);
-	$src_dir = $Component->src_dir;
-	$src_dir = str_replace($ns_as_path,'',$src_dir);
+        //if part of the path matches the namespace this part needs to be removed
+        $ns_as_path = str_replace('\\','/',$Component->namespace);
+        $src_dir = $Component->src_dir;
+        $src_dir = str_replace($ns_as_path,'',$src_dir);
         Kernel::register_autoloader_path($Component->namespace, $src_dir);
     }
     //TODO - check the composer.json for an autoload section and provide it here
