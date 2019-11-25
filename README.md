@@ -8,12 +8,12 @@ Guzaba Platform is a front end and plugin management system for [Guzaba2 Framewo
 
 There is a [docker-compose file](https://github.com/AzonMedia/guzaba-platform/blob/master/app/dockerfiles/GuzabaPlatformDev/docker-compose.yml) with preset environment variables available at [./app/dockerfiles/GuzabaPlatformDev/](https://github.com/AzonMedia/guzaba-platform/tree/master/app/dockerfiles/GuzabaPlatformDev). 
 
-Before the application is started it needs to be deployed on the host system with:
+Before the application is started it needs to be deployed on the host system in an empty directory with:
 
 ```
-# clone the repository
-$ git clone git@github.com:AzonMedia/guzaba-platform.git
+$ composer require guzaba-platform/guzaba-platform
 ```
+This will install GuzabaPlatform and run the GuzabaPlatformInstaller package that will create the needed directories & files in the root of the project. 
 
 To deploy the application in containers execute:
 ```
@@ -42,11 +42,6 @@ If the above command produces an error this is most probably related to the cont
 $ docker ps
 ```  
 
-**NOTE - on first run:** The dependencies need to be installed - inside the container execute:
-```
-$ cd /home/local
-$ composer install
-```
 **NOTE - on first run:** The front end needs to be compiled - inside the container execute:
 ```
 $ cd /home/local/app/public_src
