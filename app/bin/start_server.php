@@ -93,10 +93,8 @@ use Psr\Log\LogLevel;
     }
     $Manifest = json_decode(file_get_contents($manifest_json_file));
     foreach ($Manifest->components as $Component) {
-        //if part of the path matches the namespace this part needs to be removed
         $ns_as_path = str_replace('\\','/',$Component->namespace);
         $src_dir = $Component->src_dir;
-        $src_dir = str_replace($ns_as_path,'',$src_dir);
         Kernel::register_autoloader_path($Component->namespace, $src_dir);
     }
     //TODO - check the composer.json for an autoload section and provide it here

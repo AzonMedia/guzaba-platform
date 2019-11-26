@@ -2,7 +2,8 @@
 
 ## Introduction
 
-Guzaba Platform is a front end and plugin management system for [Guzaba2 Framework](https://github.com/AzonMedia/guzaba2).
+[GuzabaPlatform](https://github.com/AzonMedia/guzaba-platform) is a plugin based system for building applications ranging from presentational websites to corporate applications.
+It is based on the [Guzaba 2 Framework](https://github.com/AzonMedia/guzaba2).
 
 ## Deployment in containers
 
@@ -65,11 +66,8 @@ $ /home/local/app/bin/start_server_in_container
 ## Manual install
 
 ```
-# clone the repository
-$ git clone git@github.com:AzonMedia/guzaba-platform.git
-
-# Fetch dependencies
-$ composer install
+# require GuzabaPlatform
+$ composer require guzaba-platform/guzaba-platform
 
 # Create local configuration
 $ cp app/registry/local.php.dist app/registry/local.php
@@ -83,8 +81,6 @@ Change the settings in your ```app/registry/local.php``` so you can connect to t
 ## Documentation
 
 The complete documentation is available at [Guzaba Platform Documentation](https://github.com/AzonMedia/guzaba-platform-docs).
-
-
 
 
 ## Directory structure

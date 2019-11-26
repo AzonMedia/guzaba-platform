@@ -2,6 +2,8 @@
 
 namespace GuzabaPlatform\Platform\Application;
 
+use Guzaba2\Event\Event;
+use Guzaba2\Kernel\Interfaces\ClassInitializationInterface;
 use Guzaba2\Orm\ClassDeclarationValidation;
 use Guzaba2\Routing\ControllerDefaultRoutingMap;
 use Guzaba2\Routing\ActiveRecordDefaultRoutingMap;
@@ -64,6 +66,7 @@ class GuzabaPlatform extends Application
 
 
         'services'      => [
+            'Middlewares',
             'ConnectionFactory',//needed to release all single connections before server start
         ],
     ];
@@ -184,26 +187,31 @@ BANNER;
 
         $ExecutorMiddleware = new ExecutorMiddleware($HttpServer, self::CONFIG_RUNTIME['override_html_content_type']);
         //$ExecutorMiddleware = new ExecutorMiddleware($HttpServer);
-        $Authorization = new AuthCheckMiddleware($HttpServer, []);
+        //$Authorization = new AuthCheckMiddleware($HttpServer, []);
 
-        //adding middlewares slows down significantly the processing
-        //$middlewares[] = $RestMiddleware;
-        //$middlewares[] = $ApplicationMiddleware;
-        $middlewares[] = $RewritingMiddleware;
-        //$middlewares[] = $ServingMiddleware;//this is a custom middleware
-        $middlewares[] = $CorsMiddleware;
-        $middlewares[] = $Authorization;
-
-        $middlewares[] = $RoutingMiddleware;
-        $middlewares[] = $PlatformMiddleware;
+//        //adding middlewares slows down significantly the processing
+//        //$middlewares[] = $RestMiddleware;
+//        //$middlewares[] = $ApplicationMiddleware;
+//        $middlewares[] = $RewritingMiddleware;
+//        //$middlewares[] = $ServingMiddleware;//this is a custom middleware
+//        $middlewares[] = $CorsMiddleware;
+//        $middlewares[] = $Authorization;
+//        $middlewares[] = $RoutingMiddleware;
+//        $middlewares[] = $PlatformMiddleware;
+//        $middlewares[] = $ExecutorMiddleware;
 
         //here more middlewares can be injected by the components
         //the component can inject middlewares in the manifest.json in its PostInstall hook
         //the component may also inject dependencies in the Di in the registry/dev.php
-        //TODO - read these from the manifest.json - if the component has middlewares: [] array
+        //a component can inject middlewares using a class implementing ClassInitializationInterface and getting the service Middlewares and using the add() with BeforeMiddleware argument
+        //to in inject a middleware before the Execution
 
-        $middlewares[] = $ExecutorMiddleware;
 
+        $Middlewares = self::get_service('Middlewares');
+        new Event($Middlewares, '_before_setup');
+        $Middlewares->add_multiple($RewritingMiddleware, $CorsMiddleware, $RoutingMiddleware, $PlatformMiddleware, $ExecutorMiddleware);
+        //there must be a way to reorder the middlewares and this order to be stored for the next restart
+        new Event($Middlewares, '_after_setup');
 
 
         $DefaultResponseBody = new Stream();
@@ -212,7 +220,9 @@ BANNER;
         //$DefaultResponseBody->write('Content not found or request not understood (routing not configured).');
         $DefaultResponse = new Response(StatusCode::HTTP_NOT_FOUND, [], $DefaultResponseBody);
 
-        $RequestHandler = new \Guzaba2\Swoole\Handlers\Http\Request($HttpServer, $middlewares, $DefaultResponse);
+        //$RequestHandler = new \Guzaba2\Swoole\Handlers\Http\Request($HttpServer, $middlewares, $DefaultResponse);
+        //$RequestHandler = new \Guzaba2\Swoole\Handlers\Http\Request($HttpServer, $Middlewares->get_middlewares(), $DefaultResponse);
+        $RequestHandler = new \Guzaba2\Swoole\Handlers\Http\Request($HttpServer, $Middlewares, $DefaultResponse);
 
         $ConnectHandler = new WorkerConnect($HttpServer, new IpFilter());
         //$WorkerHandler = new WorkerHandler($HttpServer);
@@ -237,9 +247,10 @@ BANNER;
         Kernel::printk($components_info);
         Kernel::printk(PHP_EOL);
 
-
         $middlewares_info = t::_('Middlewares:').PHP_EOL;
-        foreach ($middlewares as $Middleware) {
+        //foreach ($middlewares as $Middleware) {
+        //foreach ($Middlewares->get_middlewares() as $Middleware) {
+        foreach ($Middlewares as $Middleware) {
             $middlewares_info .= str_repeat(' ',4).'- '.get_class($Middleware).' - '.((new \ReflectionClass($Middleware))->getFileName()).PHP_EOL;
         }
         Kernel::printk($middlewares_info);

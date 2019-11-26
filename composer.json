@@ -26,6 +26,9 @@
         "composer/composer": "^1.10@dev",
         "guzaba-platform/guzaba-platform-installer": "dev-master"
     },
+    "require-dev": {
+        "guzaba-platform/guzbaa-platform-docs": "dev-master"
+    },
     "autoload": {
         "psr-4": {
             "GuzabaPlatform\\Platform\\": "app/src/GuzabaPlatform/Platform/"

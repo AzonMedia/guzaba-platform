@@ -6,6 +6,7 @@ use Azonmedia\Lock\Backends\SwooleTableBackend;
 use Azonmedia\Lock\CoroutineLockManager;
 use Guzaba2\Authorization\CurrentUser;
 //use Guzaba2\Authorization\User;
+use GuzabaPlatform\Platform\Application\Middlewares;
 use GuzabaPlatform\Platform\Authentication\Models\User;
 use Guzaba2\Database\ConnectionFactory;
 use Guzaba2\Database\ConnectionProviders\Basic;
@@ -184,7 +185,13 @@ return [
             'ApmBackend'                    => [
                 'class'                         => NullBackend::class,
                 'args'                          => [],
-            ]
+            ],
+            'Middlewares'                   => [
+                'class'                         => Middlewares::class,
+                'args'                          => [
+                    'middlewares'                  => [],//these are defined in GuzabaPlatform
+                ],
+            ],
         ],
     ],
 ];
