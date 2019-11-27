@@ -26,8 +26,7 @@ use Psr\Log\LogLevel;
         print 'The application requires PHP 7.4.0RC5 or higher.'.PHP_EOL;
         exit(1);
     }
-
-    $autoload_path = realpath(__DIR__ . '/../../vendor/autoload.php');
+    $autoload_path = realpath(__DIR__ . '/../../../../autoload.php');
     require_once($autoload_path);
 
     require_once('CliOptions.php');
@@ -44,8 +43,8 @@ use Psr\Log\LogLevel;
     }
 
     $initial_directory = getcwd();
-    $app_directory = realpath(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR).DIRECTORY_SEPARATOR;
-    $generated_files_dir = $app_directory.'startup_generated';
+    $app_directory = realpath(dirname($autoload_path) .'/../app/');
+    $generated_files_dir = $app_directory.'/startup_generated';
     $generated_runtime_config_dir  = $generated_files_dir.'/runtime_configs';
     $generated_runtime_config_file = $generated_files_dir.'/runtime_config.php';
 
@@ -70,7 +69,7 @@ use Psr\Log\LogLevel;
         TRUE  // ignoreEmptyContextAndExtra option, default false
     );
 
-    $FileHandler = new StreamHandler($app_directory.'logs'.DIRECTORY_SEPARATOR.'main_log.txt', $log_level);
+    $FileHandler = new StreamHandler($app_directory.'/logs'.DIRECTORY_SEPARATOR.'main_log.txt', $log_level);
     $FileHandler->setFormatter($Formatter);
     $Logger->pushHandler($FileHandler);
 
