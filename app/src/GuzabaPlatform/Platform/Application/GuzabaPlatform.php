@@ -125,7 +125,7 @@ BANNER;
         }
 
         if (!empty($server_options['enable_static_handler']) && empty($server_options['document_root'])) {
-            $server_options['document_root'] = $this->app_directory.'public/';
+            $server_options['document_root'] = $this->app_directory.'/public/';
         }
 
         //if (!empty($server_options['open_http2_protocol'])) {
