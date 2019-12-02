@@ -32,10 +32,11 @@ class Test extends Controller
     {
         //$struct = ['message' => 'ok'];
         //$Response = self::get_structured_ok_response($struct);
-        $Connection = static::get_service('ConnectionFactory')->get_connection(MysqlConnectionCoroutine::class, $CR);
+        //$Connection = static::get_service('ConnectionFactory')->get_connection(MysqlConnectionCoroutine::class, $CR);
         //$Context = Coroutine::getContext();
         //print $Context->CurrentUser->get_id();
         //print self::get_service('CurrentUser')->get()->get_id();
+        self::get_service('CurrentUser');
 
         //$arr = \GuzabaPlatform\Platform\Tests\Models\Test::get_by( ['test_name' => 'some test value'] );
         $o1 = new \GuzabaPlatform\Platform\Tests\Models\Test(76);
@@ -46,6 +47,7 @@ class Test extends Controller
         //$str = 'all good';
         //$Response = self::get_string_ok_response($str);
         $Response = self::get_structured_ok_response([$o1, $o2]);
+        $Response = $Response->withHeader('data-origin','orm-specific');
         return $Response;
     }
 }

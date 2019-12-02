@@ -1,6 +1,6 @@
 <?php
 
-namespace GuzabaPlatform\Platform\Home\Controllers;
+namespace GuzabaPlatform\Platform\Crud\Controllers;
 
 use Guzaba2\Http\Method;
 use Guzaba2\Mvc\Controller;
@@ -33,10 +33,14 @@ class Crud extends Controller
         ],
     ];
 
+    /**
+     * returns a list with all ActiveRecord classes
+     */
     public function classes(): ResponseInterface
     {
         $struct['classes'] = [];
 
+        // get all ActiveRecord classes that are loaded by the Kernel
         $classes = ActiveRecord::get_active_record_classes(array_keys(Kernel::get_registered_autoloader_paths()));
         foreach ($classes as $class_name) {
             try {
@@ -47,10 +51,19 @@ class Crud extends Controller
             }
         }
 
+        asort($struct['classes']);
         $Response = parent::get_structured_ok_response($struct);
         return $Response;
     }
 
+    /**
+     * @param string $class_name
+     * @param int $page
+     * @param int $limit
+     * @param string $search_values: url encoded, base64 encoded, JSON.stringified array
+     * @param string $sort_by: column name
+     * @param string $sort_desc: true / false; if true => sort DESC
+     */
     public function objects(string $class_name, int $page, int $limit, string $search_values, string $sort_by, string $sort_desc): ResponseInterface
     {
         $Connection = static::get_service('ConnectionFactory')->get_connection(MysqlConnectionCoroutine::class, $CR);
@@ -68,10 +81,12 @@ class Crud extends Controller
         $activeRecordKeys = array_keys($columns_data);
         $activeRecordKeys[] = 'object_uuid';
         $struct['properties'] = $activeRecordKeys;
-        
-        $struct['data'] = $ActiveRecord::get_data_by((array) $search, $offset, $limit, $use_like = TRUE, $sort_by, (bool) $sort_desc);
 
-        $struct['totalItems'] = $ActiveRecord::get_data_count_by((array) $search, $use_like = TRUE);
+        $struct['data'] = $ActiveRecord::get_data_by((array) $search, $offset, $limit, $use_like = TRUE, $sort_by, (bool) $sort_desc, $total_found_rows);
+
+
+        //$struct['totalItems'] = $ActiveRecord::get_data_count_by((array) $search, $use_like = TRUE);
+        $struct['data'] = $total_found_rows;
         $struct['numPages'] = ceil($struct['totalItems'] / $limit);
 
         $Response = parent::get_structured_ok_response($struct);

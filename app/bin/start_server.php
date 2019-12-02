@@ -56,7 +56,8 @@ use Psr\Log\LogLevel;
     $Registry = new Registry($RegistryBackendCli, $generated_runtime_config_file, $generated_runtime_config_dir);
     $RegistryBackendEnv = new RegistryBackendEnv('');
     $Registry->add_backend($RegistryBackendEnv);
-    $RegistryBackendArray = new RegistryBackendArray(realpath(__DIR__ . '/../registry'));
+
+    $RegistryBackendArray = new RegistryBackendArray(realpath($app_directory . '/registry'));
     $Registry->add_backend($RegistryBackendArray);
 
 

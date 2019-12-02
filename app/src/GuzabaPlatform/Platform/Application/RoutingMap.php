@@ -11,6 +11,7 @@ use GuzabaPlatform\Platform\Authentication\Controllers\ManageProfile;
 use GuzabaPlatform\Platform\Authentication\Controllers\PasswordReset;
 use GuzabaPlatform\Platform\Home\Controllers\Home;
 use GuzabaPlatform\Platform\Application\GuzabaPlatform as GP;
+use GuzabaPlatform\Platform\Crud\Controllers\Crud;
 
 /**
  * Class RoutingMap

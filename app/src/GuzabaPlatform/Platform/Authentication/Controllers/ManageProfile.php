@@ -20,7 +20,7 @@ class ManageProfile extends Controller
         GP::API_ROUTE_PREFIX.'/manage-profile'   => [
         //'/user-login'   => [
             Method::HTTP_GET_HEAD_OPT       => [self::class, 'main'],
-            Method::HTTP_POST               => [self::class, 'save'],
+            Method::HTTP_POST               => [self::class, 'update'],
         ],
     ];
 
@@ -65,7 +65,7 @@ class ManageProfile extends Controller
         return $Response;
     }
 
-    public function save(string $user_name, string $user_email) : ResponseInterface
+    public function update(string $user_name, string $user_email) : ResponseInterface
     {
         $struct = [];
 
