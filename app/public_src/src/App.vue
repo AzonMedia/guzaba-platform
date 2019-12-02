@@ -5,8 +5,6 @@
       <router-link to="/login" v-if="! isLoggedIn">Login</router-link>
       <router-link to="/logout" v-if="isLoggedIn">Logout</router-link> |
       <router-link to="/about">About</router-link>
-      <span v-if="isLoggedIn"> | </span>
-      <router-link to="/crud" v-if="isLoggedIn">CRUD</router-link>
     </div>
     <router-view/>
   </div>
