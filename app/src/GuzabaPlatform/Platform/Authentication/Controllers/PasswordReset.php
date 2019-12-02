@@ -21,7 +21,7 @@ class PasswordReset extends Controller
         GP::API_ROUTE_PREFIX.'/password-reset'   => [
         //'/password-reset'   => [
             Method::HTTP_GET_HEAD_OPT       => [self::class, 'main'],
-            Method::HTTP_POST               => [self::class, 'save'],
+            Method::HTTP_POST               => [self::class, 'update'],
         ],
     ];
 
@@ -58,7 +58,7 @@ class PasswordReset extends Controller
         return $Response;
     }
 
-    public function save(string $new_password_1, string $new_password_2, string $old_password) : ResponseInterface
+    public function update(string $new_password_1, string $new_password_2, string $old_password) : ResponseInterface
     {
         $struct = [];
 

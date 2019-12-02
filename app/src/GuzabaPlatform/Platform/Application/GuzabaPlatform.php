@@ -115,10 +115,13 @@ BANNER;
         $Watchdog = new \Azonmedia\Watchdog\Watchdog(new \Azonmedia\Watchdog\Backends\SwooleTableBackend());
         Kernel::set_watchdog($Watchdog);
 
-        $middlewares = [];
 
         $server_options = self::CONFIG_RUNTIME['swoole']['server_options'];
 
+        if (self::is_production()) {
+            $server_options['daemonize'] = TRUE;
+            $server_options['log_file'] = $this->app_directory.'/logs/swoole_log.txt';
+        }
         if (!empty(self::CONFIG_RUNTIME['disable_static_handler'])) {
             $server_options['enable_static_handler'] = FALSE;
             unset($server_options['document_root']);
@@ -188,7 +191,7 @@ BANNER;
         $ExecutorMiddleware = new ExecutorMiddleware($HttpServer, self::CONFIG_RUNTIME['override_html_content_type']);
         //$ExecutorMiddleware = new ExecutorMiddleware($HttpServer);
         //$Authorization = new AuthCheckMiddleware($HttpServer, []);
-
+//      $middlewares = [];
 //        //adding middlewares slows down significantly the processing
 //        //$middlewares[] = $RestMiddleware;
 //        //$middlewares[] = $ApplicationMiddleware;
@@ -234,7 +237,7 @@ BANNER;
 
         Kernel::printk(self::PLATFORM_BANNER);
         Kernel::printk(PHP_EOL);
-        Kernel::printk(sprintf('GuzabaPlatform %s at %s', self::CONFIG_RUNTIME['version'], $this->app_directory).PHP_EOL);
+        Kernel::printk(sprintf('GuzabaPlatform version %s running in %s mode at %s', self::CONFIG_RUNTIME['version'], static::get_deployment(), $this->app_directory).PHP_EOL);
         Kernel::printk(PHP_EOL);
 
 

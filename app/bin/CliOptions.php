@@ -74,7 +74,7 @@ abstract class CliOptions
         'log-level'                     => [
             'shortcut'          => NULL,
             'input'             => InputOption::VALUE_REQUIRED,
-            'description'       => 'Sets the log level as per the PSR-3',
+            'description'       => 'Sets the log level. Valid options are "debug", "info", "notice", "warning", "error", "critical", "alert", "emergency". Default is "debug".',
             'default'           => NULL,
             'class'             => GuzabaPlatform::class,
             'option'            => 'log_level',
@@ -96,6 +96,15 @@ abstract class CliOptions
             'class'             => GuzabaPlatform::class,
             'option'            => ['kernel' => ['disable_all_class_validation' => NULL]],
         ],
+        'deployment'                    => [
+            'shortcut'          => NULL,
+            'input'             => InputOption::VALUE_REQUIRED,
+            'description'       => 'Valid options are "production", "staging", "deployment". Default is "deployment". In production Swoole is daemonized.',
+            'default'           => NULL,
+            'class'             => \Guzaba2\Application\Application::class,
+            'option'            => 'deployment',
+        ],
+
     ];
 
     public static function get_cli_options() : array

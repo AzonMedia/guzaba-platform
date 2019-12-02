@@ -81,10 +81,16 @@ class Crud extends Controller
         $activeRecordKeys = array_keys($columns_data);
         $activeRecordKeys[] = 'object_uuid';
         $struct['properties'] = $activeRecordKeys;
+<<<<<<< Updated upstream:app/src/GuzabaPlatform/Platform/Crud/Controllers/Crud.php
 
         $struct['data'] = $ActiveRecord::get_data_by((array) $search, $offset, $limit, $use_like = TRUE, $sort_by, (bool) $sort_desc);
+=======
+        
+        $struct['data'] = $ActiveRecord::get_data_by((array) $search, $offset, $limit, $use_like = TRUE, $sort_by, (bool) $sort_desc, $total_found_rows);
+>>>>>>> Stashed changes:app/src/GuzabaPlatform/Platform/Home/Controllers/Crud.php
 
-        $struct['totalItems'] = $ActiveRecord::get_data_count_by((array) $search, $use_like = TRUE);
+        //$struct['totalItems'] = $ActiveRecord::get_data_count_by((array) $search, $use_like = TRUE);
+        $struct['data'] = $total_found_rows;
         $struct['numPages'] = ceil($struct['totalItems'] / $limit);
 
         $Response = parent::get_structured_ok_response($struct);
