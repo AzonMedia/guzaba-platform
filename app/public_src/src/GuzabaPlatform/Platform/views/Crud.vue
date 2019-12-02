@@ -233,7 +233,7 @@ export default {
         	this.action = action;
         	this.crudObjectUuid = null;
         	this.putValues = row;
-
+			console.log(row);
 			for (var key in row) {
 				if (key == "object_uuid") {
 		    		this.crudObjectUuid = row[key];

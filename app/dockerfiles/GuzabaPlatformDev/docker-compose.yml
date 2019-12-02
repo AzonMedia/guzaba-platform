@@ -9,7 +9,7 @@ services:
     #- "/home/local:/home/local"
 #    - "/home/local/PROJECTS/
     #- "/home/local/PROJECTS/guzaba-platform/guzaba-platform:/home/local"
-    - "${GUZABA_PLATFORM_HOST_DIR}:/home/local"
+    - "${GUZABA_PLATFORM_HOST_DIR}:${GUZABA_PLATFORM_HOST_DIR}"
     stdin_open: true
     tty: true
     env_file:

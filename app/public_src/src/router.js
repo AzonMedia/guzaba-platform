@@ -50,7 +50,11 @@ let router = new Router({
                 import(
                     './GuzabaPlatform/Platform/views/Crud.vue')
         },
-
+        {
+            path: '/register',
+            name: 'Register',
+            component: Auth
+        },
     ]
 })
 

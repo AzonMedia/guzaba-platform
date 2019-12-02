@@ -10,6 +10,7 @@ use GuzabaPlatform\Platform\Application\GuzabaPlatform as GP;
 use GuzabaPlatform\Platform\Authentication\Models\JwtToken as Token;
 use GuzabaPlatform\Platform\Authentication\Models\User;
 use Psr\Http\Message\ResponseInterface;
+use Guzaba2\Kernel\Kernel;
 
 class Auth extends Controller
 {

@@ -87,14 +87,14 @@ CREATE TABLE `guzaba_log_entries` (
 --
 
 CREATE TABLE `guzaba_object_meta` (
-  `object_uuid_binary` binary(16) NOT NULL,
-  `object_uuid` char(36) GENERATED ALWAYS AS (bin_to_uuid(`object_uuid_binary`)) VIRTUAL NOT NULL,
-  `class_name` varchar(255) NOT NULL,
-  `object_id` bigint(20) UNSIGNED NOT NULL,
-  `object_create_microtime` bigint(16) UNSIGNED NOT NULL,
-  `object_last_update_microtime` bigint(16) UNSIGNED NOT NULL,
-  `object_create_transaction_id` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
-  `object_last_update_transction_id` bigint(20) UNSIGNED NOT NULL DEFAULT '0'
+  `meta_object_uuid_binary` binary(16) NOT NULL,
+  `meta_object_uuid` char(36) GENERATED ALWAYS AS (bin_to_uuid(`meta_object_uuid_binary`)) VIRTUAL NOT NULL,
+  `meta_class_name` varchar(255) NOT NULL,
+  `meta_object_id` bigint(20) UNSIGNED NOT NULL,
+  `meta_object_create_microtime` bigint(16) UNSIGNED NOT NULL,
+  `meta_object_last_update_microtime` bigint(16) UNSIGNED NOT NULL,
+  `meta_object_create_transaction_id` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
+  `meta_object_last_update_transction_id` bigint(20) UNSIGNED NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
@@ -104,14 +104,14 @@ CREATE TABLE `guzaba_object_meta` (
 --
 
 CREATE TABLE `guzaba_object_meta_new` (
-  `object_uuid_binary` binary(16) NOT NULL,
-  `class_name` varchar(255) NOT NULL,
-  `object_id` bigint(20) UNSIGNED NOT NULL,
-  `object_create_microtime` bigint(16) UNSIGNED NOT NULL,
-  `object_last_update_microtime` bigint(16) UNSIGNED NOT NULL,
-  `object_create_transaction_id` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
-  `object_last_update_transction_id` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
-  `object_uuid` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL
+  `meta_object_uuid_binary` binary(16) NOT NULL,
+  `meta_class_name` varchar(255) NOT NULL,
+  `meta_object_id` bigint(20) UNSIGNED NOT NULL,
+  `meta_object_create_microtime` bigint(16) UNSIGNED NOT NULL,
+  `meta_object_last_update_microtime` bigint(16) UNSIGNED NOT NULL,
+  `meta_object_create_transaction_id` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
+  `meta_object_last_update_transction_id` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
+  `meta_object_uuid` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
@@ -121,14 +121,14 @@ CREATE TABLE `guzaba_object_meta_new` (
 --
 
 CREATE TABLE `guzaba_object_meta_test` (
-  `object_uuid_binary` binary(16) NOT NULL,
-  `class_name` varchar(255) NOT NULL,
-  `object_id` bigint(20) UNSIGNED NOT NULL,
-  `object_create_microtime` bigint(16) UNSIGNED NOT NULL,
-  `object_last_update_microtime` bigint(16) UNSIGNED NOT NULL,
-  `object_create_transaction_id` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
-  `object_last_update_transction_id` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
-  `object_uuid` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci GENERATED ALWAYS AS (bin_to_uuid(`object_uuid_binary`)) VIRTUAL NOT NULL
+  `meta_object_uuid_binary` binary(16) NOT NULL,
+  `meta_class_name` varchar(255) NOT NULL,
+  `meta_object_id` bigint(20) UNSIGNED NOT NULL,
+  `meta_object_create_microtime` bigint(16) UNSIGNED NOT NULL,
+  `meta_object_last_update_microtime` bigint(16) UNSIGNED NOT NULL,
+  `meta_object_create_transaction_id` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
+  `meta_object_last_update_transction_id` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
+  `meta_object_uuid` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci GENERATED ALWAYS AS (bin_to_uuid(`object_uuid_binary`)) VIRTUAL NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
