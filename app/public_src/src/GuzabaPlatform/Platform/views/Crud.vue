@@ -14,7 +14,7 @@
 
                             <template slot="top-row" slot-scope="{ fields }">
                                 <td v-for="field in fields">
-                                    <template v-if="field.key=='object_uuid'">
+                                    <template v-if="field.key=='meta_object_uuid'">
                                         <b-button size="sm" variant="outline-primary" type="submit" @click="search()">Search</b-button>
                                     </template>
 
@@ -24,7 +24,7 @@
                                 </td>
                             </template>
 
-                            <template v-slot:cell(object_uuid)="row">
+                            <template v-slot:cell(meta_object_uuid)="row">
                                   <b-button size="sm" variant="outline-danger" v-on:click.stop="" @click="showModal('delete', row.item)">Delete</b-button>
                             </template>
 
@@ -53,9 +53,9 @@
                     <template v-if="!actionState">
                         <p>{{actionTitle}}</p>
 
-                        <b-form-group class="form-group" v-for="(value, index) in putValues" v-if="index!='object_uuid'" :label="index" label-align="right" label-cols="3">
+                        <b-form-group class="form-group" v-for="(value, index) in putValues" v-if="index!='meta_object_uuid'" :label="index" label-align="right" label-cols="3">
 
-                            <template  v-if="action=='delete'">
+                            <template v-if="action=='delete'">
                                 <b-form-input :value="value" disabled></b-form-input>
                             </template>
 
@@ -168,7 +168,7 @@ export default {
                 for (var i in resp.data.properties) {
                     var key = resp.data.properties[i];
 
-                    if (key != 'object_uuid') {
+                    if (key != 'meta_object_uuid') {
                         self.fields.push({
                             key: key,
                             sortable: true
@@ -213,11 +213,12 @@ export default {
         showModal(action, row) {
             this.action = action;
             this.crudObjectUuid = null;
-            this.putValues = row;
 
             for (var key in row) {
-                if (key == "object_uuid") {
+                if (key == "meta_object_uuid") {
                     this.crudObjectUuid = row[key];
+                } else if (!key.includes("meta_")){
+                    this.putValues[key] = row[key];
                 }
             }
 
@@ -281,7 +282,7 @@ export default {
                         var url = this.selectedClassNameShort.toLowerCase() + '/' + this.crudObjectUuid;
 
                         sendValues = this.putValues;
-                        delete sendValues['object_uuid'];
+                        delete sendValues['meta_object_uuid'];
                     break;
 
                     case 'post' :
@@ -289,7 +290,7 @@ export default {
                         var url = this.selectedClassNameShort.toLowerCase();
 
                         sendValues = this.putValues;
-                        delete sendValues['object_uuid'];
+                        delete sendValues['meta_object_uuid'];
                     break;
                 }
 
