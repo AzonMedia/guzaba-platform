@@ -86,9 +86,9 @@ class Crud extends Controller
         $activeRecordKeys[] = 'meta_object_uuid';
         $struct['properties'] = $activeRecordKeys;
 
-        $struct['data'] = $ActiveRecord::get_data_by((array) $search, $offset, $limit, $use_like = TRUE, $sort_by, (bool) $sort_desc);
+        $struct['data'] = $ActiveRecord::get_data_by((array) $search, $offset, $limit, $use_like = TRUE, $sort_by, (bool) $sort_desc, $total_found_rows);
 
-        $struct['totalItems'] = count($ActiveRecord::get_data_by((array) $search, 0, 0, $use_like = TRUE));
+        $struct['totalItems'] = $total_found_rows;
         $struct['numPages'] = ceil($struct['totalItems'] / $limit);
 
         $Response = parent::get_structured_ok_response($struct);
