@@ -1,17 +1,25 @@
 <?php
 
-use Azonmedia\Apm\CoroutineProfiler;
+//use Azonmedia\Apm\CoroutineProfiler;
 use Azonmedia\Apm\NullBackend;
+use Azonmedia\Apm\Profiler;
 use Azonmedia\Lock\Backends\SwooleTableBackend;
 use Azonmedia\Lock\CoroutineLockManager;
+use Azonmedia\Lock\LockManager;
+use Guzaba2\Authorization\Acl\AclAuthorizationProvider;
 use Guzaba2\Authorization\CurrentUser;
 //use Guzaba2\Authorization\User;
+use Guzaba2\Cache\ContextCache;
+use Guzaba2\Cache\MemoryCache;
+use Guzaba2\Cache\RedisCache;
+use Guzaba2\Cache\SwooleTableCache;
+use Guzaba2\Cache\SwooleTableIntCache;
 use GuzabaPlatform\Platform\Application\Middlewares;
 use GuzabaPlatform\Platform\Authentication\Models\User;
 use Guzaba2\Database\ConnectionFactory;
 use Guzaba2\Database\ConnectionProviders\Basic;
 use Guzaba2\Database\ConnectionProviders\Pool;
-use Guzaba2\Database\QueryCache;
+use Guzaba2\Database\Sql\QueryCache;
 use Guzaba2\Di\Container;
 use Guzaba2\Event\Events;
 use Guzaba2\Kernel\Kernel;
@@ -89,7 +97,8 @@ return [
             'OrmStore'                      => [
                 'class'                         => Memory::class,//the Memory store is the first to be looked into
                 'args'                          => [
-                    'FallbackStore'                 => 'RedisOrmStore',
+                    //'FallbackStore'                 => 'RedisOrmStore',
+                    'FallbackStore'                 => 'MysqlOrmStore',
                 ],
             ],
             'RedisOrmStore'                 => [
@@ -138,37 +147,47 @@ return [
             'QueryCache' => [
                 'class'                         => QueryCache::class,
                 'args'                          => [
-                    // TODO add required params
+                    'TimeCache'                     => 'TimeCache',
+                    'Cache'                         => 'WorkerCache',
                 ],
             ],
             'LockManager'                   => [
-                'class'                         => CoroutineLockManager::class,
+                //'class'                         => CoroutineLockManager::class,
+                'class'                         => LockManager::class,
                 'args'                          => [
                     'Backend'                       => 'LockManagerBackend',
                     'Logger'                        => [Kernel::class, 'get_logger'],
                 ],
-                'initialize_immediately'        => TRUE,
             ],
             'LockManagerBackend'            => [
                 'class'                         => SwooleTableBackend::class,
                 'args'                          => [
                     'Logger'                        => [Kernel::class, 'get_logger'],
                 ],
+                'initialize_immediately'        => TRUE,
             ],
             'AuthorizationProvider'         => [
-                'class'                         => BypassAuthorizationProvider::class,
+                //'class'                         => BypassAuthorizationProvider::class,
+                'class'                         => AclAuthorizationProvider::class,
                 'args'                          => [],
             ],
             'CurrentUser'                   => [
                 'class'                         => CurrentUser::class,
                 'args'                          => [
                     'User'                          => 'DefaultCurrentUser',
+                    //'user_id'                       => 1,
+                    //'user_class'                    => User::class,
                 ],
             ],
             'DefaultCurrentUser'            => [
                 'class'                         => User::class,
                 'args'                          => [
-                    'index'                         => 0,
+                    'index'                         => 1,
+                    'read_only'                     => TRUE,
+                    'permission_checks_disabled'    => TRUE,
+                ],
+                'depends_on'                    => [
+                    'LockManager'
                 ],
             ],
             'Events'                        => [
@@ -176,7 +195,9 @@ return [
                 'args'                          => [],
             ],
             'Apm'                           => [
-                'class'                         => CoroutineProfiler::class,
+                //'class'                         => CoroutineProfiler::class,
+                //'class'                         => Profiler::class,
+                'class'                         => Profiler::class,
                 'args'                          => [
                     'Backend'                       => 'ApmBackend',
                     'worker_id'                     => [Kernel::class, 'get_worker_id'],
@@ -192,6 +213,30 @@ return [
                     'middlewares'                  => [],//these are defined in GuzabaPlatform
                 ],
             ],
+            'TimeCache'                     => [
+                'class'                         => SwooleTableIntCache::class,
+                'args'                          => [],
+                'initialize_immediately'        => TRUE,
+            ],
+            'ContextCache'                  => [ //cache within the execution
+                'class'                         => ContextCache::class,
+                'args'                          => [],
+            ],
+            'WorkerCache'                   => [
+                'class'                         => MemoryCache::class,
+                'args'                          => [],
+            ],
+            'GlobalCache'                   => [
+                //Swoole table is not suitable for general purpose cache, but only a specialized one as it needs to have specific structure defined
+                //'class'                         => SwooleTableCache::class,
+                //'args'                          => [],
+                //'initialize_immediately'        => TRUE,
+                'class'                         => RedisCache::class,
+                'args'                          => [
+                    'connection_class'              => RedisConnection::class,
+                ],
+            ],
+
         ],
     ],
 ];

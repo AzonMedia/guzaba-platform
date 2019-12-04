@@ -14,7 +14,7 @@ class Start extends Command
 
     public function configure() : void
     {
-        $this->setName('start')->setDescription('Sets application options (by providing these to the Registry).')->setHelp('Sets application options (by providing these to the Registry).');
+        $this->setName('start')->setDescription('Sets application options.')->setHelp('Sets application options.');
         foreach (CliOptions::CLI_OPTIONS as $option_name => $option_settings) {
             $this-> addOption ($option_name, $option_settings['shortcut'], $option_settings['input'], $option_settings['description'], $option_settings['default']);
         }

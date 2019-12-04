@@ -20,7 +20,7 @@ use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
 // use GuzabaPlatform\Platform\Authentication\Models\Token as Token;
-use GuzabaPlatform\Platform\Authentication\Models\JwtToken as Token;
+use GuzabaPlatform\Platform\Authentication\Models\JwtToken;
 
 
 class PlatformMiddleware extends Base
@@ -61,7 +61,7 @@ class PlatformMiddleware extends Base
         if (isset($headers['token'])) {
             try {
 
-                $Token = new Token(['token_string' => $headers['token'][0]]);
+                $Token = new JwtToken(['token_string' => $headers['token'][0]]);
 
                 if ($Token->token_expiration_time > time()) {
                     // update token_expiration_time
@@ -81,7 +81,7 @@ class PlatformMiddleware extends Base
 
         if (isset($current_user_id)) {
             $Context = Coroutine::getContext();
-            $User = new User($current_user_id);
+            $User = new User($current_user_id, TRUE, TRUE);
             self::get_service('CurrentUser')->set($User);
         }
 

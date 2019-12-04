@@ -41,7 +41,8 @@ abstract class CliOptions
         ],
         'ssl-cert-file'                 => [
             'shortcut'          => NULL,
-            'input'             => InputOption::VALUE_OPTIONAL,
+            //'input'             => InputOption::VALUE_OPTIONAL,
+            'input'             => InputOption::VALUE_REQUIRED,
             'description'       => 'Sets ssl cert file',
             'default'           => NULL,
             'class'             => GuzabaPlatform::class,
@@ -49,7 +50,8 @@ abstract class CliOptions
         ],
         'ssl-key-file'                 => [
             'shortcut'          => NULL,
-            'input'             => InputOption::VALUE_OPTIONAL,
+            //'input'             => InputOption::VALUE_OPTIONAL,
+            'input'             => InputOption::VALUE_REQUIRED,
             'description'       => 'Sets ssl key file',
             'default'           => NULL,
             'class'             => GuzabaPlatform::class,
@@ -99,7 +101,7 @@ abstract class CliOptions
         'deployment'                    => [
             'shortcut'          => NULL,
             'input'             => InputOption::VALUE_REQUIRED,
-            'description'       => 'Valid options are "production", "staging", "deployment". Default is "deployment". In production Swoole is daemonized.',
+            'description'       => 'Valid options are "production", "staging", "deployment". Default is "deployment". In "production" Swoole is daemonized.',
             'default'           => NULL,
             'class'             => \Guzaba2\Application\Application::class,
             'option'            => 'deployment',

@@ -86,7 +86,7 @@ class Login extends Controller
         try {
             $User = new User([
                 'user_name' => $username
-            ]);
+            ], TRUE, TRUE);
 
             if (password_verify($password, $User->user_password)) {
 

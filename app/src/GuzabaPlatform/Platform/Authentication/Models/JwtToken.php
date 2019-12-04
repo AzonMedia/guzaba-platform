@@ -9,6 +9,7 @@ use Guzaba2\Orm\ActiveRecord;
 use Guzaba2\Base\Exceptions\LogicException;
 use Guzaba2\Base\Base;
 use Firebase\JWT\JWT;
+use Psr\Http\Message\RequestInterface;
 
 /**
  * Class Token
@@ -92,5 +93,21 @@ class JwtToken extends Base implements TokenInterface
     	} else {
     		return $this;
     	}
+    }
+
+    /**
+     * @param RequestInterface $Request
+     */
+    public static function get_user_id_from_request(RequestInterface $Request) /* mixed */
+    {
+        $ret = '';
+        $headers = $Request->getHeaders();
+        if (isset($headers['token'])) {
+            $Token = new JwtToken(['token_string' => $headers['token'][0]]);
+            if ($Token->token_expiration_time > time()) {
+                $ret = $Token->user_id;
+            }
+        }
+        return $ret;
     }
 }
