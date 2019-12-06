@@ -108,11 +108,11 @@ return [
                     'connection_class'              => RedisConnection::class,
                 ],
             ],
-            'RedisCo'                       => [
-                'class'                         => RedisConnection::class,
-                'args'                          => [
-                ],
-            ],
+//            'RedisCo'                       => [
+//                'class'                         => RedisConnection::class,
+//                'args'                          => [
+//                ],
+//            ],
             'MysqlOrmStore'                 => [
                 'class'                         => Mysql::class,
                 'args'                          => [
