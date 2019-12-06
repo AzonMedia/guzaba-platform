@@ -66,8 +66,6 @@ class Crud extends Controller
      */
     public function objects(string $class_name, int $page, int $limit, string $search_values, string $sort_by, string $sort_desc): ResponseInterface
     {
-        $Connection = static::get_service('ConnectionFactory')->get_connection(MysqlConnectionCoroutine::class, $CR);
-
         $struct = [];
 
         if ($sort_by == 'none') {
@@ -76,7 +74,6 @@ class Crud extends Controller
 
         $class_name = str_replace(".", "\\", $class_name);
         $ActiveRecord = new $class_name(0);
-        $main_table = $Connection::get_tprefix().$ActiveRecord::get_main_table();
 
         $offset = ($page - 1) * $limit;
         $search = json_decode(base64_decode(urldecode($search_values)));

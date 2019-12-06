@@ -141,6 +141,9 @@ export default {
 
         getClassObjects(className) {
 
+            this.fields = [];
+            this.newObject = {};
+
             className = className.split('\\').join('.');
 
             if (this.selectedClassName != className) {
@@ -161,9 +164,6 @@ export default {
 
             this.$http.get('/crud-objects/' + this.selectedClassName + '/' + self.currentPage + '/' + self.limit + '/'+ searchValuesToPass + '/' + this.sortBy + '/' + this.sortDesc)
             .then(resp => {
-
-                this.fields = [];
-                this.newObject = {};
 
                 for (var i in resp.data.properties) {
                     var key = resp.data.properties[i];
@@ -213,6 +213,7 @@ export default {
         showModal(action, row) {
             this.action = action;
             this.crudObjectUuid = null;
+            this.putValues = {};
 
             for (var key in row) {
                 if (key == "meta_object_uuid") {
