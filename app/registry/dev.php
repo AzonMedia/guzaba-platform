@@ -1,5 +1,4 @@
 <?php
-declare(strict_types=1);
 
 //use Azonmedia\Apm\CoroutineProfiler;
 use Azonmedia\Apm\NullBackend;
@@ -8,6 +7,7 @@ use Azonmedia\Lock\Backends\SwooleTableBackend;
 use Azonmedia\Lock\CoroutineLockManager;
 use Azonmedia\Lock\LockManager;
 use Guzaba2\Authorization\Acl\AclAuthorizationProvider;
+use Guzaba2\Authorization\Acl\AclCreateAuthorizationProvider;
 use Guzaba2\Authorization\CurrentUser;
 //use Guzaba2\Authorization\User;
 use Guzaba2\Cache\ContextCache;
@@ -169,7 +169,8 @@ return [
             ],
             'AuthorizationProvider'         => [
                 //'class'                         => BypassAuthorizationProvider::class,
-                'class'                         => AclAuthorizationProvider::class,
+                //'class'                         => AclAuthorizationProvider::class,
+                'class'                         => AclCreateAuthorizationProvider::class,
                 'args'                          => [],
             ],
             'CurrentUser'                   => [
