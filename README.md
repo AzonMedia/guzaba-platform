@@ -14,7 +14,7 @@ Before the application is started it needs to be deployed on the host system in 
 ```
 $ echo "{}">composer.json
 $ composer config minimum-stability dev
-$ composer require guzaba-platform/guzaba-platform
+$ composer require guzaba-platform/guzaba-platform:dev-master
 ```
 This will install GuzabaPlatform and run the GuzabaPlatformInstaller package that will create the needed directories & files in the root of the project.
 While the GuzabaPlatform depends on PHP 7.4 and Swoole these requirements are not enforced in the composer.json file as it needs to be possible to bootstrap the application from any environment and the applicattion will be always started in a container which already contains everything needed.
