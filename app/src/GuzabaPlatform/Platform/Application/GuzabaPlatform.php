@@ -219,7 +219,7 @@ BANNER;
 
 
         $DefaultResponseBody = new Stream();
-        $DefaultResponseBody->write('Content not found or request not understood (routing not configured).');
+        $DefaultResponseBody->write('Content not found or request not understood/route not found.');
         //$DefaultResponseBody = new \Guzaba2\Http\Body\Str();
         //$DefaultResponseBody->write('Content not found or request not understood (routing not configured).');
         $DefaultResponse = new Response(StatusCode::HTTP_NOT_FOUND, [], $DefaultResponseBody);
