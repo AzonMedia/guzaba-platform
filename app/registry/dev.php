@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 //use Azonmedia\Apm\CoroutineProfiler;
 use Azonmedia\Apm\NullBackend;

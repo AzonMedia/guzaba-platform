@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace GuzabaPlatform\bin;
 
 use Symfony\Component\Console\Command\Command;
