@@ -17,13 +17,25 @@ use GuzabaPlatform\Platform\Application\GuzabaPlatform as GP;
 class Login extends Controller
 {
 
-    public const ROUTES = [
-        GP::API_ROUTE_PREFIX.'/login'   => [
-        //'/login'   => [
-            Method::HTTP_GET_HEAD_OPT       => [self::class, 'main'],
-            Method::HTTP_POST               => [self::class, 'login'],
+//    public const ROUTES = [
+//        GP::API_ROUTE_PREFIX.'/login'   => [
+//        //'/login'   => [
+//            Method::HTTP_GET_HEAD_OPT       => [self::class, 'main'],
+//            Method::HTTP_POST               => [self::class, 'login'],
+//        ],
+//    ];
+
+    protected const CONFIG_DEFAULTS = [
+        'routes'    => [
+            '/login'   => [
+                //'/login'   => [
+                Method::HTTP_GET_HEAD_OPT       => [self::class, 'main'],
+                Method::HTTP_POST               => [self::class, 'login'],
+            ],
         ],
     ];
+
+    protected const CONFIG_RUNTIME = [];
 
     public function main() : ResponseInterface
     {

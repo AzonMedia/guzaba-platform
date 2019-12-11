@@ -12,11 +12,21 @@ use Psr\Http\Message\ResponseInterface;
 class Home extends Controller
 {
 
-    public const ROUTES = [
-        '/'   => [ //does not use the API prefix as this is not an API route but serves the static content (the main Vue template)
-            Method::HTTP_ALL       => [self::class, 'main'],
+//    public const ROUTES = [
+//        '/'   => [ //does not use the API prefix as this is not an API route but serves the static content (the main Vue template)
+//            Method::HTTP_ALL       => [self::class, 'main'],
+//        ],
+//    ];
+
+    protected const CONFIG_DEFAULTS = [
+        'routes'    => [
+            '/'   => [ //does not use the API prefix as this is not an API route but serves the static content (the main Vue template)
+                Method::HTTP_ALL       => [self::class, 'main'],
+            ],
         ],
     ];
+
+    protected const CONFIG_RUNTIME = [];
 
     public function main() : ResponseInterface
     {

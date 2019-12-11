@@ -18,13 +18,25 @@ use GuzabaPlatform\Platform\Authentication\Models\User;
 class PasswordReset extends Controller
 {
 
-    public const ROUTES = [
-        GP::API_ROUTE_PREFIX.'/password-reset'   => [
-        //'/password-reset'   => [
-            Method::HTTP_GET_HEAD_OPT       => [self::class, 'main'],
-            Method::HTTP_POST               => [self::class, 'update'],
+//    public const ROUTES = [
+//        GP::API_ROUTE_PREFIX.'/password-reset'   => [
+//        //'/password-reset'   => [
+//            Method::HTTP_GET_HEAD_OPT       => [self::class, 'main'],
+//            Method::HTTP_POST               => [self::class, 'update'],
+//        ],
+//    ];
+
+    protected const CONFIG_DEFAULTS = [
+        'routes'    => [
+            GP::API_ROUTE_PREFIX.'/password-reset'   => [
+                //'/password-reset'   => [
+                Method::HTTP_GET_HEAD_OPT       => [self::class, 'main'],
+                Method::HTTP_POST               => [self::class, 'update'],
+            ],
         ],
     ];
+
+    protected const CONFIG_RUNTIME = [];
 
     private User $User;
 

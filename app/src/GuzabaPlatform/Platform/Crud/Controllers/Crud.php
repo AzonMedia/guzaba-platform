@@ -22,18 +22,26 @@ class Crud extends Controller
         'services'      => [
             'ConnectionFactory'
         ],
+        'routes'        => [
+            '/crud-classes' => [
+                Method::HTTP_GET_HEAD_OPT => [self::class, 'classes']
+            ],
+            '/crud-objects/{class_name}/{page}/{limit}/{search_values}/{sort_by}/{sort_desc}' => [
+                Method::HTTP_GET_HEAD_OPT => [self::class, 'objects']
+            ],
+        ],
     ];
 
     protected const CONFIG_RUNTIME = [];
 
-    public const ROUTES = [
-        GP::API_ROUTE_PREFIX . '/crud-classes' => [
-            Method::HTTP_GET_HEAD_OPT => [self::class, 'classes']
-        ],
-        GP::API_ROUTE_PREFIX . '/crud-objects/{class_name}/{page}/{limit}/{search_values}/{sort_by}/{sort_desc}' => [
-            Method::HTTP_GET_HEAD_OPT => [self::class, 'objects']
-        ],
-    ];
+//    public const ROUTES = [
+//        GP::API_ROUTE_PREFIX . '/crud-classes' => [
+//            Method::HTTP_GET_HEAD_OPT => [self::class, 'classes']
+//        ],
+//        GP::API_ROUTE_PREFIX . '/crud-objects/{class_name}/{page}/{limit}/{search_values}/{sort_by}/{sort_desc}' => [
+//            Method::HTTP_GET_HEAD_OPT => [self::class, 'objects']
+//        ],
+//    ];
 
     /**
      * returns a list with all ActiveRecord classes

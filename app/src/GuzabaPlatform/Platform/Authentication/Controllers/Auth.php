@@ -16,15 +16,29 @@ use Guzaba2\Kernel\Kernel;
 class Auth extends Controller
 {
 
-    public const ROUTES = [
-        GP::API_ROUTE_PREFIX . '/user-login' => [
-            Method::HTTP_GET_HEAD_OPT => [self::class, 'main'],
-            Method::HTTP_POST => [self::class, 'login'],
-        ],
-        GP::API_ROUTE_PREFIX . '/user-register' => [
-            Method::HTTP_POST => [self::class, 'register'],
-        ],
+//    public const ROUTES = [
+//        GP::API_ROUTE_PREFIX . '/user-login' => [
+//            Method::HTTP_GET_HEAD_OPT => [self::class, 'main'],
+//            Method::HTTP_POST => [self::class, 'login'],
+//        ],
+//        GP::API_ROUTE_PREFIX . '/user-register' => [
+//            Method::HTTP_POST => [self::class, 'register'],
+//        ],
+//    ];
+
+    protected const CONFIG_DEFAULTS = [
+        'routes'    => [
+            '/user-login' => [
+                Method::HTTP_GET_HEAD_OPT => [self::class, 'main'],
+                Method::HTTP_POST => [self::class, 'login'],
+            ],
+            '/user-register' => [
+                Method::HTTP_POST => [self::class, 'register'],
+            ],
+        ]
     ];
+
+    protected const CONFIG_RUNTIME = [];
 
     public function main(): ResponseInterface
     {

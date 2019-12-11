@@ -17,16 +17,26 @@ use GuzabaPlatform\Platform\Authentication\Models\User;
 class ManageProfile extends Controller
 {
 
-    public const ROUTES = [
-        GP::API_ROUTE_PREFIX.'/manage-profile'   => [
-        //'/user-login'   => [
-            Method::HTTP_GET_HEAD_OPT       => [self::class, 'main'],
-            Method::HTTP_POST               => [self::class, 'update'],
+//    public const ROUTES = [
+//        GP::API_ROUTE_PREFIX.'/manage-profile'   => [
+//        //'/user-login'   => [
+//            Method::HTTP_GET_HEAD_OPT       => [self::class, 'main'],
+//            Method::HTTP_POST               => [self::class, 'update'],
+//        ],
+//    ];
+
+    protected const CONFIG_DEFAULTS = [
+        'routes'    => [
+            '/manage-profile'   => [
+                Method::HTTP_GET_HEAD_OPT       => [self::class, 'main'],
+                Method::HTTP_POST               => [self::class, 'update'],
+            ],
         ],
     ];
 
-    private User $User;
+    protected const CONFIG_RUNTIME = [];
 
+    private User $User;
 
     public function _init() : ResponseInterface
     {

@@ -25,32 +25,32 @@ class RoutingMap
 {
     public const ROUTING_MAP = [
         '/'                                     => [ //this route serves the front end (index.html)
-            Method::HTTP_GET_HEAD_OPT                       => [Home::class, 'main'],
+            Method::HTTP_ALL                       => [Home::class, 'main'],
         ],
-        GP::API_ROUTE_PREFIX.'/login'                                => [
-            Method::HTTP_GET_HEAD_OPT                       => [Login::class, 'main'],
-            Method::HTTP_POST                               => [Login::class, 'login'],
-        ],
-        GP::API_ROUTE_PREFIX.'/manage-profile'                       => [
-            Method::HTTP_GET_HEAD_OPT                       => [ManageProfile::class, 'main'],
-            Method::HTTP_POST                               => [ManageProfile::class, 'save'],
-        ],
-        GP::API_ROUTE_PREFIX.'/password-reset'                       => [
-            Method::HTTP_GET_HEAD_OPT                       => [PasswordReset::class, 'main'],
-            Method::HTTP_POST                               => [PasswordReset::class, 'save'],
-        ],
-        GP::API_ROUTE_PREFIX.'/user-login'                           => [
-            Method::HTTP_GET                                => [Auth::class, 'main'],
-            Method::HTTP_POST                               => [Auth::class, 'login'],
-        ],
-        GP::API_ROUTE_PREFIX.'/user-register'                        => [
-            Method::HTTP_POST                               => [Auth::class, 'register'],
-        ],
-        GP::API_ROUTE_PREFIX.'/crud-classes'                         => [
-            Method::HTTP_GET_HEAD_OPT                       => [Crud::class, 'classes'],
-        ],
-        GP::API_ROUTE_PREFIX.'/crud-objects/{class_name}/{page}/{limit}/{search_values}/{sort_by}/{sort_desc}' => [
-            Method::HTTP_GET_HEAD_OPT                       => [Crud::class, 'objects'],
-        ],
+//        GP::API_ROUTE_PREFIX.'/login'                                => [
+//            Method::HTTP_GET_HEAD_OPT                       => [Login::class, 'main'],
+//            Method::HTTP_POST                               => [Login::class, 'login'],
+//        ],
+//        GP::API_ROUTE_PREFIX.'/manage-profile'                       => [
+//            Method::HTTP_GET_HEAD_OPT                       => [ManageProfile::class, 'main'],
+//            Method::HTTP_POST                               => [ManageProfile::class, 'save'],
+//        ],
+//        GP::API_ROUTE_PREFIX.'/password-reset'                       => [
+//            Method::HTTP_GET_HEAD_OPT                       => [PasswordReset::class, 'main'],
+//            Method::HTTP_POST                               => [PasswordReset::class, 'save'],
+//        ],
+//        GP::API_ROUTE_PREFIX.'/user-login'                           => [
+//            Method::HTTP_GET                                => [Auth::class, 'main'],
+//            Method::HTTP_POST                               => [Auth::class, 'login'],
+//        ],
+//        GP::API_ROUTE_PREFIX.'/user-register'                        => [
+//            Method::HTTP_POST                               => [Auth::class, 'register'],
+//        ],
+//        GP::API_ROUTE_PREFIX.'/crud-classes'                         => [
+//            Method::HTTP_GET_HEAD_OPT                       => [Crud::class, 'classes'],
+//        ],
+//        GP::API_ROUTE_PREFIX.'/crud-objects/{class_name}/{page}/{limit}/{search_values}/{sort_by}/{sort_desc}' => [
+//            Method::HTTP_GET_HEAD_OPT                       => [Crud::class, 'objects'],
+//        ],
     ];
 }

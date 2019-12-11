@@ -15,17 +15,23 @@ use GuzabaPlatform\Platform\Authentication\Models\User;
 class Test extends Controller
 {
 
-    public const ROUTES = [
-        GP::API_ROUTE_PREFIX.'/test2'      => [
-            Method::HTTP_GET_HEAD_OPT               => [self::class, 'main'],
-            Method::HTTP_POST                       => [self::class, 'post'],
-        ],
-    ];
+//    public const ROUTES = [
+//        GP::API_ROUTE_PREFIX.'/test2'      => [
+//            Method::HTTP_GET_HEAD_OPT               => [self::class, 'main'],
+//            Method::HTTP_POST                       => [self::class, 'post'],
+//        ],
+//    ];
 
     protected const CONFIG_DEFAULTS = [
         'services'      => [
 //            'ConnectionFactory',
 //            'CurrentUser',
+        ],
+        'routes'        => [
+            '/test2'      => [
+                Method::HTTP_GET_HEAD_OPT               => [self::class, 'main'],
+                Method::HTTP_POST                       => [self::class, 'post'],
+            ],
         ],
     ];
 
