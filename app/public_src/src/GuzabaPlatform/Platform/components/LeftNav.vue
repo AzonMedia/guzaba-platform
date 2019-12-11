@@ -3,11 +3,11 @@
         <b-nav vertical class="w-25">
             <b-nav-item>
                 <b-card no-body class="mb-1">
-                    <b-card-header v-b-toggle.crud-operations class="p-1" role="tab">
+                    <b-card-header v-b-toggle.crud-classes class="p-1" role="tab">
                         <b-link href="#">Crud Operations</b-link>
                     </b-card-header>
 
-                    <b-collapse id="crud-operations" accordion="my-accordion" role="tabpanel">
+                    <b-collapse id="crud-classes" accordion="my-accordion" role="tabpanel">
                         <b-card-body>
                             <b-card-text v-for="classFullName in classes" @click="loadCrud(classFullName)" class="small" :class="active[classFullName]"> {{ classFullName }} </b-card-text>
                         </b-card-body>
@@ -17,13 +17,13 @@
 
             <b-nav-item>
                 <b-card no-body class="mb-1">
-                    <b-card-header class="p-1" role="tab">
-                        <b-link href="#" v-b-toggle.accordion-2>Example Accordion 2</b-link>
+                    <b-card-header v-b-toggle.crud-permissions class="p-1" role="tab">
+                        <b-link href="#">Permissions</b-link>
                     </b-card-header>
 
-                    <b-collapse id="accordion-2" accordion="my-accordion" role="tabpanel">
+                    <b-collapse id="crud-permissions" accordion="my-accordion" role="tabpanel">
                         <b-card-body>
-                            <b-card-text>Example Text</b-card-text>
+                            <tree-menu @loadPermissions="loadPermissions" class="small" v-for="(node, index) in tree" :nodes="node" :label="index" :depth="1"></tree-menu>
                         </b-card-body>
                     </b-collapse>
                 </b-card>
@@ -37,22 +37,28 @@
 <script>
 // @ is an alias to /src
 import Hook from '@/GuzabaPlatform/Platform/components/hooks/Hooks.vue'
+import TreeMenu from '@/GuzabaPlatform/Platform/components/TreeMenu.vue'
 
 export default {
     name: 'leftNav',
     components: {
-        Hook
+        Hook,
+        TreeMenu
     },
     data() {
         return {
             classes: [],
-            active: []
+            controllers: {},
+            nonControllers: [],
+            active: [],
+            tree: []
         }
     },
     mounted() {
         this.$root.$on('bv::collapse::state', (collapseId, isJustShown) => {
-            if (collapseId == "crud-operations" && isJustShown == true) {
-                this.classes = [];
+            if (isJustShown == true && collapseId == "crud-classes") {
+                this.resetData();
+
                 var self = this;
 
                 this.$http.get('/crud-classes')
@@ -62,14 +68,36 @@ export default {
                 .catch(err => {
                     console.log(err);
                 })
+            } else if (isJustShown == true && collapseId == "crud-permissions") {
+                this.resetData();
+
+                var self = this;
+
+                this.$http.get('/permissions-controllers')
+                .then(resp => {
+                    self.tree = resp.data.tree;
+                })
+                .catch(err => {
+                    console.log(err);
+                })
             }
         })
     },
     methods: {
+        resetData() {
+            this.classes = [];
+            this.nonControllers = [];
+            this.active = [];
+        },
+
         loadCrud(className) {
             this.$emit('loadContent', 'Crud', {selectedClassName: className});
             this.active = [];
             this.active[className] = 'active';
+        },
+
+        loadPermissions(vars) {
+            this.$emit('loadContent', 'Permissions', {selectedMethod: vars});
         }
     },
     watch:{
@@ -94,7 +122,7 @@ export default {
     height: 100vh !important;
 }
 
-p.card-text {
+p.card-text, .tree-menu {
     margin-bottom: 5px;
     text-align: left;
 }
@@ -106,6 +134,11 @@ p.card-text {
 
 .card-header a, .card-text, .nav-link {
     color: #2c3e50;
+    text-align: left;
+}
+
+.card-text:hover {
+    color: #007bff;
 }
 
 .card-text {
@@ -121,5 +154,19 @@ p.card-text {
 
 .card-body {
     padding: .5rem 0 .5rem 0 !important;
+}
+
+.card:hover {
+    color: #2c3e50;
+    cursor: auto;
+}
+
+.tree-menu .label-wrapper {
+    border-bottom: 1px solid #dee2e6;
+    border-bottom: 1px solid #dee2e6;
+}
+.tree-menu .label-wrapper {
+    cursor: pointer !important;
+    color: #2c3e50 !important;
 }
 </style>

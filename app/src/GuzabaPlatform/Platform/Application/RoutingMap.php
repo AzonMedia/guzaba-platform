@@ -13,6 +13,7 @@ use GuzabaPlatform\Platform\Authentication\Controllers\PasswordReset;
 use GuzabaPlatform\Platform\Home\Controllers\Home;
 use GuzabaPlatform\Platform\Application\GuzabaPlatform as GP;
 use GuzabaPlatform\Platform\Crud\Controllers\Crud;
+use GuzabaPlatform\Platform\Crud\Controllers\Permissions;
 
 /**
  * Class RoutingMap
@@ -51,6 +52,12 @@ class RoutingMap
         ],
         GP::API_ROUTE_PREFIX.'/crud-objects/{class_name}/{page}/{limit}/{search_values}/{sort_by}/{sort_desc}' => [
             Method::HTTP_GET_HEAD_OPT                       => [Crud::class, 'objects'],
+        ],
+        GP::API_ROUTE_PREFIX.'/permissions-controllers'             => [
+            Method::HTTP_GET_HEAD_OPT                       => [Permissions::class, 'controllers'],
+        ],
+        GP::API_ROUTE_PREFIX . '/permissions-users/{method_name}' => [
+            Method::HTTP_GET_HEAD_OPT => [self::class, 'permissions']
         ],
     ];
 }

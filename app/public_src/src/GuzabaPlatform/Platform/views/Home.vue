@@ -9,13 +9,17 @@
 // @ is an alias to /src
 import HelloWorld from '@/GuzabaPlatform/Platform/components/HelloWorld.vue'
 import LeftNav from '@/GuzabaPlatform/Platform/components/LeftNav.vue'
+import TreeMenu from '@/GuzabaPlatform/Platform/components/TreeMenu.vue'
 import Crud from '@/GuzabaPlatform/Platform/views/Crud.vue'
+import Permissions from '@/GuzabaPlatform/Platform/views/Permissions.vue'
 
 export default {
     name: 'home',
     components: {
         HelloWorld,
         LeftNav,
+        TreeMenu,
+        Permissions,
         Crud
     },
     data() {
