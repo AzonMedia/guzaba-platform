@@ -36,12 +36,12 @@ class Permissions extends Base
         }
 
         $controllers_tree = self::explodeTree($controllers_classes, "\\");
-        $non_controllers_tree = self::explodeTree($non_controllers_classes, "\\");
+        $non_controllers_tree = self::explodeTree($non_controllers_classes, "\\", TRUE);
 
         return [$controllers_tree, $non_controllers_tree];
     }
 
-    private static function explodeTree($array, $delimiter = '\\', $baseval = false)
+    private static function explodeTree($array, $delimiter = '\\', bool $add_crud_actions = FALSE, $baseval = false)
     {
         if(!is_array($array)) return false;
 
@@ -76,11 +76,22 @@ class Permissions extends Base
                 $RClass = new ReflectionClass($val);
 
                 $methods_arr = [];
-                foreach ($RClass->getMethods() as $method) {
+                foreach ($RClass->getMethods(\ReflectionMethod::IS_PUBLIC) as $method) {
                     if ($method->class == $val && substr($method->name, 0, 1 ) !== "_" ) {
                         $methods_arr[$method->name] = $val . "::" . $method->name;
                     }
-                }  
+                }
+
+                if($add_crud_actions) {
+	                $methods_arr = array_merge([
+                        'create' => $val . '::create',
+                        'read' => $val . '::read',
+                        'write' => $val . '::write',
+                        'delete' => $val . '::delete',
+                        'grant_permission' => $val . '::grant_permission',
+                        'revoke_permission' => $val . '::revoke_permission'
+	                ], $methods_arr);
+                }
 
                 $parentArr[$leafPart] = $methods_arr;
             } elseif ($baseval && is_array($parentArr[$leafPart])) {
@@ -110,6 +121,8 @@ LEFT JOIN
         acl_permissions.class_name = :class_name
     AND
         acl_permissions.action_name = :action_name
+    AND
+		(acl_permissions.object_id IS NULL OR acl_permissions.object_id = 0)
 LEFT JOIN
     {$Connection::get_tprefix()}users as users
     ON
@@ -119,9 +132,8 @@ LEFT JOIN
     ON
         meta.meta_object_id = acl_permissions.permission_id
 WHERE
-    users.user_id IS NULL
-OR
-    users.user_id = 1
+	(users.user_id IS NULL OR users.user_id = 1)
+
 ORDER BY
     roles.role_name
 ";

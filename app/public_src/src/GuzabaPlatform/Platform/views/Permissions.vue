@@ -78,11 +78,11 @@ export default {
             if (row.meta_object_uuid !== null) {
                 this.action = "delete";
 
-                var url = 'permission/' + row.meta_object_uuid;
+                var url = 'acl-permission/' + row.meta_object_uuid;
             } else {
                 this.action = "post";
 
-                var url = 'permission';
+                var url = 'acl-permission';
 
                 sendValues.role_id = row.role_id;
 
