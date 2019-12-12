@@ -2,7 +2,7 @@
     <div class="permissions">
         <div class="content">
             <div id="data" class="tab">
-                <h3 v-if="selectedMethod!=''"> {{selectedMethod}} permissions <b-button variant="success" @click="showModal('post', newObject)" size="sm">Add New Role</b-button> </h3>
+                <h4 v-if="selectedMethod!=''"> <b>{{selectedMethod}}</b> permissions </h4>
 
                 <template v-if="!selectedMethod">
                     <p>No class selected!</p>
@@ -10,78 +10,24 @@
 
                 <template v-else>
                     <b-form>
-                        <b-table striped show-empty :items="items" :fields="fields" empty-text="No records found!" @row-clicked="rowClickHandler"  no-local-sorting @sort-changed="sortingChanged" head-variant="dark" table-hover>
-
-                            <template slot="top-row" slot-scope="{ fields }">
-                                <td v-for="field in fields">
-                                    <template v-if="field.key=='meta_object_uuid'">
-                                        <b-button size="sm" variant="outline-primary" type="submit" @click="search()">Search</b-button>
-                                    </template>
-
-                                    <template v-else>
-                                        <b-form-input v-model="searchValues[field.key]" type="search" :placeholder="field.label"></b-form-input>
-                                    </template>
-                                </td>
+                        <b-table
+                            striped
+                            show-empty
+                            :items="items"
+                            :fields="fields"
+                            empty-text="No records found!"
+                            head-variant="dark"
+                            table-hover
+                            :sort-by.sync="sortBy"
+                            :sort-desc.sync="sortDesc"
+                            :busy.sync="isBusy"
+                        >
+                            <template v-slot:cell(granted)="row">
+                                <b-form-checkbox :value="1" :unchecked-value="0" @change="tooglePermission(row.item)" v-model="row.item.granted"></b-form-checkbox>
                             </template>
-
-                            <template v-slot:cell(meta_object_uuid)="row">
-                                  <b-button size="sm" variant="outline-danger" v-on:click.stop="" @click="showModal('delete', row.item)">Delete</b-button>
-                            </template>
-
                         </b-table>
                     </b-form>
                 </template>
-
-                <b-pagination v-if="totalItems > limit" size="md" :total-rows="totalItems" v-model="currentPage" :per-page="limit"  align="center"></b-pagination>
-
-                <b-modal
-                  id="crud-modal"
-                  :title="modalTitle"
-                  :header-bg-variant="modalVariant"
-                  header-text-variant="light"
-                  body-bg-variant="light"
-                  body-text-variant="dark"
-                  :ok-title="ButtonTitle"
-                  :ok-variant="ButtonVariant"
-                  centered
-                  @ok="proceedAction($event)"
-                  :cancel-disabled="actionState"
-                  :ok-disabled="loadingState"
-                  :ok-only="actionState && !loadingState"
-                  size="lg"
-                >
-                    <template v-if="!actionState">
-                        <p>{{actionTitle}}</p>
-
-                        <b-form-group class="form-group" v-for="(value, index) in putValues" v-if="index!='meta_object_uuid'" :label="index" label-align="right" label-cols="3">
-
-                            <template v-if="action=='delete'">
-                                <b-form-input :value="value" disabled></b-form-input>
-                            </template>
-
-                            <template v-else>
-                                <b-form-input v-model="putValues[index]"></b-form-input>
-                            </template>
-
-                        </b-form-group>
-                    </template>
-
-                    <template v-else>
-                        <p v-if="loadingState">
-                            {{loadingMessage}}
-                            ...
-                        </p>
-                        <p v-else>
-                            <template v-if="requestError == ''">
-                                {{successfulMessage}}
-                            </template>
-                            <template v-else>
-                                The operation can not be performed due to an error:<br />
-                                {{requestError}}
-                            </template>
-                        </p>
-                    </template>
-                </b-modal>
             </div>
         </div>
     </div>
@@ -95,29 +41,72 @@ export default {
     data() {
         return {
             selectedMethod: '',
-            putValues: [],
-            actionTitle: '',
-            loadingState: '',
-            actionState: '',
-            ButtonVariant: '',
-            ButtonTitle: '',
-            modalVariant: '',
-            limit: '',
-            modalTitle: '',
-            totalItems: '',
-            selectedClassName: '',
+            items: [],
+            isBusy: false,
+            sortBy: 'role_name',
+            sortDesc: false,
+            fields: [
+                { key: 'granted', sortable: true },
+                { key: 'role_id', sortable: true },
+                { key: 'role_name', sortable: true }
+            ],
         }
     },
     methods: {
-        getPermissions(className) {
-            this.$http.get('/permissions-users/' + className)
+        getPermissions() {
+            this.items = [];
+            var self = this;
+
+            this.$http.get('/permissions-users/' + this.selectedMethod)
             .then(resp => {
-                console.log(resp.data);
+                self.items = resp.data.items;
             })
             .catch(err => {
                 console.log(err);
+            })
+            .finally(function(){
+                self.sortBy = 'granted';
+                self.sortDesc = true;
             });
-        }
+        },
+
+        tooglePermission(row){
+            this.isBusy = true;
+
+            var sendValues = {};
+
+            if (row.meta_object_uuid !== null) {
+                this.action = "delete";
+
+                var url = 'permission/' + row.meta_object_uuid;
+            } else {
+                this.action = "post";
+
+                var url = 'permission';
+
+                sendValues.role_id = row.role_id;
+
+                var spl = this.selectedMethod.split("::");
+                sendValues.class_name = spl[0];
+                sendValues.action_name = spl[1];
+            }
+
+            var self = this;
+
+            this.$http({
+                method: this.action,
+                url: url,
+                data: this.$stringify(sendValues)
+            })
+            .catch(err => {
+                console.log(err);
+            })
+            .finally(function(){
+                self.getPermissions()
+                self.isBusy = false;
+            });
+        },
+
     },
     props: {
         contentArgs: {}
@@ -125,13 +114,14 @@ export default {
     watch:{
         contentArgs: {
             handler: function(value) {
-                this.getPermissions(value.selectedMethod);
+                this.selectedMethod = value.selectedMethod;
+                this.getPermissions();
             }
         }
     },
     mounted() {
         this.selectedMethod = this.contentArgs.selectedMethod;
-        this.getPermissions(this.selectedMethod);
+        this.getPermissions();
     }
 };
 
@@ -177,9 +167,5 @@ tr:hover{
 
 th:hover{
     background-color: #000 !important;
-}
-
-tr {
-    cursor: pointer;
 }
 </style>

@@ -41,11 +41,11 @@ class Permissions extends Controller
     {
         $struct['tree'] = [];
 
-        $tree = \GuzabaPlatform\Platform\Crud\Models\Permissions::get_controllers_tree();
+        $classes = \GuzabaPlatform\Platform\Crud\Models\Permissions::get_controllers_tree();
 
         $struct['tree'] = [
-            'Controllers' => $tree,
-            'Non-Controllers' => ''
+            'Controllers' => $classes[0],
+            'Non-Controllers' => $classes[1]
         ];
 
         $Response = parent::get_structured_ok_response($struct);
@@ -53,35 +53,20 @@ class Permissions extends Controller
     }
 
     /**
-     * @param string $class_name
-     * @param int $page
-     * @param int $limit
-     * @param string $search_values: url encoded, base64 encoded, JSON.stringified array
-     * @param string $sort_by: column name
-     * @param string $sort_desc: true / false; if true => sort DESC
+     * @param string $method_name
      */
     public function permissions(string $method_name): ResponseInterface
     {
         $struct = [];
 
         list($class_name, $action_name) = explode("::", $method_name);
+        $class_name = str_replace("/", "\\", $class_name);
 
         try {
-            // $permissions = \Guzaba2\Authorization\Acl\Permission::get_by([
-            //     'class_name' => str_replace("/", "\\", $class_name),
-            //     'action_name' => $action_name
-            // ]);
-
-            // if (count($permissions)) {
-            //     $ActiveRecord = $permissions[0];
-
-            // }
-            $permissions = \GuzabaPlatform\Platform\Crud\Models\Permissions::get_permissions(str_replace("/", "\\", $class_name), $action_name);
-            print_r($permissions);
-            $struct['items'] = $pemissions;
+            $struct['items'] = \GuzabaPlatform\Platform\Crud\Models\Permissions::get_permissions($class_name, $action_name);
             $struct['message'] = "Class: " . $class_name . ", action: " . $action_name;
         } catch (RecordNotFoundException $exception) {
-
+            $struct['message'] = $exception->getMessage();
         }
 
         $Response = parent::get_structured_ok_response($struct);
