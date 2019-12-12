@@ -4,12 +4,12 @@ declare(strict_types=1);
 namespace GuzabaPlatform\Platform\Home\Controllers;
 
 use Guzaba2\Http\Method;
-use Guzaba2\Mvc\Controller;
+use Guzaba2\Mvc\ActiveRecordController;
 use Guzaba2\Translator\Translator as t;
 use GuzabaPlatform\Platform\Application\GuzabaPlatform as GP;
 use Psr\Http\Message\ResponseInterface;
 
-class Home extends Controller
+class Home extends ActiveRecordController
 {
 
 //    public const ROUTES = [

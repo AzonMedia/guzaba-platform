@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace GuzabaPlatform\Platform\Crud\Controllers;
 
 use Guzaba2\Http\Method;
-use Guzaba2\Mvc\Controller;
+use Guzaba2\Mvc\ActiveRecordController;
 use Guzaba2\Orm\Exceptions\RecordNotFoundException;
 use Guzaba2\Base\Exceptions\RunTimeException;
 use Guzaba2\Translator\Translator as t;
@@ -15,7 +15,7 @@ use Guzaba2\Kernel\Kernel;
 use GuzabaPlatform\Platform\Application\MysqlConnectionCoroutine;
 use Azonmedia\Reflection\ReflectionClass;
 
-class Crud extends Controller
+class Crud extends ActiveRecordController
 {
 
     protected const CONFIG_DEFAULTS = [

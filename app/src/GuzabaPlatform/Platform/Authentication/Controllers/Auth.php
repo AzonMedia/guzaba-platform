@@ -4,7 +4,7 @@ declare(strict_types=1);
 namespace GuzabaPlatform\Platform\Authentication\Controllers;
 
 use Guzaba2\Http\Method;
-use Guzaba2\Mvc\Controller;
+use Guzaba2\Mvc\ActiveRecordController;
 use Guzaba2\Orm\Exceptions\RecordNotFoundException;
 use Guzaba2\Translator\Translator as t;
 use GuzabaPlatform\Platform\Application\GuzabaPlatform as GP;
@@ -13,7 +13,7 @@ use GuzabaPlatform\Platform\Authentication\Models\User;
 use Psr\Http\Message\ResponseInterface;
 use Guzaba2\Kernel\Kernel;
 
-class Auth extends Controller
+class Auth extends ActiveRecordController
 {
 
 //    public const ROUTES = [
