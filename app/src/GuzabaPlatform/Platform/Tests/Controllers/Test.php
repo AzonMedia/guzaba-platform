@@ -22,10 +22,6 @@ class Test extends ActiveRecordController
 //    ];
 
     protected const CONFIG_DEFAULTS = [
-        'services'      => [
-//            'ConnectionFactory',
-//            'CurrentUser',
-        ],
         'routes'        => [
             '/test2'      => [
                 Method::HTTP_GET_HEAD_OPT               => [self::class, 'main'],
@@ -79,6 +75,9 @@ class Test extends ActiveRecordController
         //$Response = self::get_structured_ok_response(['message' => 'ok']);
         $Response = self::get_structured_ok_response([$o2]);
         $Response = $Response->withHeader('data-origin','orm-specific');
+
+
+
         return $Response;
     }
 

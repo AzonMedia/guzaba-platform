@@ -72,7 +72,8 @@ use Psr\Log\LogLevel;
 
     //use the below IF to disable the normal log in production node if needed (startup messages will not be logged)
     //if (!isset($cli_options_mapping['Guzaba2\\Application\\Application']['deployment']) || strtolower($cli_options_mapping['Guzaba2\\Application\\Application']['deployment']) !== 'production') {
-    $FileHandler = new StreamHandler($app_directory.'/logs'.DIRECTORY_SEPARATOR.'main_log.txt', $log_level);
+    $log_file = $app_directory.'/logs'.DIRECTORY_SEPARATOR.'main_log.txt';
+    $FileHandler = new StreamHandler($log_file, $log_level);
     $FileHandler->setFormatter($Formatter);
     $Logger->pushHandler($FileHandler);
     //}
