@@ -52,13 +52,16 @@ use Psr\Log\LogLevel;
 
     //Registry Setup
     //the priority from highest to lowest is: Cli, Env, Array
-    $RegistryBackendCli = new RegistryBackendCli($cli_options_mapping);
-    $Registry = new Registry($RegistryBackendCli, $generated_runtime_config_file, $generated_runtime_config_dir);
+    //the fallback is registered first and then in increasing priority
+
+    $RegistryBackendArray = new RegistryBackendArray(realpath($app_directory . '/registry'));
+    $Registry = new Registry($RegistryBackendArray, $generated_runtime_config_file, $generated_runtime_config_dir);
+
     $RegistryBackendEnv = new RegistryBackendEnv('');
     $Registry->add_backend($RegistryBackendEnv);
 
-    $RegistryBackendArray = new RegistryBackendArray(realpath($app_directory . '/registry'));
-    $Registry->add_backend($RegistryBackendArray);
+    $RegistryBackendCli = new RegistryBackendCli($cli_options_mapping);
+    $Registry->add_backend($RegistryBackendCli);
 
 
 
