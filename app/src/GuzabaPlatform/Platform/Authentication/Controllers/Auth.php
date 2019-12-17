@@ -7,13 +7,14 @@ use Guzaba2\Http\Method;
 use Guzaba2\Mvc\ActiveRecordController;
 use Guzaba2\Orm\Exceptions\RecordNotFoundException;
 use Guzaba2\Translator\Translator as t;
+use GuzabaPlatform\Platform\Application\BaseController;
 use GuzabaPlatform\Platform\Application\GuzabaPlatform as GP;
 use GuzabaPlatform\Platform\Authentication\Models\JwtToken as Token;
 use GuzabaPlatform\Platform\Authentication\Models\User;
 use Psr\Http\Message\ResponseInterface;
 use Guzaba2\Kernel\Kernel;
 
-class Auth extends ActiveRecordController
+class Auth extends BaseController
 {
 
 //    public const ROUTES = [

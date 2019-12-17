@@ -8,6 +8,7 @@ use Guzaba2\Mvc\ActiveRecordController;
 use Guzaba2\Orm\Exceptions\RecordNotFoundException;
 use Guzaba2\Base\Exceptions\RunTimeException;
 use Guzaba2\Translator\Translator as t;
+use GuzabaPlatform\Platform\Application\BaseController;
 use GuzabaPlatform\Platform\Application\GuzabaPlatform as GP;
 use Psr\Http\Message\ResponseInterface;
 use Guzaba2\Orm\ActiveRecord;
@@ -15,7 +16,7 @@ use Guzaba2\Kernel\Kernel;
 use GuzabaPlatform\Platform\Application\MysqlConnectionCoroutine;
 use Azonmedia\Reflection\ReflectionClass;
 
-class Crud extends ActiveRecordController
+class Crud extends BaseController
 {
 
     protected const CONFIG_DEFAULTS = [

@@ -6,10 +6,11 @@ namespace GuzabaPlatform\Platform\Home\Controllers;
 use Guzaba2\Http\Method;
 use Guzaba2\Mvc\ActiveRecordController;
 use Guzaba2\Translator\Translator as t;
+use GuzabaPlatform\Platform\Application\BaseController;
 use GuzabaPlatform\Platform\Application\GuzabaPlatform as GP;
 use Psr\Http\Message\ResponseInterface;
 
-class Home extends ActiveRecordController
+class Home extends BaseController
 {
 
 //    public const ROUTES = [

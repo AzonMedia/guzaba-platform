@@ -5,6 +5,7 @@ namespace GuzabaPlatform\Platform\Authentication\Controllers;
 
 use Guzaba2\Http\Method;
 use Guzaba2\Mvc\ActiveRecordController;
+use GuzabaPlatform\Platform\Application\BaseController;
 use GuzabaPlatform\Platform\Application\GuzabaPlatform as GP;
 use Psr\Http\Message\ResponseInterface;
 use Guzaba2\Coroutine\Coroutine;
@@ -15,7 +16,7 @@ use Guzaba2\Database\Exceptions\DuplicateKeyException;
 use Guzaba2\Database\Exceptions\ForeignKeyConstraintException;
 use GuzabaPlatform\Platform\Authentication\Models\User;
 
-class PasswordReset extends ActiveRecordController
+class PasswordReset extends BaseController
 {
 
 //    public const ROUTES = [

@@ -7,11 +7,12 @@ use Guzaba2\Authorization\Acl\Permission;
 use Guzaba2\Coroutine\Coroutine;
 use Guzaba2\Http\Method;
 use Guzaba2\Mvc\ActiveRecordController;
+use GuzabaPlatform\Platform\Application\BaseController;
 use GuzabaPlatform\Platform\Application\GuzabaPlatform as GP;
 use GuzabaPlatform\Platform\Application\MysqlConnectionCoroutine;
 use GuzabaPlatform\Platform\Authentication\Models\User;
 
-class Test extends ActiveRecordController
+class Test extends BaseController
 {
 
 //    public const ROUTES = [
