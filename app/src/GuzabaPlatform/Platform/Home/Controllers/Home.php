@@ -39,7 +39,14 @@ class Home extends BaseController
 //        $Response = parent::get_structured_ok_response($struct);
         //
         //print $this->get_request()->get_server()->get_document_root();
-        $contents = \Swoole\Coroutine\System::readFile($this->get_request()->get_server()->get_document_root().'/index.html');
+        $index_file_path = $this->get_request()->get_server()->get_document_root().'/index.html';
+        if (file_exists($index_file_path)) {
+            $contents = \Swoole\Coroutine\System::readFile();
+        } else {
+            $contents = sprintf('The Vue front end is not compiled. Please see ./public_src/build.');
+        }
+
+
         $Response = parent::get_string_ok_response($contents);
         return $Response;
     }
