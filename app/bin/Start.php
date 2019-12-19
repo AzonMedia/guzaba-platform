@@ -8,13 +8,17 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
+/**
+ * Class Start
+ * @package GuzabaPlatform\bin
+ */
 class Start extends Command
 {
 
     protected array $parsed_options = [];
 
     /**
-     * Initializes the options by readin CliOptions::CLI_OPTIONS
+     * Initializes the options by reading CliOptions::CLI_OPTIONS
      */
     public function configure() : void
     {

@@ -41,6 +41,12 @@ use Psr\Log\LogLevel;
     if (isset($cli_options_mapping['GuzabaPlatform\\Platform\\Application\\GuzabaPlatform']['log_level'])) {
         $log_level = $cli_options_mapping['GuzabaPlatform\\Platform\\Application\\GuzabaPlatform']['log_level'];
     }
+    if (isset($cli_options_mapping['Guzaba2\\Application\\Application']['deployment']) && strtolower($cli_options_mapping['Guzaba2\\Application\\Application']['deployment']) === 'production') {
+        if (in_array(strtolower($log_level), ['debug', 'info'])) {
+            //in production debug and info should not be used as this will fill the logs - raise the level to the minimum notice
+            $log_level = 'notice';
+        }
+    }
 
     $initial_directory = getcwd();
     $app_directory = realpath(dirname($autoload_path) .'/../app/');
@@ -101,18 +107,18 @@ use Psr\Log\LogLevel;
     }
     $Manifest = json_decode(file_get_contents($manifest_json_file));
     foreach ($Manifest->components as $Component) {
-        $ns_as_path = str_replace('\\','/',$Component->namespace);
+        //$ns_as_path = str_replace('\\','/',$Component->namespace);
         $src_dir = $Component->src_dir;
         Kernel::register_autoloader_path($Component->namespace, $src_dir);
     }
-    //TODO - check the composer.json for an autoload section and provide it here
+    //use the composer autoload path and provide it to the Kernel (the Kernel::autoloader() will be used, not the composer one even though this was defined in the composer.json file)
     $Composer = json_decode(file_get_contents($root_directory.'/composer.json'), TRUE);
     if (isset($Composer['autoload']['psr-4'])) {
         foreach ($Composer['autoload']['psr-4'] as $namespace=>$rel_path) {
             Kernel::register_autoloader_path($namespace, $root_directory.'/'.$rel_path);
         }
     };
-    //if there is no autoload/psr-4 section in the composer.json file then here an explicit call to Kernel::register_autoloader_path() needs to be done and the namespace prefix and path provdied.
+    //if there is no autoload/psr-4 section in the composer.json file then here an explicit call to Kernel::register_autoloader_path() needs to be done and the namespace prefix and path provided.
 
     //past this point it is possible to autoload Application specific classes
 

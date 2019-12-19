@@ -29,6 +29,13 @@ return [
         'database'  => 'db',
         'tprefix'   => 'prefix_',
     ],
-
+    \GuzabaPlatform\Platform\Application\MongoDbConnection::class => [
+        'host'      => 'host',
+        'port'      => 27017,
+        'database' 	=> 'db',
+        'username' 	=> 'user',
+        'password' 	=> 'pass',
+        'AI_table'  => 'guzaba_autoincrement_counters',
+    ],
 
 ];
