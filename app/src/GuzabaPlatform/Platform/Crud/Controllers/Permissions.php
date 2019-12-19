@@ -32,6 +32,9 @@ class Permissions extends Controller
         GP::API_ROUTE_PREFIX . '/permissions-users/{method_name}' => [
             Method::HTTP_GET_HEAD_OPT => [self::class, 'permissions']
         ],
+        GP::API_ROUTE_PREFIX . '/permissions-objects/{class_name}/{object_uuid}' => [
+            Method::HTTP_GET_HEAD_OPT => [self::class, 'permissions_object']
+        ],
     ];
 
     /**
@@ -41,7 +44,7 @@ class Permissions extends Controller
     {
         $struct['tree'] = [];
 
-        $classes = \GuzabaPlatform\Platform\Crud\Models\Permissions::get_controllers_tree();
+        $classes = \GuzabaPlatform\Platform\Crud\Models\Permissions::get_tree();
 
         $struct['tree'] = [
             'Controllers' => $classes[0],
@@ -60,14 +63,26 @@ class Permissions extends Controller
         $struct = [];
 
         list($class_name, $action_name) = explode("::", $method_name);
-        $class_name = str_replace("/", "\\", $class_name);
+        $class_name = str_replace(".", "\\", $class_name);
 
-        try {
-            $struct['items'] = \GuzabaPlatform\Platform\Crud\Models\Permissions::get_permissions($class_name, $action_name);
-            $struct['message'] = "Class: " . $class_name . ", action: " . $action_name;
-        } catch (RecordNotFoundException $exception) {
-            $struct['message'] = $exception->getMessage();
-        }
+        $struct['items'] = \GuzabaPlatform\Platform\Crud\Models\Permissions::get_permissions($class_name, $action_name);
+
+        $Response = parent::get_structured_ok_response($struct);
+        return $Response;
+    }
+
+    /**
+     * @param string $class_name
+     * @param string $object_uuid
+     */
+    public function permissions_object(string $class_name, string $object_uuid): ResponseInterface
+    {
+        $struct = [];
+
+        $class_name = str_replace(".", "\\", $class_name);
+
+        $ActiveRecord = new $class_name($object_uuid);
+        $struct['items'] = \GuzabaPlatform\Platform\Crud\Models\Permissions::get_permissions_by_uuid($class_name, $ActiveRecord->meta_object_id);
 
         $Response = parent::get_structured_ok_response($struct);
         return $Response;

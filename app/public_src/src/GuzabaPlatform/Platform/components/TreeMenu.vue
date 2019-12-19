@@ -6,13 +6,14 @@
                 {{ label }}
             </div>
         </div>
+
         <tree-menu
-            @loadPermissions="loadPermissions"
             v-if="(showChildren && isObject(nodes))"
             v-for="(node, index) in nodes" 
             :nodes="node"
             :label="index"
             :depth="depth + 1"
+            :contentToLoad="contentToLoad"
         >
         </tree-menu>
     </div>
@@ -20,7 +21,7 @@
 <script>
 
 export default { 
-    props: [ 'label', 'nodes', 'depth' ],
+    props: [ 'label', 'nodes', 'depth', 'contentToLoad' ],
     data() {
         return { showChildren: false }
     },
@@ -47,20 +48,13 @@ export default {
             if (this.isObject(this.nodes)) {
                 this.showChildren = !this.showChildren;
             } else {
-                this.loadPermissions(this.nodes);
+                this.contentToLoad(this.nodes);
             }
         },
 
         isObject(o) { 
             return typeof o == "object" 
-        },
-
-        loadPermissions(method) {
-            this.$emit('loadPermissions', method);
-            //this.active = [];
-            //this.active[className] = 'active';
-        },
-
+        }
     }
 }
 </script>

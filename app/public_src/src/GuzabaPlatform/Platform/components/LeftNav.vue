@@ -9,7 +9,7 @@
 
                     <b-collapse id="crud-classes" accordion="my-accordion" role="tabpanel">
                         <b-card-body>
-                            <b-card-text v-for="classFullName in classes" @click="loadCrud(classFullName)" class="small" :class="active[classFullName]"> {{ classFullName }} </b-card-text>
+                            <tree-menu class="small" v-for="(node, index) in crud" :nodes="node" :label="index" :contentToLoad="loadCrud" :depth="1"></tree-menu>
                         </b-card-body>
                     </b-collapse>
                 </b-card>
@@ -23,7 +23,7 @@
 
                     <b-collapse id="crud-permissions" accordion="my-accordion" role="tabpanel">
                         <b-card-body>
-                            <tree-menu @loadPermissions="loadPermissions" class="small" v-for="(node, index) in tree" :nodes="node" :label="index" :depth="1"></tree-menu>
+                            <tree-menu class="small" v-for="(node, index) in permissions" :nodes="node" :label="index" :contentToLoad="loadPermissions" :depth="1"></tree-menu>
                         </b-card-body>
                     </b-collapse>
                 </b-card>
@@ -48,10 +48,10 @@ export default {
     data() {
         return {
             classes: [],
-            controllers: {},
+            controllers: [],
             nonControllers: [],
-            active: [],
-            tree: []
+            permissions: [],
+            crud: [],
         }
     },
     mounted() {
@@ -63,7 +63,7 @@ export default {
 
                 this.$http.get('/crud-classes')
                 .then(resp => {
-                    self.classes = resp.data.classes;
+                    self.crud = resp.data.classes;
                 })
                 .catch(err => {
                     console.log(err);
@@ -75,7 +75,7 @@ export default {
 
                 this.$http.get('/permissions-controllers')
                 .then(resp => {
-                    self.tree = resp.data.tree;
+                    self.permissions = resp.data.tree;
                 })
                 .catch(err => {
                     console.log(err);
@@ -86,32 +86,20 @@ export default {
     methods: {
         resetData() {
             this.classes = [];
+            this.controllers = [];
             this.nonControllers = [];
-            this.active = [];
+            this.permissions = [];
+            this.crud = [];
         },
 
         loadCrud(className) {
             this.$emit('loadContent', 'Crud', {selectedClassName: className});
-            this.active = [];
-            this.active[className] = 'active';
         },
 
-        loadPermissions(vars) {
-            this.$emit('loadContent', 'Permissions', {selectedMethod: vars});
+        loadPermissions(methodName) {
+            this.$emit('loadContent', 'Permissions', {selectedMethod: methodName});
         }
-    },
-    watch:{
-        contentArgs: {
-            handler: function(value) {
-                this.getClassObjects(value.selectedClassName.split('\\').join('.'));
-            }
-        },
-        currentPage: {
-            handler: function(value) {
-                this.getClassObjects(this.selectedClassName);
-            }
-        }
-    },
+    }
 }
 </script>
 

@@ -7,7 +7,7 @@ use Guzaba2\Kernel\Kernel;
 use Guzaba2\Orm\ActiveRecord;
 use Azonmedia\Reflection\ReflectionClass;
 
-class Permissions extends Base
+class Crud extends Base
 {
     protected const CONFIG_DEFAULTS = [
         'services'      => [
@@ -20,22 +20,17 @@ class Permissions extends Base
     public static function get_tree()
     {
         // get all ActiveRecord classes that are loaded by the Kernel
-        $controllers = ActiveRecord::get_active_record_classes(array_keys(Kernel::get_registered_autoloader_paths()));
+        $all_classes = ActiveRecord::get_active_record_classes(array_keys(Kernel::get_registered_autoloader_paths()));
 
-        foreach ($controllers as $class_name) {
+        foreach ($all_classes as $class_name) {
             $RClass = new ReflectionClass($class_name);
 
-            if ($RClass->isInstantiable() && $RClass->extendsClass('Guzaba2\Mvc\Controller')) {
-                $controllers_classes[$class_name] = $class_name;
-            } else {
-                $non_controllers_classes[$class_name] = $class_name;
+            if ($RClass->isInstantiable() && !$RClass->extendsClass('Guzaba2\Mvc\Controller')) {
+                $classes[$class_name] = $class_name;
             }
         }
 
-        $controllers_tree = self::explodeTree($controllers_classes, "\\");
-        $non_controllers_tree = self::explodeTree($non_controllers_classes, "\\", TRUE);
-
-        return [$controllers_tree, $non_controllers_tree];
+        return self::explodeTree($classes, "\\");
     }
 
     private static function explodeTree($array, $delimiter = '\\', bool $add_crud_actions = FALSE, $baseval = false)
@@ -72,25 +67,14 @@ class Permissions extends Base
             if (empty($parentArr[$leafPart])) {
                 $RClass = new ReflectionClass($val);
 
-                $methods_arr = [];
-                foreach ($RClass->getMethods(\ReflectionMethod::IS_PUBLIC) as $method) {
-                    if ($method->class == $val && substr($method->name, 0, 1 ) !== "_" ) {
-                        $methods_arr[$method->name] = $val . "::" . $method->name;
-                    }
-                }
+                // $methods_arr = [];
+                // foreach ($RClass->getMethods(\ReflectionMethod::IS_PUBLIC) as $method) {
+                //     if ($method->class == $val && substr($method->name, 0, 1 ) !== "_" ) {
+                //         $methods_arr[$method->name] = $val . "::" . $method->name;
+                //     }
+                // }
 
-                if($add_crud_actions) {
-	                $methods_arr = array_merge([
-                        'create' => $val . '::create',
-                        'read' => $val . '::read',
-                        'write' => $val . '::write',
-                        'delete' => $val . '::delete',
-                        'grant_permission' => $val . '::grant_permission',
-                        'revoke_permission' => $val . '::revoke_permission'
-	                ], $methods_arr);
-                }
-
-                $parentArr[$leafPart] = $methods_arr;
+                $parentArr[$leafPart] = $val;
             } elseif ($baseval && is_array($parentArr[$leafPart])) {
                 $parentArr[$leafPart]['__base_val'] = $val;
             }
@@ -137,54 +121,5 @@ ORDER BY
 
         $data = $Connection->prepare($q)->execute(['class_name' => $class_name, 'action_name' => $action_name])->fetchAll();
         return $data;
-    }
-
-    public static function get_permissions_by_uuid(string $class_name, string $object_id)
-    {
-        $Connection = Kernel::get_service('ConnectionFactory')->get_connection('GuzabaPlatform\Platform\Application\MysqlConnectionCoroutine', $ScopeReference);
-
-        $q = "
-SELECT
-    roles.*,
-    meta.meta_object_uuid,
-    acl_permissions.action_name
-FROM
-    {$Connection::get_tprefix()}roles as roles
-LEFT JOIN
-    {$Connection::get_tprefix()}acl_permissions as acl_permissions
-    ON
-        roles.role_id = acl_permissions.role_id
-    AND
-        acl_permissions.class_name = :class_name
-    AND
-        acl_permissions.object_id = :object_id
-LEFT JOIN
-    {$Connection::get_tprefix()}users as users
-    ON
-        roles.role_id = users.user_id
-LEFT JOIN
-    {$Connection::get_tprefix()}object_meta as meta
-    ON
-        meta.meta_object_id = acl_permissions.permission_id
-WHERE
-    (users.user_id IS NULL OR users.user_id = 1)
-ORDER BY
-    roles.role_name
-";
-
-        $data = $Connection->prepare($q)->execute(['class_name' => $class_name, 'object_id' => $object_id])->fetchAll();
-
-        $ret = [];
-        foreach ($data as $row) {
-
-            $ret[$row['role_id']]['role_id'] = $row['role_id'];
-            $ret[$row['role_id']]['role_name'] = $row['role_name'];
-
-            if ($row['action_name']) {
-                $ret[$row['role_id']][$row['action_name'] . '_granted'] = $row['meta_object_uuid'];
-            }
-        }
-
-        return $ret;
     }
 }

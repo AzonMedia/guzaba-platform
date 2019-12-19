@@ -56,8 +56,11 @@ class RoutingMap
         GP::API_ROUTE_PREFIX.'/permissions-controllers'             => [
             Method::HTTP_GET_HEAD_OPT                       => [Permissions::class, 'controllers'],
         ],
-        GP::API_ROUTE_PREFIX . '/permissions-users/{method_name}' => [
+        GP::API_ROUTE_PREFIX.'/permissions-users/{method_name}' => [
             Method::HTTP_GET_HEAD_OPT => [self::class, 'permissions']
+        ],
+        GP::API_ROUTE_PREFIX.'/permissions-objects/{class_name}/{object_uuid}' => [
+            Method::HTTP_GET_HEAD_OPT => [self::class, 'permissions_object']
         ],
     ];
 }

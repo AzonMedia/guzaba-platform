@@ -40,19 +40,7 @@ class Crud extends Controller
      */
     public function classes(): ResponseInterface
     {
-        $struct['classes'] = [];
-
-        // get all ActiveRecord classes that are loaded by the Kernel
-        $classes = ActiveRecord::get_active_record_classes(array_keys(Kernel::get_registered_autoloader_paths()));
-        foreach ($classes as $class_name) {
-            $RClass = new ReflectionClass($class_name);
-
-            if ($RClass->isInstantiable() && !$RClass->extendsClass('Guzaba2\Mvc\Controller') ) {
-                $struct['classes'][] = $class_name;
-            }
-        }
-
-        asort($struct['classes']);
+        $struct['classes'] = \GuzabaPlatform\Platform\Crud\Models\Crud::get_tree();
         $Response = parent::get_structured_ok_response($struct);
         return $Response;
     }

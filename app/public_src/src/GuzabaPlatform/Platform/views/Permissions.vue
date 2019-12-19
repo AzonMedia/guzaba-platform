@@ -57,7 +57,7 @@ export default {
             this.items = [];
             var self = this;
 
-            this.$http.get('/permissions-users/' + this.selectedMethod)
+            this.$http.get('/permissions-users/' + this.selectedMethod.split('\\').join('.'))
             .then(resp => {
                 self.items = resp.data.items;
             })
