@@ -244,7 +244,7 @@ BANNER;
         //$WorkerHandler = new WorkerHandler($HttpServer);
         $WorkerHandler = new WorkerStart($HttpServer, self::CONFIG_RUNTIME['swoole']['enable_debug_ports'], self::CONFIG_RUNTIME['swoole']['base_debug_port']);
 
-        $HttpServer->on('Connect', $ConnectHandler);
+        //$HttpServer->on('Connect', $ConnectHandler);
         $HttpServer->on('WorkerStart', $WorkerHandler);
         $HttpServer->on('Request', $RequestHandler);
 

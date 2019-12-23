@@ -101,6 +101,7 @@ return [
                     //'FallbackStore'                 => 'RedisOrmStore',
                     'FallbackStore'                 => 'MysqlOrmStore',
                 ],
+                //'type'                          => 'worker',//no need - let it be global - there is a separate event on server start
             ],
             'RedisOrmStore'                 => [
                 'class'                         => Redis::class,
@@ -134,6 +135,7 @@ return [
                     'FallbackMetaStore'             => 'NullOrmMetaStore',
                 ],
                 'initialize_immediately'        => TRUE,
+                //'type'                          => 'worker',//this is a swoole table - can not be worker as this needs to be global - swoole table must be initialized before workers
             ],
             'NullOrmMetaStore'              => [
                 'class'                         => NullMetaStore::class,
@@ -159,6 +161,7 @@ return [
                     'Backend'                       => 'LockManagerBackend',
                     'Logger'                        => [Kernel::class, 'get_logger'],
                 ],
+                'type'                          => 'coroutine',
             ],
             'LockManagerBackend'            => [
                 'class'                         => SwooleTableBackend::class,
@@ -180,6 +183,7 @@ return [
                     //'user_id'                       => 1,
                     //'user_class'                    => User::class,
                 ],
+                'type'                          => 'coroutine',
             ],
             'DefaultCurrentUser'            => [
                 'class'                         => User::class,
@@ -195,6 +199,7 @@ return [
             'Events'                        => [
                 'class'                         => Events::class,
                 'args'                          => [],
+                'type'                          => 'coroutine',
             ],
             'Apm'                           => [
                 //'class'                         => CoroutineProfiler::class,
@@ -204,6 +209,7 @@ return [
                     'Backend'                       => 'ApmBackend',
                     'worker_id'                     => [Kernel::class, 'get_worker_id'],
                 ],
+                'type'                          => 'coroutine',
             ],
             'ApmBackend'                    => [
                 'class'                         => NullBackend::class,
