@@ -173,6 +173,9 @@ BANNER;
             $models_routing_map_with_prefix[self::API_ROUTE_PREFIX.$key] = $value;
         }
         $models_routing_meta_data = $ModelsDefaultRoutingMap->get_all_meta_data();
+        foreach ($models_routing_meta_data as $key=>$value) {
+            $models_routing_meta_data_with_prefix[self::API_ROUTE_PREFIX.$key] = $value;
+        }
 
         //$routing_map = Router::merge_routes($controllers_routing_map, $models_routing_map);
         //$routing_meta_data = array_merge($controllers_routing_meta_data, $models_routing_meta_data);
@@ -180,7 +183,7 @@ BANNER;
         //$routing_meta_data = $models_routing_meta_data;
         //$routing_map = Router::merge_routes($static_routing_map, $models_routing_map);
         $routing_map = Router::merge_routes($static_routing_map, $models_routing_map_with_prefix);
-        $routing_meta_data = array_merge([], $models_routing_meta_data);
+        $routing_meta_data = array_merge([], $models_routing_meta_data_with_prefix);
 
         //$Router = new Router(new RoutingMapArray($routing_map));
         $Router = new Router(new GeneratedRoutingMap($routing_map, $routing_meta_data, $this->generated_files_dir));

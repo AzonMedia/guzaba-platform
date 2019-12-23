@@ -12,10 +12,10 @@ use GuzabaPlatform\Platform\Authentication\Models\Token as Token;
 class User extends \Guzaba2\Authorization\User
 {
     protected const CONFIG_DEFAULTS = [
-        'main_table'            => 'users',
+        //'main_table'            => 'users',//inherit
         'cost'                  => 12,
         'alg'                   => PASSWORD_BCRYPT,
-        'route'                 => '/user',
+        //'route'                 => '/user',//inherit
 	];
 
     protected const CONFIG_RUNTIME = [];
