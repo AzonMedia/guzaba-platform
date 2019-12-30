@@ -1,6 +1,7 @@
 <template>
   <div class="hello">
-    <img alt="Vue logo" src="@/assets/logo.png">
+    <!-- <img alt="Vue logo" src="@/assets/logo.png"> -->
+    <img alt="Vue logo" src="@GuzabaPlatform.Platform/assets/logo.png">
     <h1>{{ contentArgs.msg }}</h1>
     <p>
       For a guide and recipes on how to configure / customize this project,<br>
