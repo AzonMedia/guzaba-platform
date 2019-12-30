@@ -36,7 +36,9 @@
 
 <script>
 // @ is an alias to /src
-import Hook from '@/GuzabaPlatform/Platform/components/hooks/Hooks.vue'
+//import Hook from '@/GuzabaPlatform/Platform/components/hooks/Hooks.vue'
+//import Hook from './hooks/Hooks.vue'
+import Hook from '@GuzabaPlatform.Platform/components/hooks/Hooks.vue'
 
 export default {
     name: 'leftNav',
