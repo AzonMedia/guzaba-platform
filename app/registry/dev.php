@@ -15,6 +15,7 @@ use Guzaba2\Cache\MemoryCache;
 use Guzaba2\Cache\RedisCache;
 use Guzaba2\Cache\SwooleTableCache;
 use Guzaba2\Cache\SwooleTableIntCache;
+use Guzaba2\Kernel\Interfaces\ApmStructureInterface;
 use GuzabaPlatform\Platform\Application\Middlewares;
 use GuzabaPlatform\Platform\Authentication\Models\User;
 use Guzaba2\Database\ConnectionFactory;
@@ -207,7 +208,8 @@ return [
                 'class'                         => Profiler::class,
                 'args'                          => [
                     'Backend'                       => 'ApmBackend',
-                    'worker_id'                     => [Kernel::class, 'get_worker_id'],
+                    //'worker_id'                     => [Kernel::class, 'get_worker_id'],
+                    'profile_data_structure'        => Kernel::APM_DATA_STRUCTURE,
                 ],
                 'type'                          => 'coroutine',
             ],
