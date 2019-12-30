@@ -41,7 +41,7 @@ class Home extends BaseController
         //print $this->get_request()->get_server()->get_document_root();
         $index_file_path = $this->get_request()->get_server()->get_document_root().'/index.html';
         if (file_exists($index_file_path)) {
-            $contents = \Swoole\Coroutine\System::readFile();
+            $contents = \Swoole\Coroutine\System::readFile($index_file_path);
         } else {
             $contents = sprintf('The Vue front end is not compiled. Please see ./public_src/build.');
         }

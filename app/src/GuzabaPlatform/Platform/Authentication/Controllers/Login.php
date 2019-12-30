@@ -15,6 +15,7 @@ use Guzaba2\Orm\Exceptions\RecordNotFoundException;
 
 use GuzabaPlatform\Platform\Application\GuzabaPlatform as GP;
 
+//not-used
 class Login extends BaseController
 {
 
@@ -28,7 +29,7 @@ class Login extends BaseController
 
     protected const CONFIG_DEFAULTS = [
         'routes'    => [
-            '/login'   => [
+            '/login-not-used'   => [
                 //'/login'   => [
                 Method::HTTP_GET_HEAD_OPT       => [self::class, 'main'],
                 Method::HTTP_POST               => [self::class, 'login'],
