@@ -26,6 +26,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const aliases = require('./components_config/webpack.components.config.js').aliases
 
 module.exports = {
+    mode: 'development',
     entry: ['./src/main.js'],
     output: {
         filename: '[name].bundle.js',

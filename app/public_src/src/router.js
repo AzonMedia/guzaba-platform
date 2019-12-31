@@ -4,8 +4,12 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import store from './store.js'
 
-import Home from './GuzabaPlatform/Platform/views/Home.vue'
-import Auth from './GuzabaPlatform/Platform/views/Auth.vue'
+//import Home from './GuzabaPlatform/Platform/views/Home.vue'
+//import Home from '@/GuzabaPlatform/Platform/views/Home.vue'
+import Home from '@GuzabaPlatform.Platform/views/Home.vue'
+//import Home from '/home/local/PROJECTS/guzaba-platform-skeleton/guzaba-platform-skeleton/vendor/guzaba-platform/guzaba-platform/app/public_src/src/views/Home.vue'
+//import Auth from './GuzabaPlatform/Platform/views/Auth.vue'
+import Auth from '@GuzabaPlatform.Platform/views/Auth.vue'
 
 Vue.use(Router)
 
@@ -27,7 +31,9 @@ let router = new Router({
             component: () =>
                 import(
                     /* webpackChunkName: "about" */
-                    './GuzabaPlatform/Platform/views/About.vue')
+                    //'./GuzabaPlatform/Platform/views/About.vue'
+                    '@GuzabaPlatform.Platform/views/About.vue'
+                    )
         },
         {
             path: '/login',
@@ -48,7 +54,9 @@ let router = new Router({
             name: 'CRUD',
             component: () =>
                 import(
-                    './GuzabaPlatform/Platform/views/Crud.vue')
+                    //'./GuzabaPlatform/Platform/views/Crud.vue'
+                    '@GuzabaPlatform.Platform/views/Crud.vue'
+                    )
         },
         {
             path: '/register',
