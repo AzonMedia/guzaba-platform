@@ -7,14 +7,10 @@
 
 <script>
 // @ is an alias to /src
-//import HelloWorld from '@/GuzabaPlatform/Platform/components/HelloWorld.vue'
-//import HelloWorld from '../components/HelloWorld.vue'
 import HelloWorld from '@GuzabaPlatform.Platform/components/HelloWorld.vue'
-//import LeftNav from '@/GuzabaPlatform/Platform/components/LeftNav.vue'
-//import LeftNav from '../components/LeftNav.vue'
 import LeftNav from '@GuzabaPlatform.Platform/components/LeftNav.vue'
-//import Crud from '@/GuzabaPlatform/Platform/views/Crud.vue'
-//import Crud from '../views/Crud.vue'
+import TreeMenu from '@GuzabaPlatform.Platform/components/TreeMenu.vue'
+import Permissions from '@GuzabaPlatform.Platform/views/Permissions.vue'
 import Crud from '@GuzabaPlatform.Platform/views/Crud.vue'
 
 export default {
@@ -22,6 +18,8 @@ export default {
     components: {
         HelloWorld,
         LeftNav,
+        TreeMenu,
+        Permissions,
         Crud
     },
     data() {

@@ -6,6 +6,9 @@ namespace GuzabaPlatform\Platform\Application;
 // use Guzaba2\Application\Application;
 use GuzabaPlatform\Platform\Authentication\Models\User;
 use Guzaba2\Base\Base;
+use Guzaba2\Http\Body\Stream;
+use Guzaba2\Http\Response;
+use Guzaba2\Http\StatusCode;
 use Guzaba2\Base\Exceptions\InvalidArgumentException;
 use Guzaba2\Base\Exceptions\RunTimeException;
 use Guzaba2\Http\Method;
@@ -49,6 +52,17 @@ class PlatformMiddleware extends Base
     public function process(ServerRequestInterface $Request, RequestHandlerInterface $Handler) : ResponseInterface
     {
 
+        if ($Request->getMethodConstant() === \Guzaba2\Http\Method::HTTP_OPTIONS) {//ONLY FOR DEVELOPMENT USE
+            $content_type = 'application/json';
+
+            $Body = new Stream();
+            $output = ['code' => 1, 'message' => 'OK'];
+            $json_output = json_encode($output);
+            $Body->write($json_output);
+            $Response = new Response(StatusCode::HTTP_OK, ['Content-Type' => $content_type], $Body);
+            return $Response;
+        }
+
         //disable the locking if the request does not involve updates
         //this must be the very first thing
         if ($Request->getMethodConstant() === Method::HTTP_GET && self::CONFIG_RUNTIME['disable_locking_on_get']) {
@@ -80,7 +94,6 @@ class PlatformMiddleware extends Base
         }
 
         if (isset($current_user_id)) {
-            $Context = Coroutine::getContext();
             $User = new User($current_user_id, TRUE, TRUE);
             self::get_service('CurrentUser')->set($User);
         }

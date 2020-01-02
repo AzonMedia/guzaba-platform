@@ -10,7 +10,7 @@
 
                 <template v-else>
                     <b-form @submit="submitSearch">
-                        <b-table striped show-empty :items="items" :fields="fields" empty-text="No records found!" @row-clicked="rowClickHandler"  no-local-sorting @sort-changed="sortingChanged" head-variant="dark" table-hover>
+                        <b-table striped show-empty :items="items" :fields="fields" empty-text="No records found!" @row-clicked="rowClickHandler" no-local-sorting @sort-changed="sortingChanged" head-variant="dark" table-hover>
 
                             <template slot="top-row" slot-scope="{ fields }">
                                 <td v-for="field in fields">
@@ -25,7 +25,9 @@
                             </template>
 
                             <template v-slot:cell(meta_object_uuid)="row">
-                                  <b-button size="sm" variant="outline-danger" v-on:click.stop="" @click="showModal('delete', row.item)">Delete</b-button>
+                                <b-button size="sm" variant="outline-danger" v-on:click.stop="" @click="showModal('delete', row.item)">Delete</b-button>
+
+                                <b-button size="sm" variant="outline-success" v-on:click.stop="" @click="showPermissions( row.item)">Permissions</b-button>
                             </template>
 
                         </b-table>
@@ -82,6 +84,54 @@
                         </p>
                     </template>
                 </b-modal>
+
+                <b-modal
+                  id="crud-permissions"
+                  :title="title_permissions"
+                  header-bg-variant="success"
+                  header-text-variant="light"
+                  body-bg-variant="light"
+                  body-text-variant="dark"
+                  hide-footer
+                  size="lg"
+                >
+                    <b-table
+                        striped
+                        show-empty
+                        :items="items_permissions"
+                        :fields="fields_permissions"
+                        empty-text="No records found!"
+                        head-variant="dark"
+                        table-hover
+                        :busy.sync="isBusy_permissions"
+                    >
+
+                        <template v-slot:cell(create_granted)="row">
+                            <b-form-checkbox :value="row.item.create_granted" :unchecked-value="0" @change="tooglePermission(row.item, 'create')" v-model="row.item.create_granted"></b-form-checkbox>
+                        </template>
+
+                        <template v-slot:cell(read_granted)="row">
+                            <b-form-checkbox :value="row.item.read_granted" :unchecked-value="0" @change="tooglePermission(row.item, 'read')" v-model="row.item.read_granted"></b-form-checkbox>
+                        </template>
+
+                        <template v-slot:cell(write_granted)="row">
+                            <b-form-checkbox :value="row.item.write_granted" :unchecked-value="0" @change="tooglePermission(row.item, 'write')" v-model="row.item.write_granted"></b-form-checkbox>
+                        </template>
+
+                        <template v-slot:cell(delete_granted)="row">
+                            <b-form-checkbox :value="row.item.delete_granted" :unchecked-value="0" @change="tooglePermission(row.item, 'delete')" v-model="row.item.delete_granted"></b-form-checkbox>
+                        </template>
+
+                        <template v-slot:cell(grant_permission_granted)="row">
+                            <b-form-checkbox :value="row.item.grant_permission_granted" :unchecked-value="0" @change="tooglePermission(row.item, 'grant_permission')" v-model="row.item.grant_permission_granted"></b-form-checkbox>
+                        </template>
+
+                        <template v-slot:cell(revoke_permission_granted)="row">
+                            <b-form-checkbox :value="row.item.revoke_permission_granted" :unchecked-value="0" @change="tooglePermission(row.item, 'revoke_permission')" v-model="row.item.revoke_permission_granted"></b-form-checkbox>
+                        </template>
+
+                    </b-table>
+                </b-modal>
             </div>
         </div>
     </div>
@@ -89,8 +139,6 @@
 </template>
 
 <script>
-//import Hook from '@/GuzabaPlatform/Platform/components/hooks/Hooks.vue'
-//import Hook from '../components/hooks/Hooks.vue'
 import Hook from '@GuzabaPlatform.Platform/components/hooks/Hooks.vue'
 import { stringify } from 'qs'
 export default {
@@ -131,6 +179,53 @@ export default {
 
             items: [],
             fields: [],
+
+            items_permissions:[],
+            fields_permissions:[
+                {
+                    key: 'role_id',
+                    label: 'Role ID',
+                    sortable: true
+                },
+                {
+                    key: 'role_name',
+                    label: 'Role Name',
+                    sortable: true
+                },
+                {
+                    key: 'create_granted',
+                    label: 'Create',
+                    sortable: true,
+                },
+                {
+                    key: 'read_granted',
+                    label: 'Read',
+                    sortable: true,
+                },
+                {
+                    key: 'write_granted',
+                    label: 'Write',
+                    sortable: true,
+                },
+                {
+                    key: 'delete_granted',
+                    label: 'Delete',
+                    sortable: true,
+                },
+                {
+                    key: 'grant_permission_granted',
+                    label: 'Grant Permission',
+                    sortable: true,
+                },
+                {
+                    key: 'revoke_permission_granted',
+                    label: 'Revoke Permission',
+                    sortable: true,
+                }
+            ],
+            title_permissions: "Permissions",
+            isBusy_permissions: false,
+            selectedObject: {},
 
             newObject: {}
         }
@@ -289,7 +384,7 @@ export default {
                     break;
 
                     case 'post' :
-                        self.loadingMessage = 'Saving object with uuid: ' + this.crudObjectUuid;
+                        self.loadingMessage = 'Saving new object';
                         var url = this.selectedClassNameShort.toLowerCase();
 
                         sendValues = this.putValues;
@@ -317,8 +412,66 @@ export default {
                     self.ButtonTitle = 'OK';
                     self.ButtonVariant = 'success';
                 });
-
             }
+        },
+
+        showPermissions(row) {
+            this.title_permissions = "Permissions for object of class \"" + row.meta_class_name + "\" with id: " + row.meta_object_id + ", object_uuid: " + row.meta_object_uuid;
+
+            this.selectedObject = row;
+
+            var self = this;
+
+            this.$http.get('/permissions-objects/' + this.selectedClassName + '/' + row.meta_object_uuid)
+            .then(resp => {
+                self.items_permissions = Object.values(resp.data.items);
+            })
+            .catch(err => {
+                console.log(err);
+                self.requestError = err;
+                self.items_permissions = [];
+            }).finally(function(){
+                self.$bvModal.show('crud-permissions');
+            });
+
+        },
+
+        tooglePermission(row, action){
+            this.isBusy_permission = true;
+
+            var sendValues = {};
+
+            if (row[action + '_granted']) {
+                var object_uuid = row[action + '_granted'];
+
+                this.action = "delete";
+
+                var url = 'acl-permissions/' + object_uuid;
+            } else {
+                this.action = "post";
+
+                var url = 'acl-permissions';
+
+                sendValues.role_id = row.role_id;
+                sendValues.object_id = this.selectedObject.meta_object_id;
+                sendValues.action_name = action;
+                sendValues.class_name = this.selectedClassName.split(".").join("\\");
+            }
+
+            var self = this;
+
+            this.$http({
+                method: this.action,
+                url: url,
+                data: this.$stringify(sendValues)
+            })
+            .catch(err => {
+                console.log(err);
+            })
+            .finally(function(){
+                self.showPermissions(self.selectedObject)
+                self.isBusy_permission = false;
+            });
         },
 
         sortingChanged(ctx) {

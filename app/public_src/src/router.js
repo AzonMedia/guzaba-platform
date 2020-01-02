@@ -50,15 +50,6 @@ let router = new Router({
             component: () => store.dispatch('logout')
         },
         {
-            path: '/crud',
-            name: 'CRUD',
-            component: () =>
-                import(
-                    //'./GuzabaPlatform/Platform/views/Crud.vue'
-                    '@GuzabaPlatform.Platform/views/Crud.vue'
-                    )
-        },
-        {
             path: '/register',
             name: 'Register',
             component: Auth
