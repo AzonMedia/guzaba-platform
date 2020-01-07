@@ -24,7 +24,7 @@
             <label for="text-password">Password</label>
             <b-input type="password" id="text-password" v-model="password" aria-describedby="password-help-block" required></b-input>
             <b-form-text id="password-help-block">
-                <Hook :name="'afterRender'"/>
+                <Hook :name="'_after_main'"/>
             </b-form-text>
             <b-button type="submit" variant="success">Login</b-button>
         </b-form>
