@@ -91,10 +91,10 @@ abstract class CliOptions
 //            'class'             => GuzabaPlatform::class,
 //            'option'            => ['kernel' => ['disable_all_class_load' => NULL]],
 //        ],
-        'disable-all-class-validation'  => [
+        'disable-validations'  => [
             'shortcut'          => NULL,
             'input'             => InputOption::VALUE_NONE,
-            'description'       => 'Do not validate all loaded classes on startup',
+            'description'       => 'Do not run the validations at startup.',
             'default'           => NULL,
             'class'             => GuzabaPlatform::class,
             'option'            => ['kernel' => ['disable_all_class_validation' => NULL]],

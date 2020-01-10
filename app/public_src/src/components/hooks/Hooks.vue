@@ -18,16 +18,19 @@
 
         <component v-if="hooks.hasOwnProperty(name)" :is="hook_render_0" :data="hooks[name][0]['data']" />
         <component v-if="hooks.hasOwnProperty(name)" :is="hook_render_1" :data="hooks[name][1]['data']" />
-        <component v-if="hooks.hasOwnProperty(name)" :is="hook_render_2" :data="hooks[name][1]['data']" />
-        <component v-if="hooks.hasOwnProperty(name)" :is="hook_render_3" :data="hooks[name][1]['data']" />
-        <component v-if="hooks.hasOwnProperty(name)" :is="hook_render_4" :data="hooks[name][1]['data']" />
+        <component v-if="hooks.hasOwnProperty(name)" :is="hook_render_2" :data="hooks[name][2]['data']" />
+        <component v-if="hooks.hasOwnProperty(name)" :is="hook_render_3" :data="hooks[name][3]['data']" />
+        <component v-if="hooks.hasOwnProperty(name)" :is="hook_render_4" :data="hooks[name][4]['data']" />
     </div>
 </template>
 
 <script>
 
-const aliases = require('@/../components_config/webpack.components.config.js').aliases
-
+//console.log('RRR');
+//const aliases = require('@/../components_config/webpack.components.config.js').aliases
+//console.log(aliases);
+//console.log(al2);
+const aliases = require('@/../components_config/webpack.components.runtime.json')
 
 export default {
     // mixins: [hookMixin],
@@ -44,10 +47,12 @@ export default {
     },
     methods: {
         hook_render: function(index) {
-            if (this.name && this.hooks[this.name] && this.hooks[this.name][index]) {
-                console.log(this.hooks[this.name][index]);
+            if (this.name && this.hooks[this.name] && this.hooks[this.name][index] && this.hooks[this.name][index]['name']) {
+                //console.log(this.hooks[this.name][index]);
+                //console.log(aliases);
+                //console.log('ggggg')
                 let hook_name = this.hooks[this.name][index]['name'];
-                //console.log(hook_name);
+                console.log(hook_name);
                 for (const alias in aliases) {
                     if (alias !='@' && hook_name.indexOf(alias) != -1) {
                         //console.log(aliases[alias]);
@@ -55,13 +60,19 @@ export default {
                         break;
                     }
                 }
+                console.log(hook_name);
                 //due to the static analisys Webpack does the import must have a path or alias hardcoded
                 //replace the VENDOR path in the
                 hook_name = hook_name.replace(aliases['@VENDOR'], '');
                 hook_name = hook_name.replace('Hook.vue', '');
                 //this causes the whole vendor directory to be searched for...
-                //console.log(hook_name);
-                return () => import(`@VENDOR/${hook_name}Hook.vue`)
+                console.log(hook_name);
+                //return () => import(`@VENDOR${hook_name}Hook.vue`)
+                return () => import(`@/../../../vendor${hook_name}Hook.vue`)
+                //return () => import(`/home/local/PROJECTS/guzaba-platform-skeleton/vendor${hook_name}Hook.vue`)
+                //return () => import('/home/local/PROJECTS/guzaba-platform-skeleton/vendor/guzaba-platform/guzaba-platform/app/public_src/src/views/hooks/templates/TextHook.vue')
+                //let z = '/guzaba-platform/guzaba-platform/app/public_src/src/views/hooks/templates/Text';
+                //return () => import(`/home/local/PROJECTS/guzaba-platform-skeleton/vendor${z}Hook.vue`)
             }
         },
     },
@@ -110,9 +121,16 @@ export default {
                             }
                         }
                     }
+
+                    for (let aa=0 ; aa < 5; aa++) {
+                        if (typeof vm.hooks[el][aa] === "undefined") {
+                            vm.hooks[el][aa] = {};
+                            vm.hooks[el][aa]['data'] = {};
+                        }
+                    }
+
                     this.counter++;//to trigger recalculation of the computed properties
                     //vm.$forceUpdate();
-
 
                 })
             }
