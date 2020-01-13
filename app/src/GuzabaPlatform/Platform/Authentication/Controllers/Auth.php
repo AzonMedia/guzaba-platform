@@ -54,6 +54,7 @@ class Auth extends BaseController
 //        contain spaces, special characters, or emoji.')],
 //        ];
 
+//a test hook
         $struct['hooks']['_after_main'][] = [
             //'name'  => 'text',
             //'name' => '@GuzabaPlatform.Platform/views/hooks/templates/text.vue',
@@ -61,6 +62,8 @@ class Auth extends BaseController
             //'name' => '/home/local/PROJECTS/guzaba-platform-skeleton/guzaba-platform-skeleton/vendor/guzaba-platform/guzaba-platform/app/public_src/src/views/hooks/templates/text.vue',
             'data' => ['text' => t::_('Your password must be 8-20 characters long, contain letters and numbers, and must not contain spaces, special characters, or emoji.')],
         ];
+
+        //$struct['password_text'] = t::_('Your password must be 8-20 characters long, contain letters and numbers, and must not contain spaces, special characters, or emoji.');
 
         $Response = parent::get_structured_ok_response($struct);
         return $Response;

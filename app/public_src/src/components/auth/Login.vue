@@ -23,6 +23,7 @@
 
             <label for="text-password">Password</label>
             <b-input type="password" id="text-password" v-model="password" aria-describedby="password-help-block" required></b-input>
+            <!-- <div>{{data.password_text}}</div> -->
             <b-form-text id="password-help-block">
                 <Hook :name="'_after_main'"/>
             </b-form-text>

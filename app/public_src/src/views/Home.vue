@@ -1,7 +1,12 @@
 <template>
     <div class="home">
-        <LeftNav v-if="isLoggedIn" @loadContent="loadContent" />
-        <component :is="dynamicContent" :contentArgs.sync="contentArgs"></component>
+        <!-- <LeftNav v-if="isLoggedIn" v-on:loadContent="loadContent" /> -->
+        <div style="border: 1px solid red;">
+            <LeftNav v-if="isLoggedIn" @loadContent="loadContent" />
+        </div>
+        <div style="border: 1px solid blue;">
+            <component :is="dynamicContent" :contentArgs.sync="contentArgs"></component>
+        </div>
     </div>
 </template>
 
@@ -25,11 +30,15 @@ export default {
     data() {
         return {
             dynamicContent: "HelloWorld",
-            contentArgs: {msg: "Welcome to Your Vue.js App"}
+            contentArgs: {
+                msg: "Welcome to Your Vue.js App"
+            }
         }
     },
     computed : {
-        isLoggedIn : function() { return this.$store.getters.isLoggedIn; }
+        isLoggedIn : function() {
+            return this.$store.getters.isLoggedIn;
+        }
     },
     methods: {
         loadContent(component, vars) {

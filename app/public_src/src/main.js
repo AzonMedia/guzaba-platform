@@ -17,6 +17,9 @@ axios.defaults.withCredentials = true
 axios.defaults.baseURL = 'http://localhost:8081/api'
 Vue.prototype.$http = axios
 
+//TODO - fix the below - it is not working
+//Vue.prototype.$aliases = require('@/../components_config/webpack.components.runtime.json')
+
 import { stringify } from 'qs'
 Vue.prototype.$stringify = stringify
 
