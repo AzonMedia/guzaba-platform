@@ -35,6 +35,7 @@ use GuzabaPlatform\Platform\Application\GuzabaPlatform;
 use GuzabaPlatform\Platform\Application\MysqlConnection;
 use GuzabaPlatform\Platform\Application\MysqlConnectionCoroutine;
 use GuzabaPlatform\Platform\Application\RedisConnection;
+use GuzabaPlatform\Platform\Application\VueRouter;
 use Guzaba2\Orm\BlockingStore\Nosql\MongoDB;
 use GuzabaPlatform\Platform\Application\MongoDbConnection;
 use Guzaba2\Authorization\BypassAuthorizationProvider;
@@ -244,6 +245,12 @@ return [
                 'class'                         => RedisCache::class,
                 'args'                          => [
                     'connection_class'              => RedisConnection::class,
+                ],
+            ],
+            'FrontendRouter'                     => [
+                'class'                         => VueRouter::class,
+                'args'                          => [
+                    'router_config_file'            => './public_src/components_config/router.config.js',
                 ],
             ],
 

@@ -24,12 +24,11 @@ class Navigation extends BaseController
 
     public function main() : ResponseInterface
     {
-        //TODO - print the following links:
-        //- Components management
         $links = [];
         $links[] = [
             'name'  => t::_('Components'),
-            'route' => GuzabaPlatform::API_ROUTE_PREFIX.'/components',
+            //'route' => GuzabaPlatform::API_ROUTE_PREFIX.'/components',
+            'route' => '/components',//no api prefix as this is a front end route
         ];
 
         $struct = ['links' => $links];

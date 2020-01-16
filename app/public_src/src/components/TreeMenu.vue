@@ -1,5 +1,6 @@
 <template>
     <div class="tree-menu">
+        TreeMenu.vue
         <div class="label-wrapper" @click="toggleChildren">
             <div :style="indent" :class="labelClasses" >
                 <i class="fa" :class="iconClasses"></i>

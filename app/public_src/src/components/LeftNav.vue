@@ -1,6 +1,8 @@
 <template>
     <div class="leftNav">
+        LeftNav.vue
         <b-nav vertical class="w-25">
+            <!--
             <b-nav-item>
                 <b-card no-body class="mb-1">
                     <b-card-header v-b-toggle.crud-classes class="p-1" role="tab">
@@ -30,6 +32,21 @@
             </b-nav-item>
 
             <b-nav-item>Example Link</b-nav-item>
+            -->
+            <b-nav-item  v-for="link in links">
+                <b-card no-body class="mb-1">
+                    <b-card-header v-b-toggle.crud-permissions class="p-1" role="tab">
+                        <router-link v-bind:to="link.route">{{link.name}}</router-link>
+                    </b-card-header>
+                    <!--
+                    <b-collapse id="crud-permissions" accordion="my-accordion" role="tabpanel">
+                        <b-card-body>
+                            <tree-menu class="small" v-for="(node, index) in permissions" :nodes="node" :label="index" :contentToLoad="loadPermissions" :depth="1"></tree-menu>
+                        </b-card-body>
+                    </b-collapse>
+                    -->
+                </b-card>
+            </b-nav-item>
         </b-nav>
     </div>
 </template>
@@ -47,6 +64,7 @@ export default {
     },
     data() {
         return {
+            links: [],
             classes: [],
             controllers: [],
             nonControllers: [],
@@ -99,6 +117,16 @@ export default {
         loadPermissions(methodName) {
             this.$emit('loadContent', 'Permissions', {selectedMethod: methodName});
         }
+    },
+    created() {
+        this.$http.get('/admin-navigation')
+            .then(resp => {
+                console.log(resp.data.links)
+                this.links = resp.data.links;
+            })
+            .catch(err => {
+                console.log(err);
+            });
     }
 }
 </script>

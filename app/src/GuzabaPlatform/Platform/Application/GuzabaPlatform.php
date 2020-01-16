@@ -273,7 +273,6 @@ BANNER;
             $middlewares_info .= str_repeat(' ',4).'- '.get_class($Middleware).' - '.((new \ReflectionClass($Middleware))->getFileName()).PHP_EOL;
         }
         Kernel::printk($middlewares_info);
-        
 
         //close any single connections that may have been opened during this phase
         self::get_service('ConnectionFactory')->close_all_connections();

@@ -48,26 +48,22 @@ export default {
     methods: {
         hook_render: function(index) {
             if (this.name && this.hooks[this.name] && this.hooks[this.name][index] && this.hooks[this.name][index]['name']) {
-                //console.log(this.hooks[this.name][index]);
-                //console.log(aliases);
-                //console.log('ggggg')
                 let hook_name = this.hooks[this.name][index]['name'];
-                console.log(hook_name);
+
                 for (const alias in aliases) {
                     if (alias !='@' && hook_name.indexOf(alias) != -1) {
-                        //console.log(aliases[alias]);
                         hook_name = hook_name.replace(alias, aliases[alias]);
                         break;
                     }
                 }
-                console.log(hook_name);
+                //console.log(hook_name);
                 //due to the static analisys Webpack does the import must have a path or alias hardcoded
                 //replace the VENDOR path in the
                 hook_name = hook_name.replace(aliases['@VENDOR'], '');
                 hook_name = hook_name.replace('Hook.vue', '');
                 //this causes the whole vendor directory to be searched for...
-                console.log(hook_name);
-                //return () => import(`@VENDOR${hook_name}Hook.vue`)
+                //console.log(hook_name);
+                //return () => import(`@VENDOR${hook_name}Hook.vue`) // not working... TODO - fix this
                 return () => import(`@/../../../vendor${hook_name}Hook.vue`)
                 //return () => import(`/home/local/PROJECTS/guzaba-platform-skeleton/vendor${hook_name}Hook.vue`)
                 //return () => import('/home/local/PROJECTS/guzaba-platform-skeleton/vendor/guzaba-platform/guzaba-platform/app/public_src/src/views/hooks/templates/TextHook.vue')

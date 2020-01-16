@@ -32,10 +32,52 @@ if (token) {
 
 Vue.config.productionTip = false
 
+
 const vue = new Vue({
     router,
     store,
-    render: h => h(App)
+    render: h => h(App),
+    // created () {
+    //     this.get_routes('/vue-routes')
+    // },
+    // methods: {
+    //     get_routes(url) {
+    //         axios
+    //             .get(url)
+    //             .then(function(response) {
+    //                 response.data.routes.forEach(function(route) {
+    //                     //console.log(route);
+    //                     let new_route = {
+    //                        path: route.path,
+    //                        name: route.name,
+    //                     };
+    //                     if (route.component.indexOf('@') == 0) {
+    //                        let component_path = route.component;
+    //                        for (const alias in aliases) {
+    //                            if (alias !='@' && component_path.indexOf(alias) != -1) {
+    //                                component_path = component_path.replace(alias, aliases[alias]);
+    //                                break;
+    //                            }
+    //                        }
+    //                        //console.log(component_path);
+    //                        component_path = component_path.replace(aliases['@VENDOR'], '');
+    //                        component_path = component_path.replace('.vue', '');
+    //                         //console.log(component_path);
+    //                        ///new_route.component = () => import(`@/../../../vendor${component_path}.vue`)
+    //                     } else {
+    //                         //this is unusual and would mean that the component is already required which will not be the case for the modules (unless a component is reused)
+    //                        ///new_route.component = route.component;
+    //                     }
+    //                     new_route.component = () => import('/home/local/PROJECTS/guzaba-platform-skeleton/vendor/guzaba-platform/guzaba-platform/app/public_src/src/views/Crud.vue');
+    //                     console.log('==================');
+    //                     console.log(new_route);
+    //                     this.$router.addRoutes([new_route]);
+    //                 });
+    //             })
+    //             //.catch(err => console.log(err))
+    //             .catch(function(){})
+    //     }
+    // }
 })
 vue.$mount('#app')
 

@@ -1,3 +1,5 @@
+
+
 /*const path = require('path')
 
 function resolve(dir) {
@@ -22,11 +24,12 @@ const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const VueLoaderPlugin = require('vue-loader/lib/plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const fs = require('fs');
 
 const aliases = require('./components_config/webpack.components.config.js').aliases
+fs.writeFile('./components_config/webpack.components.runtime.json', JSON.stringify(aliases, null, ' '), function(){});
 
 module.exports = {
-    mode: 'development',
     entry: ['./src/main.js'],
     output: {
         filename: '[name].bundle.js',
