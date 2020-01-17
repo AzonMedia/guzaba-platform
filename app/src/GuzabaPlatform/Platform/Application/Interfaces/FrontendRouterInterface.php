@@ -17,7 +17,9 @@ interface FrontendRouterInterface
      * Returns all routes
      * @return array
      */
-    public function get_all_routes() : array ;
+    public function get_routes() : array ;
+
+    public function get_route(string $route) : array;
 
     /**
      * Returns the file to which the configuration is to be dumped

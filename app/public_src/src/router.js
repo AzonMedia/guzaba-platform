@@ -6,12 +6,12 @@ import store from './store.js'
 
 //import Home from './GuzabaPlatform/Platform/views/Home.vue'
 //import Home from '@/GuzabaPlatform/Platform/views/Home.vue'
-import Home from '@GuzabaPlatform.Platform/views/Home.vue'
+///import Home from '@GuzabaPlatform.Platform/views/Home.vue'
 //import Home from '/home/local/PROJECTS/guzaba-platform-skeleton/guzaba-platform-skeleton/vendor/guzaba-platform/guzaba-platform/app/public_src/src/views/Home.vue'
 //import Auth from './GuzabaPlatform/Platform/views/Auth.vue'
 import Auth from '@GuzabaPlatform.Platform/views/Auth.vue'
 import NotFound from '@GuzabaPlatform.Platform/views/NotFound.vue'
-import axios from "axios";
+///import axios from "axios";
 
 //const aliases = require('@/../components_config/webpack.components.runtime.json')
 //import aliases from '@/../components_config/webpack.components.runtime.json'

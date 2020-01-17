@@ -30,10 +30,12 @@ const aliases = require('./components_config/webpack.components.config.js').alia
 fs.writeFile('./components_config/webpack.components.runtime.json', JSON.stringify(aliases, null, ' '), function(){});
 
 module.exports = {
+
     entry: ['./src/main.js'],
     output: {
         filename: '[name].bundle.js',
-        path: __dirname + '/dist'
+        path: __dirname + '/dist',
+        publicPath: '/',
     },
 
     resolve: {

@@ -18,18 +18,36 @@ class Navigation extends BaseController
                 Method::HTTP_GET_HEAD_OPT               => [self::class, 'main']
             ],
         ],
+        'services'      => [
+            'FrontendRouter'
+        ],
     ];
 
     protected const CONFIG_RUNTIME = [];
 
     public function main() : ResponseInterface
     {
+
         $links = [];
-        $links[] = [
-            'name'  => t::_('Components'),
-            //'route' => GuzabaPlatform::API_ROUTE_PREFIX.'/components',
-            'route' => '/components',//no api prefix as this is a front end route
-        ];
+//        $links[] = [
+//            'name'  => t::_('Components'),
+//            //'route' => GuzabaPlatform::API_ROUTE_PREFIX.'/components',
+//            'route' => '/admin/components',//no api prefix as this is a front end route
+//        ];
+
+        $FrontendRouter = self::get_service('FrontendRouter');
+
+
+        $routes = $FrontendRouter->get_routes();
+
+        if (isset($routes['/admin']['children'])) {
+            $routes = $routes['/admin']['children'];
+            foreach ($routes as $route) {
+                if (!empty($route['meta']['in_navigation'])) {
+                    $links[] = ['name' => $route['name'], 'route' => '/admin/'.$route['path']];
+                }
+            }
+        }
 
         $struct = ['links' => $links];
         $Response = self::get_structured_ok_response($struct);

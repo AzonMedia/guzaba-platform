@@ -42,8 +42,13 @@ class Component extends Base implements ComponentInterface, ComponentInitializat
     {
         //register few default routes
         //there are also some hardcoded routes at router.js
-        $VueRouter = self::get_service('FrontendRouter');
-        $VueRouter->add_route('/', '@GuzabaPlatform.Platform/views/Home.vue', 'Home');
-        $VueRouter->add_route('/admin', '@GuzabaPlatform.Platform/views/Admin/Home.vue', 'Admin Home');
+        $FrontendRouter = self::get_service('FrontendRouter');
+        $FrontendRouter->add_route('/', '@GuzabaPlatform.Platform/views/Home.vue', 'Home');
+        $FrontendRouter->add_route('/admin', '@GuzabaPlatform.Platform/views/Admin/Home.vue', 'Admin Home');
+        $meta = [
+            'in_navigation' => TRUE, //to be shown in the admin navigation
+            'additional_template' => '@GuzabaPlatform.Platform/views/Admin/Components/NavigationHook.vue',//here the list of classes will be expanded
+        ];
+        $FrontendRouter->add_route('/admin/components', '@GuzabaPlatform.Platform/views/Admin/Components/Components.vue' ,'Components', $meta);
     }
 }
