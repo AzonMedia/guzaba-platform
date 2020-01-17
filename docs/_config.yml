@@ -1,1 +1,4 @@
 theme: jekyll-theme-slate
+title: GuzabaPlatform
+description: Web application development platform based on Guzaba 2 framework, Swoole & Vue
+show_downloads: true
