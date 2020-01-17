@@ -47,7 +47,7 @@ class Component extends Base implements ComponentInterface, ComponentInitializat
         $FrontendRouter->add_route('/admin', '@GuzabaPlatform.Platform/views/Admin/Home.vue', 'Admin Home');
         $meta = [
             'in_navigation' => TRUE, //to be shown in the admin navigation
-            'additional_template' => '@GuzabaPlatform.Platform/views/Admin/Components/NavigationHook.vue',//here the list of classes will be expanded
+            'additional_template' => '@GuzabaPlatform.Platform/views/Admin/Components/NavigationHook.vue',//here the list of components will be expanded
         ];
         $FrontendRouter->add_route('/admin/components', '@GuzabaPlatform.Platform/views/Admin/Components/Components.vue' ,'Components', $meta);
     }
