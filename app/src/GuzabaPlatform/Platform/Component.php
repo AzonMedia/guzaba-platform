@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace GuzabaPlatform\Platform\Application;
+namespace GuzabaPlatform\Platform;
 
 use Guzaba2\Base\Base;
 use GuzabaPlatform\Components\Base\Interfaces\ComponentInitializationInterface;
@@ -28,6 +28,7 @@ class Component extends Base implements ComponentInterface, ComponentInitializat
     protected const COMPONENT_VERSION = '0.0.1';//TODO update this to come from the Composer.json file of the component
     protected const VENDOR_NAME = 'Azonmedia';
     protected const VENDOR_URL = 'https://azonmedia.com';
+    protected const ERROR_REFERENCE_URL = 'https://error-reference.guzaba.org/error/';
 
     /**
      * @return array
