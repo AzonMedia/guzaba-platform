@@ -9,7 +9,9 @@
                 </div>
                 <div>
                     additional menu
-                    <component :is="after_router_link_hook"/>
+                    <keep-alive>
+                        <component :is="after_router_link_hook"/>
+                    </keep-alive>
                 </div>
             </div>
 
