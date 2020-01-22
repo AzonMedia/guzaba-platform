@@ -37,7 +37,7 @@ class Navigation extends BaseController
 
         $FrontendRouter = self::get_service('FrontendRouter');
 
-
+        /*
         $routes = $FrontendRouter->get_routes();
 
         if (isset($routes['/admin']['children'])) {
@@ -46,6 +46,13 @@ class Navigation extends BaseController
                 if (!empty($route['meta']['in_navigation'])) {
                     $links[] = ['name' => $route['name'], 'route' => '/admin/'.$route['path']];
                 }
+            }
+        }
+        */
+        $routes = $FrontendRouter->{'/admin'}->get_children();
+        foreach ($routes as $Route) {
+            if (!empty($Route['meta']['in_navigation'])) {
+                $links[] = ['name' => $Route['name'], 'route' => '/admin/'.$Route['path']];
             }
         }
 

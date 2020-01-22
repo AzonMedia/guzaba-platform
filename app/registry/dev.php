@@ -250,7 +250,7 @@ return [
             'FrontendRouter'                     => [
                 'class'                         => VueRouter::class,
                 'args'                          => [
-                    'router_config_file'            => './public_src/components_config/router.config.js',
+                    'router_file'                   => './public_src/components_config/router.config.js',
                 ],
             ],
 

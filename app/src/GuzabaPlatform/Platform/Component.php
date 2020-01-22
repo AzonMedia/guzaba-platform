@@ -42,12 +42,15 @@ class Component extends BaseComponent implements ComponentInterface, ComponentIn
         //register few default routes
         //there are also some hardcoded routes at router.js
         $FrontendRouter = self::get_service('FrontendRouter');
-        $FrontendRouter->add_route('/', '@GuzabaPlatform.Platform/views/Home.vue', 'Home');
-        $FrontendRouter->add_route('/admin', '@GuzabaPlatform.Platform/views/Admin/Home.vue', 'Admin Home');
-        $meta = [
-            'in_navigation' => TRUE, //to be shown in the admin navigation
-            'additional_template' => '@GuzabaPlatform.Platform/views/Admin/Components/NavigationHook.vue',//here the list of components will be expanded
+        $FrontendRouter->add('/', '@GuzabaPlatform.Platform/views/Home.vue', ['name' => 'Home']);
+        $FrontendRouter->add('/admin', '@GuzabaPlatform.Platform/views/Admin/Home.vue', ['name' => 'Admin Home']);
+        $additional = [
+            'name' => 'Components',
+            'meta' => [
+                'in_navigation' => TRUE, //to be shown in the admin navigation
+                'additional_template' => '@GuzabaPlatform.Platform/views/Admin/Components/NavigationHook.vue',//here the list of components will be expanded
+            ],
         ];
-        $FrontendRouter->add_route('/admin/components', '@GuzabaPlatform.Platform/views/Admin/Components/Components.vue' ,'Components', $meta);
+        $FrontendRouter->{'/admin'}->add('components', '@GuzabaPlatform.Platform/views/Admin/Components/Components.vue' ,$additional);
     }
 }
