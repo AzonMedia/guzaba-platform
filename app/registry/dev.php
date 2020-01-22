@@ -190,7 +190,8 @@ return [
             'DefaultCurrentUser'            => [
                 'class'                         => User::class,
                 'args'                          => [
-                    'index'                         => 1,
+                    //'index'                         => 1,
+                    'index'                         => '5c40bffb-f972-11e9-8f16-002564a26d87',
                     'read_only'                     => TRUE,
                     'permission_checks_disabled'    => TRUE,
                 ],
