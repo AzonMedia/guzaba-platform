@@ -195,7 +195,7 @@ BANNER;
             'Access-Control-Allow-Credentials'  => 'true',
             'Access-Control-Allow-Methods'      => 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
             'Access-Control-Expose-Headers'     => 'token',
-            'Access-Control-Allow-Headers'      => 'token'
+            'Access-Control-Allow-Headers'      => 'token, content-type',
         ];
 
         $CorsMiddleware = new CorsMiddleware($cors_headers);
@@ -233,15 +233,19 @@ BANNER;
         new Event($Middlewares, '_after_setup');
 
 
+        /*
         $DefaultResponseBody = new Stream();
         $DefaultResponseBody->write('Content not found or request not understood/route not found.');
         //$DefaultResponseBody = new \Guzaba2\Http\Body\Str();
         //$DefaultResponseBody->write('Content not found or request not understood (routing not configured).');
         $DefaultResponse = new Response(StatusCode::HTTP_NOT_FOUND, [], $DefaultResponseBody);
+        */
+
 
         //$RequestHandler = new \Guzaba2\Swoole\Handlers\Http\Request($HttpServer, $middlewares, $DefaultResponse);
         //$RequestHandler = new \Guzaba2\Swoole\Handlers\Http\Request($HttpServer, $Middlewares->get_middlewares(), $DefaultResponse);
-        $RequestHandler = new \Guzaba2\Swoole\Handlers\Http\Request($HttpServer, $Middlewares, $DefaultResponse);
+        //$RequestHandler = new \Guzaba2\Swoole\Handlers\Http\Request($HttpServer, $Middlewares, $DefaultResponse, $ServerErrorReponse);
+        $RequestHandler = new \Guzaba2\Swoole\Handlers\Http\Request($HttpServer, $Middlewares);
 
         $ConnectHandler = new WorkerConnect($HttpServer, new IpFilter());
         //$WorkerHandler = new WorkerHandler($HttpServer);
