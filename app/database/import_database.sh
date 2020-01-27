@@ -12,7 +12,7 @@ if [ $# -ne 2 ]; then
 fi
 
 database_file=$1
-env_file=$2 #"./guzaba-platform.env"
+env_file=$2
 
 . "$env_file"
 
@@ -28,10 +28,8 @@ printf "[client]\n" > "$mysql_cnf"
 printf "host=%s\n" "$host" >> "$mysql_cnf"
 printf "user=%s\n" "root" >> "$mysql_cnf"
 printf "password=%s\n" "$pass" >> "$mysql_cnf"
-#printf "%s\n" "$mysql_cnf"
 
 function spinner() {
-    #local pid=$1
     local delay=0.75
     local spinstr='|/-\'
     while :
@@ -67,14 +65,11 @@ if [ ! -z "$port" ] && [ ! -z "$pass" ] && [ ! -z "$database" ]; then
         exit $ENO_GENERAL
     fi
 
-    #result="$($mysql_command --defaults-file="$mysql_cnf" --defaults-group-suffix=client --protocol tcp -e "DROP DATABASE IF EXISTS ${database};" 2>&1)"
-    #if [ $? -ne 0 ]; then
-    #    printf "${red_color}[ERROR] Could not drop database \"%s\".${no_color}\n%s\n" "$database" "$result"
-    #    exit $ENO_GENERAL
-    #fi
-
-    #result="$($mysql_command --defaults-file="$mysql_cnf" --defaults-group-suffix=client --protocol tcp -e "SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE='BASE TABLE' AND TABLE_SCHEMA='guzaba2';")"
-    #result="$($mysql_command --defaults-file="$mysql_cnf" --defaults-group-suffix=client --protocol tcp --skip-column-names -e "SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE='BASE TABLE' AND TABLE_SCHEMA='${database}';")"
+    result="$($mysql_command --defaults-file="$mysql_cnf" --defaults-group-suffix=client --protocol tcp --skip-column-names -e "SELECT COUNT(*) FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_TYPE='BASE TABLE' AND TABLE_SCHEMA='${database}';")"
+    if [ $result -ne 0 ]; then
+        printf "${red_color}[ERROR] Database '%s' exists and is not empty. Skipping import...${no_color}\n%s\n" "$database"
+        exit $ENO_GENERAL
+    fi
 
     result="$($mysql_command --defaults-file="$mysql_cnf" --defaults-group-suffix=client --protocol tcp -e "CREATE DATABASE IF NOT EXISTS ${database} /*\!40100 DEFAULT CHARACTER SET utf8mb4 */;" 2>&1)"
     if [ $? -ne 0 ]; then
