@@ -15,6 +15,7 @@ use Guzaba2\Cache\MemoryCache;
 use Guzaba2\Cache\RedisCache;
 use Guzaba2\Cache\SwooleTableCache;
 use Guzaba2\Cache\SwooleTableIntCache;
+use Guzaba2\Kernel\Interfaces\ApmStructureInterface;
 use GuzabaPlatform\Platform\Application\Middlewares;
 use GuzabaPlatform\Platform\Authentication\Models\User;
 use Guzaba2\Database\ConnectionFactory;
@@ -34,6 +35,7 @@ use GuzabaPlatform\Platform\Application\GuzabaPlatform;
 use GuzabaPlatform\Platform\Application\MysqlConnection;
 use GuzabaPlatform\Platform\Application\MysqlConnectionCoroutine;
 use GuzabaPlatform\Platform\Application\RedisConnection;
+use GuzabaPlatform\Platform\Application\VueRouter;
 use Guzaba2\Orm\BlockingStore\Nosql\MongoDB;
 use GuzabaPlatform\Platform\Application\MongoDbConnection;
 use Guzaba2\Authorization\BypassAuthorizationProvider;
@@ -101,6 +103,7 @@ return [
                     //'FallbackStore'                 => 'RedisOrmStore',
                     'FallbackStore'                 => 'MysqlOrmStore',
                 ],
+                //'type'                          => 'worker',//no need - let it be global - there is a separate event on server start
             ],
             'RedisOrmStore'                 => [
                 'class'                         => Redis::class,
@@ -134,6 +137,7 @@ return [
                     'FallbackMetaStore'             => 'NullOrmMetaStore',
                 ],
                 'initialize_immediately'        => TRUE,
+                //'type'                          => 'worker',//this is a swoole table - can not be worker as this needs to be global - swoole table must be initialized before workers
             ],
             'NullOrmMetaStore'              => [
                 'class'                         => NullMetaStore::class,
@@ -159,6 +163,7 @@ return [
                     'Backend'                       => 'LockManagerBackend',
                     'Logger'                        => [Kernel::class, 'get_logger'],
                 ],
+                'type'                          => 'coroutine',
             ],
             'LockManagerBackend'            => [
                 'class'                         => SwooleTableBackend::class,
@@ -180,11 +185,13 @@ return [
                     //'user_id'                       => 1,
                     //'user_class'                    => User::class,
                 ],
+                'type'                          => 'coroutine',
             ],
             'DefaultCurrentUser'            => [
                 'class'                         => User::class,
                 'args'                          => [
-                    'index'                         => 1,
+                    //'index'                         => 1,
+                    'index'                         => '5c40bffb-f972-11e9-8f16-002564a26d87',
                     'read_only'                     => TRUE,
                     'permission_checks_disabled'    => TRUE,
                 ],
@@ -195,6 +202,7 @@ return [
             'Events'                        => [
                 'class'                         => Events::class,
                 'args'                          => [],
+                'type'                          => 'coroutine',
             ],
             'Apm'                           => [
                 //'class'                         => CoroutineProfiler::class,
@@ -202,8 +210,10 @@ return [
                 'class'                         => Profiler::class,
                 'args'                          => [
                     'Backend'                       => 'ApmBackend',
-                    'worker_id'                     => [Kernel::class, 'get_worker_id'],
+                    //'worker_id'                     => [Kernel::class, 'get_worker_id'],
+                    'profile_data_structure'        => Kernel::APM_DATA_STRUCTURE,
                 ],
+                'type'                          => 'coroutine',
             ],
             'ApmBackend'                    => [
                 'class'                         => NullBackend::class,
@@ -236,6 +246,12 @@ return [
                 'class'                         => RedisCache::class,
                 'args'                          => [
                     'connection_class'              => RedisConnection::class,
+                ],
+            ],
+            'FrontendRouter'                     => [
+                'class'                         => VueRouter::class,
+                'args'                          => [
+                    'router_file'                   => './public_src/components_config/router.config.js',
                 ],
             ],
 

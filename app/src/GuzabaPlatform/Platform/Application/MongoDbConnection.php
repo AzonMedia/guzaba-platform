@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace GuzabaPlatform\Platform\Application;
 
 use Guzaba2\Database\Nosql\MongoDb\ConnectionCoroutine;
+use GuzabaPlatform\Platform\Application\Traits\ConnectionConstructorTrait;
 
 class MongoDbConnection extends ConnectionCoroutine
 {
@@ -14,8 +15,10 @@ class MongoDbConnection extends ConnectionCoroutine
         'database' 	=> 'swoole',
         'username' 	=> 'swoole_user',
         'password' 	=> 'swoole_password',
-        'tprefix' 	=> 'guzaba_',
+        'AI_table'  => 'guzaba_autoincrement_counters',
     ];
 
     protected const CONFIG_RUNTIME = [];
+
+    use ConnectionConstructorTrait;
 }

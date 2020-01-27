@@ -4,9 +4,10 @@ declare(strict_types=1);
 namespace GuzabaPlatform\Platform\Authentication\Controllers;
 
 use Guzaba2\Http\Method;
+use Guzaba2\Mvc\ActiveRecordController;
+use GuzabaPlatform\Platform\Application\BaseController;
 use GuzabaPlatform\Platform\Application\GuzabaPlatform as GP;
 use Psr\Http\Message\ResponseInterface;
-use Guzaba2\Mvc\Controller;
 use Guzaba2\Coroutine\Coroutine;
 use Guzaba2\Translator\Translator as t;
 use Guzaba2\Orm\Exceptions\RecordNotFoundException;
@@ -15,16 +16,28 @@ use Guzaba2\Database\Exceptions\DuplicateKeyException;
 use Guzaba2\Database\Exceptions\ForeignKeyConstraintException;
 use GuzabaPlatform\Platform\Authentication\Models\User;
 
-class PasswordReset extends Controller
+class PasswordReset extends BaseController
 {
 
-    public const ROUTES = [
-        GP::API_ROUTE_PREFIX.'/password-reset'   => [
-        //'/password-reset'   => [
-            Method::HTTP_GET_HEAD_OPT       => [self::class, 'main'],
-            Method::HTTP_POST               => [self::class, 'update'],
+//    public const ROUTES = [
+//        GP::API_ROUTE_PREFIX.'/password-reset'   => [
+//        //'/password-reset'   => [
+//            Method::HTTP_GET_HEAD_OPT       => [self::class, 'main'],
+//            Method::HTTP_POST               => [self::class, 'update'],
+//        ],
+//    ];
+
+    protected const CONFIG_DEFAULTS = [
+        'routes'    => [
+            GP::API_ROUTE_PREFIX.'/password-reset'   => [
+                //'/password-reset'   => [
+                Method::HTTP_GET_HEAD_OPT       => [self::class, 'main'],
+                Method::HTTP_POST               => [self::class, 'update'],
+            ],
         ],
     ];
+
+    protected const CONFIG_RUNTIME = [];
 
     private User $User;
 

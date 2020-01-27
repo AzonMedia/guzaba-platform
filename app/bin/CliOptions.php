@@ -61,7 +61,7 @@ abstract class CliOptions
         'enable-http2'                  => [
             'shortcut'          => NULL,
             'input'             => InputOption::VALUE_NONE,
-            'description'       => 'Enable HTTP2 (requires also --disable-static-handler --enable-ssl to be provided)',
+            'description'       => 'Enable HTTP2 (requires also --enable-ssl to be provided)',
             'default'           => NULL,
             'class'             => GuzabaPlatform::class,
             'option'            => 'enable_http2',
@@ -91,10 +91,10 @@ abstract class CliOptions
 //            'class'             => GuzabaPlatform::class,
 //            'option'            => ['kernel' => ['disable_all_class_load' => NULL]],
 //        ],
-        'disable-all-class-validation'  => [
+        'disable-validations'  => [
             'shortcut'          => NULL,
             'input'             => InputOption::VALUE_NONE,
-            'description'       => 'Do not validate all loaded classes on startup',
+            'description'       => 'Do not run the validations at startup.',
             'default'           => NULL,
             'class'             => GuzabaPlatform::class,
             'option'            => ['kernel' => ['disable_all_class_validation' => NULL]],
@@ -106,6 +106,14 @@ abstract class CliOptions
             'default'           => NULL,
             'class'             => \Guzaba2\Application\Application::class,
             'option'            => 'deployment',
+        ],
+        'enable-debug-ports'            => [
+            'shortcut'          => NULL,
+            'input'             => InputOption::VALUE_NONE,
+            'description'       => 'Enables the debug ports for the Swoole Workers.',
+            'default'           => NULL,
+            'class'             => GuzabaPlatform::class,
+            'option'            => ['swoole' => ['enable_debug_ports' => NULL]],
         ],
 
     ];

@@ -8,6 +8,7 @@ use Guzaba2\Kernel\Interfaces\ClassInitializationInterface;
 use Guzaba2\Orm\ClassDeclarationValidation;
 use Guzaba2\Routing\ControllerDefaultRoutingMap;
 use Guzaba2\Routing\ActiveRecordDefaultRoutingMap;
+use Guzaba2\Swoole\Debug\Debugger;
 use Guzaba2\Translator\Translator as t;
 use GuzabaPlatform\Platform\Application\PlatformMiddleware;
 use Guzaba2\Application\Application;
@@ -48,7 +49,8 @@ class GuzabaPlatform extends Application
                 'ssl_cert_file'             => NULL,
                 'ssl_key_file'              => NULL,
             ],
-
+            'enable_debug_ports'        => FALSE,
+            'base_debug_port'           => Debugger::DEFAULT_BASE_DEBUG_PORT,
         ],
         'version'                   => 'dev',
 
@@ -134,8 +136,8 @@ BANNER;
 
         //if (!empty($server_options['open_http2_protocol'])) {
         if (self::CONFIG_RUNTIME['enable_ssl']) {
-            $server_options['ssl_cert_file'] = $server_options['ssl_cert_file'] ? $server_options['ssl_cert_file'] : $this->app_directory.'certificates/localhost.crt';
-            $server_options['ssl_key_file'] = $server_options['ssl_key_file'] ? $server_options['ssl_key_file'] : $this->app_directory.'certificates/localhost.key';
+            $server_options['ssl_cert_file'] = $server_options['ssl_cert_file'] ? $server_options['ssl_cert_file'] : $this->app_directory.'/certificates/localhost.crt';
+            $server_options['ssl_key_file'] = $server_options['ssl_key_file'] ? $server_options['ssl_key_file'] : $this->app_directory.'/certificates/localhost.key';
         } else {
             unset($server_options['ssl_cert_file']);
             unset($server_options['ssl_key_file']);
@@ -157,18 +159,31 @@ BANNER;
         $Rewriter = new UrlRewritingRules('/api/');
         $RewritingMiddleware = new RewritingMiddleware($HttpServer, $Rewriter);
 
-        //$routing_table = RoutingMap::ROUTING_MAP;
+        $static_routing_map = RoutingMap::ROUTING_MAP;
 
         //$Router = new Router(new RoutingMapArray($routing_table));
-        $ControllersDefaultRoutingMap = new ControllerDefaultRoutingMap(array_keys(Kernel::get_registered_autoloader_paths()));
-        $ModelsDefaultRoutingMap = new ActiveRecordDefaultRoutingMap(array_keys(Kernel::get_registered_autoloader_paths()), self::API_ROUTE_PREFIX );
-        $controllers_routing_map = $ControllersDefaultRoutingMap->get_routing_map();
-        $controllers_routing_meta_data = $ControllersDefaultRoutingMap->get_all_meta_data();
+        //$ControllersDefaultRoutingMap = new ControllerDefaultRoutingMap(array_keys(Kernel::get_registered_autoloader_paths()));
+        //$ModelsDefaultRoutingMap = new ActiveRecordDefaultRoutingMap(array_keys(Kernel::get_registered_autoloader_paths()), self::API_ROUTE_PREFIX );
+        $ModelsDefaultRoutingMap = new ActiveRecordDefaultRoutingMap(array_keys(Kernel::get_registered_autoloader_paths()));
+        //$controllers_routing_map = $ControllersDefaultRoutingMap->get_routing_map();
+        //$controllers_routing_meta_data = $ControllersDefaultRoutingMap->get_all_meta_data();
         $models_routing_map = $ModelsDefaultRoutingMap->get_routing_map();
+        $models_routing_map_with_prefix = [];
+        foreach ($models_routing_map as $key=>$value) {
+            $models_routing_map_with_prefix[self::API_ROUTE_PREFIX.$key] = $value;
+        }
         $models_routing_meta_data = $ModelsDefaultRoutingMap->get_all_meta_data();
+        foreach ($models_routing_meta_data as $key=>$value) {
+            $models_routing_meta_data_with_prefix[self::API_ROUTE_PREFIX.$key] = $value;
+        }
 
-        $routing_map = Router::merge_routes($controllers_routing_map, $models_routing_map);
-        $routing_meta_data = array_merge($controllers_routing_meta_data, $models_routing_meta_data);
+        //$routing_map = Router::merge_routes($controllers_routing_map, $models_routing_map);
+        //$routing_meta_data = array_merge($controllers_routing_meta_data, $models_routing_meta_data);
+        //$routing_map = $models_routing_map;
+        //$routing_meta_data = $models_routing_meta_data;
+        //$routing_map = Router::merge_routes($static_routing_map, $models_routing_map);
+        $routing_map = Router::merge_routes($static_routing_map, $models_routing_map_with_prefix);
+        $routing_meta_data = array_merge([], $models_routing_meta_data_with_prefix);
 
         //$Router = new Router(new RoutingMapArray($routing_map));
         $Router = new Router(new GeneratedRoutingMap($routing_map, $routing_meta_data, $this->generated_files_dir));
@@ -180,7 +195,7 @@ BANNER;
             'Access-Control-Allow-Credentials'  => 'true',
             'Access-Control-Allow-Methods'      => 'GET,PUT,POST,DELETE,PATCH,OPTIONS',
             'Access-Control-Expose-Headers'     => 'token',
-            'Access-Control-Allow-Headers'      => 'token'
+            'Access-Control-Allow-Headers'      => 'token, content-type',
         ];
 
         $CorsMiddleware = new CorsMiddleware($cors_headers);
@@ -218,21 +233,25 @@ BANNER;
         new Event($Middlewares, '_after_setup');
 
 
+        /*
         $DefaultResponseBody = new Stream();
         $DefaultResponseBody->write('Content not found or request not understood/route not found.');
         //$DefaultResponseBody = new \Guzaba2\Http\Body\Str();
         //$DefaultResponseBody->write('Content not found or request not understood (routing not configured).');
         $DefaultResponse = new Response(StatusCode::HTTP_NOT_FOUND, [], $DefaultResponseBody);
+        */
+
 
         //$RequestHandler = new \Guzaba2\Swoole\Handlers\Http\Request($HttpServer, $middlewares, $DefaultResponse);
         //$RequestHandler = new \Guzaba2\Swoole\Handlers\Http\Request($HttpServer, $Middlewares->get_middlewares(), $DefaultResponse);
-        $RequestHandler = new \Guzaba2\Swoole\Handlers\Http\Request($HttpServer, $Middlewares, $DefaultResponse);
+        //$RequestHandler = new \Guzaba2\Swoole\Handlers\Http\Request($HttpServer, $Middlewares, $DefaultResponse, $ServerErrorReponse);
+        $RequestHandler = new \Guzaba2\Swoole\Handlers\Http\Request($HttpServer, $Middlewares);
 
         $ConnectHandler = new WorkerConnect($HttpServer, new IpFilter());
         //$WorkerHandler = new WorkerHandler($HttpServer);
-        $WorkerHandler = new WorkerStart($HttpServer);
+        $WorkerHandler = new WorkerStart($HttpServer, self::CONFIG_RUNTIME['swoole']['enable_debug_ports'], self::CONFIG_RUNTIME['swoole']['base_debug_port']);
 
-        $HttpServer->on('Connect', $ConnectHandler);
+        //$HttpServer->on('Connect', $ConnectHandler);
         $HttpServer->on('WorkerStart', $WorkerHandler);
         $HttpServer->on('Request', $RequestHandler);
 
@@ -258,7 +277,6 @@ BANNER;
             $middlewares_info .= str_repeat(' ',4).'- '.get_class($Middleware).' - '.((new \ReflectionClass($Middleware))->getFileName()).PHP_EOL;
         }
         Kernel::printk($middlewares_info);
-        
 
         //close any single connections that may have been opened during this phase
         self::get_service('ConnectionFactory')->close_all_connections();

@@ -4,27 +4,42 @@ declare(strict_types=1);
 namespace GuzabaPlatform\Platform\Authentication\Controllers;
 
 use Guzaba2\Http\Method;
-use Guzaba2\Mvc\Controller;
+use Guzaba2\Mvc\ActiveRecordController;
 use Guzaba2\Orm\Exceptions\RecordNotFoundException;
 use Guzaba2\Translator\Translator as t;
+use GuzabaPlatform\Platform\Application\BaseController;
 use GuzabaPlatform\Platform\Application\GuzabaPlatform as GP;
 use GuzabaPlatform\Platform\Authentication\Models\JwtToken as Token;
 use GuzabaPlatform\Platform\Authentication\Models\User;
 use Psr\Http\Message\ResponseInterface;
 use Guzaba2\Kernel\Kernel;
 
-class Auth extends Controller
+class Auth extends BaseController
 {
 
-    public const ROUTES = [
-        GP::API_ROUTE_PREFIX . '/user-login' => [
-            Method::HTTP_GET_HEAD_OPT => [self::class, 'main'],
-            Method::HTTP_POST => [self::class, 'login'],
-        ],
-        GP::API_ROUTE_PREFIX . '/user-register' => [
-            Method::HTTP_POST => [self::class, 'register'],
-        ],
+//    public const ROUTES = [
+//        GP::API_ROUTE_PREFIX . '/user-login' => [
+//            Method::HTTP_GET_HEAD_OPT => [self::class, 'main'],
+//            Method::HTTP_POST => [self::class, 'login'],
+//        ],
+//        GP::API_ROUTE_PREFIX . '/user-register' => [
+//            Method::HTTP_POST => [self::class, 'register'],
+//        ],
+//    ];
+
+    protected const CONFIG_DEFAULTS = [
+        'routes'    => [
+            '/user-login' => [
+                Method::HTTP_GET_HEAD_OPT => [self::class, 'main'],
+                Method::HTTP_POST => [self::class, 'login'],
+            ],
+            '/user-register' => [
+                Method::HTTP_POST => [self::class, 'register'],
+            ],
+        ]
     ];
+
+    protected const CONFIG_RUNTIME = [];
 
     public function main(): ResponseInterface
     {
@@ -33,11 +48,22 @@ class Auth extends Controller
         $struct['username_placeholder'] = t::_('Username');
         $struct['password_placeholder'] = t::_('Password');
         $struct['login_button'] = t::_('Login');
-        $struct['hooks']['afterRender'] = [
-            'name' => 'text',
-            'data' => ['text' => t::_('Your password must be 8-20 characters long, contain letters and numbers, and must not
-        contain spaces, special characters, or emoji.')],
+//        $struct['hooks']['_after_main'] = [
+//            'name' => 'text',
+//            'data' => ['text' => t::_('Your password must be 8-20 characters long, contain letters and numbers, and must not
+//        contain spaces, special characters, or emoji.')],
+//        ];
+
+//a test hook
+        $struct['hooks']['_after_main'][] = [
+            //'name'  => 'text',
+            //'name' => '@GuzabaPlatform.Platform/views/hooks/templates/text.vue',
+            'name' => '@GuzabaPlatform.Platform/views/hooks/templates/TextHook.vue',
+            //'name' => '/home/local/PROJECTS/guzaba-platform-skeleton/guzaba-platform-skeleton/vendor/guzaba-platform/guzaba-platform/app/public_src/src/views/hooks/templates/text.vue',
+            'data' => ['text' => t::_('Your password must be 8-20 characters long, contain letters and numbers, and must not contain spaces, special characters, or emoji.')],
         ];
+
+        //$struct['password_text'] = t::_('Your password must be 8-20 characters long, contain letters and numbers, and must not contain spaces, special characters, or emoji.');
 
         $Response = parent::get_structured_ok_response($struct);
         return $Response;

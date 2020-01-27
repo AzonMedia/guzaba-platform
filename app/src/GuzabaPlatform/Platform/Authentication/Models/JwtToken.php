@@ -25,7 +25,10 @@ class JwtToken extends Base implements TokenInterface
         'secret'      		=> 'secret',
         'allowed_algs'      => 'HS256',
         'expiration_time'	=>  1 * 24 * 60 * 60, // 1 day
-        'renew_time'		=>  1 * 60 * 60 // 1 hour
+        'renew_time'		=>  1 * 60 * 60, // 1 hour
+        'services'          => [
+            'CurrentUser'
+        ],
     ];
 
     protected const CONFIG_RUNTIME = [];
@@ -101,12 +104,16 @@ class JwtToken extends Base implements TokenInterface
      */
     public static function get_user_id_from_request(RequestInterface $Request) /* mixed */
     {
-        $ret = '';
+        $ret = self::get_service('CurrentUser')->get_default_user_uuid();
         $headers = $Request->getHeaders();
         if (isset($headers['token'])) {
-            $Token = new JwtToken(['token_string' => $headers['token'][0]]);
-            if ($Token->token_expiration_time > time()) {
-                $ret = $Token->user_id;
+            try {
+                $Token = new JwtToken(['token_string' => $headers['token'][0]]);
+                if ($Token->token_expiration_time > time()) {
+                    $ret = $Token->user_id;
+                }
+            } catch (RecordNotFoundException $Exception) {
+
             }
         }
         return $ret;

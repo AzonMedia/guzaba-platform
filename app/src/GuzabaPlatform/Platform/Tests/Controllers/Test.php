@@ -3,29 +3,31 @@ declare(strict_types=1);
 
 namespace GuzabaPlatform\Platform\Tests\Controllers;
 
-
 use Guzaba2\Authorization\Acl\Permission;
 use Guzaba2\Coroutine\Coroutine;
 use Guzaba2\Http\Method;
-use Guzaba2\Mvc\Controller;
+use Guzaba2\Mvc\ActiveRecordController;
+use GuzabaPlatform\Platform\Application\BaseController;
 use GuzabaPlatform\Platform\Application\GuzabaPlatform as GP;
 use GuzabaPlatform\Platform\Application\MysqlConnectionCoroutine;
 use GuzabaPlatform\Platform\Authentication\Models\User;
 
-class Test extends Controller
+class Test extends BaseController
 {
 
-    public const ROUTES = [
-        GP::API_ROUTE_PREFIX.'/test2'      => [
-            Method::HTTP_GET_HEAD_OPT               => [self::class, 'main'],
-            Method::HTTP_POST                       => [self::class, 'post'],
-        ],
-    ];
+//    public const ROUTES = [
+//        GP::API_ROUTE_PREFIX.'/test2'      => [
+//            Method::HTTP_GET_HEAD_OPT               => [self::class, 'main'],
+//            Method::HTTP_POST                       => [self::class, 'post'],
+//        ],
+//    ];
 
     protected const CONFIG_DEFAULTS = [
-        'services'      => [
-//            'ConnectionFactory',
-//            'CurrentUser',
+        'routes'        => [
+            '/test2'      => [
+                Method::HTTP_GET_HEAD_OPT               => [self::class, 'main'],
+                Method::HTTP_POST                       => [self::class, 'post'],
+            ],
         ],
     ];
 
@@ -74,6 +76,9 @@ class Test extends Controller
         //$Response = self::get_structured_ok_response(['message' => 'ok']);
         $Response = self::get_structured_ok_response([$o2]);
         $Response = $Response->withHeader('data-origin','orm-specific');
+
+
+
         return $Response;
     }
 

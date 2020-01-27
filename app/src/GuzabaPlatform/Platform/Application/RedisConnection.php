@@ -5,7 +5,13 @@ declare(strict_types=1);
 namespace GuzabaPlatform\Platform\Application;
 
 use Guzaba2\Database\Nosql\Redis\ConnectionCoroutine;
+use GuzabaPlatform\Platform\Application\Traits\ConnectionConstructorTrait;
 
+/**
+ * Class RedisConnection
+ * @package GuzabaPlatform\Platform\Application
+ * A coroutine connection for redis.
+ */
 class RedisConnection extends ConnectionCoroutine
 {
     protected const CONFIG_DEFAULTS = [
@@ -22,4 +28,6 @@ class RedisConnection extends ConnectionCoroutine
     ];
 
     protected const CONFIG_RUNTIME = [];
+
+    use ConnectionConstructorTrait;
 }

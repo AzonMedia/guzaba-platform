@@ -8,19 +8,31 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
+/**
+ * Class Start
+ * @package GuzabaPlatform\bin
+ */
 class Start extends Command
 {
 
     protected array $parsed_options = [];
 
+    /**
+     * Initializes the options by reading CliOptions::CLI_OPTIONS
+     */
     public function configure() : void
     {
         $this->setName('start')->setDescription('Sets application options.')->setHelp('Sets application options.');
         foreach (CliOptions::CLI_OPTIONS as $option_name => $option_settings) {
-            $this-> addOption ($option_name, $option_settings['shortcut'], $option_settings['input'], $option_settings['description'], $option_settings['default']);
+            $this->addOption($option_name, $option_settings['shortcut'], $option_settings['input'], $option_settings['description'], $option_settings['default']);
         }
     }
 
+    /**
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     * @return int
+     */
     public function execute(InputInterface $input, OutputInterface $output) : int
     {
 
@@ -35,12 +47,21 @@ class Start extends Command
         return 0;
     }
 
+    /**
+     * Returns an associative array with the parsed options.
+     * @return array
+     */
     public function get_parsed_options() : array
     {
         return $this->parsed_options;
     }
 
-    private static function assign_value(&$options, $option_name, $option_value) : void
+    /**
+     * @param mixed $options
+     * @param mixed $option_name
+     * @param mixed $option_value
+     */
+    private static function assign_value( /* mixed */ &$options, /* mixed */ $option_name, /* mixed */ $option_value) : void
     {
         if (is_string($option_name)) {
             //print $option_name.' '.$option_value;
@@ -50,6 +71,9 @@ class Start extends Command
                 throw new \InvalidArgumentException(sprintf(t::_('The array provided for $option_name can contain only one entry.')));
             }
             $key = array_key_first($option_name);
+            if ($options === NULL) {
+                $options = [];
+            }
             if (!array_key_exists($key, $options)) {
                 $options[$key] = [];
             }

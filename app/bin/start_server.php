@@ -41,6 +41,12 @@ use Psr\Log\LogLevel;
     if (isset($cli_options_mapping['GuzabaPlatform\\Platform\\Application\\GuzabaPlatform']['log_level'])) {
         $log_level = $cli_options_mapping['GuzabaPlatform\\Platform\\Application\\GuzabaPlatform']['log_level'];
     }
+    if (isset($cli_options_mapping['Guzaba2\\Application\\Application']['deployment']) && strtolower($cli_options_mapping['Guzaba2\\Application\\Application']['deployment']) === 'production') {
+        if (in_array(strtolower($log_level), ['debug', 'info'])) {
+            //in production debug and info should not be used as this will fill the logs - raise the level to the minimum notice
+            $log_level = 'notice';
+        }
+    }
 
     $initial_directory = getcwd();
     $app_directory = realpath(dirname($autoload_path) .'/../app/');
@@ -52,13 +58,16 @@ use Psr\Log\LogLevel;
 
     //Registry Setup
     //the priority from highest to lowest is: Cli, Env, Array
-    $RegistryBackendCli = new RegistryBackendCli($cli_options_mapping);
-    $Registry = new Registry($RegistryBackendCli, $generated_runtime_config_file, $generated_runtime_config_dir);
+    //the fallback is registered first and then in increasing priority
+
+    $RegistryBackendArray = new RegistryBackendArray(realpath($app_directory . '/registry'));
+    $Registry = new Registry($RegistryBackendArray, $generated_runtime_config_file, $generated_runtime_config_dir);
+
     $RegistryBackendEnv = new RegistryBackendEnv('');
     $Registry->add_backend($RegistryBackendEnv);
 
-    $RegistryBackendArray = new RegistryBackendArray(realpath($app_directory . '/registry'));
-    $Registry->add_backend($RegistryBackendArray);
+    $RegistryBackendCli = new RegistryBackendCli($cli_options_mapping);
+    $Registry->add_backend($RegistryBackendCli);
 
 
 
@@ -72,7 +81,8 @@ use Psr\Log\LogLevel;
 
     //use the below IF to disable the normal log in production node if needed (startup messages will not be logged)
     //if (!isset($cli_options_mapping['Guzaba2\\Application\\Application']['deployment']) || strtolower($cli_options_mapping['Guzaba2\\Application\\Application']['deployment']) !== 'production') {
-    $FileHandler = new StreamHandler($app_directory.'/logs'.DIRECTORY_SEPARATOR.'main_log.txt', $log_level);
+    $log_file = $app_directory.'/logs'.DIRECTORY_SEPARATOR.'main_log.txt';
+    $FileHandler = new StreamHandler($log_file, $log_level);
     $FileHandler->setFormatter($Formatter);
     $Logger->pushHandler($FileHandler);
     //}
@@ -97,18 +107,18 @@ use Psr\Log\LogLevel;
     }
     $Manifest = json_decode(file_get_contents($manifest_json_file));
     foreach ($Manifest->components as $Component) {
-        $ns_as_path = str_replace('\\','/',$Component->namespace);
+        //$ns_as_path = str_replace('\\','/',$Component->namespace);
         $src_dir = $Component->src_dir;
         Kernel::register_autoloader_path($Component->namespace, $src_dir);
     }
-    //TODO - check the composer.json for an autoload section and provide it here
+    //use the composer autoload path and provide it to the Kernel (the Kernel::autoloader() will be used, not the composer one even though this was defined in the composer.json file)
     $Composer = json_decode(file_get_contents($root_directory.'/composer.json'), TRUE);
     if (isset($Composer['autoload']['psr-4'])) {
         foreach ($Composer['autoload']['psr-4'] as $namespace=>$rel_path) {
             Kernel::register_autoloader_path($namespace, $root_directory.'/'.$rel_path);
         }
     };
-    //if there is no autoload/psr-4 section in the composer.json file then here an explicit call to Kernel::register_autoloader_path() needs to be done and the namespace prefix and path provdied.
+    //if there is no autoload/psr-4 section in the composer.json file then here an explicit call to Kernel::register_autoloader_path() needs to be done and the namespace prefix and path provided.
 
     //past this point it is possible to autoload Application specific classes
 

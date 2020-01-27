@@ -18,6 +18,7 @@
         "ext-json": "*",
         "guzaba/guzaba2": "dev-master",
         "guzaba-platform/components-base": "dev-master",
+        "azonmedia/vue-router": "dev-master",
         "psr/log": "^1.1",
         "monolog/monolog": "^2.0@dev",
         "firebase/php-jwt": "dev-master",

@@ -4,8 +4,9 @@ declare(strict_types=1);
 namespace GuzabaPlatform\Platform\Authentication\Controllers;
 
 use Guzaba2\Http\Method;
-use Guzaba2\Mvc\Controller;
+use Guzaba2\Mvc\ActiveRecordController;
 use Guzaba2\Translator\Translator as t;
+use GuzabaPlatform\Platform\Application\BaseController;
 use Psr\Http\Message\ResponseInterface;
 use GuzabaPlatform\Platform\Authentication\Models\User;
 // use GuzabaPlatform\Platform\Authentication\Models\Token as Token;
@@ -14,16 +15,29 @@ use Guzaba2\Orm\Exceptions\RecordNotFoundException;
 
 use GuzabaPlatform\Platform\Application\GuzabaPlatform as GP;
 
-class Login extends Controller
+//not-used
+class Login extends BaseController
 {
 
-    public const ROUTES = [
-        GP::API_ROUTE_PREFIX.'/login'   => [
-        //'/login'   => [
-            Method::HTTP_GET_HEAD_OPT       => [self::class, 'main'],
-            Method::HTTP_POST               => [self::class, 'login'],
+//    public const ROUTES = [
+//        GP::API_ROUTE_PREFIX.'/login'   => [
+//        //'/login'   => [
+//            Method::HTTP_GET_HEAD_OPT       => [self::class, 'main'],
+//            Method::HTTP_POST               => [self::class, 'login'],
+//        ],
+//    ];
+
+    protected const CONFIG_DEFAULTS = [
+        'routes'    => [
+            '/login-not-used'   => [
+                //'/login'   => [
+                Method::HTTP_GET_HEAD_OPT       => [self::class, 'main'],
+                Method::HTTP_POST               => [self::class, 'login'],
+            ],
         ],
     ];
+
+    protected const CONFIG_RUNTIME = [];
 
     public function main() : ResponseInterface
     {
