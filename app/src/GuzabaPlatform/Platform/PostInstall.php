@@ -14,7 +14,6 @@ class PostInstall implements PostInstallHookInterface
 {
     public static function post_install_hook(Installer $Installer, InstalledRepositoryInterface $Repo, PackageInterface $Package) : void
     {
-/*
         $guzaba_platform_dir = $Installer->getInstallPath($Package);
 
         $database_file = $guzaba_platform_dir . '/app/database/guzaba2.sql';
@@ -32,6 +31,5 @@ class PostInstall implements PostInstallHookInterface
                 echo $buffer;
             });
         }
-*/
     }
 }
