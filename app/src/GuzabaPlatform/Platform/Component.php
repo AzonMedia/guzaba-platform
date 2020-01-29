@@ -7,10 +7,8 @@ use Guzaba2\Base\Base;
 use GuzabaPlatform\Components\Base\BaseComponent;
 use GuzabaPlatform\Components\Base\Interfaces\ComponentInitializationInterface;
 use GuzabaPlatform\Components\Base\Interfaces\ComponentInterface;
-use GuzabaPlatform\Components\Base\Interfaces\PostInstallHookInterface;
-use Composer\Installer\PackageEvent;
 
-class Component extends BaseComponent implements ComponentInterface, ComponentInitializationInterface, PostInstallHookInterface
+class Component extends BaseComponent implements ComponentInterface, ComponentInitializationInterface
 {
     protected const CONFIG_DEFAULTS = [
         'services'      => [
@@ -35,7 +33,6 @@ class Component extends BaseComponent implements ComponentInterface, ComponentIn
      */
     public static function run_all_initializations() : array
     {
-        file_put_contents('./KOKOMOKO.TXT', 'I am called 1' . PHP_EOL, FILE_APPEND);
         self::register_routes();
         return ['register_routes'];
     }
@@ -44,7 +41,6 @@ class Component extends BaseComponent implements ComponentInterface, ComponentIn
     {
         //register few default routes
         //there are also some hardcoded routes at router.js
-        file_put_contents('./KOKOMOKO.TXT', 'I am called 2' . PHP_EOL, FILE_APPEND);
         $FrontendRouter = self::get_service('FrontendRouter');
         $FrontendRouter->add('/', '@GuzabaPlatform.Platform/views/Home.vue', ['name' => 'Home']);
         $FrontendRouter->add('/admin', '@GuzabaPlatform.Platform/views/Admin/Home.vue', ['name' => 'Admin Home']);
@@ -56,11 +52,5 @@ class Component extends BaseComponent implements ComponentInterface, ComponentIn
             ],
         ];
         $FrontendRouter->{'/admin'}->add('components', '@GuzabaPlatform.Platform/views/Admin/Components/Components.vue' ,$additional);
-    }
-
-    public static function post_installation_hook(PackageEvent $PackageEvent) : bool
-    {
-        file_put_contents('./KOKOMOKO.TXT', 'I am called 3' . PHP_EOL, FILE_APPEND);
-        return TRUE;
     }
 }
