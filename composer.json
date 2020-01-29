@@ -34,5 +34,11 @@
         "psr-4": {
             "GuzabaPlatform\\Platform\\": "app/src/GuzabaPlatform/Platform/"
         }
+    },
+    "suggest" : {
+        "guzaba-platform/crud": "Provides for basic CRUD operations and permissions management on all object",
+        "guzaba-platform/classes": "Provides permissions management for classes",
+        "guzaba-platform/controllers": "Provides permissions management for controllers",
+        "guzaba-platform/request-caching": "Provides request caching and faster response in certain cases"
     }
 }

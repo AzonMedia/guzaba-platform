@@ -15,4 +15,30 @@ class Test extends BaseActiveRecord
     ];
 
     protected const CONFIG_RUNTIME = [];
+
+    public function f1()
+    {
+
+    }
+
+    /**
+     * @check_permissions
+     */
+    public function f2()
+    {
+
+    }
+
+    public static function f3()
+    {
+
+    }
+
+    /**
+     * @check_permissions
+     */
+    public static function f4()
+    {
+
+    }
 }

@@ -198,6 +198,7 @@ return [
                 'depends_on'                    => [
                     'LockManager'
                 ],
+                'type'                          => 'coroutine',
             ],
             'Events'                        => [
                 'class'                         => Events::class,

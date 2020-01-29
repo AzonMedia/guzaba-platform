@@ -11,6 +11,7 @@ use GuzabaPlatform\Platform\Application\BaseController;
 use GuzabaPlatform\Platform\Application\GuzabaPlatform as GP;
 use GuzabaPlatform\Platform\Application\MysqlConnectionCoroutine;
 use GuzabaPlatform\Platform\Authentication\Models\User;
+use Psr\Http\Message\ResponseInterface;
 
 class Test extends BaseController
 {
@@ -25,15 +26,26 @@ class Test extends BaseController
     protected const CONFIG_DEFAULTS = [
         'routes'        => [
             '/test2'      => [
-                Method::HTTP_GET_HEAD_OPT               => [self::class, 'main'],
+                Method::HTTP_GET                        => [self::class, 'main'],
                 Method::HTTP_POST                       => [self::class, 'post'],
+            ],
+            '/test3'      => [
+                Method::HTTP_GET                        => [self::class, 'test3'],
             ],
         ],
     ];
 
     protected const CONFIG_RUNTIME = [];
 
-    public function main()
+    public function test3() : ResponseInterface
+    {
+        $actions = \GuzabaPlatform\Platform\Tests\Models\Test::get_object_actions();
+        print_r($actions);
+        $Response = self::get_structured_ok_response(['message' => 'this is a test method']);
+        return $Response;
+    }
+
+    public function main() : ResponseInterface
     {
         //$struct = ['message' => 'ok'];
         //$Response = self::get_structured_ok_response($struct);
@@ -82,7 +94,7 @@ class Test extends BaseController
         return $Response;
     }
 
-    public function post()
+    public function post() : ResponseInterface
     {
 //        $o1 = new \GuzabaPlatform\Platform\Tests\Models\Test(76);
 //        $o2 = new \GuzabaPlatform\Platform\Tests\Models\Test(76);
