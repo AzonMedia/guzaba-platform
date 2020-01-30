@@ -2,9 +2,12 @@
   "name": "guzaba-platform",
   "version": "0.1.0",
   "private": true,
-  "scripts" : {
-    "dev": "webpack-dev-server --devtool eval --progress --colors --hot",
-    "build": "NODE_ENV=production webpack -p"
+  "scripts": {
+    "start": "webpack-dev-server --watch-poll",
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint",
+    "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
     "axios": "^0.19.0",
