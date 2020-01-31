@@ -7,6 +7,7 @@ use Guzaba2\Authorization\Acl\Permission;
 use Guzaba2\Coroutine\Coroutine;
 use Guzaba2\Http\Method;
 use Guzaba2\Mvc\ActiveRecordController;
+use Guzaba2\Mvc\ExecutorMiddleware;
 use GuzabaPlatform\Platform\Application\BaseController;
 use GuzabaPlatform\Platform\Application\GuzabaPlatform as GP;
 use GuzabaPlatform\Platform\Application\MysqlConnectionCoroutine;
@@ -37,12 +38,29 @@ class Test extends BaseController
 
     protected const CONFIG_RUNTIME = [];
 
-    public function test3() : ResponseInterface
+    public function test3(int $arg1 = 0) : ResponseInterface
     {
-        $actions = \GuzabaPlatform\Platform\Tests\Models\Test::get_object_actions();
-        print_r($actions);
-        $Response = self::get_structured_ok_response(['message' => 'this is a test method']);
+        //$actions = \GuzabaPlatform\Platform\Tests\Models\Test::get_object_actions();
+        //print_r($actions);
+        $struct = ['message' => 'this is a test method'];
+        //examples how to invoke a nested controller
+        //$struct['test4'] = $this->execute_structured_method('test4');
+        $struct += $this->execute_structured_action('test4', ['a' => 'gggg']);
+        //$struct += $this->test4('asdasd');//will not fire the events...
+
+        //maybe in future
+        //$struct += $this('test4');
+        //$struct += $this('test4', $arg1, $arg2);//__invoke() using execute_structured_action
+        //$this->{'+test4'}();
+        $Response = self::get_structured_ok_response($struct);
+
         return $Response;
+    }
+
+    public function test4(string $a) : ResponseInterface
+    {
+        $struct = ['text4' => 'text from test4 '.$a];
+        return self::get_structured_ok_response($struct);
     }
 
     public function main() : ResponseInterface
