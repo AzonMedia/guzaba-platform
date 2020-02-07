@@ -47,7 +47,7 @@ class Middlewares extends Base implements \Iterator, \Countable
      * @param MiddlewareInterface|string|null $before_middleware_class
      * @return bool
      */
-    public function add(MiddlewareInterface $Middleware, $BeforeMiddleware = NULL) : bool
+    public function add(MiddlewareInterface $Middleware, /* MiddlewareInterface|string|null */ $BeforeMiddleware = NULL) : bool
     {
         if ($this->has_middleware($Middleware)) {
             return FALSE;
@@ -81,14 +81,56 @@ class Middlewares extends Base implements \Iterator, \Countable
         return TRUE;
     }
 
+    public function remove( /* MiddlewareInterface|string */ $Middleware) : bool
+    {
+
+        if (is_string($Middleware)) {
+            if (!class_exists($Middleware)) {
+                throw new InvalidArgumentException(sprintf(t::_('The provided middleware class %s does not exist.'), $Middleware));
+            }
+        } elseif (is_object($Middleware)) {
+            if (!($Middleware instanceof MiddlewareInterface)) {
+                throw new InvalidArgumentException(sprintf(t::_('The provided middleware instance of class %s must implement the %s interface.'), get_class($Middleware) , MiddlewareInterface::class ));
+            }
+        } else {
+            throw new InvalidArgumentException(sprintf(t::_('An unsupported type %s was provided to $BeforeMiddleware argument of %s().'), gettype($Middleware), __METHOD__ ));
+        }
+
+        $ret = FALSE;
+
+        foreach ($this->middlwares as $key=>$RegisteredMiddleware) {
+            if (is_string($Middleware)) {
+                if ($RegisteredMiddleware instanceof $Middleware) {
+                    unset($this->middlewares[$key]);
+                    $this->middlewares = array_values($this->middlewares);
+                    $ret = TRUE;
+                    break;
+                }
+            } elseif (is_object($Middleware)) {
+                if ($Middleware === $RegisteredMiddleware) {
+                    unset($this->middlewares[$key]);
+                    $this->middlewares = array_values($this->middlewares);
+                    $ret = TRUE;
+                    break;
+                }
+            } else {
+                //future use
+            }
+        }
+        return $ret;
+    }
+
     /**
      * @param string|MiddlewareInterface $Middleware
      * @return bool
      */
-    public function has_middleware($Middleware) : bool
+    public function has_middleware( /* MiddlewareInterface|string */ $Middleware) : bool
     {
         $ret = FALSE;
         if (is_string($Middleware)) {
+            if (!$Middleware) {
+                throw new InvalidArgumentException(sprintf(t::_('No middleware class provided to method %s().'), __METHOD__));
+            }
             if (!class_exists($Middleware)) {
                 throw new InvalidArgumentException(sprintf(t::_('The provided $Middleware argument %s to method %s() does not contain an existing class name.'), $Middleware, __METHOD__ ));
             }
@@ -111,6 +153,30 @@ class Middlewares extends Base implements \Iterator, \Countable
             throw new InvalidArgumentException(sprintf(t::_('An unsupported type %s was provided to $Middleware argument of %s().'), gettype($BeforeMiddleware), __METHOD__ ));
         }
 
+        return $ret;
+    }
+
+    /**
+     * Returns the first middleware that matches the provided $middleware_class.
+     * @param string $middleware_class
+     * @return MiddlewareInterface|null
+     * @throws InvalidArgumentException
+     */
+    public function get_middleware(string $middleware_class) : ?MiddlewareInterface
+    {
+        if (!$middleware_class) {
+            throw new InvalidArgumentException(sprintf(t::_('No middleware class provided to method %s().'), __METHOD__));
+        }
+        if (!class_exists($middleware_class)) {
+            throw new InvalidArgumentException(sprintf(t::_('The provided $Middleware argument %s to method %s() does not contain an existing class name.'), $middleware_class, __METHOD__ ));
+        }
+        $ret = NULL;
+        foreach ($this->middlewares as $Middleware) {
+            if ($Middleware instanceof $middleware_class) {
+                $ret = $Middleware;
+                break;
+            }
+        }
         return $ret;
     }
 

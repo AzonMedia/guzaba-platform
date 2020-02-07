@@ -112,11 +112,22 @@ BANNER;
         return $this->execute();
     }
 
+    /**
+     * Returns the path to the ./app directory of the project.
+     * @return string
+     */
+    public function get_app_dir() : string
+    {
+        return $this->app_directory;
+    }
+
     public function execute() : int
     {
 
         $Watchdog = new \Azonmedia\Watchdog\Watchdog(new \Azonmedia\Watchdog\Backends\SwooleTableBackend());
         Kernel::set_watchdog($Watchdog);
+
+        Kernel::get_di_container()->add('GuzabaPlatform', $this);
 
 
         $server_options = self::CONFIG_RUNTIME['swoole']['server_options'];
@@ -156,8 +167,9 @@ BANNER;
         //$RestMiddleware = new RestMiddleware();
 
         //$Rewriter = new Rewriter(new RewritingRulesArray([]));
-        $Rewriter = new UrlRewritingRules('/api/');
-        $RewritingMiddleware = new RewritingMiddleware($HttpServer, $Rewriter);
+        $Rewriter = new UrlRewritingRules( ['/api/'] );
+        //$RewritingMiddleware = new RewritingMiddleware($HttpServer, $Rewriter);
+        $RewritingMiddleware = new RewritingMiddleware($Rewriter);
 
         $static_routing_map = RoutingMap::ROUTING_MAP;
 

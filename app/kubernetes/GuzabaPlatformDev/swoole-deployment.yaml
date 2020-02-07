@@ -1,0 +1,115 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.16.0 (0c01309)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: swoole
+  name: swoole
+spec:
+  replicas: 1
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        io.kompose.service: swoole
+    spec:
+      containers:
+      - env:
+        - name: GUZABAPLATFORM_PLATFORM_APPLICATION_MYSQLCONNECTIONCOROUTINE_DATABASE
+          valueFrom:
+            configMapKeyRef:
+              key: GUZABAPLATFORM_PLATFORM_APPLICATION_MYSQLCONNECTIONCOROUTINE_DATABASE
+              name: swoole-guzaba-platform-env
+        - name: GUZABAPLATFORM_PLATFORM_APPLICATION_MYSQLCONNECTIONCOROUTINE_HOST
+          valueFrom:
+            configMapKeyRef:
+              key: GUZABAPLATFORM_PLATFORM_APPLICATION_MYSQLCONNECTIONCOROUTINE_HOST
+              name: swoole-guzaba-platform-env
+        - name: GUZABAPLATFORM_PLATFORM_APPLICATION_MYSQLCONNECTIONCOROUTINE_PASSWORD
+          valueFrom:
+            configMapKeyRef:
+              key: GUZABAPLATFORM_PLATFORM_APPLICATION_MYSQLCONNECTIONCOROUTINE_PASSWORD
+              name: swoole-guzaba-platform-env
+        - name: GUZABAPLATFORM_PLATFORM_APPLICATION_MYSQLCONNECTIONCOROUTINE_PORT
+          valueFrom:
+            configMapKeyRef:
+              key: GUZABAPLATFORM_PLATFORM_APPLICATION_MYSQLCONNECTIONCOROUTINE_PORT
+              name: swoole-guzaba-platform-env
+        - name: GUZABAPLATFORM_PLATFORM_APPLICATION_MYSQLCONNECTIONCOROUTINE_TPREFIX
+          valueFrom:
+            configMapKeyRef:
+              key: GUZABAPLATFORM_PLATFORM_APPLICATION_MYSQLCONNECTIONCOROUTINE_TPREFIX
+              name: swoole-guzaba-platform-env
+        - name: GUZABAPLATFORM_PLATFORM_APPLICATION_MYSQLCONNECTIONCOROUTINE_USER
+          valueFrom:
+            configMapKeyRef:
+              key: GUZABAPLATFORM_PLATFORM_APPLICATION_MYSQLCONNECTIONCOROUTINE_USER
+              name: swoole-guzaba-platform-env
+        - name: GUZABAPLATFORM_PLATFORM_APPLICATION_MYSQLCONNECTION_DATABASE
+          valueFrom:
+            configMapKeyRef:
+              key: GUZABAPLATFORM_PLATFORM_APPLICATION_MYSQLCONNECTION_DATABASE
+              name: swoole-guzaba-platform-env
+        - name: GUZABAPLATFORM_PLATFORM_APPLICATION_MYSQLCONNECTION_HOST
+          valueFrom:
+            configMapKeyRef:
+              key: GUZABAPLATFORM_PLATFORM_APPLICATION_MYSQLCONNECTION_HOST
+              name: swoole-guzaba-platform-env
+        - name: GUZABAPLATFORM_PLATFORM_APPLICATION_MYSQLCONNECTION_PASSWORD
+          valueFrom:
+            configMapKeyRef:
+              key: GUZABAPLATFORM_PLATFORM_APPLICATION_MYSQLCONNECTION_PASSWORD
+              name: swoole-guzaba-platform-env
+        - name: GUZABAPLATFORM_PLATFORM_APPLICATION_MYSQLCONNECTION_PORT
+          valueFrom:
+            configMapKeyRef:
+              key: GUZABAPLATFORM_PLATFORM_APPLICATION_MYSQLCONNECTION_PORT
+              name: swoole-guzaba-platform-env
+        - name: GUZABAPLATFORM_PLATFORM_APPLICATION_MYSQLCONNECTION_TPREFIX
+          valueFrom:
+            configMapKeyRef:
+              key: GUZABAPLATFORM_PLATFORM_APPLICATION_MYSQLCONNECTION_TPREFIX
+              name: swoole-guzaba-platform-env
+        - name: GUZABAPLATFORM_PLATFORM_APPLICATION_MYSQLCONNECTION_USER
+          valueFrom:
+            configMapKeyRef:
+              key: GUZABAPLATFORM_PLATFORM_APPLICATION_MYSQLCONNECTION_USER
+              name: swoole-guzaba-platform-env
+        - name: GUZABAPLATFORM_PLATFORM_APPLICATION_REDISCONNECTION_DATABASE
+          valueFrom:
+            configMapKeyRef:
+              key: GUZABAPLATFORM_PLATFORM_APPLICATION_REDISCONNECTION_DATABASE
+              name: swoole-guzaba-platform-env
+        - name: GUZABAPLATFORM_PLATFORM_APPLICATION_REDISCONNECTION_HOST
+          valueFrom:
+            configMapKeyRef:
+              key: GUZABAPLATFORM_PLATFORM_APPLICATION_REDISCONNECTION_HOST
+              name: swoole-guzaba-platform-env
+        - name: GUZABAPLATFORM_PLATFORM_APPLICATION_REDISCONNECTION_PASSWORD
+          valueFrom:
+            configMapKeyRef:
+              key: GUZABAPLATFORM_PLATFORM_APPLICATION_REDISCONNECTION_PASSWORD
+              name: swoole-guzaba-platform-env
+        - name: GUZABAPLATFORM_PLATFORM_APPLICATION_REDISCONNECTION_PORT
+          valueFrom:
+            configMapKeyRef:
+              key: GUZABAPLATFORM_PLATFORM_APPLICATION_REDISCONNECTION_PORT
+              name: swoole-guzaba-platform-env
+        - name: GUZABAPLATFORM_PLATFORM_APPLICATION_REDISCONNECTION_TIMEOUT
+          valueFrom:
+            configMapKeyRef:
+              key: GUZABAPLATFORM_PLATFORM_APPLICATION_REDISCONNECTION_TIMEOUT
+              name: swoole-guzaba-platform-env
+        image: kenashkov/php:7.4.1-swoole-4.4.14
+        name: swoole
+        ports:
+        - containerPort: 8081
+        resources: {}
+        stdin: true
+        tty: true
+      restartPolicy: Always
+status: {}
