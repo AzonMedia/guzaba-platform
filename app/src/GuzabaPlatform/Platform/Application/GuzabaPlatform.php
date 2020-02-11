@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace GuzabaPlatform\Platform\Application;
 
+use Azonmedia\Packages\Packages;
 use Guzaba2\Event\Event;
 use Guzaba2\Kernel\Interfaces\ClassInitializationInterface;
 use Guzaba2\Orm\ClassDeclarationValidation;
@@ -272,6 +273,10 @@ BANNER;
         Kernel::printk(PHP_EOL);
         Kernel::printk(sprintf('GuzabaPlatform version %s running in %s mode at %s', self::CONFIG_RUNTIME['version'], static::get_deployment(), $this->app_directory).PHP_EOL);
         Kernel::printk(PHP_EOL);
+
+        Kernel::printk(sprintf('Initializing translations').PHP_EOL);
+        t::initialize(Packages::get_application_composer_file_path(), $packages_filter = ['/azonmedia.*/i', '/guzaba-platform.*/i', '/guzaba.*/i'] );
+        Kernel::printk(sprintf(t::_('Loaded %s translations from %s packages.'), t::get_loaded_translations_count(), count(t::get_loaded_packages()) ).PHP_EOL);
 
 
         $root_directory = realpath($this->app_directory.'/../');
