@@ -1,0 +1,27 @@
+{
+    "package": "guzaba-platform/guzaba-platform",
+    "source_language": "en",
+    "translations": [
+        {
+            "en": "Loaded %s translations from %s packages",
+            "bg": "Заредени %s превода от %s пакета"
+        },
+        {
+            "en": "The file %s does not exist. This file is created when \"composer require guzaba-platofrm/guzaba-platform\" is executed.",
+            "bg": "Файлът %s не съществува. Този файл се създава при изпълнение на \"composer require guzaba-platofrm/guzaba-platform\"."
+        },
+        {
+            "en": "GuzabaPlatform version %s running in %s mode at %s",
+            "bg": "GuzabaPlatform версия %s работи в %s режим на %s"
+        },
+        {
+            "en": "Installed components:",
+            "bg": "Инсталирани компоненти:"
+        },
+        {
+            "en": "Middlewares:",
+            "bg": "Мидълуери:"
+        }
+    ]
+
+}

@@ -65,6 +65,9 @@ class GuzabaPlatform extends Application
             'disable_all_class_validation'      => FALSE,
         ],
 
+        'target_language'           => 'en',
+        'skip_translator'           => FALSE,
+
 
 //        'override_html_content_type' => 'json',//to facilitate debugging when opening the XHR in browser
 
@@ -271,12 +274,13 @@ BANNER;
 
         Kernel::printk(self::PLATFORM_BANNER);
         Kernel::printk(PHP_EOL);
-        Kernel::printk(sprintf('GuzabaPlatform version %s running in %s mode at %s', self::CONFIG_RUNTIME['version'], static::get_deployment(), $this->app_directory).PHP_EOL);
+        Kernel::printk(sprintf(t::_('GuzabaPlatform version %s running in %s mode at %s'), self::CONFIG_RUNTIME['version'], static::get_deployment(), $this->app_directory).PHP_EOL);
         Kernel::printk(PHP_EOL);
 
-        Kernel::printk(sprintf('Initializing translations').PHP_EOL);
-        t::initialize(Packages::get_application_composer_file_path(), $packages_filter = ['/azonmedia.*/i', '/guzaba-platform.*/i', '/guzaba.*/i'] );
-        Kernel::printk(sprintf(t::_('Loaded %s translations from %s packages.'), t::get_loaded_translations_count(), count(t::get_loaded_packages()) ).PHP_EOL);
+        //the translator initialization can be moved in start_server.php but then Kernel::printk() cant be used and the start time in Kernel::initialize() will be very wrong
+        //Kernel::printk(sprintf('Initializing translations').PHP_EOL);
+        //t::initialize(Packages::get_application_composer_file_path(), $packages_filter = ['/azonmedia.*/i', '/guzaba-platform.*/i', '/guzaba.*/i'] );
+        //Kernel::printk(sprintf(t::_('Loaded %s translations from %s packages.'), t::get_loaded_translations_count(), count(t::get_loaded_packages()) ).PHP_EOL);
 
 
         $root_directory = realpath($this->app_directory.'/../');

@@ -1,0 +1,11 @@
+{
+    "package": "guzaba-platform/guzaba-platform",
+    "source_language": "en",
+    "translations": [
+        {
+            "en": "test message",
+            "bg": "тестово съобщение"
+        }
+    ]
+
+}

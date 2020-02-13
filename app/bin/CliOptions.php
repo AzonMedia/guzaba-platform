@@ -115,6 +115,22 @@ abstract class CliOptions
             'class'             => GuzabaPlatform::class,
             'option'            => ['swoole' => ['enable_debug_ports' => NULL]],
         ],
+        'target-language'               => [
+            'shortcut'          => NULL,
+            'input'             => InputOption::VALUE_REQUIRED,
+            'description'       => 'Sets the target language for the translations. Valid options are "en", "bg" or other ISO 639 code (ver 1,2,3). Set this option to have the startup messages translated.',
+            'default'           => NULL,
+            'class'             => GuzabaPlatform::class,
+            'option'            => 'target_language',
+        ],
+        'skip-translator'               => [
+            'shortcut'          => NULL,
+            'input'             => InputOption::VALUE_NONE,
+            'description'       => 'Prevents the translator initialization. Use when no translations are needed (the application language matches the source language).',
+            'default'           => NULL,
+            'class'             => GuzabaPlatform::class,
+            'option'            => 'skip_translator',
+        ],
 
     ];
 

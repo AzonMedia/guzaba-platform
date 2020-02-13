@@ -12,6 +12,7 @@ use GuzabaPlatform\Platform\Application\BaseController;
 use GuzabaPlatform\Platform\Application\GuzabaPlatform as GP;
 use GuzabaPlatform\Platform\Application\MysqlConnectionCoroutine;
 use GuzabaPlatform\Platform\Authentication\Models\User;
+use Guzaba2\Translator\Translator as t;
 use Psr\Http\Message\ResponseInterface;
 
 class Test extends BaseController
@@ -33,10 +34,23 @@ class Test extends BaseController
             '/test3'      => [
                 Method::HTTP_GET                        => [self::class, 'test3'],
             ],
+            '/test4'      => [
+                Method::HTTP_GET                        => [self::class, 'test4'],
+            ],
+            '/test5'      => [
+                Method::HTTP_GET                        => [self::class, 'test5'],
+            ],
         ],
     ];
 
     protected const CONFIG_RUNTIME = [];
+
+    public function test5() : ResponseInterface
+    {
+        print t::_('test message');
+        $struct = ['text4' => t::_('test message')];
+        return self::get_structured_ok_response($struct);
+    }
 
     public function test3(int $arg1 = 0) : ResponseInterface
     {

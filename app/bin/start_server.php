@@ -3,7 +3,9 @@ declare(strict_types=1);
 
 namespace GuzabaPlatform\bin;
 
+use Azonmedia\Packages\Packages;
 use Azonmedia\Registry\RegistryBackendArray;
+use Azonmedia\Translator\Translator;
 use Guzaba2\Base\Exceptions\RunTimeException;
 use Guzaba2\Di\Container;
 use GuzabaPlatform\Platform\Application\GuzabaPlatform;
@@ -20,10 +22,13 @@ use Psr\Log\LogLevel;
 
 (function() {
 
+    $init_microtime = microtime(TRUE);//needed by the kernel
+
     error_reporting(E_ALL);
 
-    if (version_compare(phpversion(),'7.4.0RC5', '<')) {
-        print 'The application requires PHP 7.4.0RC5 or higher.'.PHP_EOL;
+    $php_min_version_required = '7.4.0';// technically 7.4.0RC5 is min required
+    if (version_compare(phpversion(), $php_min_version_required, '<')) {
+        print sprintf('The application requires PHP %s or higher.', $php_min_version_required).PHP_EOL;
         exit(1);
     }
     $autoload_path = realpath(__DIR__ . '/../../../../autoload.php');
@@ -33,9 +38,48 @@ use Psr\Log\LogLevel;
     require_once('Start.php');
     $cli_options_mapping = CliOptions::get_cli_options();
 
+    Kernel::set_init_microtime($init_microtime);
+    Kernel::printk(sprintf('Run start_server --help for startup options') . PHP_EOL);
+
+    $initial_directory = getcwd();
+    $app_directory = realpath(dirname($autoload_path) .'/../app/');
+
+    // ===== begin Translator initialization ===== //
+    $skip_translator = FALSE;
+    if (isset($cli_options_mapping['GuzabaPlatform\\Platform\\Application\\GuzabaPlatform']['skip_translator'])) {
+        $skip_translator = TRUE;
+    }
+
+    $target_language = 'en';//the target language can be changed at any time during execution. It needs to be set for each request (coroutine) served (based on route or accept headers).
+    if (isset($cli_options_mapping['GuzabaPlatform\\Platform\\Application\\GuzabaPlatform']['target_language'])) {
+        if ($skip_translator) {
+            print sprintf('The --skip-translator and --target-language options are incompatible.').PHP_EOL;
+            exit(1);
+        }
+        $target_language = $cli_options_mapping['GuzabaPlatform\\Platform\\Application\\GuzabaPlatform']['target_language'];
+    }
+
+    if (!$skip_translator) {
+        Kernel::printk(sprintf('Initializing Translator') . PHP_EOL);
+        Kernel::printk(sprintf('Current target language is "%s", use --target-language to change it', $target_language) . PHP_EOL);
+        $composer_file_path = Packages::get_application_composer_file_path();
+        $packages_filter = ['/azonmedia.*/i', '/guzaba-platform.*/i', '/guzaba.*/i'];
+        $additional_paths = [];
+        $app_translations_directory = $app_directory.'/src/translations/';
+        if (file_exists($app_translations_directory) && is_dir($app_translations_directory)) {
+            $additional_paths[] = $app_translations_directory;
+        }
+        Translator::initialize($target_language, $composer_file_path, $packages_filter, $additional_paths);
+        Kernel::printk(sprintf(Translator::_('Loaded %s translations from %s packages'), Translator::get_loaded_messages_count(), count(Translator::get_loaded_packages())) . PHP_EOL);
+    } else {
+        Kernel::printk(sprintf('Translator initialization is prevented by configuration') . PHP_EOL);
+    }
+
+    // ===== end Translator initialization ===== //
+
     //ini_set("swoole.enable_preemptive_scheduler","1");
     //\Swoole\Coroutine::set([ 'enable_preemptive_scheduler' => 1 ]);
-    //the above is available in Master branch only not released yet
+    //do not enable the above until it is guaranteed that there is no shared/changed global state
 
     $log_level = LogLevel::DEBUG;//default to Debug
     if (isset($cli_options_mapping['GuzabaPlatform\\Platform\\Application\\GuzabaPlatform']['log_level'])) {
@@ -48,8 +92,7 @@ use Psr\Log\LogLevel;
         }
     }
 
-    $initial_directory = getcwd();
-    $app_directory = realpath(dirname($autoload_path) .'/../app/');
+
     $generated_files_dir = $app_directory.'/startup_generated';
     $generated_runtime_config_dir  = $generated_files_dir.'/runtime_configs';
     $generated_runtime_config_file = $generated_files_dir.'/runtime_config.php';
@@ -92,7 +135,7 @@ use Psr\Log\LogLevel;
     $StdoutHandler->setFormatter($Formatter);
     $Logger->pushHandler($StdoutHandler);
 
-    Kernel::initialize($Registry, $Logger);
+    Kernel::initialize($Registry, $Logger, $init_microtime);
 
     $DependencyContainer = new Container();
     Kernel::set_di_container($DependencyContainer);
