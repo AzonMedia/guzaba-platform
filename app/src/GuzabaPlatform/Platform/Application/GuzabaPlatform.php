@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace GuzabaPlatform\Platform\Application;
 
 use Azonmedia\Packages\Packages;
+use Guzaba2\Base\Exceptions\RunTimeException;
 use Guzaba2\Event\Event;
 use Guzaba2\Kernel\Interfaces\ClassInitializationInterface;
 use Guzaba2\Orm\ClassDeclarationValidation;
@@ -49,24 +50,33 @@ class GuzabaPlatform extends Application
                 // 'open_http2_protocol'       => FALSE,//depends on enable-http2 (and enable-ssl)
                 'ssl_cert_file'             => NULL,
                 'ssl_key_file'              => NULL,
+
+                'http_parse_post'       => FALSE,
+                'upload_tmp_dir'        => NULL,//will be set by the application
             ],
             'enable_debug_ports'        => FALSE,
             'base_debug_port'           => Debugger::DEFAULT_BASE_DEBUG_PORT,
         ],
         'version'                   => 'dev',
 
-        'cors_origin'               => 'http://localhost:8081',
+        'cors_origin'               => 'http://localhost:8080',
         'enable_http2'              => FALSE,//if enabled enable_static_handler/document_root doesnt work
         'enable_ssl'                => FALSE,
         'disable_static_handler'    => FALSE,
+        'disable_file_upload'       => FALSE,
+
+        //'upload_max_filesize'       => NULL,//means get from PHP
+        //'post_max_size'             => NULL,//means get from PHP
+
         'log_level'                 => LogLevel::DEBUG,
         'kernel'                    => [
             'disable_all_class_load'            => FALSE,
             'disable_all_class_validation'      => FALSE,
         ],
 
-        'target_language'           => 'en',
+        'target_language'           => 'en',//this is the default target language
         'skip_translator'           => FALSE,
+        'supported_languages'       => ['en','bg'],
 
 
 //        'override_html_content_type' => 'json',//to facilitate debugging when opening the XHR in browser
@@ -104,6 +114,18 @@ BANNER;
     public function __construct($app_directory, $generated_files_dir)
     {
         parent::__construct();
+        if (!empty(self::CONFIG_RUNTIME['supported_languages'])) {
+            t::set_supported_languages(self::CONFIG_RUNTIME['supported_languages']);
+        }
+        if (!empty(self::CONFIG_RUNTIME['target_language'])) {
+            if (in_array(self::CONFIG_RUNTIME['target_language'], self::CONFIG_RUNTIME['supported_languages'], TRUE)) {
+                t::set_target_language(self::CONFIG_RUNTIME['target_language']);
+            } else {
+                $message = sprintf(t::_('The configured target_language "%s" in GuzabaPlatform::CONFIG_RUNTIME[\'target_language\'] is not found in the supported languages "%s" configured in GuzabaPlatform::CONFIG_RUNTIME[\'supported_languages\'].'), self::CONFIG_RUNTIME['target_language'], implode(', ',self::CONFIG_RUNTIME['supported_languages']) );
+                throw new RunTimeException($message, 0, NULL, '14e5336f-cf56-41d9-8862-f02789d370f3');
+            }
+        }
+
 
         $this->app_directory = $app_directory;
         $this->generated_files_dir = $generated_files_dir;
@@ -149,6 +171,10 @@ BANNER;
             $server_options['document_root'] = $this->app_directory.'/public/';
         }
 
+        if (empty(self::CONFIG_RUNTIME['disable_file_upload'])) {
+            $server_options['upload_tmp_dir'] = $this->app_directory.'/uploads_temp_dir';
+        }
+
         //if (!empty($server_options['open_http2_protocol'])) {
         if (self::CONFIG_RUNTIME['enable_ssl']) {
             $server_options['ssl_cert_file'] = $server_options['ssl_cert_file'] ? $server_options['ssl_cert_file'] : $this->app_directory.'/certificates/localhost.crt';
@@ -171,7 +197,8 @@ BANNER;
         //$RestMiddleware = new RestMiddleware();
 
         //$Rewriter = new Rewriter(new RewritingRulesArray([]));
-        $Rewriter = new UrlRewritingRules( ['/api/'] );
+        //$Rewriter = new UrlRewritingRules( ['/api/'] );
+        $Rewriter = new UrlRewritingRules( [self::API_ROUTE_PREFIX.'/'] );
         //$RewritingMiddleware = new RewritingMiddleware($HttpServer, $Rewriter);
         $RewritingMiddleware = new RewritingMiddleware($Rewriter);
 
@@ -180,7 +207,7 @@ BANNER;
         //$Router = new Router(new RoutingMapArray($routing_table));
         //$ControllersDefaultRoutingMap = new ControllerDefaultRoutingMap(array_keys(Kernel::get_registered_autoloader_paths()));
         //$ModelsDefaultRoutingMap = new ActiveRecordDefaultRoutingMap(array_keys(Kernel::get_registered_autoloader_paths()), self::API_ROUTE_PREFIX );
-        $ModelsDefaultRoutingMap = new ActiveRecordDefaultRoutingMap(array_keys(Kernel::get_registered_autoloader_paths()));
+        $ModelsDefaultRoutingMap = new ActiveRecordDefaultRoutingMap(array_keys(Kernel::get_registered_autoloader_paths()), self::CONFIG_RUNTIME['supported_languages'] ?? []);
         //$controllers_routing_map = $ControllersDefaultRoutingMap->get_routing_map();
         //$controllers_routing_meta_data = $ControllersDefaultRoutingMap->get_all_meta_data();
         $models_routing_map = $ModelsDefaultRoutingMap->get_routing_map();

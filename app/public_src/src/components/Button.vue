@@ -1,5 +1,5 @@
 <template>
-    <div class="button" v-bind:class="{ active: ButtonData.is_active }">{{ButtonData.label}}</div>
+    <div class="button" v-bind:class="{ active: ButtonData.is_active }" v-on:click="ButtonData.handler">{{ButtonData.label}}</div>
 </template>
 
 <script>
@@ -18,5 +18,6 @@
     float: left;
     margin: 3px;
     padding: 3px;
+    cursor: pointer;
 }
 </style>

@@ -6,14 +6,17 @@ namespace GuzabaPlatform\Platform\Tests\Controllers;
 use Guzaba2\Authorization\Acl\Permission;
 use Guzaba2\Coroutine\Coroutine;
 use Guzaba2\Http\Method;
+use Guzaba2\Kernel\Kernel;
 use Guzaba2\Mvc\ActiveRecordController;
 use Guzaba2\Mvc\ExecutorMiddleware;
 use GuzabaPlatform\Platform\Application\BaseController;
+use GuzabaPlatform\Platform\Application\GuzabaPlatform;
 use GuzabaPlatform\Platform\Application\GuzabaPlatform as GP;
 use GuzabaPlatform\Platform\Application\MysqlConnectionCoroutine;
 use GuzabaPlatform\Platform\Authentication\Models\User;
 use Guzaba2\Translator\Translator as t;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Log\LogLevel;
 
 class Test extends BaseController
 {
@@ -45,9 +48,24 @@ class Test extends BaseController
 
     protected const CONFIG_RUNTIME = [];
 
+    /**
+     * Example setting the language
+     * The preferred way is to leave the value blank and if there is a value to set the target language
+     * instead of having the default target language provided as default value to the parameter as this creates dependency on an external class (GuzabaPlatform)
+     * and also will require accessing a public constant (as the RUNTIME_CONFIG is protected)
+     * If this needs to be added on all controllers then the _init() method can se set on the BaseController
+     * If the provided language is not supported this will trigger a notice and the target language will not be changed
+     * @param string $language
+     * @throws \Azonmedia\Exceptions\RunTimeException
+     */
+    public function _init(?string $language = NULL)
+    {
+        t::set_target_language($language, $this->get_request());
+    }
+
     public function test5() : ResponseInterface
     {
-        print t::_('test message');
+        //print t::_('test message');
         $struct = ['text4' => t::_('test message')];
         return self::get_structured_ok_response($struct);
     }

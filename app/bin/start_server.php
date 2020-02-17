@@ -51,6 +51,7 @@ use Psr\Log\LogLevel;
     }
 
     $target_language = 'en';//the target language can be changed at any time during execution. It needs to be set for each request (coroutine) served (based on route or accept headers).
+    //TODO - retrieve the target language from the translation.json
     if (isset($cli_options_mapping['GuzabaPlatform\\Platform\\Application\\GuzabaPlatform']['target_language'])) {
         if ($skip_translator) {
             print sprintf('The --skip-translator and --target-language options are incompatible.').PHP_EOL;
