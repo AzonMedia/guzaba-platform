@@ -81,6 +81,13 @@ class GuzabaPlatform extends Application
 
 //        'override_html_content_type' => 'json',//to facilitate debugging when opening the XHR in browser
 
+        'date_time_formats'         => [
+            'date_time_format'          => 'Y-m-d H:i:s',
+            'time_format'               => 'H:i:s',
+            'minutes_format'            => 'H:i',
+            'date_format'               => 'Y-m-d',
+        ],
+
 
         'services'      => [
             'Middlewares',
@@ -145,6 +152,11 @@ BANNER;
     public function get_app_dir() : string
     {
         return $this->app_directory;
+    }
+
+    public function get_date_time_formats() : array
+    {
+        return self::CONFIG_RUNTIME['date_time_formats'];
     }
 
     public function execute() : int

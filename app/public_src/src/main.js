@@ -14,7 +14,8 @@ Vue.use(BootstrapVue)
 //axios start
 import axios from 'axios'
 axios.defaults.withCredentials = true
-axios.defaults.baseURL = 'http://localhost:8081/api'
+axios.defaults.baseURL = 'http://localhost:8081/api' //this is used for the API calls
+//axios.defaults.baseHost = 'http://localhost:8081/'
 Vue.prototype.$http = axios
 
 //TODO - fix the below - it is not working
