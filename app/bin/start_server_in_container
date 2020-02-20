@@ -1,4 +1,4 @@
 script=$0
 path=$(dirname "$0")
 export GUZABA_PLATFORM_HOST_DIR=`pwd`/../../
-docker-compose -f $path/../dockerfiles/GuzabaPlatform/docker-compose.yml up
+#docker-compose -f $path/../dockerfiles/GuzabaPlatform/docker-compose.yml up

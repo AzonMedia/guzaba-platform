@@ -3,10 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "webpack-dev-server --watch-poll",
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
+    "serve": "webpack-dev-server --watch-poll",
+    "serve-vue": "vue-cli-service serve",
+    "build": "webpack",
+    "build-vue": "vue-cli-service build",
+    "lint-vue": "vue-cli-service lint",
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {

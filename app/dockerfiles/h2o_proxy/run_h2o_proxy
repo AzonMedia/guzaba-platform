@@ -1,0 +1,1 @@
+docker run -p "8082:8443" -v "$(pwd):/home/h2o" -ti lkwg82/h2o-http2-server
