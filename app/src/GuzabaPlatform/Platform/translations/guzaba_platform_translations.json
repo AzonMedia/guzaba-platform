@@ -3,8 +3,8 @@
     "source_language": "en",
     "translations": [
         {
-            "en": "Loaded %s translations from %s packages",
-            "bg": "Заредени %s превода от %s пакета"
+            "en": "Loaded %1s translations from %2s packages",
+            "bg": "Заредени %1s превода от %2s пакета"
         },
         {
             "en": "The file %s does not exist. This file is created when \"composer require guzaba-platofrm/guzaba-platform\" is executed.",
@@ -21,6 +21,14 @@
         {
             "en": "Middlewares:",
             "bg": "Мидълуери:"
+        },
+        {
+            "en": "CORS origin set to: %1s",
+            "bg": "CORS произходът е зададен на: %1s"
+        },
+        {
+            "en": "Using the default CORS origin: %1s",
+            "bg": "Използва се подразбиращия се CORS произход: %1s"
         }
     ]
 

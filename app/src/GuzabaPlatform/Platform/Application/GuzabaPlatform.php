@@ -315,11 +315,17 @@ BANNER;
         Kernel::printk(PHP_EOL);
         Kernel::printk(sprintf(t::_('GuzabaPlatform version %s running in %s mode at %s'), self::CONFIG_RUNTIME['version'], static::get_deployment(), $this->app_directory).PHP_EOL);
         Kernel::printk(PHP_EOL);
+        if (self::CONFIG_RUNTIME['cors_origin'] !== self::CONFIG_DEFAULTS['cors_origin']) {
+            Kernel::printk(sprintf(t::_('CORS origin set to: %1s'), self::CONFIG_RUNTIME['cors_origin']).PHP_EOL);
+        } else {
+            Kernel::printk(sprintf(t::_('Using the default CORS origin: %1s'), self::CONFIG_RUNTIME['cors_origin']).PHP_EOL);
+        }
+
 
         //the translator initialization can be moved in start_server.php but then Kernel::printk() cant be used and the start time in Kernel::initialize() will be very wrong
         //Kernel::printk(sprintf('Initializing translations').PHP_EOL);
         //t::initialize(Packages::get_application_composer_file_path(), $packages_filter = ['/azonmedia.*/i', '/guzaba-platform.*/i', '/guzaba.*/i'] );
-        //Kernel::printk(sprintf(t::_('Loaded %s translations from %s packages.'), t::get_loaded_translations_count(), count(t::get_loaded_packages()) ).PHP_EOL);
+        //Kernel::printk(sprintf(t::_('Loaded %1s translations from %2s packages.'), t::get_loaded_translations_count(), count(t::get_loaded_packages()) ).PHP_EOL);
 
 
         $root_directory = realpath($this->app_directory.'/../');
