@@ -4,11 +4,14 @@ declare(strict_types=1);
 namespace GuzabaPlatform\Platform\Base\Controllers;
 
 use Guzaba2\Authorization\Role;
+use Guzaba2\Base\Exceptions\InvalidArgumentException;
 use Guzaba2\Http\Method;
 use Guzaba2\Kernel\Kernel;
 use Guzaba2\Mvc\Controller;
+use Guzaba2\Mvc\Interfaces\ControllerInterface;
 use GuzabaPlatform\Platform\Application\BaseController;
 use Psr\Http\Message\ResponseInterface;
+use Guzaba2\Translator\Translator as t;
 
 /**
  * Class Controllers
@@ -23,7 +26,7 @@ class Controllers extends BaseController
             '/base/controllers' => [
                 Method::HTTP_GET => [self::class, 'get_controllers'],
             ],
-            '/base/actions/{controller_name}' => [
+            '/base/controllers/{controller_name}' => [
                 Method::HTTP_GET => [self::class, 'get_controller_actions'],
             ],
         ],
@@ -65,8 +68,15 @@ class Controllers extends BaseController
         if (strpos($controller_name,'-')) {
             $controller_name = str_replace('-','\\',$controller_name);
         }
+        if (!$controller_name) {
+            throw new InvalidArgumentException(sprintf(t::_('No $controller_name provided. A controller class name is expected.')));
+        }
         if (!class_exists($controller_name)) {
-            return self::get_structured_badrequest_response(['message' => sprintf(t::_('The provided controller class %1s does not exist.'), $controller_name)]);
+            //return self::get_structured_badrequest_response(['message' => sprintf(t::_('The provided controller class %1s does not exist.'), $controller_name)]);
+            throw new InvalidArgumentException(sprintf(t::_('The provided $controller_name class %1s does not exist.'), $controller_name));
+        }
+        if (!is_a($controller_name, ControllerInterface::class, TRUE)) {
+            throw new InvalidArgumentException(sprintf(t::_('The provided $controller_name class %1s does not implement %2s.'), $controller_name, ControllerInterface::class ));
         }
         if ($role_uuid) {
             $Role = new Role($role_uuid);

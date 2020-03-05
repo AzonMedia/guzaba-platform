@@ -11,6 +11,8 @@ class Test extends BaseActiveRecord
         'main_table'            => 'tests',
         'route'                 => '/test',
 
+        'object_name_column'    => 'test_name',
+
         'load_in_memory'        => TRUE,
     ];
 
