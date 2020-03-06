@@ -1,0 +1,16 @@
+get_ip_address() {
+    echo `hostname -I`|grep -oE '192.168.0.([0-9]*)'
+}
+
+docker run \
+    -p "8082:8443" \
+    --name H2O_PROXY \
+    --rm \
+    -v "$(pwd):/home/h2o" \
+    -v "$(pwd)/../../public:/home/h2o/public" \
+    -ti \
+    -e SWOOLE_HOST=http://$(get_ip_address):8081/ \
+    kenashkov/h2o:2.3.0-beta2
+
+#this image does not provide yet a 2.3 beta
+#lkwg82/h2o-http2-server
