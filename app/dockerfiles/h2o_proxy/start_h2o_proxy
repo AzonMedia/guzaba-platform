@@ -10,6 +10,7 @@ docker run \
     -v "$(pwd)/../../public:/home/h2o/public" \
     -ti \
     -e SWOOLE_HOST=http://$(get_ip_address):8081/ \
+    -e SWOOLE_API_HOST=http://$(get_ip_address):8081/api/ \
     kenashkov/h2o:2.3.0-beta2
 
 #this image does not provide yet a 2.3 beta
