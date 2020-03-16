@@ -31,7 +31,8 @@ use Psr\Log\LogLevel;
         print sprintf('The application requires PHP %s or higher.', $php_min_version_required).PHP_EOL;
         exit(1);
     }
-    $autoload_path = realpath(__DIR__ . '/../../../../autoload.php');
+    //$autoload_path = realpath(__DIR__ . '/../../../../autoload.php');//is symlink is used
+    $autoload_path = realpath(__DIR__ . '/../../vendor/autoload.php');//if copy is done on installation
     require_once($autoload_path);
 
     require_once('CliOptions.php');

@@ -42,7 +42,7 @@ class Test extends BaseController
             ],
             '/test5'      => [
                 Method::HTTP_GET                        => [self::class, 'test5'],
-            ],
+            ]
         ],
     ];
 

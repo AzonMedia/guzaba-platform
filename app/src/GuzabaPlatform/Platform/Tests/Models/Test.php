@@ -5,6 +5,13 @@ namespace GuzabaPlatform\Platform\Tests\Models;
 
 use GuzabaPlatform\Platform\Application\BaseActiveRecord;
 
+/**
+ * Class Test
+ * @package GuzabaPlatform\Platform\Tests\Models
+ *
+ * @property test_id
+ * @property test_name
+ */
 class Test extends BaseActiveRecord
 {
     protected const CONFIG_DEFAULTS = [

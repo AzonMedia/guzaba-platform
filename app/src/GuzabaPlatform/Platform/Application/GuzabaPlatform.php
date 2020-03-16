@@ -120,6 +120,7 @@ BANNER;
 
     public function __construct($app_directory, $generated_files_dir)
     {
+
         parent::__construct();
         if (!empty(self::CONFIG_RUNTIME['supported_languages'])) {
             t::set_supported_languages(self::CONFIG_RUNTIME['supported_languages']);
@@ -136,6 +137,13 @@ BANNER;
 
         $this->app_directory = $app_directory;
         $this->generated_files_dir = $generated_files_dir;
+
+        if (!count(self::CONFIG_RUNTIME)) {
+            //this would mean that the kernel autoloader did not process the configutation options.
+            //This can happen if the kernel has wrong paths and this can happen if the whole project was moved to another root directory but the paths in manifest.json were not updated.
+            //throw new RunTimeException(sprintf(t::_()));
+            die(sprintf(t::_('It appears the Kernel could not find the right path to %s1. This can be a result of the application being moved to another root directory without updating the paths in the ./manifest.json file.'), __FILE__ ));
+        }
 
         Kernel::run($this, self::CONFIG_RUNTIME['kernel']);
     }
