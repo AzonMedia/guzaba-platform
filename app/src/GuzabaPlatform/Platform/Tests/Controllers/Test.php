@@ -5,10 +5,12 @@ namespace GuzabaPlatform\Platform\Tests\Controllers;
 
 use Guzaba2\Authorization\Acl\Permission;
 use Guzaba2\Coroutine\Coroutine;
+use Guzaba2\Database\Interfaces\ConnectionInterface;
 use Guzaba2\Http\Method;
 use Guzaba2\Kernel\Kernel;
 use Guzaba2\Mvc\ActiveRecordController;
 use Guzaba2\Mvc\ExecutorMiddleware;
+use Guzaba2\Transaction\TransactionManager;
 use GuzabaPlatform\Platform\Application\BaseController;
 use GuzabaPlatform\Platform\Application\GuzabaPlatform;
 use GuzabaPlatform\Platform\Application\GuzabaPlatform as GP;
@@ -42,8 +44,16 @@ class Test extends BaseController
             ],
             '/test5'      => [
                 Method::HTTP_GET                        => [self::class, 'test5'],
-            ]
+            ],
+            '/test-transactions'    => [
+                Method::HTTP_GET                        => [self::class, 'test_transactions'],
+            ],
         ],
+        'services' => [
+            'ConnectionFactory',
+            //'TransactionManager',
+        ]
+
     ];
 
     protected const CONFIG_RUNTIME = [];
@@ -57,10 +67,28 @@ class Test extends BaseController
      * If the provided language is not supported this will trigger a notice and the target language will not be changed
      * @param string $language
      * @throws \Azonmedia\Exceptions\RunTimeException
+     * @throws \Azonmedia\Exceptions\InvalidArgumentException
      */
     public function _init(?string $language = NULL)
     {
         t::set_target_language($language, $this->get_request());
+    }
+
+    public function test_transactions() : ResponseInterface
+    {
+        /** @var TransactionManager $TXM */
+        //$TXM = self::get_service('TransactionManager');
+        /** @var ConnectionInterface $Connection */
+        $Connection = self::get_service('ConnectionFactory')->get_connection(MysqlConnectionCoroutine::class, $CR);
+        //$TXM->begin_transaction($Connection, $TR);//no need of scope reference here as the resource (connection) already has one
+        //if the resource scope reference is freed (ref count --) this should also invoke a transaction rollback on the current transaction
+        //there is no need to have an explicit reference to the transaction by the scope reference
+        //$TXM->begin_transaction($Connection);
+        //$Connection->begin_transaction();
+        $Transaction = $Connection->new_transaction();
+        $Transaction->begin();
+
+        return self::get_structured_ok_response(['message' => 'ok']);
     }
 
     public function test5() : ResponseInterface

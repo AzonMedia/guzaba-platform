@@ -39,6 +39,7 @@ use GuzabaPlatform\Platform\Application\VueRouter;
 use Guzaba2\Orm\BlockingStore\Nosql\MongoDB;
 use GuzabaPlatform\Platform\Application\MongoDbConnection;
 use Guzaba2\Authorization\BypassAuthorizationProvider;
+use Guzaba2\Transaction\TransactionManager;
 use Psr\Log\LogLevel;
 
 return [
@@ -255,7 +256,11 @@ return [
                     'router_file'                   => './public_src/components_config/router.config.js',
                 ],
             ],
-
+            'TransactionManager'           => [
+                'class'                         => TransactionManager::class,
+                'args'                          => [],
+                'type'                          => 'coroutine',
+            ],
         ],
     ],
 ];
