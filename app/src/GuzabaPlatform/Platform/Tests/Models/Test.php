@@ -9,8 +9,8 @@ use GuzabaPlatform\Platform\Application\BaseActiveRecord;
  * Class Test
  * @package GuzabaPlatform\Platform\Tests\Models
  *
- * @property test_id
- * @property test_name
+ * @property int test_id
+ * @property string test_name
  */
 class Test extends BaseActiveRecord
 {

@@ -3,13 +3,22 @@ declare(strict_types=1);
 
 namespace GuzabaPlatform\Platform\Tests\Controllers;
 
+use Azonmedia\Exceptions\InvalidArgumentException;
 use Guzaba2\Authorization\Acl\Permission;
+use Guzaba2\Base\Exceptions\RunTimeException;
 use Guzaba2\Coroutine\Coroutine;
+use Guzaba2\Database\Interfaces\ConnectionFactoryInterface;
 use Guzaba2\Database\Interfaces\ConnectionInterface;
+use Guzaba2\Event\Event;
 use Guzaba2\Http\Method;
 use Guzaba2\Kernel\Kernel;
 use Guzaba2\Mvc\ActiveRecordController;
 use Guzaba2\Mvc\ExecutorMiddleware;
+use Guzaba2\Orm\ActiveRecord;
+use Guzaba2\Orm\OrmTransactionalResource;
+use Guzaba2\Orm\ScopeManager;
+use Guzaba2\Orm\Store\Memory;
+use Guzaba2\Orm\Transaction;
 use Guzaba2\Transaction\TransactionManager;
 use GuzabaPlatform\Platform\Application\BaseController;
 use GuzabaPlatform\Platform\Application\GuzabaPlatform;
@@ -48,9 +57,16 @@ class Test extends BaseController
             '/test-transactions'    => [
                 Method::HTTP_GET                        => [self::class, 'test_transactions'],
             ],
+            '/test-object-transactions'    => [
+                Method::HTTP_PUT                        => [self::class, 'test_object_transactions'],
+            ],
+            '/test-orm-transactions'    => [
+                Method::HTTP_PUT                        => [self::class, 'test_orm_transactions'],
+            ],
         ],
         'services' => [
             'ConnectionFactory',
+            'OrmStore',
             //'TransactionManager',
         ]
 
@@ -67,28 +83,115 @@ class Test extends BaseController
      * If the provided language is not supported this will trigger a notice and the target language will not be changed
      * @param string $language
      * @throws \Azonmedia\Exceptions\RunTimeException
-     * @throws \Azonmedia\Exceptions\InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public function _init(?string $language = NULL)
     {
         t::set_target_language($language, $this->get_request());
     }
 
+    public function test_orm_transactions() :ResponseInterface
+    {
+        $Transaction = ActiveRecord::new_transaction($TR);
+        $Transaction->begin();
+        $Test = new \GuzabaPlatform\Platform\Tests\Models\Test(121);
+        $Test->test_name = 'asdasd 4445 66';
+        //$Transaction->rollback();
+        $Test->write();
+        $Transaction->commit();
+        print $Test->test_name.PHP_EOL;//some test value 333 expected
+        return self::get_structured_ok_response(['message' => 'ok']);
+    }
+
+    public function test_object_transactions() : ResponseInterface
+    {
+        /** @var Memory $Memory */
+        $Memory = self::get_service('OrmStore');
+        /** @var Transaction $Transaction */
+        $Transaction = $Memory->new_transaction($TR);
+        $Transaction->begin();
+        $Test = new \GuzabaPlatform\Platform\Tests\Models\Test(119);
+        $Test->test_name = 'asdasd';
+        $Transaction->rollback();
+        //$Transaction->commit();
+        print $Test->test_name.PHP_EOL;//some test value 333 expected
+        return self::get_structured_ok_response();
+    }
+
+    /**
+     * @return ResponseInterface
+     * @throws RunTimeException
+     */
     public function test_transactions() : ResponseInterface
     {
         /** @var TransactionManager $TXM */
-        //$TXM = self::get_service('TransactionManager');
+        //$TXM = self::get_service('TransactionManager');//not needed
+
+        /** @var ConnectionFactoryInterface $ConnectionFactory */
+        $ConnectionFactory = self::get_service('ConnectionFactory');
         /** @var ConnectionInterface $Connection */
-        $Connection = self::get_service('ConnectionFactory')->get_connection(MysqlConnectionCoroutine::class, $CR);
+        $Connection = $ConnectionFactory->get_connection(MysqlConnectionCoroutine::class, $CR);
+        //print $Connection->get_object_internal_id().' '.$Connection->get_resource_id().PHP_EOL;
         //$TXM->begin_transaction($Connection, $TR);//no need of scope reference here as the resource (connection) already has one
         //if the resource scope reference is freed (ref count --) this should also invoke a transaction rollback on the current transaction
         //there is no need to have an explicit reference to the transaction by the scope reference
         //$TXM->begin_transaction($Connection);
         //$Connection->begin_transaction();
-        $Transaction = $Connection->new_transaction();
+        //it will be needed to have ScopeReference in the new_transaction() as in the case of nested calls & connections & transactions
+        //one scope may have connection + transaction and the next nested scope to have only a connection
+        //and if a rollback is done on the transaction on the free_connection this will rollback the parent transaction
+        $Transaction = $Connection->new_transaction($TR);
+
+        //alternative
+        //$MemoryTransaction = self::get_service('ConnectionFactory')->get_connection(MysqlConnectionCoroutine::class, $CR)->new_transaction($TR);
+
         $Transaction->begin();
 
+
+        $this->test_nested_transaction();
+
+        $Transaction->commit();
+
         return self::get_structured_ok_response(['message' => 'ok']);
+    }
+
+    protected function test_nested_transaction() : void
+    {
+        //$MemoryTransaction = self::get_service('ConnectionFactory')->get_connection(MysqlConnectionCoroutine::class, $CR)->new_transaction($TR);
+        /** @var ConnectionFactoryInterface $ConnectionFactory */
+        $ConnectionFactory = self::get_service('ConnectionFactory');
+        /** @var ConnectionInterface $Connection */
+        $Connection = $ConnectionFactory->get_connection(MysqlConnectionCoroutine::class, $CR);
+        //print $Connection->get_object_internal_id().' '.$Connection->get_resource_id().PHP_EOL;
+        $Transaction = $Connection->new_transaction($TR);
+        $Transaction->add_callback('_before_rollback', function(Event $Event) : void
+        {
+            $Transaction = $Event->get_subject();
+            print $Transaction->get_rollback_reason().PHP_EOL;
+        });
+        $Transaction->begin();
+//        $MemoryTransaction->add_callback('_before_rollback', function(){
+//            print 'AAAAAAAAAAAA';
+//        });
+//        $MemoryTransaction->add_callback('_before_commit', function(){
+//            print 'BBBBBBBBBBBB';
+//        });
+
+        $this->test_nested_transaction_2();
+
+        //$MemoryTransaction->commit();
+    }
+
+    protected function test_nested_transaction_2() : void
+    {
+        $Transaction = self::get_service('ConnectionFactory')->get_connection(MysqlConnectionCoroutine::class, $CR)->new_transaction($TR);
+        $Transaction->add_callback('_before_rollback', function(Event $Event) : void
+        {
+            $Transaction = $Event->get_subject();
+            print $Transaction->get_rollback_reason().PHP_EOL;
+        });
+        $Transaction->begin();
+        $Transaction->commit();
     }
 
     public function test5() : ResponseInterface
