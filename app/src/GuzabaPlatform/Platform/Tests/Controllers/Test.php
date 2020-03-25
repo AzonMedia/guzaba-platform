@@ -7,6 +7,7 @@ use Azonmedia\Exceptions\InvalidArgumentException;
 use Guzaba2\Authorization\Acl\Permission;
 use Guzaba2\Base\Exceptions\RunTimeException;
 use Guzaba2\Coroutine\Coroutine;
+use Guzaba2\Coroutine\Resources;
 use Guzaba2\Database\Interfaces\ConnectionFactoryInterface;
 use Guzaba2\Database\Interfaces\ConnectionInterface;
 use Guzaba2\Event\Event;
@@ -90,17 +91,34 @@ class Test extends BaseController
         t::set_target_language($language, $this->get_request());
     }
 
-    public function test_orm_transactions() :ResponseInterface
+    public function test_orm_transactions() : ResponseInterface
     {
         $Transaction = ActiveRecord::new_transaction($TR);
         $Transaction->begin();
         $Test = new \GuzabaPlatform\Platform\Tests\Models\Test(121);
         $Test->test_name = 'asdasd 4445 66';
         //$Transaction->rollback();
+
+        $this->test_orm_nested_transaction();
+
+
         $Test->write();
         $Transaction->commit();
         print $Test->test_name.PHP_EOL;//some test value 333 expected
+//unset($TR);
+        $Context = Coroutine::getContext();
+        $Resources = $Context->{Resources::class};
+        print 'Resources: '.count($Resources->get_resources());
+
         return self::get_structured_ok_response(['message' => 'ok']);
+    }
+
+    protected function test_orm_nested_transaction() : void
+    {
+        $Transaction = ActiveRecord::new_transaction($TR);
+        $Transaction->begin();
+        $Test = new \GuzabaPlatform\Platform\Tests\Models\Test(122);
+        $Test->test_name = 'ffggg';
     }
 
     public function test_object_transactions() : ResponseInterface
@@ -110,22 +128,47 @@ class Test extends BaseController
         /** @var Transaction $Transaction */
         $Transaction = $Memory->new_transaction($TR);
         $Transaction->begin();
-        $Test = new \GuzabaPlatform\Platform\Tests\Models\Test(119);
+        $Test = new \GuzabaPlatform\Platform\Tests\Models\Test(121);
         $Test->test_name = 'asdasd';
-        $Transaction->rollback();
-        //$Transaction->commit();
+        $this->test_nested_object_transactions();
+        //$Transaction->rollback();
+        $Transaction->commit();
         print $Test->test_name.PHP_EOL;//some test value 333 expected
+
+
+
         return self::get_structured_ok_response();
+    }
+
+    protected function test_nested_object_transactions() : void
+    {
+        /** @var Memory $Memory */
+        $Memory = self::get_service('OrmStore');
+        /** @var Transaction $Transaction */
+        $Transaction = $Memory->new_transaction($TR);
+        $Transaction->begin();
+        $Test = new \GuzabaPlatform\Platform\Tests\Models\Test(122);
+        $Test->test_name = 'asdasd fff';
     }
 
     /**
      * @return ResponseInterface
+     * @throws InvalidArgumentException
      * @throws RunTimeException
+     * @throws \Guzaba2\Coroutine\Exceptions\ContextDestroyedException
      */
     public function test_transactions() : ResponseInterface
     {
         /** @var TransactionManager $TXM */
         //$TXM = self::get_service('TransactionManager');//not needed
+
+        /** @var ConnectionFactoryInterface $ConnectionFactory */
+        //$ConnectionFactory = self::get_service('ConnectionFactory');
+        /** @var ConnectionInterface $Connection */
+        //$Connection = $ConnectionFactory->get_connection(MysqlConnectionCoroutine::class, $CR);
+        //print $Connection->get_object_internal_id().' '.$Connection->get_resource_id().PHP_EOL;
+        //$TXM->begin_transaction($Connection, $TR);//no need of scope reference here as the resource (connection) already has one
+        //if the resource scope reference is free
 
         /** @var ConnectionFactoryInterface $ConnectionFactory */
         $ConnectionFactory = self::get_service('ConnectionFactory');
@@ -134,6 +177,8 @@ class Test extends BaseController
         //print $Connection->get_object_internal_id().' '.$Connection->get_resource_id().PHP_EOL;
         //$TXM->begin_transaction($Connection, $TR);//no need of scope reference here as the resource (connection) already has one
         //if the resource scope reference is freed (ref count --) this should also invoke a transaction rollback on the current transaction
+        //there is no need to have an explicit reference to the transaction by the scope reference
+        //$TXM->begin_transaction($Connection);d (ref count --) this should also invoke a transaction rollback on the current transaction
         //there is no need to have an explicit reference to the transaction by the scope reference
         //$TXM->begin_transaction($Connection);
         //$Connection->begin_transaction();
@@ -151,6 +196,12 @@ class Test extends BaseController
         $this->test_nested_transaction();
 
         $Transaction->commit();
+
+//        unset($TR);
+//        unset($CR);
+//        $Context = Coroutine::getContext();
+//        $Resources = $Context->{Resources::class};
+//        print 'Resources: '.count($Resources->get_resources()).PHP_EOL;
 
         return self::get_structured_ok_response(['message' => 'ok']);
     }
