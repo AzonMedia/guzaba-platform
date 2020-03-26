@@ -2,7 +2,11 @@
     "name": "guzaba-platform/guzaba-platform",
     "type": "guzaba-platform",
     "description": "A plugin based platform for creating applications",
-    "keywords": ["GuzabaPlatform", "application platform", "plugin management"],
+    "keywords": [
+        "GuzabaPlatform",
+        "application platform",
+        "plugin management"
+    ],
     "homepage": "https://github.com/AzonMedia/guzaba-platform",
     "license": "BSD-3-Clause",
     "minimum-stability": "dev",
@@ -28,14 +32,18 @@
         "guzaba-platform/guzaba-platform-installer": "dev-master"
     },
     "require-dev": {
-        "guzaba-platform/guzbaa-platform-docs": "dev-master"
+        "guzaba-platform/guzbaa-platform-docs": "dev-master",
+        "codeception/codeception": "4.1.x-dev",
+        "codeception/module-phpbrowser": "^1.0.0",
+        "codeception/module-asserts": "^1.0.0",
+        "codeception/module-rest": "dev-master"
     },
     "autoload": {
         "psr-4": {
             "GuzabaPlatform\\Platform\\": "app/src/GuzabaPlatform/Platform/"
         }
     },
-    "suggest" : {
+    "suggest": {
         "guzaba-platform/crud": "Provides for basic CRUD operations and permissions management on all object",
         "guzaba-platform/classes": "Provides permissions management for classes",
         "guzaba-platform/controllers": "Provides permissions management for controllers",

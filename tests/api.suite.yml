@@ -1,0 +1,11 @@
+#actor: ApiTester
+#modules:
+#    enabled:
+#        - \Helper\Api
+actor: ApiTester
+modules:
+    enabled:
+        - REST:
+              url: http://localhost:8081/api/
+              depends: PhpBrowser
+              part: Json
