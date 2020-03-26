@@ -1,0 +1,2 @@
+#to be run when Guzaba Platform is installed as dependency
+php ../../bin/codecept run
