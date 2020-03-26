@@ -116,6 +116,11 @@ class Test extends BaseController
     protected function test_orm_nested_transaction() : void
     {
         $Transaction = ActiveRecord::new_transaction($TR);
+        $Transaction->add_callback('_before_rollback', function(Event $Event) : void {
+            /** @var Transaction $Transaction */
+            $Transaction = $Event->get_subject();
+            print $Transaction->get_rollback_reason();
+        });
         $Transaction->begin();
         $Test = new \GuzabaPlatform\Platform\Tests\Models\Test(122);
         $Test->test_name = 'ffggg';
