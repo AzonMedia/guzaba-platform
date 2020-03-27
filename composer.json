@@ -33,6 +33,7 @@
     },
     "require-dev": {
         "guzaba-platform/guzbaa-platform-docs": "dev-master",
+        "guzaba-platform/guzaba-platform-tests": "dev-master",
         "codeception/codeception": "4.1.x-dev",
         "codeception/module-phpbrowser": "^1.0.0",
         "codeception/module-asserts": "^1.0.0",
