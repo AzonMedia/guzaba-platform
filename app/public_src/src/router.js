@@ -45,7 +45,7 @@ let static_routes = [
     // {
     //     path: '/admin',
     //     name: 'admin',
-    //     component: () => import('@GuzabaPlatform.Platform/views/Admin/Home.vue')
+    //     component: () => import('@GuzabaPlatform.Platform/views/Crud/Home.vue')
     // },
     {
         path: '/user/login',
