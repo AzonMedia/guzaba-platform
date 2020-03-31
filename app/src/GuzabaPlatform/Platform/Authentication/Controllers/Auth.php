@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace GuzabaPlatform\Platform\Authentication\Controllers;
 
 use Guzaba2\Http\Method;
+use Guzaba2\Http\StatusCode;
 use Guzaba2\Mvc\ActiveRecordController;
 use Guzaba2\Orm\Exceptions\RecordNotFoundException;
 use Guzaba2\Translator\Translator as t;
@@ -29,19 +30,19 @@ class Auth extends BaseController
 
     protected const CONFIG_DEFAULTS = [
         'routes'    => [
-            '/user-login' => [
-                Method::HTTP_GET_HEAD_OPT => [self::class, 'main'],
-                Method::HTTP_POST => [self::class, 'login'],
+            '/user/login' => [
+                Method::HTTP_GET    => [self::class, 'login_get'],
+                Method::HTTP_POST   => [self::class, 'login_post'],
             ],
-            '/user-register' => [
-                Method::HTTP_POST => [self::class, 'register'],
+            '/user/register' => [
+                Method::HTTP_POST   => [self::class, 'register_post'],
             ],
         ]
     ];
 
     protected const CONFIG_RUNTIME = [];
 
-    public function main(): ResponseInterface
+    public function login_get(): ResponseInterface
     {
         $struct = [];
 
@@ -69,7 +70,7 @@ class Auth extends BaseController
         return $Response;
     }
 
-    public function login(string $username, string $password): ResponseInterface
+    public function login_post(string $username, string $password): ResponseInterface
     {
         $Response = parent::get_structured_ok_response();
         $struct = &$Response->getBody()->getStructure();
@@ -93,7 +94,8 @@ class Auth extends BaseController
                 'user_name' => $username,
             ]);
 
-            if (password_verify($password, $User->user_password)) {
+            //if (password_verify($password, $User->user_password)) {
+            if ($User->verify_password($password)) {
 
                 $Token = new Token();
                 $Token->user_id = $User->user_id;
@@ -111,32 +113,50 @@ class Auth extends BaseController
         if (isset($Token)) {
             $Response = $Response->withHeader('token', $Token->token_string);
         } else {
-            $Response = $Response->withStatus(\Guzaba2\Http\StatusCode::HTTP_FORBIDDEN);
+            $Response = $Response->withStatus(StatusCode::HTTP_FORBIDDEN);
         }
 
         return $Response;
     }
 
-    public function register(string $email, string $username, string $password)
+    public function register_get(): ResponseInterface
     {
-        $Response = parent::get_structured_ok_response();
-        $struct = &$Response->getBody()->getStructure();
-
-        try {
-            $user = new User(['user_email' => $email]);
-            $struct['message'] = t::_('Email already exist!');
-            $Response = $Response->withStatus(\Guzaba2\Http\StatusCode::HTTP_FOUND);
-        } catch(RecordNotFoundException $e) {
-            $user = new User();
-            $user->user_email = $email;
-            $user->user_name = $username;
-            $user->user_password = $password;
-            $user->save();
-
-            $Response = $Response->withStatus(\Guzaba2\Http\StatusCode::HTTP_CREATED);
-            $struct['message'] = t::_('User was registered successful.');
-        }
-
-        return $Response;
+        $struct = [];
+        return self::get_structured_ok_response($struct);
     }
+
+    public function register_post(string $user_email, string $user_name, string $user_password, string $user_password_confirmation): ResponseInterface
+    {
+        $struct = [];
+        $User = new User();
+        $User->user_email = $user_email;
+        $User->user_name = $user_name;
+        $User->set_password($user_password, $user_password_confirmation);
+        $User->write();
+        $struct['message'] = sprintf(t::_('The user %1s was created successfully.'), $User->user_name);
+        $struct['uuid'] = $User->get_uuid();
+        return self::get_structured_ok_response($struct);
+    }
+
+//    public function register(string $email, string $username, string $password)
+//    {
+//        $Response = parent::get_structured_ok_response();
+//        $struct = &$Response->getBody()->getStructure();
+//
+//        try {
+//            $user = new User(['user_email' => $email]);
+//            $struct['message'] = t::_('Email already exist!');
+//            $Response = $Response->withStatus(StatusCode::HTTP_FOUND);
+//        } catch(RecordNotFoundException $E) {
+//            $user = new User();
+//            $user->user_email = $email;
+//            $user->user_name = $username;
+//            $user->user_password = $password;
+//            $user->save();
+//
+//            $Response = $Response->withStatus(StatusCode::HTTP_CREATED);
+//            $struct['message'] = t::_('User was registered successful.');
+//        }
+//        return $Response;
+//    }
 }

@@ -76,7 +76,8 @@ class GuzabaPlatform extends Application
 
         'target_language'           => 'en',//this is the default target language
         'skip_translator'           => FALSE,
-        'supported_languages'       => ['en','bg'],
+        //'supported_languages'       => ['en','bg'],
+        'supported_languages'       => ['en'],
 
 
 //        'override_html_content_type' => 'json',//to facilitate debugging when opening the XHR in browser

@@ -25,9 +25,11 @@
             <b-input type="password" id="text-password" v-model="password" aria-describedby="password-help-block" required></b-input>
             <!-- <div>{{data.password_text}}</div> -->
             <b-form-text id="password-help-block">
-                <Hook :name="'_after_main'"/>
             </b-form-text>
+
             <b-button type="submit" variant="success">Login</b-button>
+
+            <Hook :name="'_after_main'"/>
         </b-form>
     </div>
 </template>
@@ -82,7 +84,7 @@ export default {
         }
     },
     mounted() {
-        this.$http.get('/user-login')
+        this.$http.get('/user/login')
     },
     methods: {
         login() {

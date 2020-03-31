@@ -48,7 +48,7 @@ let static_routes = [
     //     component: () => import('@GuzabaPlatform.Platform/views/Admin/Home.vue')
     // },
     {
-        path: '/login',
+        path: '/user/login',
         name: 'Login',
         component: Auth
         // component: () => import('@/components/auth/Login.vue'),
@@ -57,12 +57,12 @@ let static_routes = [
         // }
     },
     {
-        path: '/logout',
+        path: '/user/logout',
         name: 'user logout',
         component: () => store.dispatch('logout')
     },
     {
-        path: '/register',
+        path: '/user/register',
         name: 'Register',
         component: Auth
     },
