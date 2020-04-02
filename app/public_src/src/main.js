@@ -14,8 +14,7 @@ Vue.use(BootstrapVue)
 //axios start
 import axios from 'axios'
 axios.defaults.withCredentials = true
-axios.defaults.baseURL = 'http://localhost:8081/api' //this is used for the API calls
-//axios.defaults.baseHost = 'http://localhost:8081/'
+axios.defaults.baseURL = 'http://localhost:8081/api'
 Vue.prototype.$http = axios
 
 //TODO - fix the below - it is not working
@@ -69,7 +68,7 @@ const vue = new Vue({
     //                         //this is unusual and would mean that the component is already required which will not be the case for the modules (unless a component is reused)
     //                        ///new_route.component = route.component;
     //                     }
-    //                     new_route.component = () => import('/home/local/PROJECTS/guzaba-platform-skeleton/vendor/guzaba-platform/guzaba-platform/app/public_src/src/views/Crud.vue');
+    //                     new_route.component = () => import('/home/local/PROJECTS/guzaba-platform-skeleton/vendor/guzaba-platform/guzaba-platform/app/public_src/src/views/CrudAdmin.vue');
     //                     console.log('==================');
     //                     console.log(new_route);
     //                     this.$router.addRoutes([new_route]);

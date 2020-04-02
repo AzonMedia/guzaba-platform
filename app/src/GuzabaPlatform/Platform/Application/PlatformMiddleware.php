@@ -45,9 +45,12 @@ class PlatformMiddleware extends Base
      * @param ServerRequestInterface $Request
      * @param RequestHandlerInterface $Handler
      * @return ResponseInterface
+     * @throws ConfigurationException
      * @throws InvalidArgumentException
      * @throws RunTimeException
-     * @throws ConfigurationException
+     * @throws \Azonmedia\Exceptions\InvalidArgumentException
+     * @throws \Guzaba2\Base\Exceptions\LogicException
+     * @throws \ReflectionException
      */
     public function process(ServerRequestInterface $Request, RequestHandlerInterface $Handler) : ResponseInterface
     {
@@ -80,7 +83,7 @@ class PlatformMiddleware extends Base
                 if ($Token->token_expiration_time > time()) {
                     // update token_expiration_time
                     $Token->update_token();
-                    $current_user_id = $Token->user_id;
+                    $current_user_uuid = $Token->user_uuid;
                 }  else {
                     unset($Token);
                 }
@@ -93,8 +96,8 @@ class PlatformMiddleware extends Base
             $Request = $Request->withoutHeader('token');
         }
 
-        if (isset($current_user_id)) {
-            $User = new User($current_user_id, TRUE, TRUE);
+        if (isset($current_user_uuid)) {
+            $User = new User($current_user_uuid, TRUE, TRUE);
             self::get_service('CurrentUser')->set($User);
         }
 

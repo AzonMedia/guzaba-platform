@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace GuzabaPlatform\Platform\Authentication\Models;
 
+use Guzaba2\Base\Exceptions\InvalidArgumentException;
 use GuzabaPlatform\Platform\Authentication\Interfaces\TokenInterface;
 use Guzaba2\Translator\Translator as t;
 use Guzaba2\Orm\Exceptions\RecordNotFoundException;
@@ -33,15 +34,18 @@ class JwtToken extends Base implements TokenInterface
 
     protected const CONFIG_RUNTIME = [];
 
-    public $user_id;
-    public $token_string;
-    public $token_expiration_time;
+    public string $user_uuid;
+    public string $token_string;
+    public int $token_expiration_time;//unitime
 
     /**
      * @param array token['token_string'], to be compatible with GuzabaPlatform\Platform\Authentication\Models\Token
      * which extends ActiveRecord class
-     * 
+     *
+     * @throws LogicException
      * @throws RecordNotFoundException
+     * @throws \Azonmedia\Exceptions\InvalidArgumentException
+     * @throws \ReflectionException
      */
     public function __construct(array $token = [])
     {
@@ -54,7 +58,7 @@ class JwtToken extends Base implements TokenInterface
 
     		try {
     			$decoded = JWT::decode($this->token_string, self::CONFIG_RUNTIME['secret'], [self::CONFIG_RUNTIME['allowed_algs']]);
-	    		$this->user_id = $decoded->uid;
+	    		$this->user_uuid = $decoded->user_uuid;
 	    		$this->token_expiration_time = $decoded->exp;
     		} catch (\Exception $e) {
     			throw new RecordNotFoundException(sprintf(t::_('No metadata for class %s, object_id %s was found.'), get_class($this), 0));
@@ -67,17 +71,18 @@ class JwtToken extends Base implements TokenInterface
      * @return Token
      *
      * throws InvalidArgumentException
+     * @throws \Azonmedia\Exceptions\InvalidArgumentException
      */
     public function generate_new_token(): TokenInterface
     {
-        if (!$this->user_id > 0) {
+        if (!$this->user_uuid) {
             throw new InvalidArgumentException(sprintf(t::_('Cannot generate token without user_id.')));
         }
 
     	$this->token_expiration_time = time() + self::CONFIG_RUNTIME['expiration_time'];       
 
 		$token = array(
-			"uid" => $this->user_id,
+			"user_uuid" => $this->user_uuid,
 		    "exp" => $this->token_expiration_time
 		);
 
@@ -89,6 +94,7 @@ class JwtToken extends Base implements TokenInterface
     /**
      * updates token_expiration_time on every request
      * @return Token
+     * @throws \Azonmedia\Exceptions\InvalidArgumentException
      */
     public function update_token() : TokenInterface
     {
@@ -101,21 +107,27 @@ class JwtToken extends Base implements TokenInterface
 
     /**
      * @param RequestInterface $Request
+     * @return string Returns the UUID
+     * @throws LogicException
+     * @throws \Azonmedia\Exceptions\InvalidArgumentException
+     * @throws \Guzaba2\Base\Exceptions\RunTimeException
+     * @throws \ReflectionException
      */
-    public static function get_user_id_from_request(RequestInterface $Request) /* mixed */
+    public static function get_user_uuid_from_request(RequestInterface $Request) /* mixed */
     {
-        $ret = self::get_service('CurrentUser')->get_default_user_uuid();
+        /** @var string $user_uuid */
+        $user_uuid = self::get_service('CurrentUser')->get_default_user_uuid();
         $headers = $Request->getHeaders();
         if (isset($headers['token'])) {
             try {
                 $Token = new JwtToken(['token_string' => $headers['token'][0]]);
                 if ($Token->token_expiration_time > time()) {
-                    $ret = $Token->user_id;
+                    $user_uuid = $Token->user_uuid;
                 }
             } catch (RecordNotFoundException $Exception) {
 
             }
         }
-        return $ret;
+        return $user_uuid;
     }
 }

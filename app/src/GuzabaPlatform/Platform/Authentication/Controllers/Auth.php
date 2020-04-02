@@ -66,17 +66,17 @@ class Auth extends BaseController
 
         //$struct['password_text'] = t::_('Your password must be 8-20 characters long, contain letters and numbers, and must not contain spaces, special characters, or emoji.');
 
-        $Response = parent::get_structured_ok_response($struct);
+        $Response = self::get_structured_ok_response($struct);
         return $Response;
     }
 
     public function login_post(string $username, string $password): ResponseInterface
     {
-        $Response = parent::get_structured_ok_response();
+        $Response = self::get_structured_ok_response();
         $struct = &$Response->getBody()->getStructure();
         $struct['user_logged_in'] = false;
 
-        $Request = parent::get_request();
+        $Request = self::get_request();
         $headers = $Request->getHeaders();
 
         if (isset($headers['token'])) {
@@ -98,12 +98,13 @@ class Auth extends BaseController
             if ($User->verify_password($password)) {
 
                 $Token = new Token();
-                $Token->user_id = $User->user_id;
+                $Token->user_uuid = $User->get_uuid();
                 $Token = $Token->generate_new_token();
 
                 $struct['user_logged_in'] = true;
             } else {
                 // do nothing; user is not logged
+                $struct['message'] = t::_('Wrong username or password!');
             }
 
         } catch (RecordNotFoundException $exception) {

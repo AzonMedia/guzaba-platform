@@ -102,5 +102,10 @@ module.exports = {
         new MiniCssExtractPlugin({
             //filename: isProd ? "[name]-[contenthash].css" : "[name].css"
         })
-    ]
+    ],
+    /** @see https://webpack.js.org/configuration/watch/ */
+    watchOptions: {
+        //ignored: /node_modules/
+        ignored: ['**/logs/**', 'node_modules/**']
+    }
 }

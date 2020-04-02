@@ -9,7 +9,9 @@ import store from './store.js'
 ///import Home from '@GuzabaPlatform.Platform/views/Home.vue'
 //import Home from '/home/local/PROJECTS/guzaba-platform-skeleton/guzaba-platform-skeleton/vendor/guzaba-platform/guzaba-platform/app/public_src/src/views/Home.vue'
 //import Auth from './GuzabaPlatform/Platform/views/Auth.vue'
-import Auth from '@GuzabaPlatform.Platform/views/Auth.vue'
+//import Auth from '@GuzabaPlatform.Platform/views/Auth.vue'
+import Login from '@GuzabaPlatform.Platform/views/user/Login.vue'
+import Register from '@GuzabaPlatform.Platform/views/user/Register.vue'
 import NotFound from '@GuzabaPlatform.Platform/views/NotFound.vue'
 ///import axios from "axios";
 
@@ -50,7 +52,8 @@ let static_routes = [
     {
         path: '/user/login',
         name: 'Login',
-        component: Auth
+        //component: Auth
+        component: Login
         // component: () => import('@/components/auth/Login.vue'),
         // meta: {
         //     serverPath: 'auth/login'
@@ -64,7 +67,8 @@ let static_routes = [
     {
         path: '/user/register',
         name: 'Register',
-        component: Auth
+        //component: Auth
+        component: Register
     },
     {
         name: 'not found',
@@ -89,7 +93,7 @@ router.beforeEach((to, from, next) => {
             next()
             return
         }
-        next('/login')
+        next('/user/login')
     } else {
         next()
     }
