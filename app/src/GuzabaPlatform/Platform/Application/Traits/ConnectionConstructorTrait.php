@@ -16,6 +16,14 @@ You may try to copy ./registry/local.php.dist to ./registry/local.php and set th
 Or if you are using ./app/bin/start_in_containers or start_containers check ./dockerfiles/GuzabaPlatform/guzaba-platform.env.';
             throw new RunTimeException(sprintf(t::_($message), get_class($this)), 0 , NULL, 'fb0a71fb-fdf2-4c7e-954a-0208464334b5');
         }
-        parent::__construct($options);
+
+        $AfterConnectCallback = static function(self $Connection): void {
+            $q = "SET GLOBAL sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));";
+            $Connection->prepare($q)->execute();
+        };
+
+        parent::__construct($options, $AfterConnectCallback);
+
+
     }
 }

@@ -176,6 +176,8 @@ BANNER;
 
         Kernel::get_di_container()->add('GuzabaPlatform', $this);
 
+        new Event($this, '_before_execute');
+
 
         $server_options = self::CONFIG_RUNTIME['swoole']['server_options'];
 
@@ -357,7 +359,12 @@ BANNER;
         //close any single connections that may have been opened during this phase
         self::get_service('ConnectionFactory')->close_all_connections();
         //after the server is started new connections (Pools) will be created for each worker
+
+
+
         $HttpServer->start();
+
+        new Event($this, '_after_execute');
 
         return Kernel::EXIT_SUCCESS;
     }
