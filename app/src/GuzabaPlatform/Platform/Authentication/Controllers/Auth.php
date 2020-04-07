@@ -126,6 +126,20 @@ class Auth extends BaseController
         return self::get_structured_ok_response($struct);
     }
 
+    /**
+     * @param string $user_email
+     * @param string $user_name
+     * @param string $user_password
+     * @param string $user_password_confirmation
+     * @return ResponseInterface
+     * @throws \Azonmedia\Exceptions\InvalidArgumentException
+     * @throws \Guzaba2\Base\Exceptions\InvalidArgumentException
+     * @throws \Guzaba2\Base\Exceptions\LogicException
+     * @throws \Guzaba2\Base\Exceptions\RunTimeException
+     * @throws \Guzaba2\Kernel\Exceptions\ConfigurationException
+     * @throws \Guzaba2\Orm\Exceptions\MultipleValidationFailedException
+     * @throws \ReflectionException
+     */
     public function register_post(string $user_email, string $user_name, string $user_password, string $user_password_confirmation): ResponseInterface
     {
         $struct = [];
@@ -133,7 +147,13 @@ class Auth extends BaseController
         $User->user_email = $user_email;
         $User->user_name = $user_name;
         $User->set_password($user_password, $user_password_confirmation);
-        $User->write();
+        try {
+            $User->write();
+        } catch (\Throwable $E) {
+            print $E->getMessage().PHP_EOL;
+            print $E->getTraceAsString();
+        }
+
         $struct['message'] = sprintf(t::_('The user %1s was created successfully.'), $User->user_name);
         $struct['uuid'] = $User->get_uuid();
         return self::get_structured_ok_response($struct);

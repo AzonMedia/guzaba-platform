@@ -124,18 +124,18 @@ class User extends \Guzaba2\Authorization\User
         }
 
         if (self::CONFIG_RUNTIME['password_settings']['enforce_strong']) {
-            $common_message = sprintf(t::_('The password must contain at least one digit, one small letter, one CAPITAL letter and one symbol (like *#@%%!$+_^<>.,).'));
+            //$common_message = sprintf(t::_('The password must contain at least one digit, one small letter, one CAPITAL letter and one symbol (like *#@%%!$+_^<>.,).'));
             if (!preg_match("#[0-9]+#", $password)) {
-                $validation_exceptions[] = new ValidationFailedException($this, 'password', $common_message.' '.sprintf(t::_('The password contains no digit.')));
+                $validation_exceptions[] = new ValidationFailedException($this, 'password', sprintf(t::_('The password contains no digit.')));
             }
             if (!preg_match("#[a-z]+#", $password)) {
-                $validation_exceptions[] = new ValidationFailedException($this, 'password', $common_message.' '.sprintf(t::_('The password contains no small letter.')));
+                $validation_exceptions[] = new ValidationFailedException($this, 'password', sprintf(t::_('The password contains no small letter.')));
             }
             if (!preg_match("#[A-Z]+#", $password)) {
-                $validation_exceptions[] = new ValidationFailedException($this, 'password', $common_message.' '.sprintf(t::_('The password contains no capital letter.')));
+                $validation_exceptions[] = new ValidationFailedException($this, 'password', sprintf(t::_('The password contains no capital letter.')));
             }
             if (!preg_match("#\W+|_#", $password)) {
-                $validation_exceptions[] = new ValidationFailedException($this, 'password', $common_message.' '.sprintf(t::_('The password contains no symbol.')));
+                $validation_exceptions[] = new ValidationFailedException($this, 'password', sprintf(t::_('The password contains no symbol.')));
             }
         }
         return $validation_exceptions;

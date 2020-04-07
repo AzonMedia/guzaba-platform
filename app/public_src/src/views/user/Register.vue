@@ -2,39 +2,52 @@
     <div class="container">
         <b-form inline @submit.stop.prevent="register">
 
-            <p id="message"></p>
+            <div>
+                <b-alert :show="Alert.show" dismissible class="messages">{{Alert.message}}</b-alert>
+            </div>
 
-            <p>
+            <div>
                 <label class="sr-only" for="inline-form-input-user-email">Email address</label>
                 <b-input-group prepend="@" class="mb-2 mr-sm-2 mb-sm-0">
                     <b-input v-model="User.user_email" id="inline-form-input-user-email" placeholder="Email address"></b-input>
                 </b-input-group>
-            </p>
+            </div>
 
-            <p>
+            <div>
                 <label class="sr-only" for="inline-form-input-user-name">Username</label>
                 <b-input-group class="mb-2 mr-sm-2 mb-sm-0">
                     <b-input v-model="User.user_name" id="inline-form-input-user-name" placeholder="Username"></b-input>
                 </b-input-group>
-            </p>
+            </div>
 
-            <p>
+            <div>
+                <b-input-group class="mb-2 mr-sm-2 mb-sm-0">
+                    <p>The password must contain at least one digit, one small letter, one CAPITAL letter and one symbol (like *#@%%!$+_^<>.,).</p>
+                </b-input-group>
+            </div>
+            <div>
                 <label class="sr-only" for="inline-form-input-user-password">Password</label>
-                <b-input type="password" id="inline-form-input-user-password" v-model="User.user_password" aria-describedby="password-help-block" placeholder="Password" required></b-input>
-            </p>
+                <b-input-group class="mb-2 mr-sm-2 mb-sm-0">
+                    <b-input type="password" id="inline-form-input-user-password" v-model="User.user_password" aria-describedby="password-help-block" placeholder="Password" required></b-input>
+                </b-input-group>
+            </div>
 
-            <p>
+            <div>
                 <label class="sr-only" for="inline-form-input-user-password-confirmation">Password confirmation</label>
-                <b-input type="password" id="inline-form-input-user-password-confirmation" v-model="User.user_password_confirmation" aria-describedby="password-help-block" placeholder="Password confirmation" required></b-input>
-            </p>
+                <b-input-group class="mb-2 mr-sm-2 mb-sm-0">
+                    <b-input type="password" id="inline-form-input-user-password-confirmation" v-model="User.user_password_confirmation" aria-describedby="password-help-block" placeholder="Password confirmation" required></b-input>
+                </b-input-group>
+            </div>
 
-            <p>
-                <b-button type="submit" variant="primary">Register</b-button>
-            </p>
+            <div>
+                <b-input-group class="mb-2 mr-sm-2 mb-sm-0">
+                    <b-button type="submit" variant="primary">Register</b-button>
+                </b-input-group>
+            </div>
 
-            <p>
+            <div>
                 <Hook :name="'_after_main'"/>
-            </p>
+            </div>
         </b-form>
     </div>
 </template>
@@ -60,7 +73,10 @@
                     user_password: null,
                     user_password_confirmation: null,
                 },
-                message: '',
+                Alert: {
+                    show: false,
+                    message: '',
+                }
             }
         },
         mounted() {
@@ -77,12 +93,11 @@
                     //self.$parent.get_dir_files(self.$parent.CurrentDirPath.name);
                     self.$router.push('/user/login');
                 }).catch(function(err) {
-                    self.message = err.response.data.message
-                    //self.$parent.get_dir_files(self.$parent.CurrentDirPath.name);//refresh just in case
-                    //self.$parent.show_toast(err.response.data.message);
+                    //self.Alert.message = err.response.data.message.split("\n").join("<br />");
+                    self.Alert.message = err.response.data.message;
+                    self.Alert.show = true;
                 }).finally(function(){
-                    //self.$parent.get_dir_files(self.ModalData.CurrentDirPath.name);//refresh just in case
-                    //
+
                 });
 
                 // let email = this.email;
@@ -100,3 +115,11 @@
         }
     };
 </script>
+
+
+<style scoped>
+.messages {
+    white-space: pre-line;
+    text-align: left;
+}
+</style>
