@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysqlhost
--- Generation Time: Apr 07, 2020 at 09:20 AM
+-- Generation Time: Apr 07, 2020 at 07:05 PM
 -- Server version: 8.0.18
 -- PHP Version: 7.2.23
 
@@ -880,27 +880,27 @@ CREATE TABLE `guzaba_roles` (
 
 INSERT INTO `guzaba_roles` (`role_id`, `role_name`, `role_is_user`) VALUES
 (1, 'ANONYMOUS', 0),
-(2, 'mario', 0),
-(7, 'ivo4', 0),
-(8, 'ivo5', 0),
-(13, 'ivo', 0),
-(14, 'ivo3213', 0),
-(15, 'a1', 0),
-(16, 'a2', 0),
-(17, 'ivo3', 0),
-(18, 'ivo4', 0),
-(19, 'ivo5', 0),
-(20, 'ivo6', 0),
-(21, 'ivo8', 0),
-(22, 'gsd', 0),
-(23, 'dubai', 0),
-(24, 'dubai2', 0),
-(25, 'dubai3', 0),
-(26, 'dubai1', 0),
-(27, 'dubai2', 0),
-(28, 'mario', 0),
-(29, 'ttt', 0),
-(34, 'vesko', 0),
+(2, 'mario', 1),
+(7, 'ivo4', 1),
+(8, 'ivo5', 1),
+(13, 'ivo', 1),
+(14, 'ivo3213', 1),
+(15, 'a1', 1),
+(16, 'a2', 1),
+(17, 'ivo3', 1),
+(18, 'ivo4', 1),
+(19, 'ivo5', 1),
+(20, 'ivo6', 1),
+(21, 'ivo8', 1),
+(22, 'gsd', 1),
+(23, 'dubai', 1),
+(24, 'dubai2', 1),
+(25, 'dubai3', 1),
+(26, 'dubai1', 1),
+(27, 'dubai2', 1),
+(28, 'mario', 1),
+(29, 'ttt', 1),
+(34, 'vesko', 1),
 (39, 'vesko', 1);
 
 -- --------------------------------------------------------
