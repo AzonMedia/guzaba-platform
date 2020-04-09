@@ -91,7 +91,8 @@ class Auth extends BaseController
 
         try {
             $User = new User([
-                'user_name' => $username,
+                'user_name'         => $username,
+                'user_is_disabled'  => 0,//prevent the login for disabled users
             ]);
 
             //if (password_verify($password, $User->user_password)) {

@@ -7,7 +7,6 @@ use Azonmedia\Exceptions\InvalidArgumentException;
 use Guzaba2\Authorization\Role;
 use Guzaba2\Base\Exceptions\RunTimeException;
 use Guzaba2\Orm\ActiveRecord;
-use Guzaba2\Orm\Exceptions\InstanceValidationFailedFailedException;
 use Guzaba2\Orm\Exceptions\MultipleValidationFailedException;
 use Guzaba2\Orm\Exceptions\ValidationFailedException;
 use Guzaba2\Orm\Interfaces\ValidationFailedExceptionInterface;
@@ -26,6 +25,7 @@ use const GuzabaPlatform\Platform\Authentication\Roles\ANONYMOUS;
  * @property string user_email
  * @property string user_password
  * @property int role_id
+ * @property bool user_is_disabled
  */
 class User extends \Guzaba2\Authorization\User
 {
@@ -194,5 +194,49 @@ class User extends \Guzaba2\Authorization\User
             $AnonymousRole = new Role(ANONYMOUS);
             $Role->grant_role($AnonymousRole);
         }
+    }
+
+    /**
+     * @check_permissions
+     * @throws InvalidArgumentException
+     * @throws MultipleValidationFailedException
+     * @throws RunTimeException
+     * @throws \Guzaba2\Base\Exceptions\InvalidArgumentException
+     * @throws \ReflectionException
+     */
+    public function enable(): void
+    {
+        $Transaction = ActiveRecord::new_transaction($TR);
+        $Transaction->begin();
+
+        $this->check_permission('enable');
+        $this->user_is_disabled = FALSE;
+        $this->write();
+
+        $this->add_log_entry('enable',sprintf(t::_('The user %1s was enabled.'), $this->user_name));
+
+        $Transaction->commit();
+    }
+
+    /**
+     * @check_permissions
+     * @throws InvalidArgumentException
+     * @throws MultipleValidationFailedException
+     * @throws RunTimeException
+     * @throws \Guzaba2\Base\Exceptions\InvalidArgumentException
+     * @throws \ReflectionException
+     */
+    public function disable(): void
+    {
+        $Transaction = ActiveRecord::new_transaction($TR);
+        $Transaction->begin();
+
+        $this->check_permission('disable');
+        $this->user_is_disabled = TRUE;
+        $this->write();
+
+        $this->add_log_entry('enable',sprintf(t::_('The user %1s was enabled.'), $this->user_name));
+
+        $Transaction->commit();
     }
 }
