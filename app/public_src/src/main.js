@@ -32,6 +32,22 @@ if (token) {
 
 Vue.config.productionTip = false
 
+Vue.filter('capitalize', function (value) {
+    if (!value) {
+        return ''
+    }
+    value = value.toString()
+    return value.charAt(0).toUpperCase() + value.slice(1)
+})
+
+Vue.filter('humanize', function (value) {
+    let fragments = value.split('_');
+    for (let i=0; i<fragments.length; i++) {
+        fragments[i] = fragments[i].charAt(0).toUpperCase() + fragments[i].slice(1);
+    }
+    return fragments.join(' ');
+})
+
 
 const vue = new Vue({
     router,
