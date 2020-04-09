@@ -10,7 +10,8 @@
 
         <tree-menu
             v-if="(showChildren && isObject(nodes))"
-            v-for="(node, index) in nodes" 
+            v-for="(node, index) in nodes"
+            v-bind:key="index"
             :nodes="node"
             :label="index"
             :depth="depth + 1"
@@ -24,7 +25,9 @@
 export default { 
     props: [ 'label', 'nodes', 'depth', 'contentToLoad' ],
     data() {
-        return { showChildren: false }
+        return {
+            showChildren: false
+        }
     },
     name: 'tree-menu',
     computed: {

@@ -33,10 +33,10 @@
 
             <b-nav-item>Example Link</b-nav-item>
             -->
-            <b-nav-item  v-for="link in links">
+            <b-nav-item  v-for="Link in links" v-bind:key="Link.route">
                 <b-card no-body class="mb-1">
                     <b-card-header v-b-toggle.crud-permissions class="p-1" role="tab">
-                        <router-link v-bind:to="link.route">{{link.name}}</router-link>
+                        <router-link v-bind:to="Link.route">{{Link.name}}</router-link>
                     </b-card-header>
                     <!--
                     <b-collapse id="crud-permissions" accordion="my-accordion" role="tabpanel">
