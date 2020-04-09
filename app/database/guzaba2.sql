@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysqlhost
--- Generation Time: Apr 07, 2020 at 07:05 PM
+-- Generation Time: Apr 09, 2020 at 03:54 PM
 -- Server version: 8.0.18
 -- PHP Version: 7.2.23
 
@@ -138,7 +138,8 @@ INSERT INTO `guzaba_classes` (`class_id`, `class_uuid_binary`, `class_name`, `cl
 (46, 0x4d769adcb7204b258c8c5b78bac1a149, 'GuzabaPlatform\\Tests\\Controllers\\TestTransactionDestruct', 'controllers'),
 (47, 0x8d967a70a8bc44b69aaa143fa074cf8e, 'GuzabaPlatform\\Tests\\Controllers\\TestCompositeTransactionDestruct', 'controllers'),
 (48, 0xab40224abf86443496aa8732dd9a770c, 'GuzabaPlatform\\Tests\\Controllers\\TestTransactionRollbackReason', 'controllers'),
-(49, 0x3b3d16e2b4c946ce897f37043a5a57da, 'GuzabaPlatform\\Users\\Controllers\\Users', 'controllers');
+(49, 0x3b3d16e2b4c946ce897f37043a5a57da, 'GuzabaPlatform\\Users\\Controllers\\Users', 'controllers'),
+(50, 0x5e83e54f67a1464390f725e863c312f4, 'GuzabaPlatform\\Users\\Controllers\\User', 'controllers');
 
 -- --------------------------------------------------------
 
@@ -197,7 +198,12 @@ CREATE TABLE `guzaba_files` (
 
 CREATE TABLE `guzaba_logs` (
   `log_id` bigint(20) UNSIGNED NOT NULL,
-  `log_content` varchar(2000) NOT NULL
+  `log_class_id` bigint(20) UNSIGNED NOT NULL,
+  `log_object_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `log_action` varchar(200) NOT NULL COMMENT 'This would correspond to the method name.',
+  `log_content` varchar(2000) NOT NULL,
+  `log_create_microtime` bigint(20) UNSIGNED NOT NULL,
+  `role_id` bigint(20) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
@@ -345,6 +351,7 @@ INSERT INTO `guzaba_object_meta` (`meta_object_uuid_binary`, `meta_class_id`, `m
 (0x3f03ea7fc0f84c8187888910a5b506c1, 9, 131, 1579879028352700, 1579879028352700, 0, 0, 0, 0),
 (0x3fd95fe88ddb4769b5b49cb13ad9bbd6, 9, 49, 1575386380817900, 1575386380817900, 0, 0, 0, 0),
 (0x46e4a7196cf44dacb6db1d50a3c83a1f, 4, 18, 1575021806916100, 1575021806916100, 0, 0, 0, 0),
+(0x471ed6f56f9c4d18a2ed9a7cd21a1ffd, 10, 6, 1586354442145500, 1586354442145500, 0, 0, 1, 1),
 (0x48fc4d7455e9422c802824f4441a87c2, 9, 125, 1579878829187200, 1579878829187200, 0, 0, 0, 0),
 (0x4b8d2ec70e604becb0976acb5c72fa8f, 4, 34, 1585684343667200, 1585684343667200, 0, 0, 1, 1),
 (0x4d84856486a64d4da1ab9e93e9587ff0, 9, 89, 1576165911567700, 1576165911567700, 0, 0, 0, 0),
@@ -420,6 +427,7 @@ INSERT INTO `guzaba_object_meta` (`meta_object_uuid_binary`, `meta_class_id`, `m
 (0xba571c13af3142b4ac148d1af61b8456, 9, 165, 1580224279845700, 1580224279845700, 0, 0, 0, 0),
 (0xbc218dcbcdf7420ba21f81ce6604b553, 32, 33, 1583487885696600, 1583487885696600, 0, 0, 0, 0),
 (0xbec2ed5ec2654fe1bf4227c4d4f2cea1, 9, 83, 1576161283248700, 1576161283248700, 0, 0, 0, 0),
+(0xbf44108cd26e410d84659154e1069432, 4, 40, 1586328607677400, 1586328607677400, 0, 0, 1, 1),
 (0xbfde8fb76f404d5883e2a5b49eca94b8, 9, 119, 1579878496763800, 1579878496763800, 0, 0, 0, 0),
 (0xc33b1566f67540449fadec684a447ff0, 4, 19, 1575021969596600, 1575021969596600, 0, 0, 0, 0),
 (0xc37afe2aeda44bfba47bd45114e99380, 4, 15, 1575021274059000, 1575021274059000, 0, 0, 0, 0),
@@ -439,6 +447,7 @@ INSERT INTO `guzaba_object_meta` (`meta_object_uuid_binary`, `meta_class_id`, `m
 (0xd8e38faa060946339597b7d82776cd64, 9, 164, 1580224250931700, 1580224250931700, 0, 0, 0, 0),
 (0xd9c9bf1735e645659fa8d864dfe24b09, 9, 174, 1580290009005900, 1580290009005900, 0, 0, 0, 0),
 (0xdb62671c4d8c46949c337e55f9869074, 4, 28, 1575557502903100, 1575557502903100, 0, 0, 0, 0),
+(0xdca7804446594cbeba74e46292be7696, 4, 41, 1586328628586200, 1586328628586200, 0, 0, 1, 1),
 (0xdd56e008b74744248258e1c243d8a1f1, 9, 7, 1574941668477800, 1574941668477800, 0, 0, 0, 0),
 (0xdd87b8547d5741d3b6493593feda959e, 4, 14, 1575020615018700, 1575020615018700, 0, 0, 0, 0),
 (0xde6743f5001b4d8ba206576733d2fb1d, 12, 99, 1575639047385500, 1575879500000000, 0, 0, 0, 0),
@@ -900,8 +909,10 @@ INSERT INTO `guzaba_roles` (`role_id`, `role_name`, `role_is_user`) VALUES
 (27, 'dubai2', 1),
 (28, 'mario', 1),
 (29, 'ttt', 1),
-(34, 'vesko', 1),
-(39, 'vesko', 1);
+(34, 'vesko2', 1),
+(39, 'vesko', 1),
+(40, 'ADMINISTRATOR', 0),
+(41, 'CLIENT', 0);
 
 -- --------------------------------------------------------
 
@@ -920,7 +931,8 @@ CREATE TABLE `guzaba_roles_hierarchy` (
 --
 
 INSERT INTO `guzaba_roles_hierarchy` (`role_hierarchy_id`, `role_id`, `inherited_role_id`) VALUES
-(5, 39, 1);
+(5, 39, 1),
+(6, 39, 41);
 
 -- --------------------------------------------------------
 
@@ -1024,23 +1036,24 @@ CREATE TABLE `guzaba_users` (
   `user_name` varchar(50) NOT NULL,
   `user_email` varchar(50) NOT NULL,
   `user_password` varchar(64) NOT NULL,
-  `role_id` bigint(20) NOT NULL
+  `role_id` bigint(20) NOT NULL,
+  `user_is_disabled` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Dumping data for table `guzaba_users`
 --
 
-INSERT INTO `guzaba_users` (`user_id`, `user_name`, `user_email`, `user_password`, `role_id`) VALUES
-(1, 'anonymous', 'anonymous@anonymous.none', '', 1),
-(2, 'test', 'test@test.test', '$2y$12$janKBnkOSU.SnlOZmBeAmO.pnpCITf3QEl7Shu3LyCab.eVpSrGSu', 1),
-(6, 'ivo', 'ivo@azonmedia.com', '$2y$12$RLZtX4uufk7zTnAnEN7LlO4YKIx2khoYEl/2OhSO/Dd.zpA3Dy3xy', 1),
-(26, 'gsd', 'ivo@azonmedia.com44', '$2y$12$nn9r2oI2Yv0LDdI1igOxAOde5KRR2yU0RAYQGClLhGRSVTgCm8dH2', 22),
-(27, 'dubai2', 'dubai2@azonmedia.com', '$2y$12$VYaCGsVo9mEfEmt/719gTurhQrPv.uiYT5rn/5S9vKtowrpoMeQd6', 27),
-(28, 'mario', 'mario@azonmedia.com', '$2y$12$R1/EuwjOYKkDuigVRn1cfuy6bGLKgj5fW5DfIS.v7EzcBBIuutLCG', 28),
-(29, 'ttt', 'ttt@ttt.ttt', '$2y$12$UEFbtlxNey/aqNSLOcrrGesRft8IHSLJRX74bGzQX3dqZxTK6CBjS', 29),
-(30, 'vesko2', 'vesko2@azonmedia.com', '', 34),
-(31, 'vesko', 'vesko@azonmedia.com', '$2y$12$C9iwpCpwv/UPgMtvKpgVi.4x7ioKZxMY9eJ5u2q22LHMsfdjniZGC', 39);
+INSERT INTO `guzaba_users` (`user_id`, `user_name`, `user_email`, `user_password`, `role_id`, `user_is_disabled`) VALUES
+(1, 'anonymous', 'anonymous@anonymous.none', '', 1, 0),
+(2, 'test', 'test@test.test', '$2y$12$janKBnkOSU.SnlOZmBeAmO.pnpCITf3QEl7Shu3LyCab.eVpSrGSu', 1, 0),
+(6, 'ivo', 'ivo@azonmedia.com', '$2y$12$RLZtX4uufk7zTnAnEN7LlO4YKIx2khoYEl/2OhSO/Dd.zpA3Dy3xy', 1, 0),
+(26, 'gsd', 'ivo@azonmedia.com44', '$2y$12$nn9r2oI2Yv0LDdI1igOxAOde5KRR2yU0RAYQGClLhGRSVTgCm8dH2', 22, 0),
+(27, 'dubai2', 'dubai2@azonmedia.com', '$2y$12$VYaCGsVo9mEfEmt/719gTurhQrPv.uiYT5rn/5S9vKtowrpoMeQd6', 27, 0),
+(28, 'mario', 'mario@azonmedia.com', '$2y$12$R1/EuwjOYKkDuigVRn1cfuy6bGLKgj5fW5DfIS.v7EzcBBIuutLCG', 28, 0),
+(29, 'ttt', 'ttt@ttt.ttt', '$2y$12$UEFbtlxNey/aqNSLOcrrGesRft8IHSLJRX74bGzQX3dqZxTK6CBjS', 29, 0),
+(30, 'vesko2', 'vesko2@azonmedia.com', '', 34, 0),
+(31, 'vesko', 'vesko@azonmedia.com', '$2y$12$C9iwpCpwv/UPgMtvKpgVi.4x7ioKZxMY9eJ5u2q22LHMsfdjniZGC', 39, 0);
 
 -- --------------------------------------------------------
 
@@ -1173,6 +1186,14 @@ ALTER TABLE `guzaba_files`
   ADD KEY `parent_file_id_FK` (`parent_file_id`);
 
 --
+-- Indexes for table `guzaba_logs`
+--
+ALTER TABLE `guzaba_logs`
+  ADD PRIMARY KEY (`log_id`),
+  ADD KEY `logs_class_id_FK` (`log_class_id`),
+  ADD KEY `logs_role_id_FK` (`role_id`);
+
+--
 -- Indexes for table `guzaba_log_entries`
 --
 ALTER TABLE `guzaba_log_entries`
@@ -1258,6 +1279,7 @@ ALTER TABLE `guzaba_roles`
 --
 ALTER TABLE `guzaba_roles_hierarchy`
   ADD PRIMARY KEY (`role_hierarchy_id`),
+  ADD UNIQUE KEY `unique_role_relation` (`role_id`,`inherited_role_id`),
   ADD KEY `inherited_role_id_FK` (`inherited_role_id`);
 
 --
@@ -1314,7 +1336,7 @@ ALTER TABLE `guzaba_categories`
 -- AUTO_INCREMENT for table `guzaba_classes`
 --
 ALTER TABLE `guzaba_classes`
-  MODIFY `class_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
+  MODIFY `class_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
 
 --
 -- AUTO_INCREMENT for table `guzaba_components`
@@ -1333,6 +1355,12 @@ ALTER TABLE `guzaba_controllers`
 --
 ALTER TABLE `guzaba_files`
   MODIFY `file_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `guzaba_logs`
+--
+ALTER TABLE `guzaba_logs`
+  MODIFY `log_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `guzaba_log_entries`
@@ -1380,13 +1408,13 @@ ALTER TABLE `guzaba_rbac_roles_permissions`
 -- AUTO_INCREMENT for table `guzaba_roles`
 --
 ALTER TABLE `guzaba_roles`
-  MODIFY `role_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `role_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- AUTO_INCREMENT for table `guzaba_roles_hierarchy`
 --
 ALTER TABLE `guzaba_roles_hierarchy`
-  MODIFY `role_hierarchy_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `role_hierarchy_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `guzaba_tests`
@@ -1435,6 +1463,13 @@ ALTER TABLE `guzaba_files`
   ADD CONSTRAINT `parent_file_id_FK` FOREIGN KEY (`parent_file_id`) REFERENCES `guzaba_files` (`file_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 --
+-- Constraints for table `guzaba_logs`
+--
+ALTER TABLE `guzaba_logs`
+  ADD CONSTRAINT `logs_class_id_FK` FOREIGN KEY (`log_class_id`) REFERENCES `guzaba_classes` (`class_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `logs_role_id_FK` FOREIGN KEY (`role_id`) REFERENCES `guzaba_roles` (`role_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+--
 -- Constraints for table `guzaba_object_aliases`
 --
 ALTER TABLE `guzaba_object_aliases`
@@ -1450,7 +1485,8 @@ ALTER TABLE `guzaba_object_meta`
 -- Constraints for table `guzaba_roles_hierarchy`
 --
 ALTER TABLE `guzaba_roles_hierarchy`
-  ADD CONSTRAINT `inherited_role_id_FK` FOREIGN KEY (`inherited_role_id`) REFERENCES `guzaba_roles` (`role_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+  ADD CONSTRAINT `inherited_role_id_FK` FOREIGN KEY (`inherited_role_id`) REFERENCES `guzaba_roles` (`role_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `role_id_FK` FOREIGN KEY (`role_id`) REFERENCES `guzaba_roles` (`role_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 --
 -- Constraints for table `guzaba_tokens`
