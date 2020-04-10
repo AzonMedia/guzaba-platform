@@ -92,11 +92,12 @@ class Auth extends BaseController
         try {
             $User = new User([
                 'user_name'         => $username,
-                'user_is_disabled'  => 0,//prevent the login for disabled users
+                //'user_is_disabled'  => 0,//prevent the login for disabled users
             ]);
 
-            //if (password_verify($password, $User->user_password)) {
-            if ($User->verify_password($password)) {
+            if ($User->user_is_disabled) {
+                $struct['message'] = sprintf(t::_('The user %1s is disabled.'), $User->user_name);
+            } elseif ($User->verify_password($password)) {
 
                 $Token = new Token();
                 $Token->user_uuid = $User->get_uuid();

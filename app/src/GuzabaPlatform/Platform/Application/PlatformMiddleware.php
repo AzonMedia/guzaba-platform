@@ -4,6 +4,9 @@ declare(strict_types=1);
 namespace GuzabaPlatform\Platform\Application;
 
 // use Guzaba2\Application\Application;
+use Guzaba2\Http\Body\Structured;
+use Guzaba2\Kernel\Kernel;
+use Guzaba2\Translator\Translator as t;
 use GuzabaPlatform\Platform\Authentication\Models\User;
 use Guzaba2\Base\Base;
 use Guzaba2\Http\Body\Stream;
@@ -24,6 +27,7 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 // use GuzabaPlatform\Platform\Authentication\Models\Token as Token;
 use GuzabaPlatform\Platform\Authentication\Models\JwtToken;
+use Psr\Log\LogLevel;
 
 
 class PlatformMiddleware extends Base
@@ -98,7 +102,16 @@ class PlatformMiddleware extends Base
 
         if (isset($current_user_uuid)) {
             $User = new User($current_user_uuid, TRUE, TRUE);
-            self::get_service('CurrentUser')->set($User);
+            if (!$User->user_is_disabled) {
+                //if the user is not disabled set the current user
+                self::get_service('CurrentUser')->set($User);
+            } else {
+                //otherwise just emit a message to the console and return forbidden request
+                Kernel::log(sprintf(t::_('Request to %1s was performed by disabled user %2s (UUID %3s). Returning forbidden content...'), $Request->getUri()->getPath(), $User->user_name, $User->get_uuid() ), LogLevel::NOTICE);
+                $structure['message'] = sprintf(t::_('The user %1s (UUID %2s) is disabled.'), $User->user_name, $User->get_uuid() );
+                $Response = new Response(StatusCode::HTTP_FORBIDDEN, [], new Structured($structure));
+                return $Response;
+            }
         }
 
         $Response = $Handler->handle($Request);
