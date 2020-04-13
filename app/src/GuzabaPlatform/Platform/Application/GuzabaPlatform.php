@@ -33,6 +33,8 @@ use Psr\Log\LogLevel;
 /**
  * Class Azonmedia
  * @package Azonmedia\Azonmedia\Application
+ *
+ * Initializes the application, sets the middlewares and server handlers
  */
 class GuzabaPlatform extends Application
 {
@@ -314,13 +316,18 @@ BANNER;
         //$RequestHandler = new \Guzaba2\Swoole\Handlers\Http\Request($HttpServer, $Middlewares, $DefaultResponse, $ServerErrorReponse);
         $RequestHandler = new \Guzaba2\Swoole\Handlers\Http\Request($HttpServer, $Middlewares);
 
-        $ConnectHandler = new WorkerConnect($HttpServer, new IpFilter());
+        //$ConnectHandler = new WorkerConnect($HttpServer, new IpFilter());
         //$WorkerHandler = new WorkerHandler($HttpServer);
         $WorkerHandler = new WorkerStart($HttpServer, self::CONFIG_RUNTIME['swoole']['enable_debug_ports'], self::CONFIG_RUNTIME['swoole']['base_debug_port']);
+
+        $PipeMessageHandler = new \Guzaba2\Swoole\Handlers\PipeMessage($HttpServer, $Middlewares);
 
         //$HttpServer->on('Connect', $ConnectHandler);
         $HttpServer->on('WorkerStart', $WorkerHandler);
         $HttpServer->on('Request', $RequestHandler);
+        $HttpServer->on('PipeMessage', $PipeMessageHandler);
+
+        Kernel::get_di_container()->add('Server', $HttpServer);
 
         Kernel::printk(self::PLATFORM_BANNER);
         Kernel::printk(PHP_EOL);
@@ -359,6 +366,7 @@ BANNER;
         //close any single connections that may have been opened during this phase
         self::get_service('ConnectionFactory')->close_all_connections();
         //after the server is started new connections (Pools) will be created for each worker
+
 
 
 

@@ -20,6 +20,8 @@ use Guzaba2\Orm\OrmTransactionalResource;
 use Guzaba2\Orm\ScopeManager;
 use Guzaba2\Orm\Store\Memory;
 use Guzaba2\Orm\Transaction;
+use Guzaba2\Swoole\IpcRequest;
+use Guzaba2\Swoole\Server;
 use Guzaba2\Transaction\TransactionManager;
 use GuzabaPlatform\Platform\Application\BaseController;
 use GuzabaPlatform\Platform\Application\GuzabaPlatform;
@@ -64,10 +66,20 @@ class Test extends BaseController
             '/test-orm-transactions'    => [
                 Method::HTTP_PUT                        => [self::class, 'test_orm_transactions'],
             ],
+            '/request-test'     => [
+                Method::HTTP_GET                        => [self::class, 'request_test'],
+            ],
+            '/ipc-test-init'    => [
+                Method::HTTP_GET                        => [self::class, 'ipc_test_init'],
+            ],
+            '/ipc-test-responder'    => [
+                Method::HTTP_GET                        => [self::class, 'ipc_test_responder'],
+            ]
         ],
         'services' => [
             'ConnectionFactory',
             'OrmStore',
+            'Server',
             //'TransactionManager',
         ]
 
@@ -89,6 +101,45 @@ class Test extends BaseController
     public function _init(?string $language = NULL)
     {
         t::set_target_language($language, $this->get_request());
+    }
+
+    /**
+     * @return ResponseInterface
+     * @throws InvalidArgumentException
+     * @throws RunTimeException
+     * @throws \Guzaba2\Base\Exceptions\InvalidArgumentException
+     * @throws \Guzaba2\Coroutine\Exceptions\ContextDestroyedException
+     * @throws \ReflectionException
+     */
+    public function ipc_test_init() : ResponseInterface
+    {
+
+        /** @var Server $Server */
+        $Server = self::get_service('Server');
+
+        $IpcRequest = new IpcRequest(Method::HTTP_GET, '/api/ipc-test-responder');
+        $start = microtime(TRUE);
+        $IpcResponse = $Server->send_ipc_request($IpcRequest, 4);//4 is the worker ID
+        $end = microtime(TRUE);
+        $Body = $IpcResponse->getBody();
+        $ipc_response_struct = $Body->getStructure();
+        return self::get_structured_ok_response(['message' => 'ipc init', 'ipc_response' => $ipc_response_struct['ipc_message'], 'time' => $end - $start ]);
+    }
+
+    public function ipc_test_responder(): ResponseInterface
+    {
+        /** @var Server $Server */
+        $Server = self::get_service('Server');
+        $worker_id = $Server->get_worker_id();
+        $Response = self::get_structured_ok_response(['message' => 'ok', 'ipc_message' => rand(1,1000).' some message here from worker '.$worker_id]);
+        return $Response;
+    }
+
+    public function request_test(): ResponseInterface
+    {
+        $Request = $this->get_request();
+        print_r($Request->getServerParams());
+        return self::get_structured_ok_response(['message' => 'ok']);
     }
 
     public function test_orm_transactions() : ResponseInterface
