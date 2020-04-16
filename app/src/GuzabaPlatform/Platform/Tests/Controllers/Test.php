@@ -74,6 +74,15 @@ class Test extends BaseController
             ],
             '/ipc-test-responder'    => [
                 Method::HTTP_GET                        => [self::class, 'ipc_test_responder'],
+            ],
+            '/test-sub-co'          => [
+                Method::HTTP_GET                        => [self::class, 'sub_co'],
+            ],
+            '/test-with-arg/{arg}'  => [
+                Method::HTTP_GET                        => [self::class, 'test_with_arg'],
+            ],
+            '/post-test-with-arg'  => [
+                Method::HTTP_POST                       => [self::class, 'post_test_with_arg'],
             ]
         ],
         'services' => [
@@ -103,12 +112,41 @@ class Test extends BaseController
         t::set_target_language($language, $this->get_request());
     }
 
+    public function test_with_arg(string $arg): ResponseInterface
+    {
+        $struct = ['mesage' => 'provided argument is '.$arg];
+        return self::get_structured_ok_response($struct);
+    }
+
+    public function post_test_with_arg(string $arg): ResponseInterface
+    {
+        $struct = ['mesage' => 'posted argument is '.$arg];
+        return self::get_structured_ok_response($struct);
+    }
+
+    public function sub_co(): ResponseInterface
+    {
+        $f1 = function() {
+            Coroutine::sleep(1);
+            return 'response from f1';
+        };
+        $f2 = function() {
+            Coroutine::sleep(12);
+            return 'response from f2';
+        };
+        $responses = Coroutine::executeMulti($f1, $f2);
+        print_r($responses);
+        return self::get_structured_ok_response();
+    }
+
     /**
      * @return ResponseInterface
      * @throws InvalidArgumentException
      * @throws RunTimeException
      * @throws \Guzaba2\Base\Exceptions\InvalidArgumentException
+     * @throws \Guzaba2\Base\Exceptions\LogicException
      * @throws \Guzaba2\Coroutine\Exceptions\ContextDestroyedException
+     * @throws \Guzaba2\Kernel\Exceptions\ConfigurationException
      * @throws \ReflectionException
      */
     public function ipc_test_init() : ResponseInterface

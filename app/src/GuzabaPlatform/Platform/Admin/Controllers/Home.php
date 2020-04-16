@@ -21,6 +21,7 @@ class Home extends BaseController
 
     public function main() : ResponseInterface
     {
-
+        $struct = ['message' => 'This is the admin home screen.'];
+        return self::get_structured_ok_response($struct);
     }
 }

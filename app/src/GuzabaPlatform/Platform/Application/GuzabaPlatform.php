@@ -11,6 +11,8 @@ use Guzaba2\Orm\ClassDeclarationValidation;
 use Guzaba2\Routing\ControllerDefaultRoutingMap;
 use Guzaba2\Routing\ActiveRecordDefaultRoutingMap;
 use Guzaba2\Swoole\Debug\Debugger;
+use Guzaba2\Swoole\Handlers\PipeMessage;
+use Guzaba2\Swoole\Handlers\Task;
 use Guzaba2\Translator\Translator as t;
 use GuzabaPlatform\Platform\Application\PlatformMiddleware;
 use Guzaba2\Application\Application;
@@ -255,6 +257,7 @@ BANNER;
 
         //$Router = new Router(new RoutingMapArray($routing_map));
         $Router = new Router(new GeneratedRoutingMap($routing_map, $routing_meta_data, $this->generated_files_dir));
+        Kernel::get_di_container()->add('Router', $Router);//thew router may be needed outside the middlewares... for verifying routes for example
         $RoutingMiddleware = new RoutingMiddleware($HttpServer, $Router);
 
         $cors_headers = [
@@ -320,12 +323,16 @@ BANNER;
         //$WorkerHandler = new WorkerHandler($HttpServer);
         $WorkerHandler = new WorkerStart($HttpServer, self::CONFIG_RUNTIME['swoole']['enable_debug_ports'], self::CONFIG_RUNTIME['swoole']['base_debug_port']);
 
-        $PipeMessageHandler = new \Guzaba2\Swoole\Handlers\PipeMessage($HttpServer, $Middlewares);
+        $PipeMessageHandler = new PipeMessage($HttpServer, $Middlewares);
+
+        $TaskHandler = new Task($HttpServer, $Middlewares);
 
         //$HttpServer->on('Connect', $ConnectHandler);
         $HttpServer->on('WorkerStart', $WorkerHandler);
         $HttpServer->on('Request', $RequestHandler);
         $HttpServer->on('PipeMessage', $PipeMessageHandler);
+        $HttpServer->on('Task', $TaskHandler);
+
 
         Kernel::get_di_container()->add('Server', $HttpServer);
 

@@ -54,6 +54,7 @@ class User extends \Guzaba2\Authorization\User
      * @throws RunTimeException
      * @throws \Guzaba2\Base\Exceptions\InvalidArgumentException
      * @throws \ReflectionException
+     * @throws \Guzaba2\Coroutine\Exceptions\ContextDestroyedException
      */
     public function change_password(string $new_password, string $new_password_confirmation, string $old_password) : void
     {
@@ -196,47 +197,4 @@ class User extends \Guzaba2\Authorization\User
         }
     }
 
-    /**
-     * @check_permissions
-     * @throws InvalidArgumentException
-     * @throws MultipleValidationFailedException
-     * @throws RunTimeException
-     * @throws \Guzaba2\Base\Exceptions\InvalidArgumentException
-     * @throws \ReflectionException
-     */
-    public function enable(): void
-    {
-        $Transaction = ActiveRecord::new_transaction($TR);
-        $Transaction->begin();
-
-        $this->check_permission('enable');
-        $this->user_is_disabled = FALSE;
-        $this->write();
-
-        $this->add_log_entry('enable',sprintf(t::_('The user %1s was enabled.'), $this->user_name));
-
-        $Transaction->commit();
-    }
-
-    /**
-     * @check_permissions
-     * @throws InvalidArgumentException
-     * @throws MultipleValidationFailedException
-     * @throws RunTimeException
-     * @throws \Guzaba2\Base\Exceptions\InvalidArgumentException
-     * @throws \ReflectionException
-     */
-    public function disable(): void
-    {
-        $Transaction = ActiveRecord::new_transaction($TR);
-        $Transaction->begin();
-
-        $this->check_permission('disable');
-        $this->user_is_disabled = TRUE;
-        $this->write();
-
-        $this->add_log_entry('enable',sprintf(t::_('The user %1s was enabled.'), $this->user_name));
-
-        $Transaction->commit();
-    }
 }
