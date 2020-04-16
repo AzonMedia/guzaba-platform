@@ -1,21 +1,17 @@
 <?php
 
-//use Azonmedia\Apm\CoroutineProfiler;
 use Azonmedia\Apm\NullBackend;
 use Azonmedia\Apm\Profiler;
 use Azonmedia\Lock\Backends\SwooleTableBackend;
-use Azonmedia\Lock\CoroutineLockManager;
 use Azonmedia\Lock\LockManager;
 use Guzaba2\Authorization\Acl\AclAuthorizationProvider;
 use Guzaba2\Authorization\Acl\AclCreateAuthorizationProvider;
 use Guzaba2\Authorization\CurrentUser;
-//use Guzaba2\Authorization\User;
 use Guzaba2\Cache\ContextCache;
 use Guzaba2\Cache\MemoryCache;
 use Guzaba2\Cache\RedisCache;
 use Guzaba2\Cache\SwooleTableCache;
 use Guzaba2\Cache\SwooleTableIntCache;
-use Guzaba2\Kernel\Interfaces\ApmStructureInterface;
 use GuzabaPlatform\Platform\Application\Middlewares;
 use GuzabaPlatform\Platform\Authentication\Models\User;
 use Guzaba2\Database\ConnectionFactory;
@@ -48,10 +44,10 @@ return [
             'host'                      => '0.0.0.0',
             'port'                      => 8081,
             'server_options'            => [
-                'worker_num'                => NULL,//http workers NULL means Server will set this to swoole_cpu_num()*2
+                'worker_num'                => 8,//http workers NULL means Server will set this to swoole_cpu_num()*2
                 //Swoole\Coroutine::create(): Unable to use async-io in task processes, please set `task_enable_coroutine` to true.
                 //'task_worker_num'   => 8,//tasks workers
-                'task_worker_num'           => 0,//tasks workers,
+                'task_worker_num'           => 4,//tasks workers,
                 'document_root'             => NULL,//to be set dynamically
                 'enable_static_handler'     => TRUE,
                 // 'open_http2_protocol'       => FALSE,//depends on enable-http2 (and enable-ssl)
@@ -66,7 +62,16 @@ return [
         'log_level'     => LogLevel::DEBUG,
         'override_html_content_type' => 'json',//to facilitate debugging when opening the XHR in browser
     ],
-    Container::class => [
+    Pool::class         => [
+        'max_connections'   => 5,
+    ],
+    /**
+     * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+     * It is important to note that during Runtime new services can also be defined.
+     * @see GuzabaPlatform::execute()
+     * !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+     */
+    Container::class    => [
         'dependencies' => [
             'ConnectionFactory'             => [
                 'class'                         => ConnectionFactory::class,
@@ -146,10 +151,10 @@ return [
                     'FallbackStore'                 => NULL,
                 ],
             ],
-            'BlankOrmStore'                 => [
-                'class'                         => BlankOrmStore::class,
-                'args'                          => [],
-            ],
+//            'BlankOrmStore'                 => [
+//                'class'                         => BlankOrmStore::class,
+//                'args'                          => [],
+//            ],
             'QueryCache' => [
                 'class'                         => QueryCache::class,
                 'args'                          => [
@@ -261,6 +266,7 @@ return [
                 'args'                          => [],
                 'type'                          => 'coroutine',
             ],
+
         ],
     ],
 ];
