@@ -89,7 +89,7 @@ class GuzabaPlatform extends Application
         'date_time_formats'         => [
             'date_time_format'          => 'Y-m-d H:i:s',
             'time_format'               => 'H:i:s',
-            'minutes_format'            => 'H:i',
+            'hrs_mins_format'           => 'H:i',
             'date_format'               => 'Y-m-d',
         ],
 
@@ -123,6 +123,16 @@ BANNER;
 
     public const API_ROUTE_PREFIX = '/api';
 
+    /**
+     * GuzabaPlatform constructor.
+     * @param $app_directory
+     * @param $generated_files_dir
+     * @throws RunTimeException
+     * @throws \Azonmedia\Exceptions\InvalidArgumentException
+     * @throws \Azonmedia\Exceptions\RunTimeException
+     * @throws \Guzaba2\Coroutine\Exceptions\ContextDestroyedException
+     * @throws \ReflectionException
+     */
     public function __construct($app_directory, $generated_files_dir)
     {
 
@@ -167,9 +177,29 @@ BANNER;
         return $this->app_directory;
     }
 
-    public function get_date_time_formats() : array
+    public static function get_date_time_formats() : array
     {
         return self::CONFIG_RUNTIME['date_time_formats'];
+    }
+
+    public static function get_date_time_format(): string
+    {
+        return self::CONFIG_RUNTIME['date_time_formats']['date_time_format'];
+    }
+
+    public static function get_time_format(): string
+    {
+        return self::CONFIG_RUNTIME['date_time_formats']['time_format'];
+    }
+
+    public static function get_hrs_mins_format(): string
+    {
+        return self::CONFIG_RUNTIME['date_time_formats']['hrs_mins_format'];
+    }
+
+    public static function get_date_format(): string
+    {
+        return self::CONFIG_RUNTIME['date_time_formats']['date_format'];
     }
 
     public function execute() : int

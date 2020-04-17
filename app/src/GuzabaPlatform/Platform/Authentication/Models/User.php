@@ -11,6 +11,7 @@ use Guzaba2\Orm\Exceptions\MultipleValidationFailedException;
 use Guzaba2\Orm\Exceptions\ValidationFailedException;
 use Guzaba2\Orm\Interfaces\ValidationFailedExceptionInterface;
 use Guzaba2\Translator\Translator as t;
+use GuzabaPlatform\Platform\Application\GuzabaPlatform;
 use GuzabaPlatform\Platform\Authentication\Models\Token as Token;
 use const GuzabaPlatform\Platform\Authentication\Roles\ANONYMOUS;
 
@@ -183,6 +184,7 @@ class User extends \Guzaba2\Authorization\User
      * @throws \Guzaba2\Base\Exceptions\LogicException
      * @throws \Guzaba2\Kernel\Exceptions\ConfigurationException
      * @throws \ReflectionException
+     * @throws \Guzaba2\Coroutine\Exceptions\ContextDestroyedException
      */
     protected function _before_write(): void
     {
@@ -195,6 +197,26 @@ class User extends \Guzaba2\Authorization\User
             $AnonymousRole = new Role(ANONYMOUS);
             $Role->grant_role($AnonymousRole);
         }
+    }
+
+    public function get_date_time_format(): string
+    {
+        return GuzabaPlatform::get_date_time_format();
+    }
+
+    public function get_time_format(): string
+    {
+        return GuzabaPlatform::get_time_format();
+    }
+
+    public function get_hrs_mins_format(): string
+    {
+        return GuzabaPlatform::get_hrs_mins_format();
+    }
+
+    public function get_date_format(): string
+    {
+        return GuzabaPlatform::get_date_format();
     }
 
 }
