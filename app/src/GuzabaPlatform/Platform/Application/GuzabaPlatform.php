@@ -149,7 +149,6 @@ BANNER;
             }
         }
 
-
         $this->app_directory = $app_directory;
         $this->generated_files_dir = $generated_files_dir;
 

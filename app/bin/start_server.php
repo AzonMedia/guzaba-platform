@@ -8,6 +8,7 @@ use Azonmedia\Registry\RegistryBackendArray;
 use Azonmedia\Translator\Translator;
 use Guzaba2\Base\Exceptions\RunTimeException;
 use Guzaba2\Di\Container;
+use Guzaba2\Kernel\SourceStream;
 use GuzabaPlatform\Platform\Application\GuzabaPlatform;
 use Azonmedia\Registry\Registry;
 use Azonmedia\Registry\RegistryBackendCli;
@@ -137,7 +138,18 @@ use Psr\Log\LogLevel;
     $StdoutHandler->setFormatter($Formatter);
     $Logger->pushHandler($StdoutHandler);
 
-    Kernel::initialize($Registry, $Logger, $init_microtime);
+    $class_cache_enabled = FALSE;
+    if (isset($cli_options_mapping['GuzabaPlatform\\Platform\\Application\\GuzabaPlatform']['enable_class_cache'])) {
+        $class_cache_enabled = TRUE;
+    }
+    $options = [
+        SourceStream::class => [ //these will be passed to the SourceStream class
+            'class_cache_enabled'   => $class_cache_enabled,
+            'class_cache_dir'       => $app_directory.'/startup_generated/classes',
+            'registry_dir'          => $app_directory.'/registry',//if provided it will compare the mtime of all the registry files and the cached classes
+        ],
+    ];
+    Kernel::initialize($Registry, $Logger, $options);
 
     $DependencyContainer = new Container();
     Kernel::set_di_container($DependencyContainer);

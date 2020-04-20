@@ -13,6 +13,7 @@ use Guzaba2\Database\Interfaces\ConnectionInterface;
 use Guzaba2\Event\Event;
 use Guzaba2\Http\Method;
 use Guzaba2\Kernel\Kernel;
+use Guzaba2\Kernel\Runtime;
 use Guzaba2\Mvc\ActiveRecordController;
 use Guzaba2\Mvc\ExecutorMiddleware;
 use Guzaba2\Orm\ActiveRecord;
@@ -83,6 +84,9 @@ class Test extends BaseController
             ],
             '/post-test-with-arg'  => [
                 Method::HTTP_POST                       => [self::class, 'post_test_with_arg'],
+            ],
+            '/trigger-exception'    => [
+                Method::HTTP_GET                        => [self::class, 'trigger_exception'],
             ]
         ],
         'services' => [
@@ -110,6 +114,11 @@ class Test extends BaseController
     public function _init(?string $language = NULL)
     {
         t::set_target_language($language, $this->get_request());
+    }
+
+    public function trigger_exception(): ResponseInterface
+    {
+        print $aaa;
     }
 
     public function test_with_arg(string $arg): ResponseInterface
