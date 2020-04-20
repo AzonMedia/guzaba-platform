@@ -138,13 +138,13 @@ use Psr\Log\LogLevel;
     $StdoutHandler->setFormatter($Formatter);
     $Logger->pushHandler($StdoutHandler);
 
-    $class_cache_enabled = FALSE;
-    if (isset($cli_options_mapping['GuzabaPlatform\\Platform\\Application\\GuzabaPlatform']['enable_class_cache'])) {
-        $class_cache_enabled = TRUE;
+    $class_cache_disabled = FALSE;
+    if (isset($cli_options_mapping['GuzabaPlatform\\Platform\\Application\\GuzabaPlatform']['disable_class_cache'])) {
+        $class_cache_disabled = TRUE;
     }
     $options = [
         SourceStream::class => [ //these will be passed to the SourceStream class
-            'class_cache_enabled'   => $class_cache_enabled,
+            'class_cache_enabled'   => !$class_cache_disabled,
             'class_cache_dir'       => $app_directory.'/startup_generated/classes',
             'registry_dir'          => $app_directory.'/registry',//if provided it will compare the mtime of all the registry files and the cached classes
         ],

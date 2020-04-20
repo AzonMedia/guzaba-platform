@@ -131,13 +131,13 @@ abstract class CliOptions
             'class'             => GuzabaPlatform::class,
             'option'            => 'skip_translator',
         ],
-        'enable-class-cache'            => [
+        'disable-class-cache'            => [
             'shortcut'          => NULL,
             'input'             => InputOption::VALUE_NONE,
-            'description'       => 'Enables class cache. Checks the mtime of the registry files and the mtime of the original file and only if the mtime of the cached file if more recent the cached file is used.',
+            'description'       => 'Disables class cache. By default the cache is enabled and checks the mtime of the registry files and the mtime of the original file and only if the mtime of the cached file if more recent the cached file is used.',
             'default'           => NULL,
             'class'             => GuzabaPlatform::class,
-            'option'            => 'enable_class_cache',
+            'option'            => 'disable_class_cache',
         ],
     ];
 
