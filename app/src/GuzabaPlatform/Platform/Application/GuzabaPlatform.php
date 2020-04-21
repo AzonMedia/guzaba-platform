@@ -201,6 +201,14 @@ BANNER;
         return self::CONFIG_RUNTIME['date_time_formats']['date_format'];
     }
 
+    /**
+     * @return int
+     * @throws RunTimeException
+     * @throws \Azonmedia\Exceptions\InvalidArgumentException
+     * @throws \Guzaba2\Base\Exceptions\InvalidArgumentException
+     * @throws \Guzaba2\Coroutine\Exceptions\ContextDestroyedException
+     * @throws \ReflectionException
+     */
     public function execute() : int
     {
 
