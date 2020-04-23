@@ -141,6 +141,10 @@ abstract class CliOptions
         ],
     ];
 
+    /**
+     * @return array
+     * @throws \Exception
+     */
     public static function get_cli_options() : array
     {
         $command = new Start();
@@ -148,11 +152,11 @@ abstract class CliOptions
 
         $app = new Application();
         // register the command
-        $app -> add($command);
-        $app -> setAutoExit(FALSE);
+        $app->add($command);
+        $app->setAutoExit(FALSE);
         // call start command without typing it in the console
-        $app -> setDefaultCommand($command->getName());
-        $app -> run(NULL, $output);
+        $app->setDefaultCommand($command->getName());
+        $app->run(NULL, $output);
 
         $cli_options_mapping = $command->get_parsed_options();
 
@@ -160,7 +164,7 @@ abstract class CliOptions
         $cli_output_errors = $output->fetch();
         if ($cli_output_errors) {
             print $cli_output_errors;
-            exit(1);
+            exit(1);//if there is an unsupported argument provided exit and show the supported ones
         }
 
         return $cli_options_mapping;

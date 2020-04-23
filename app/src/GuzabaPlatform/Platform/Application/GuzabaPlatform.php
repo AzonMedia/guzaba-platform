@@ -208,6 +208,7 @@ BANNER;
      * @throws \Guzaba2\Base\Exceptions\InvalidArgumentException
      * @throws \Guzaba2\Coroutine\Exceptions\ContextDestroyedException
      * @throws \ReflectionException
+     * @throws \Guzaba2\Kernel\Exceptions\ConfigurationException
      */
     public function execute() : int
     {

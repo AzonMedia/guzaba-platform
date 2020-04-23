@@ -102,8 +102,25 @@ use Psr\Log\LogLevel;
 
     chdir($app_directory);
 
+    $class_cache_disabled = FALSE;
+    //log the last start line as it may contain registry overrides
+    //and as there are cached classes these will not be regenerated if the command line is different
+    $last_cli_path = $generated_files_dir.'/last_startup_args';
+    $last_command_args = [];
+    if (file_exists($last_cli_path)) {
+        $last_command_args = file_get_contents($last_cli_path);
+    }
+    $current_command_args = $_SERVER['argv'];
+    file_put_contents($last_cli_path, print_r($current_command_args, TRUE));//update the last command
+    if (print_r($current_command_args, TRUE) !== $last_command_args) { //$current_command_args is array , $last_command_args is string
+        $class_cache_disabled = TRUE;//ignore the existing class cache and regenerate - like a modification in the registry
+    }
+    if (isset($cli_options_mapping['GuzabaPlatform\\Platform\\Application\\GuzabaPlatform']['disable_class_cache'])) {
+        $class_cache_disabled = TRUE;
+    }
+
     //Registry Setup
-    //the priority from highest to lowest is: Cli, Env, Array
+    //the priority from highest to lowest is: Cli, Env, Array. Cli args override env vars, and env vars override php array config.
     //the fallback is registered first and then in increasing priority
 
     $RegistryBackendArray = new RegistryBackendArray(realpath($app_directory . '/registry'));
@@ -114,7 +131,6 @@ use Psr\Log\LogLevel;
 
     $RegistryBackendCli = new RegistryBackendCli($cli_options_mapping);
     $Registry->add_backend($RegistryBackendCli);
-
 
 
     $Logger = new Logger('main_log');
@@ -138,10 +154,7 @@ use Psr\Log\LogLevel;
     $StdoutHandler->setFormatter($Formatter);
     $Logger->pushHandler($StdoutHandler);
 
-    $class_cache_disabled = FALSE;
-    if (isset($cli_options_mapping['GuzabaPlatform\\Platform\\Application\\GuzabaPlatform']['disable_class_cache'])) {
-        $class_cache_disabled = TRUE;
-    }
+
     $options = [
         SourceStream::class => [ //these will be passed to the SourceStream class
             'class_cache_enabled'   => !$class_cache_disabled,
