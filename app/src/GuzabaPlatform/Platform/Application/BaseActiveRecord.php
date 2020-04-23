@@ -23,10 +23,10 @@ abstract class BaseActiveRecord extends ActiveRecord implements ModelInterface
     public static function get_object_name_property(): string
     {
         if (!isset(static::CONFIG_RUNTIME['object_name_property'])) {
-            throw new RunTimeException(sprintf(t::_('The class %1s is missing the CONFIG_DEFAULTS[\'object_name_property\'] configuation option.'), static::class));
+            throw new RunTimeException(sprintf(t::_('The class %1$s is missing the CONFIG_DEFAULTS[\'object_name_property\'] configuation option.'), static::class));
         }
         if (!in_array(static::CONFIG_RUNTIME['object_name_property'], static::get_property_names())) {
-            throw new RunTimeException(sprintf(t::_('The %1s::CONFIG_DEFAULTS[\'object_name_property\'] config options contains an invalid property name %2s. The class %3s does have such a property.'), static::class, static::CONFIG_RUNTIME['object_name_property'], static::class ));
+            throw new RunTimeException(sprintf(t::_('The %1$s::CONFIG_DEFAULTS[\'object_name_property\'] config options contains an invalid property name %2$s. The class %3$s does have such a property.'), static::class, static::CONFIG_RUNTIME['object_name_property'], static::class ));
         }
         return static::CONFIG_RUNTIME['object_name_property'];
     }

@@ -121,11 +121,11 @@ class User extends \Guzaba2\Authorization\User
         }
 
         if (strlen($password) < self::CONFIG_RUNTIME['password_settings']['min_length']) {
-            $validation_exceptions[] = new ValidationFailedException($this, 'password', sprintf(t::_('The password must be at least %1s characters.'), self::CONFIG_RUNTIME['password_settings']['min_length']));
+            $validation_exceptions[] = new ValidationFailedException($this, 'password', sprintf(t::_('The password must be at least %1$s characters.'), self::CONFIG_RUNTIME['password_settings']['min_length']));
         }
 
         if (strlen($password) > self::CONFIG_RUNTIME['password_settings']['max_length']) {
-            $validation_exceptions[] = new ValidationFailedException($this, 'password', sprintf(t::_('The password can be at most %1s characters.'), self::CONFIG_RUNTIME['password_settings']['max_length']));
+            $validation_exceptions[] = new ValidationFailedException($this, 'password', sprintf(t::_('The password can be at most %1$s characters.'), self::CONFIG_RUNTIME['password_settings']['max_length']));
         }
 
         if (self::CONFIG_RUNTIME['password_settings']['enforce_strong']) {

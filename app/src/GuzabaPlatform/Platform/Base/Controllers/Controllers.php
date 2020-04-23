@@ -72,11 +72,11 @@ class Controllers extends BaseController
             throw new InvalidArgumentException(sprintf(t::_('No $controller_name provided. A controller class name is expected.')));
         }
         if (!class_exists($controller_name)) {
-            //return self::get_structured_badrequest_response(['message' => sprintf(t::_('The provided controller class %1s does not exist.'), $controller_name)]);
-            throw new InvalidArgumentException(sprintf(t::_('The provided $controller_name class %1s does not exist.'), $controller_name));
+            //return self::get_structured_badrequest_response(['message' => sprintf(t::_('The provided controller class %1$s does not exist.'), $controller_name)]);
+            throw new InvalidArgumentException(sprintf(t::_('The provided $controller_name class %1$s does not exist.'), $controller_name));
         }
         if (!is_a($controller_name, ControllerInterface::class, TRUE)) {
-            throw new InvalidArgumentException(sprintf(t::_('The provided $controller_name class %1s does not implement %2s.'), $controller_name, ControllerInterface::class ));
+            throw new InvalidArgumentException(sprintf(t::_('The provided $controller_name class %1$s does not implement %2$s.'), $controller_name, ControllerInterface::class ));
         }
         if ($role_uuid) {
             $Role = new Role($role_uuid);

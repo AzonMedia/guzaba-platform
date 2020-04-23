@@ -96,7 +96,7 @@ class Auth extends BaseController
             ]);
 
             if ($User->user_is_disabled) {
-                $struct['message'] = sprintf(t::_('The user %1s is disabled.'), $User->user_name);
+                $struct['message'] = sprintf(t::_('The user %1$s is disabled.'), $User->user_name);
             } elseif ($User->verify_password($password)) {
 
                 $Token = new Token();
@@ -156,7 +156,7 @@ class Auth extends BaseController
             print $E->getTraceAsString();
         }
 
-        $struct['message'] = sprintf(t::_('The user %1s was created successfully.'), $User->user_name);
+        $struct['message'] = sprintf(t::_('The user %1$s was created successfully.'), $User->user_name);
         $struct['uuid'] = $User->get_uuid();
         return self::get_structured_ok_response($struct);
     }

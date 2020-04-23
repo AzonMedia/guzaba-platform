@@ -107,8 +107,8 @@ class PlatformMiddleware extends Base
                 self::get_service('CurrentUser')->set($User);
             } else {
                 //otherwise just emit a message to the console and return forbidden request
-                Kernel::log(sprintf(t::_('Request to %1s was performed by disabled user %2s (UUID %3s). Returning forbidden content...'), $Request->getUri()->getPath(), $User->user_name, $User->get_uuid() ), LogLevel::NOTICE);
-                $structure['message'] = sprintf(t::_('The user %1s (UUID %2s) is disabled.'), $User->user_name, $User->get_uuid() );
+                Kernel::log(sprintf(t::_('Request to %1$s was performed by disabled user %2$s (UUID %3$s). Returning forbidden content...'), $Request->getUri()->getPath(), $User->user_name, $User->get_uuid() ), LogLevel::NOTICE);
+                $structure['message'] = sprintf(t::_('The user %1$s (UUID %2$s) is disabled.'), $User->user_name, $User->get_uuid() );
                 $Response = new Response(StatusCode::HTTP_FORBIDDEN, [], new Structured($structure));
                 return $Response;
             }
