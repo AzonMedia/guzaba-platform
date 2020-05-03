@@ -54,14 +54,14 @@ SPIN_PID=$!
 trap cleanup `seq 0 15`
 
 if [ ! -z "$port" ] && [ ! -z "$pass" ] && [ ! -z "$database" ]; then
-    nc -zv localhost 3306 &> /dev/null
-    if [ $? -ne 0 ]; then
-        printf "${red_color}[ERROR] Could not import database %s:%s not responding.${no_color}\n" "$mysql_host" "$port"
+    if [ ! -x "$(command -v "$mysql_command")" ]; then
+        printf "${red_color}[ERROR] Could not import database - \"%s\" command is not installed.${no_color}\n" "$mysql_command"
         exit $ENO_GENERAL
     fi
 
-    if [ ! -x "$(command -v "$mysql_command")" ]; then
-        printf "${red_color}[ERROR] Could not import database - \"%s\" command is not installed.${no_color}\n" "$mysql_command"
+    result="$($mysql_command --defaults-file="$mysql_cnf" --defaults-group-suffix=client --protocol tcp -e ";" 2>&1)"
+    if [ $? -ne 0 ]; then
+        printf "${red_color}[ERROR] Could not connect to database with provided credentials.${no_color}\n%s\n" "$database" "$result"
         exit $ENO_GENERAL
     fi
 
