@@ -1,0 +1,4 @@
+script=$0
+path=$(dirname "$0")
+export GUZABA_PLATFORM_HOST_DIR=`pwd`/../../
+docker-compose -f $path/../dockerfiles/GuzabaPlatformDev/docker-compose.yml stop
