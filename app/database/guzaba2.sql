@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysqlhost
--- Generation Time: Apr 09, 2020 at 03:54 PM
+-- Generation Time: May 07, 2020 at 10:02 AM
 -- Server version: 8.0.18
 -- PHP Version: 7.2.23
 
@@ -139,7 +139,10 @@ INSERT INTO `guzaba_classes` (`class_id`, `class_uuid_binary`, `class_name`, `cl
 (47, 0x8d967a70a8bc44b69aaa143fa074cf8e, 'GuzabaPlatform\\Tests\\Controllers\\TestCompositeTransactionDestruct', 'controllers'),
 (48, 0xab40224abf86443496aa8732dd9a770c, 'GuzabaPlatform\\Tests\\Controllers\\TestTransactionRollbackReason', 'controllers'),
 (49, 0x3b3d16e2b4c946ce897f37043a5a57da, 'GuzabaPlatform\\Users\\Controllers\\Users', 'controllers'),
-(50, 0x5e83e54f67a1464390f725e863c312f4, 'GuzabaPlatform\\Users\\Controllers\\User', 'controllers');
+(50, 0x5e83e54f67a1464390f725e863c312f4, 'GuzabaPlatform\\Users\\Controllers\\User', 'controllers'),
+(51, 0x105df137d0cc41b6ad9200b175ac1e2f, 'GuzabaPlatform\\Tests\\Controllers\\TestIpcRequests', 'controllers'),
+(52, 0x3a39cf85478d44a7b2d03f48c2d6c7e3, 'GuzabaPlatform\\AppServer\\Monitor\\Controllers\\Monitor', 'controllers'),
+(53, 0xf757405cf2684e858a69ba512f82ad28, 'GuzabaPlatform\\AppServer\\Monitor\\Controllers\\Responder', 'controllers');
 
 -- --------------------------------------------------------
 
@@ -203,7 +206,9 @@ CREATE TABLE `guzaba_logs` (
   `log_action` varchar(200) NOT NULL COMMENT 'This would correspond to the method name.',
   `log_content` varchar(2000) NOT NULL,
   `log_create_microtime` bigint(20) UNSIGNED NOT NULL,
-  `role_id` bigint(20) UNSIGNED NOT NULL
+  `role_id` bigint(20) UNSIGNED NOT NULL,
+  `log_ip` varchar(15) NOT NULL,
+  `log_iplong` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
@@ -1048,7 +1053,7 @@ INSERT INTO `guzaba_users` (`user_id`, `user_name`, `user_email`, `user_password
 (1, 'anonymous', 'anonymous@anonymous.none', '', 1, 0),
 (2, 'test', 'test@test.test', '$2y$12$janKBnkOSU.SnlOZmBeAmO.pnpCITf3QEl7Shu3LyCab.eVpSrGSu', 1, 0),
 (6, 'ivo', 'ivo@azonmedia.com', '$2y$12$RLZtX4uufk7zTnAnEN7LlO4YKIx2khoYEl/2OhSO/Dd.zpA3Dy3xy', 1, 0),
-(26, 'gsd', 'ivo@azonmedia.com44', '$2y$12$nn9r2oI2Yv0LDdI1igOxAOde5KRR2yU0RAYQGClLhGRSVTgCm8dH2', 22, 0),
+(26, 'gsd', 'ivo@azonmedia.com44', '$2y$12$nn9r2oI2Yv0LDdI1igOxAOde5KRR2yU0RAYQGClLhGRSVTgCm8dH2', 22, 1),
 (27, 'dubai2', 'dubai2@azonmedia.com', '$2y$12$VYaCGsVo9mEfEmt/719gTurhQrPv.uiYT5rn/5S9vKtowrpoMeQd6', 27, 0),
 (28, 'mario', 'mario@azonmedia.com', '$2y$12$R1/EuwjOYKkDuigVRn1cfuy6bGLKgj5fW5DfIS.v7EzcBBIuutLCG', 28, 0),
 (29, 'ttt', 'ttt@ttt.ttt', '$2y$12$UEFbtlxNey/aqNSLOcrrGesRft8IHSLJRX74bGzQX3dqZxTK6CBjS', 29, 0),
@@ -1336,7 +1341,7 @@ ALTER TABLE `guzaba_categories`
 -- AUTO_INCREMENT for table `guzaba_classes`
 --
 ALTER TABLE `guzaba_classes`
-  MODIFY `class_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `class_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
 
 --
 -- AUTO_INCREMENT for table `guzaba_components`

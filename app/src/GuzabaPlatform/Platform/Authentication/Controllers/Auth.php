@@ -56,13 +56,13 @@ class Auth extends BaseController
 //        ];
 
 //a test hook
-        $struct['hooks']['_after_main'][] = [
-            //'name'  => 'text',
-            //'name' => '@GuzabaPlatform.Platform/views/hooks/templates/text.vue',
-            'name' => '@GuzabaPlatform.Platform/views/hooks/templates/TextHook.vue',
-            //'name' => '/home/local/PROJECTS/guzaba-platform-skeleton/guzaba-platform-skeleton/vendor/guzaba-platform/guzaba-platform/app/public_src/src/views/hooks/templates/text.vue',
-            'data' => ['text' => t::_('Your password must be 8-20 characters long, contain letters and numbers, and must not contain spaces, special characters, or emoji.')],
-        ];
+//        $struct['hooks']['_after_main'][] = [
+//            //'name'  => 'text',
+//            //'name' => '@GuzabaPlatform.Platform/views/hooks/templates/text.vue',
+//            'name' => '@GuzabaPlatform.Platform/views/hooks/templates/TextHook.vue',
+//            //'name' => '/home/local/PROJECTS/guzaba-platform-skeleton/guzaba-platform-skeleton/vendor/guzaba-platform/guzaba-platform/app/public_src/src/views/hooks/templates/text.vue',
+//            'data' => ['text' => t::_('Your password must be 8-20 characters long, contain letters and numbers, and must not contain spaces, special characters, or emoji.')],
+//        ];
 
         //$struct['password_text'] = t::_('Your password must be 8-20 characters long, contain letters and numbers, and must not contain spaces, special characters, or emoji.');
 
@@ -141,6 +141,7 @@ class Auth extends BaseController
      * @throws \Guzaba2\Kernel\Exceptions\ConfigurationException
      * @throws \Guzaba2\Orm\Exceptions\MultipleValidationFailedException
      * @throws \ReflectionException
+     * @throws \Guzaba2\Coroutine\Exceptions\ContextDestroyedException
      */
     public function register_post(string $user_email, string $user_name, string $user_password, string $user_password_confirmation): ResponseInterface
     {
@@ -149,12 +150,13 @@ class Auth extends BaseController
         $User->user_email = $user_email;
         $User->user_name = $user_name;
         $User->set_password($user_password, $user_password_confirmation);
-        try {
-            $User->write();
-        } catch (\Throwable $E) {
-            print $E->getMessage().PHP_EOL;
-            print $E->getTraceAsString();
-        }
+//        try {
+//            $User->write();
+//        } catch (\Throwable $E) {
+//            print $E->getMessage().PHP_EOL;
+//            print $E->getTraceAsString();
+//        }
+        $User->write();
 
         $struct['message'] = sprintf(t::_('The user %1$s was created successfully.'), $User->user_name);
         $struct['uuid'] = $User->get_uuid();

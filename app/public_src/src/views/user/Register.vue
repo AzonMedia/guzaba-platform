@@ -3,7 +3,9 @@
         <b-form inline @submit.stop.prevent="register">
 
             <div>
-                <b-alert :show="Alert.show" dismissible class="messages">{{Alert.message}}</b-alert>
+                <!-- <b-alert :show="Alert.show" dismissible class="messages">{{Alert.message}}</b-alert> -->
+                <!-- @see https://stackoverflow.com/questions/59265828/once-dismissed-the-boostrap-vue-alert-its-not-working-again -->
+                <b-alert v-model="Alert.show" dismissible class="messages">{{Alert.message}}</b-alert>
             </div>
 
             <div>
@@ -85,17 +87,19 @@
         methods: {
             register() {
                 let url = '/user/register';
-                let self = this;
+                //let self = this;
                 //let SendValues = {};
                 //SendValues.new_directory_name = this.new_directory_name;
                 this.$http.post(url, this.User).
-                then(function() {
+                then(() => {
                     //self.$parent.get_dir_files(self.$parent.CurrentDirPath.name);
-                    self.$router.push('/user/login');
-                }).catch(function(err) {
+                    this.$router.push('/user/login');
+                }).catch(err => {
+                    //console.log(err);
                     //self.Alert.message = err.response.data.message.split("\n").join("<br />");
-                    self.Alert.message = err.response.data.message;
-                    self.Alert.show = true;
+                    //this.Alert.message = err.response.data.message;
+                    //this.Alert.show = true;
+                    this.show_alert(err.response.data.message)
                 }).finally(function(){
 
                 });
@@ -111,6 +115,10 @@
                 // this.email = null;
                 // this.username = null;
                 // this.password = null;
+            },
+            show_alert(message) {
+                this.Alert.message = message;
+                this.Alert.show = true;
             }
         }
     };
