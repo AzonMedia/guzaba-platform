@@ -62,7 +62,12 @@ let static_routes = [
     {
         path: '/user/logout',
         name: 'user logout',
-        component: () => store.dispatch('logout')
+        component: () => {
+            store.dispatch('logout').then(() => {
+                //this.$router.push('/user/login');
+                this.$router.push('/');
+            })
+        }
     },
     {
         path: '/user/register',

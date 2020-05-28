@@ -7,6 +7,7 @@ use Guzaba2\Base\Base;
 use GuzabaPlatform\Components\Base\BaseComponent;
 use GuzabaPlatform\Components\Base\Interfaces\ComponentInitializationInterface;
 use GuzabaPlatform\Components\Base\Interfaces\ComponentInterface;
+use GuzabaPlatform\Platform\Application\VueRouter;
 
 class Component extends BaseComponent implements ComponentInterface, ComponentInitializationInterface
 {
@@ -22,7 +23,7 @@ class Component extends BaseComponent implements ComponentInterface, ComponentIn
     //https://components.platform.guzaba.org/component/{vendor}/{component}
     protected const COMPONENT_URL = 'https://components.platform.guzaba.org/component/guzaba-platform/guzaba-platform';
     //protected const DEV_COMPONENT_URL//this should come from composer.json
-    protected const COMPONENT_NAMESPACE = 'GuzabaPlatform\\Platform';
+    protected const COMPONENT_NAMESPACE = __NAMESPACE__;
     protected const COMPONENT_VERSION = '0.0.1';//TODO update this to come from the Composer.json file of the component
     protected const VENDOR_NAME = 'Azonmedia';
     protected const VENDOR_URL = 'https://azonmedia.com';
@@ -41,8 +42,12 @@ class Component extends BaseComponent implements ComponentInterface, ComponentIn
     {
         //register few default routes
         //there are also some hardcoded routes at router.js
+        /** @var VueRouter $FrontendRouter */
         $FrontendRouter = self::get_service('FrontendRouter');
-        $FrontendRouter->add('/', '@GuzabaPlatform.Platform/views/Home.vue', ['name' => 'Home']);
+        if (!$FrontendRouter->exists('/')) { //it may already exist defined by the application
+            $FrontendRouter->add('/', '@GuzabaPlatform.Platform/views/Home.vue', ['name' => 'Home']);
+        }
+
         $FrontendRouter->add('/admin', '@GuzabaPlatform.Platform/views/Admin/Home.vue', ['name' => 'Admin Home']);
         $additional = [
             'name' => 'Components',

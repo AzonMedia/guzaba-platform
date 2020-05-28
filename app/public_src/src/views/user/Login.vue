@@ -99,7 +99,15 @@
                 let password = this.password;
                 let self = this;
                 this.$store.dispatch('login', { username, password })
-                    .then(() => this.$router.push('/'))
+                    .then(
+                        //() => this.$router.push('/')
+                        resp => {
+                            console.log(resp)
+                            console.log('aaaaa')
+                            let route = resp.data.route || '/'
+                            this.$router.push(route)
+                        }
+                    )
                     //.catch(err => console.log('Not authorized'))
                     .catch(function(err) {
                         self.Alert.message = err.response.data.message

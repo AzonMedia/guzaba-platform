@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace GuzabaPlatform\Platform\Authentication\Controllers;
 
+use Guzaba2\Authorization\Role;
 use Guzaba2\Http\Method;
 use Guzaba2\Http\StatusCode;
 use Guzaba2\Mvc\ActiveRecordController;
@@ -14,6 +15,7 @@ use GuzabaPlatform\Platform\Authentication\Models\JwtToken as Token;
 use GuzabaPlatform\Platform\Authentication\Models\User;
 use Psr\Http\Message\ResponseInterface;
 use Guzaba2\Kernel\Kernel;
+use const GuzabaPlatform\Platform\Authentication\Roles\ADMINISTRATOR;
 
 class Auth extends BaseController
 {
@@ -73,7 +75,7 @@ class Auth extends BaseController
     public function login_post(string $username, string $password): ResponseInterface
     {
         $Response = self::get_structured_ok_response();
-        $struct = &$Response->getBody()->getStructure();
+        $struct =& $Response->getBody()->getStructure();
         $struct['user_logged_in'] = false;
 
         $Request = self::get_request();
@@ -102,6 +104,12 @@ class Auth extends BaseController
                 $Token = new Token();
                 $Token->user_uuid = $User->get_uuid();
                 $Token = $Token->generate_new_token();
+
+                if ($User->is_member_of(new Role(ADMINISTRATOR))) {
+                    $struct['route'] = '/admin';
+                } else {
+                    $struct['route'] = '/';
+                }
 
                 $struct['user_logged_in'] = true;
             } else {
