@@ -7,6 +7,7 @@ namespace GuzabaPlatform\Platform\Components\Controllers;
 use Guzaba2\Http\Method;
 use GuzabaPlatform\Platform\Application\BaseController;
 use Psr\Http\Message\ResponseInterface;
+use Guzaba2\Translator\Translator as t;
 
 class Components extends BaseController
 {

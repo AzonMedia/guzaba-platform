@@ -53,9 +53,11 @@ class Component extends BaseComponent implements ComponentInterface, ComponentIn
             'name' => 'Components',
             'meta' => [
                 'in_navigation' => TRUE, //to be shown in the admin navigation
-                'additional_template' => '@GuzabaPlatform.Platform/views/Admin/Components/NavigationHook.vue',//here the list of components will be expanded
+                'additional_template' => '@GuzabaPlatform.Platform/views/Admin/Components/ComponentsNavigationHook.vue',//here the list of components will be expanded
             ],
         ];
-        $FrontendRouter->{'/admin'}->add('components', '@GuzabaPlatform.Platform/views/Admin/Components/Components.vue' ,$additional);
+        $FrontendRouter->{'/admin'}->add('components', '@GuzabaPlatform.Platform/views/Admin/Components/ComponentsAdmin.vue' ,$additional);
+
+        $FrontendRouter->{'/admin'}->add('component-stores', '@GuzabaPlatform.Platform/views/Admin/Components/StoresAdmin.vue' , ['name' => 'Stores'] );
     }
 }

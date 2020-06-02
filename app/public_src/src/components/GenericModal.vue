@@ -22,9 +22,6 @@
                 let AdditionalData = typeof this.ModalData.AdditionalData !== 'undefined' ? this.ModalData.AdditionalData : {}
                 //let method = ModalData.method ?? 'patch';
                 let method = typeof this.ModalData.method !== 'undefined' ? this.ModalData.method : 'patch';
-                console.log(AdditionalData);
-                //this.$http.patch(url, PostData).
-                //console.log(this.$parent.TreeData);
 
 
                 this.$http[method](url, AdditionalData).

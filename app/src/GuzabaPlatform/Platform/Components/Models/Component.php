@@ -5,7 +5,9 @@ namespace GuzabaPlatform\Platform\Components\Models;
 
 
 use Guzaba2\Orm\ActiveRecord;
+use Guzaba2\Translator\Translator as t;
 
+//no used
 class Component extends ActiveRecord
 {
 
