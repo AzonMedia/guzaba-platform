@@ -3,24 +3,23 @@ declare(strict_types=1);
 
 namespace GuzabaPlatform\Platform\Components\Models;
 
+use Azonmedia\Patterns\Traits\ReadonlyOverloadingTrait;
 use Azonmedia\Utilities\HttpUtil;
 use Guzaba2\Base\Base;
 use Guzaba2\Base\Exceptions\InvalidArgumentException;
 use Guzaba2\Base\Exceptions\RunTimeException;
+use Guzaba2\Orm\Exceptions\RecordNotFoundException;
 use GuzabaPlatform\Platform\Application\GuzabaPlatform;
 use Guzaba2\Translator\Translator as t;
 
-//not used
 class Store extends Base
 {
 
-    //public string $store_name;
-    //public string $store_url;
-    //public string $store_added_time;
+    use ReadonlyOverloadingTrait;
 
     public const COMPONENTS_FILE = '/components.json';
-    public const LOGO_FILE = 'store_logo.png';//must be a square image
-    public const ICON_FILE = 'store_icon.ico';//must be a square image
+    public const LOGO_FILE = '/store_logo.png';//must be a square image
+    public const ICON_FILE = '/store_icon.ico';//must be a square image
 
     protected array $data = [
         'store_name'        => '',
@@ -42,9 +41,10 @@ class Store extends Base
         }
         self::validate_store_url($store_url);
 
-        //$this->store_name = $store_name;
-        //$this->store_url = $store_url;
-        //$this->store_added_time = $store_added_time;
+        if ($store_url[-1] === '/') {
+            $store_url = substr($store_url, 0, - 1);
+        }
+
         $this->data['store_name'] = $store_name;
         $this->data['store_url'] = $store_url;
         $this->data['store_added_time'] = $store_added_time;
@@ -54,12 +54,19 @@ class Store extends Base
 
     }
 
-    public static function validate_store_url(string $store_url, bool $validate_components_file = FALSE): bool
+    public static function validate_store_url(string $store_url, bool $validate_components_file = FALSE): void
     {
         if (!$store_url) {
-            throw new InvalidArgumentException(sprintf(t::_('No store URL provided.')));
+            throw new InvalidArgumentException(sprintf(t::_('No Store URL provided.')));
         } elseif (!filter_var($store_url, FILTER_VALIDATE_URL)) {
-            throw new InvalidArgumentException(sprintf(t::_('The provided store URL %s is not a valid URL.'), $store_url));
+            throw new InvalidArgumentException(sprintf(t::_('The provided Store URL %s is not a valid URL.'), $store_url));
+        }
+        $url_components = parse_url($store_url);
+        if (isset($url_components['query'])) {
+            throw new InvalidArgumentException(sprintf(t::_('The provided Store URL %s has query component %s. The Store URL can not contain query component and must end with path.'), $store_url, $url_components['query'] ));
+        }
+        if (isset($url_components['fragment'])) {
+            throw new InvalidArgumentException(sprintf(t::_('The provided Store URL %s has fragment component %s. The Store URL can not contain fragment component and must end with path.'), $store_url, $url_components['query'] ));
         }
         if ($validate_components_file) {
             if (!HttpUtil::resource_exists($store_url)) {
@@ -76,39 +83,42 @@ class Store extends Base
     {
         self::validate_store_url($store_url, TRUE);
         $ComponentsDecoded = json_decode(file_get_contents($store_url.self::COMPONENTS_FILE), FALSE, 512, JSON_THROW_ON_ERROR);
-        return new Store($store_url, $ComponentsDecoded->store_name, 0);
+        return new Store($ComponentsDecoded->store_name, $store_url, 0);
     }
 
-    public function __get(string $property) /* mixed */
+    public static function get_instance_from_manifest(string $store_url): self
     {
-        if (!array_key_exists($property, $this->data)) {
-            throw new RunTimeException(sprintf(t::_('The objects of class %s do not have a property %s.'), get_class($this), $property));
+        $Manifest = Manifest::get_default_instance();
+        return $Manifest->get_store_by_url($store_url);
+    }
+
+    public function get_decoded_object(): object
+    {
+        return json_decode(file_get_contents($this->store_url.self::COMPONENTS_FILE), FALSE, 512, \JSON_THROW_ON_ERROR);
+    }
+
+    /**
+     * @return Component[]
+     */
+    public function get_available_components(): array
+    {
+        $ret = [];
+        $DecodedObject = $this->get_decoded_object();
+        foreach ($DecodedObject->components as $DecodedComponent) {
+            $ret[] = new Component(
+                $DecodedComponent->composer_package,//package_name
+                $DecodedComponent->name,//name
+                $DecodedComponent->description,//description
+                $DecodedComponent->namespace,
+                $DecodedComponent->root_dir,
+                $DecodedComponent->src_dir,
+                $DecodedComponent->public_sr_dir,
+                $DecodedComponent->installed_time,
+                );
         }
-        return $this->data[$property];
+
     }
 
-    public function __set(string $property, /* mixed */ $value) : void
-    {
-//        if (!array_key_exists($property, $this->data)) {
-//            throw new RunTimeException(sprintf(t::_('The objects of class %s do not have a property %s.'), get_class($this), $property));
-//        }
-//        $this->data[$property] = $value;
-        throw new RunTimeException(sprintf(t::_('It is not allowed to change the properties on objects of class %s.'), get_class($this) ));
-    }
 
-    public function __isset(string $property): bool
-    {
-        return array_key_exists($property, $this->data);
-    }
-
-    public function __unset(string $property): void
-    {
-        throw new RunTimeException(sprintf(t::_('It is not allowed to unset properties on objects of class %s.'), get_class($this) ));
-    }
-
-    public function get_data(): array
-    {
-        return $this->data;
-    }
 
 }

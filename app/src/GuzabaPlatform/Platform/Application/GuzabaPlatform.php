@@ -162,7 +162,7 @@ BANNER;
         Kernel::run($this, self::CONFIG_RUNTIME['kernel']);
     }
 
-    public function __invoke() : int
+    public function __invoke(): int
     {
         return $this->execute();
     }
@@ -171,12 +171,21 @@ BANNER;
      * Returns the path to the ./app directory of the project.
      * @return string
      */
-    public function get_app_dir() : string
+    public function get_app_dir(): string
     {
         return $this->app_directory;
     }
 
-    public static function get_date_time_formats() : array
+    /**
+     * Returns the path to the manifest.json file of the project
+     * @return string
+     */
+    public function get_manifest_file_path(): string
+    {
+        return realpath($this->app_directory.'/../manifest.json');
+    }
+
+    public static function get_date_time_formats(): array
     {
         return self::CONFIG_RUNTIME['date_time_formats'];
     }

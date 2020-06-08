@@ -3,54 +3,64 @@ declare(strict_types=1);
 
 namespace GuzabaPlatform\Platform\Components\Models;
 
-
-use Guzaba2\Orm\ActiveRecord;
+use Azonmedia\Patterns\Traits\ReadonlyOverloadingTrait;
+use Guzaba2\Base\Base;
+use Guzaba2\Base\Exceptions\InvalidArgumentException;
 use Guzaba2\Translator\Translator as t;
 
-//no used
-class Component extends ActiveRecord
+class Component extends Base
 {
 
-    protected const CONFIG_DEFAULTS = [
-        'main_table'            => 'components',
-        'route'                 => '/component',
-        'structure' => [
-            [
-                'name' => 'object_uuid',
-                'native_type' => 'varchar',
-                'php_type' => 'string',
-                'size' => 1,
-                'nullable' => false,
-                'column_id' => 1,
-                'primary' => true,
-                'autoincrement' => false,
-                'default_value' => 0,
-            ],
-            [
-                'name' => 'component_name',
-                'native_type' => 'varchar',
-                'php_type' => 'string',
-                'size' => 255,
-                'nullable' => false,
-                'column_id' => 2,
-                'primary' => false,
-                'default_value' => '',
-            ],
-            [
-                'name' => 'component_url',
-                'native_type' => 'varchar',
-                'php_type' => 'string',
-                'size' => 255,
-                'nullable' => false,
-                'column_id' => 3,
-                'primary' => false,
-                'default_value' => '',
-            ]
-        ]
+    use ReadonlyOverloadingTrait;
+
+    protected array $data = [
+        'package_name'      => '',
+        'name'              => '',
+        'description'       => '',
+        'namespace'         => '',
+
+        //the below are used only on installed components
+        'root_dir'          => '',
+        'src_dir'           => '',
+        'public_src_dir'    => '',
+        'installed_time'    => 0,
     ];
 
+    /**
+     * Component constructor.
+     * @param string $name The name of the component in packagist.org
+     * @param string $namespace
+     * @param string $root_dir
+     * @param string $src_dir
+     * @param string $public_src_dir
+     * @param int $installed_time
+     * @throws InvalidArgumentException
+     * @throws \Azonmedia\Exceptions\InvalidArgumentException
+     */
+    public function __construct(string $package_name, string $name = '', string $description = '', string $namespace = '', string $root_dir = '', string $src_dir = '', string $public_src_dir = '', int $installed_time = 0)
+    {
 
-    protected const CONFIG_RUNTIME = [];
+        if (!$package_name) {
+            throw new InvalidArgumentException(sprintf(t::_('No component package name provided.')));
+        }
+        //add better name validation
+        if (strpos($package_name, '/') === FALSE) {
+            throw new InvalidArgumentException(sprintf(t::_('The provided component package name %s does not contain /.'), $package_name));
+        }
+        //TODO - cant start with / cant end with / and cant have more than one /
 
+        if (!$name) {
 
+        }
+
+        if (!$namespace) {
+
+        }
+
+        foreach ($this->data as $key=>$value) {
+            if (isset(${$key})) {
+                $this->data[$key] = ${$key};
+            }
+        }
+    }
 }

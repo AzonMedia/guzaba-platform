@@ -9,9 +9,16 @@
 </template>
 
 <script>
+
     import ButtonC from '@GuzabaPlatform.Platform/components/Button.vue'
+
+    import ToastMixin from '@GuzabaPlatform.Platform/ToastMixin.js'
+
     export default {
         name: "ComponentsAdmin",
+        mixins: [
+            ToastMixin,
+        ],
         components: {
             ButtonC,
         },
@@ -37,7 +44,19 @@
             },
             install_component_handler() {
                 this.$router.push('/admin/components/available')
+            },
+            load_components() {
+                this.$http.get('/admin/components')
+                    .then(resp => {
+                        this.stores = resp.data.stores;
+                    })
+                    .catch(err => {
+                        this.show_toast(err.response.data.message);
+                    });
             }
+        },
+        mounted() {
+            this.load_components()
         }
     }
 </script>

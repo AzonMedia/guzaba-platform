@@ -26,6 +26,8 @@ export default {
                 }
             }
             this.$bvToast.toast(message, ToastConfig)
+
+            //console.log(message)//also always log the messages to the console for reference
         }
     }
 }

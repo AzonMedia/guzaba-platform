@@ -1,5 +1,5 @@
 <template>
-    <b-modal title="Add Store" id="create-directory-modal" @ok="modal_ok_handler" @cancel="modal_cancel_handler" @show="modal_show_handler">
+    <b-modal title="Add Store" id="add-store-modal" @ok="modal_ok_handler" @cancel="modal_cancel_handler" @show="modal_show_handler">
         <div>
             <p>Store URL: <input v-model="store_url" type="text" placeholder="Store URL" /></p>
         </div>
@@ -19,7 +19,7 @@
         },
         methods: {
             modal_ok_handler(bvModalEvent) {
-                let url = '/admin/component-stores/';
+                let url = '/admin/component-store/';
                 let SendValues = {};
                 SendValues.store_url = this.store_url;
                 this.$http.post(url, SendValues).

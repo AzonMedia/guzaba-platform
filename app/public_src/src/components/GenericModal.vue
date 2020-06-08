@@ -25,15 +25,25 @@
 
 
                 this.$http[method](url, AdditionalData).
-                then(function(resp) {
-                    console.log(resp);
-                    console.log(self.$parent.show_toast)
-                    self.$parent.show_toast(resp.data.message);
-                }).catch(function(err) {
-                    self.$parent.show_toast(err.response.data.message);
-                }).finally(function(){
-                    //self.$parent.get_dir_files(self.ModalData.CurrentDirPath.name);//refresh just in case
+                then( resp => {
+                    this.$parent.show_toast(resp.data.message);
+                    if (typeof this.ModalData.SuccessCallback !== 'undefined') {
+                        this.ModalData.SuccessCallback();
+                    }
+                }).catch( err => {
+                    this.$parent.show_toast(err.response.data.message);
+                    if (typeof this.ModalData.ErrorCallback !== 'undefined') {
+                        this.ModalData.ErrorCallback();
+                    }
+                }).finally( () => {
+                    if (typeof this.ModalData.FinallyCallback !== 'undefined') {
+                        this.ModalData.FinallyCallback();
+                    }
+                    this.cleanup()
                 });
+            },
+            cleanup() {
+                this.ModalData = {};
             }
         }
     }
