@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.1
+-- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
 -- Host: mysqlhost
--- Generation Time: May 07, 2020 at 10:02 AM
--- Server version: 8.0.18
--- PHP Version: 7.2.23
+-- Generation Time: Jul 11, 2020 at 03:14 PM
+-- Server version: 8.0.20
+-- PHP Version: 7.4.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -19,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `guzaba2`
+-- Database: `newwealthcapital`
 --
 
 -- --------------------------------------------------------
@@ -29,10 +28,10 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `guzaba_acl_permissions` (
-  `permission_id` bigint(20) UNSIGNED NOT NULL,
-  `role_id` bigint(20) UNSIGNED NOT NULL,
-  `class_id` bigint(20) UNSIGNED NOT NULL,
-  `object_id` bigint(20) UNSIGNED DEFAULT '0',
+  `permission_id` bigint UNSIGNED NOT NULL,
+  `role_id` bigint UNSIGNED NOT NULL,
+  `class_id` bigint UNSIGNED NOT NULL,
+  `object_id` bigint UNSIGNED DEFAULT '0',
   `action_name` varchar(200) NOT NULL,
   `permission_description` varchar(2000) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -66,9 +65,9 @@ INSERT INTO `guzaba_acl_permissions` (`permission_id`, `role_id`, `class_id`, `o
 --
 
 CREATE TABLE `guzaba_categories` (
-  `guzaba_categories_id` int(10) UNSIGNED NOT NULL,
-  `guzaba_categories_lang_id` tinyint(3) UNSIGNED NOT NULL,
-  `guzaba_categories_is_active` tinyint(4) NOT NULL
+  `guzaba_categories_id` int UNSIGNED NOT NULL,
+  `guzaba_categories_lang_id` tinyint UNSIGNED NOT NULL,
+  `guzaba_categories_is_active` tinyint NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
@@ -78,7 +77,7 @@ CREATE TABLE `guzaba_categories` (
 --
 
 CREATE TABLE `guzaba_classes` (
-  `class_id` bigint(20) UNSIGNED NOT NULL,
+  `class_id` bigint UNSIGNED NOT NULL,
   `class_uuid_binary` binary(16) NOT NULL,
   `class_uuid` char(36) GENERATED ALWAYS AS (bin_to_uuid(`class_uuid_binary`)) VIRTUAL NOT NULL,
   `class_name` varchar(255) NOT NULL,
@@ -142,7 +141,11 @@ INSERT INTO `guzaba_classes` (`class_id`, `class_uuid_binary`, `class_name`, `cl
 (50, 0x5e83e54f67a1464390f725e863c312f4, 'GuzabaPlatform\\Users\\Controllers\\User', 'controllers'),
 (51, 0x105df137d0cc41b6ad9200b175ac1e2f, 'GuzabaPlatform\\Tests\\Controllers\\TestIpcRequests', 'controllers'),
 (52, 0x3a39cf85478d44a7b2d03f48c2d6c7e3, 'GuzabaPlatform\\AppServer\\Monitor\\Controllers\\Monitor', 'controllers'),
-(53, 0xf757405cf2684e858a69ba512f82ad28, 'GuzabaPlatform\\AppServer\\Monitor\\Controllers\\Responder', 'controllers');
+(53, 0xf757405cf2684e858a69ba512f82ad28, 'GuzabaPlatform\\AppServer\\Monitor\\Controllers\\Responder', 'controllers'),
+(54, 0x0aedcb9c15264e558f54d4f730d2e814, 'GuzabaPlatform\\Platform\\Components\\Controllers\\Stores', 'controllers'),
+(55, 0x05f6b008d697402abc87761e0c12a9a9, 'GuzabaPlatform\\Platform\\Components\\Controllers\\Store', 'controllers'),
+(56, 0xfdfdc48fc0e9402f9c1faa2fcbaf6cc6, 'GuzabaPlatform\\Roles\\Controllers\\Role', 'controllers'),
+(57, 0xd290a3a06a6b4ed9b69bc221b3cdf5b4, 'GuzabaPlatform\\Roles\\Controllers\\Roles', 'controllers');
 
 -- --------------------------------------------------------
 
@@ -151,7 +154,7 @@ INSERT INTO `guzaba_classes` (`class_id`, `class_uuid_binary`, `class_name`, `cl
 --
 
 CREATE TABLE `guzaba_components` (
-  `component_id` bigint(20) UNSIGNED NOT NULL,
+  `component_id` bigint UNSIGNED NOT NULL,
   `component_name` varchar(255) NOT NULL,
   `component_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT 'The source/installation URL',
   `component_namespace` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT 'Should be enough to identify all of the component files'
@@ -171,7 +174,7 @@ INSERT INTO `guzaba_components` (`component_id`, `component_name`, `component_ur
 --
 
 CREATE TABLE `guzaba_controllers` (
-  `controller_id` bigint(20) UNSIGNED NOT NULL,
+  `controller_id` bigint UNSIGNED NOT NULL,
   `controller_name` varchar(200) NOT NULL,
   `controller_description` varchar(200) NOT NULL,
   `controller_class` varchar(200) NOT NULL,
@@ -185,12 +188,12 @@ CREATE TABLE `guzaba_controllers` (
 --
 
 CREATE TABLE `guzaba_files` (
-  `file_id` bigint(20) UNSIGNED NOT NULL,
-  `parent_file_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `file_id` bigint UNSIGNED NOT NULL,
+  `parent_file_id` bigint UNSIGNED DEFAULT NULL,
   `file_is_dir` tinyint(1) NOT NULL DEFAULT '0',
   `file_relative_path` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT 'The relative path to the store root',
   `file_type` varchar(50) NOT NULL COMMENT 'mime type',
-  `file_size` int(11) NOT NULL
+  `file_size` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
@@ -200,16 +203,26 @@ CREATE TABLE `guzaba_files` (
 --
 
 CREATE TABLE `guzaba_logs` (
-  `log_id` bigint(20) UNSIGNED NOT NULL,
-  `log_class_id` bigint(20) UNSIGNED NOT NULL,
-  `log_object_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `log_id` bigint UNSIGNED NOT NULL,
+  `log_class_id` bigint UNSIGNED NOT NULL,
+  `log_object_id` bigint UNSIGNED DEFAULT NULL,
   `log_action` varchar(200) NOT NULL COMMENT 'This would correspond to the method name.',
   `log_content` varchar(2000) NOT NULL,
-  `log_create_microtime` bigint(20) UNSIGNED NOT NULL,
-  `role_id` bigint(20) UNSIGNED NOT NULL,
+  `log_create_microtime` bigint UNSIGNED NOT NULL,
+  `role_id` bigint UNSIGNED NOT NULL,
   `log_ip` varchar(15) NOT NULL,
-  `log_iplong` int(10) UNSIGNED NOT NULL
+  `log_iplong` int UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Dumping data for table `guzaba_logs`
+--
+
+INSERT INTO `guzaba_logs` (`log_id`, `log_class_id`, `log_object_id`, `log_action`, `log_content`, `log_create_microtime`, `role_id`, `log_ip`, `log_iplong`) VALUES
+(2, 4, 40, 'write', 'The record was modified with the following properties being updates .', 1594480432395385, 1, '', 0),
+(3, 4, 40, 'write', 'The record was modified with the following properties being updates .', 1594480436553540, 1, '', 0),
+(4, 10, 7, 'write', 'The record was modified with the following properties being updates .', 1594480442882413, 1, '', 0),
+(5, 10, 8, 'write', 'The record was modified with the following properties being updates .', 1594480447051786, 1, '', 0);
 
 -- --------------------------------------------------------
 
@@ -218,7 +231,7 @@ CREATE TABLE `guzaba_logs` (
 --
 
 CREATE TABLE `guzaba_log_entries` (
-  `log_entry_id` bigint(20) UNSIGNED NOT NULL,
+  `log_entry_id` bigint UNSIGNED NOT NULL,
   `log_entry_content` varchar(2000) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -229,13 +242,13 @@ CREATE TABLE `guzaba_log_entries` (
 --
 
 CREATE TABLE `guzaba_navigation_links` (
-  `link_id` bigint(20) UNSIGNED NOT NULL,
-  `parent_link_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `link_id` bigint UNSIGNED NOT NULL,
+  `parent_link_id` bigint UNSIGNED DEFAULT NULL,
   `link_class_name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `link_class_action` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT 'If the link points to a controller this needs to be filled in and the link_object_id must be NULL.',
-  `link_object_id` bigint(20) DEFAULT NULL,
+  `link_object_id` bigint DEFAULT NULL,
   `link_name` varchar(200) NOT NULL,
-  `link_order` smallint(5) UNSIGNED NOT NULL,
+  `link_order` smallint UNSIGNED NOT NULL,
   `link_redirect` varchar(2000) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL COMMENT 'A link must point to an object or have a redirect set or neither if it is just a structure holder. The redirect can be a route (path to controller)'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci COMMENT='link_class_name is not optimized to link_class_id as there will not be that many links';
 
@@ -262,10 +275,10 @@ INSERT INTO `guzaba_navigation_links` (`link_id`, `parent_link_id`, `link_class_
 --
 
 CREATE TABLE `guzaba_navigation_links_b1` (
-  `link_id` bigint(20) UNSIGNED NOT NULL,
-  `parent_link_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `link_id` bigint UNSIGNED NOT NULL,
+  `parent_link_id` bigint UNSIGNED DEFAULT NULL,
   `link_class_name` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  `link_object_id` bigint(20) DEFAULT NULL,
+  `link_object_id` bigint DEFAULT NULL,
   `link_name` varchar(200) NOT NULL,
   `link_redirect` varchar(2000) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL COMMENT 'A link must point to an object or have a redirect set or neither if it is just a structure holder.'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -307,14 +320,14 @@ CREATE TABLE `guzaba_object_aliases` (
 CREATE TABLE `guzaba_object_meta` (
   `meta_object_uuid_binary` binary(16) NOT NULL,
   `meta_object_uuid` char(36) GENERATED ALWAYS AS (bin_to_uuid(`meta_object_uuid_binary`)) VIRTUAL NOT NULL,
-  `meta_class_id` bigint(20) UNSIGNED NOT NULL,
-  `meta_object_id` bigint(20) UNSIGNED NOT NULL,
-  `meta_object_create_microtime` bigint(16) UNSIGNED NOT NULL,
-  `meta_object_last_update_microtime` bigint(16) UNSIGNED NOT NULL,
-  `meta_object_create_transaction_id` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
-  `meta_object_last_update_transaction_id` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
-  `meta_object_create_role_id` bigint(20) UNSIGNED NOT NULL,
-  `meta_object_last_update_role_id` bigint(20) UNSIGNED NOT NULL
+  `meta_class_id` bigint UNSIGNED NOT NULL,
+  `meta_object_id` bigint UNSIGNED NOT NULL,
+  `meta_object_create_microtime` bigint UNSIGNED NOT NULL,
+  `meta_object_last_update_microtime` bigint UNSIGNED NOT NULL,
+  `meta_object_create_transaction_id` bigint UNSIGNED NOT NULL DEFAULT '0',
+  `meta_object_last_update_transaction_id` bigint UNSIGNED NOT NULL DEFAULT '0',
+  `meta_object_create_role_id` bigint UNSIGNED NOT NULL,
+  `meta_object_last_update_role_id` bigint UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
@@ -375,6 +388,7 @@ INSERT INTO `guzaba_object_meta` (`meta_object_uuid_binary`, `meta_class_id`, `m
 (0x5c40bffbf97211e98f16002564a26d87, 20, 1, 1567001206088700, 1571384548387700, 0, 0, 0, 0),
 (0x5e0c5745543a40d687a15d4ccbd90360, 9, 150, 1580130714189300, 1580130714189300, 0, 0, 0, 0),
 (0x5f93a481b910417a8c4a2754ab90803d, 9, 177, 1580293174326300, 1580293174326300, 0, 0, 0, 0),
+(0x5fb8a8f1e15841c994c24500959d3e5f, 10, 8, 1594480447048500, 1594480447048500, 0, 0, 1, 1),
 (0x60d9f56294174833b52986a48ea2ca8f, 4, 17, 1575021543726300, 1575021543726300, 0, 0, 0, 0),
 (0x6193763cc49544faa64f56f7863f8830, 4, 25, 1575298789109700, 1575298789109700, 0, 0, 0, 0),
 (0x627f5c31bda84a81a670b5ab62b30610, 12, 113, 1584032208826400, 1584032208826400, 0, 0, 0, 0),
@@ -385,6 +399,7 @@ INSERT INTO `guzaba_object_meta` (`meta_object_uuid_binary`, `meta_class_id`, `m
 (0x691cbf09bf8149f997cea9ad7b88c35d, 32, 27, 1583487724712600, 1583487826000000, 0, 0, 0, 0),
 (0x69f5da6534e44b13916b8201dff2729a, 9, 57, 1575974333637700, 1575974333637700, 0, 0, 0, 0),
 (0x6bac274f500b46a6a37a5c9dd5f286ce, 9, 169, 1580226910266400, 1580226910266400, 0, 0, 0, 0),
+(0x724b57f2c9924cd0b158e8e860ca8b68, 10, 7, 1594480442874000, 1594480442874000, 0, 0, 1, 1),
 (0x725c29bfe55446e1a5bd046f7c4fe9db, 32, 24, 1583487180414000, 1583487826000000, 0, 0, 0, 0),
 (0x72fccdae82744fb48a248b744e87ce88, 17, 40, 1573559445188900, 1573559445188900, 0, 0, 0, 0),
 (0x758709ae088a403eb4a8ac0b822b42c9, 12, 118, 1584355342299500, 1584355342299500, 0, 0, 1, 1),
@@ -432,7 +447,7 @@ INSERT INTO `guzaba_object_meta` (`meta_object_uuid_binary`, `meta_class_id`, `m
 (0xba571c13af3142b4ac148d1af61b8456, 9, 165, 1580224279845700, 1580224279845700, 0, 0, 0, 0),
 (0xbc218dcbcdf7420ba21f81ce6604b553, 32, 33, 1583487885696600, 1583487885696600, 0, 0, 0, 0),
 (0xbec2ed5ec2654fe1bf4227c4d4f2cea1, 9, 83, 1576161283248700, 1576161283248700, 0, 0, 0, 0),
-(0xbf44108cd26e410d84659154e1069432, 4, 40, 1586328607677400, 1586328607677400, 0, 0, 1, 1),
+(0xbf44108cd26e410d84659154e1069432, 4, 40, 1586328607677400, 1594480436000000, 0, 0, 1, 1),
 (0xbfde8fb76f404d5883e2a5b49eca94b8, 9, 119, 1579878496763800, 1579878496763800, 0, 0, 0, 0),
 (0xc33b1566f67540449fadec684a447ff0, 4, 19, 1575021969596600, 1575021969596600, 0, 0, 0, 0),
 (0xc37afe2aeda44bfba47bd45114e99380, 4, 15, 1575021274059000, 1575021274059000, 0, 0, 0, 0),
@@ -483,12 +498,12 @@ CREATE TABLE `guzaba_object_meta_b1` (
   `meta_object_uuid_binary` binary(16) NOT NULL,
   `meta_object_uuid` char(36) GENERATED ALWAYS AS (bin_to_uuid(`meta_object_uuid_binary`)) VIRTUAL NOT NULL,
   `meta_class_name` varchar(255) NOT NULL,
-  `meta_class_id` bigint(20) UNSIGNED NOT NULL,
-  `meta_object_id` bigint(20) UNSIGNED NOT NULL,
-  `meta_object_create_microtime` bigint(16) UNSIGNED NOT NULL,
-  `meta_object_last_update_microtime` bigint(16) UNSIGNED NOT NULL,
-  `meta_object_create_transaction_id` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
-  `meta_object_last_update_transaction_id` bigint(20) UNSIGNED NOT NULL DEFAULT '0'
+  `meta_class_id` bigint UNSIGNED NOT NULL,
+  `meta_object_id` bigint UNSIGNED NOT NULL,
+  `meta_object_create_microtime` bigint UNSIGNED NOT NULL,
+  `meta_object_last_update_microtime` bigint UNSIGNED NOT NULL,
+  `meta_object_create_transaction_id` bigint UNSIGNED NOT NULL DEFAULT '0',
+  `meta_object_last_update_transaction_id` bigint UNSIGNED NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
@@ -632,11 +647,11 @@ INSERT INTO `guzaba_object_meta_b1` (`meta_object_uuid_binary`, `meta_class_name
 CREATE TABLE `guzaba_object_meta_new` (
   `object_uuid_binary` binary(16) NOT NULL,
   `class_name` varchar(255) NOT NULL,
-  `object_id` bigint(20) UNSIGNED NOT NULL,
-  `object_create_microtime` bigint(16) UNSIGNED NOT NULL,
-  `object_last_update_microtime` bigint(16) UNSIGNED NOT NULL,
-  `object_create_transaction_id` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
-  `object_last_update_transction_id` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
+  `object_id` bigint UNSIGNED NOT NULL,
+  `object_create_microtime` bigint UNSIGNED NOT NULL,
+  `object_last_update_microtime` bigint UNSIGNED NOT NULL,
+  `object_create_transaction_id` bigint UNSIGNED NOT NULL DEFAULT '0',
+  `object_last_update_transction_id` bigint UNSIGNED NOT NULL DEFAULT '0',
   `object_uuid` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -735,11 +750,11 @@ INSERT INTO `guzaba_object_meta_new` (`object_uuid_binary`, `class_name`, `objec
 CREATE TABLE `guzaba_object_meta_test` (
   `object_uuid_binary` binary(16) NOT NULL,
   `class_name` varchar(255) NOT NULL,
-  `object_id` bigint(20) UNSIGNED NOT NULL,
-  `object_create_microtime` bigint(16) UNSIGNED NOT NULL,
-  `object_last_update_microtime` bigint(16) UNSIGNED NOT NULL,
-  `object_create_transaction_id` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
-  `object_last_update_transction_id` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
+  `object_id` bigint UNSIGNED NOT NULL,
+  `object_create_microtime` bigint UNSIGNED NOT NULL,
+  `object_last_update_microtime` bigint UNSIGNED NOT NULL,
+  `object_create_transaction_id` bigint UNSIGNED NOT NULL DEFAULT '0',
+  `object_last_update_transction_id` bigint UNSIGNED NOT NULL DEFAULT '0',
   `object_uuid` char(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci GENERATED ALWAYS AS (bin_to_uuid(`object_uuid_binary`)) VIRTUAL NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -834,10 +849,10 @@ INSERT INTO `guzaba_object_meta_test` (`object_uuid_binary`, `class_name`, `obje
 --
 
 CREATE TABLE `guzaba_rbac_operations` (
-  `operation_id` bigint(20) NOT NULL,
+  `operation_id` bigint NOT NULL,
   `action_name` varchar(200) NOT NULL,
   `class_name` varchar(200) NOT NULL,
-  `object_id` bigint(20) DEFAULT '0' COMMENT 'object_id === NULL means operation on any object of class_name (like a privilege)',
+  `object_id` bigint DEFAULT '0' COMMENT 'object_id === NULL means operation on any object of class_name (like a privilege)',
   `operation_description` varchar(2000) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -848,7 +863,7 @@ CREATE TABLE `guzaba_rbac_operations` (
 --
 
 CREATE TABLE `guzaba_rbac_permissions` (
-  `permission_id` bigint(20) UNSIGNED NOT NULL,
+  `permission_id` bigint UNSIGNED NOT NULL,
   `permission_name` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -859,9 +874,9 @@ CREATE TABLE `guzaba_rbac_permissions` (
 --
 
 CREATE TABLE `guzaba_rbac_permissions_operations` (
-  `permission_operation_id` bigint(20) UNSIGNED NOT NULL,
-  `permission_id` bigint(20) UNSIGNED NOT NULL,
-  `operation_id` bigint(20) UNSIGNED NOT NULL
+  `permission_operation_id` bigint UNSIGNED NOT NULL,
+  `permission_id` bigint UNSIGNED NOT NULL,
+  `operation_id` bigint UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
@@ -871,9 +886,9 @@ CREATE TABLE `guzaba_rbac_permissions_operations` (
 --
 
 CREATE TABLE `guzaba_rbac_roles_permissions` (
-  `role_permission_id` bigint(20) UNSIGNED NOT NULL,
-  `role_id` bigint(20) UNSIGNED NOT NULL,
-  `permission_id` bigint(20) UNSIGNED NOT NULL
+  `role_permission_id` bigint UNSIGNED NOT NULL,
+  `role_id` bigint UNSIGNED NOT NULL,
+  `permission_id` bigint UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
@@ -883,8 +898,9 @@ CREATE TABLE `guzaba_rbac_roles_permissions` (
 --
 
 CREATE TABLE `guzaba_roles` (
-  `role_id` bigint(20) UNSIGNED NOT NULL,
+  `role_id` bigint UNSIGNED NOT NULL,
   `role_name` varchar(200) NOT NULL,
+  `role_description` varchar(1000) NOT NULL,
   `role_is_user` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -892,32 +908,32 @@ CREATE TABLE `guzaba_roles` (
 -- Dumping data for table `guzaba_roles`
 --
 
-INSERT INTO `guzaba_roles` (`role_id`, `role_name`, `role_is_user`) VALUES
-(1, 'ANONYMOUS', 0),
-(2, 'mario', 1),
-(7, 'ivo4', 1),
-(8, 'ivo5', 1),
-(13, 'ivo', 1),
-(14, 'ivo3213', 1),
-(15, 'a1', 1),
-(16, 'a2', 1),
-(17, 'ivo3', 1),
-(18, 'ivo4', 1),
-(19, 'ivo5', 1),
-(20, 'ivo6', 1),
-(21, 'ivo8', 1),
-(22, 'gsd', 1),
-(23, 'dubai', 1),
-(24, 'dubai2', 1),
-(25, 'dubai3', 1),
-(26, 'dubai1', 1),
-(27, 'dubai2', 1),
-(28, 'mario', 1),
-(29, 'ttt', 1),
-(34, 'vesko2', 1),
-(39, 'vesko', 1),
-(40, 'ADMINISTRATOR', 0),
-(41, 'CLIENT', 0);
+INSERT INTO `guzaba_roles` (`role_id`, `role_name`, `role_description`, `role_is_user`) VALUES
+(1, 'ANONYMOUS', '', 0),
+(2, 'mario', '', 1),
+(7, 'ivo4', '', 1),
+(8, 'ivo5', '', 1),
+(13, 'ivo', '', 1),
+(14, 'ivo3213', '', 1),
+(15, 'a1', '', 1),
+(16, 'a2', '', 1),
+(17, 'ivo3', '', 1),
+(18, 'ivo4', '', 1),
+(19, 'ivo5', '', 1),
+(20, 'ivo6', '', 1),
+(21, 'ivo8', '', 1),
+(22, 'gsd', '', 1),
+(23, 'dubai', '', 1),
+(24, 'dubai2', '', 1),
+(25, 'dubai3', '', 1),
+(26, 'dubai1', '', 1),
+(27, 'dubai2', '', 1),
+(28, 'mario', '', 1),
+(29, 'ttt', '', 1),
+(34, 'vesko2', '', 1),
+(39, 'vesko', '', 1),
+(40, 'ADMINISTRATOR', '', 0),
+(41, 'CLIENT', '', 0);
 
 -- --------------------------------------------------------
 
@@ -926,9 +942,9 @@ INSERT INTO `guzaba_roles` (`role_id`, `role_name`, `role_is_user`) VALUES
 --
 
 CREATE TABLE `guzaba_roles_hierarchy` (
-  `role_hierarchy_id` bigint(20) UNSIGNED NOT NULL,
-  `role_id` bigint(20) UNSIGNED NOT NULL,
-  `inherited_role_id` bigint(20) UNSIGNED NOT NULL
+  `role_hierarchy_id` bigint UNSIGNED NOT NULL,
+  `role_id` bigint UNSIGNED NOT NULL,
+  `inherited_role_id` bigint UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
@@ -937,7 +953,9 @@ CREATE TABLE `guzaba_roles_hierarchy` (
 
 INSERT INTO `guzaba_roles_hierarchy` (`role_hierarchy_id`, `role_id`, `inherited_role_id`) VALUES
 (5, 39, 1),
-(6, 39, 41);
+(6, 39, 41),
+(7, 40, 1),
+(8, 41, 1);
 
 -- --------------------------------------------------------
 
@@ -946,7 +964,7 @@ INSERT INTO `guzaba_roles_hierarchy` (`role_hierarchy_id`, `role_id`, `inherited
 --
 
 CREATE TABLE `guzaba_tests` (
-  `test_id` bigint(20) UNSIGNED NOT NULL,
+  `test_id` bigint UNSIGNED NOT NULL,
   `test_name` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -985,11 +1003,11 @@ INSERT INTO `guzaba_tests` (`test_id`, `test_name`) VALUES
 --
 
 CREATE TABLE `guzaba_tests_temporal` (
-  `temporal_record_id` bigint(20) UNSIGNED NOT NULL,
-  `temporal_record_from_microtime` bigint(20) UNSIGNED NOT NULL,
-  `temporal_record_to_microtime` bigint(20) UNSIGNED NOT NULL,
-  `temporal_record_role_id` bigint(20) UNSIGNED NOT NULL,
-  `test_id` bigint(20) UNSIGNED NOT NULL,
+  `temporal_record_id` bigint UNSIGNED NOT NULL,
+  `temporal_record_from_microtime` bigint UNSIGNED NOT NULL,
+  `temporal_record_to_microtime` bigint UNSIGNED NOT NULL,
+  `temporal_record_role_id` bigint UNSIGNED NOT NULL,
+  `test_id` bigint UNSIGNED NOT NULL,
   `test_name` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -1023,11 +1041,11 @@ INSERT INTO `guzaba_tests_temporal` (`temporal_record_id`, `temporal_record_from
 --
 
 CREATE TABLE `guzaba_tokens` (
-  `token_id` bigint(20) UNSIGNED NOT NULL,
+  `token_id` bigint UNSIGNED NOT NULL,
   `token_uuid` binary(16) NOT NULL,
   `token_string` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `user_id` bigint(20) UNSIGNED NOT NULL,
-  `token_expiration_time` bigint(20) UNSIGNED NOT NULL
+  `user_id` bigint UNSIGNED NOT NULL,
+  `token_expiration_time` bigint UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
@@ -1037,11 +1055,11 @@ CREATE TABLE `guzaba_tokens` (
 --
 
 CREATE TABLE `guzaba_users` (
-  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` bigint UNSIGNED NOT NULL,
   `user_name` varchar(50) NOT NULL,
   `user_email` varchar(50) NOT NULL,
   `user_password` varchar(64) NOT NULL,
-  `role_id` bigint(20) NOT NULL,
+  `role_id` bigint NOT NULL,
   `user_is_disabled` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -1067,7 +1085,7 @@ INSERT INTO `guzaba_users` (`user_id`, `user_name`, `user_email`, `user_password
 --
 
 CREATE TABLE `guzaba_users_test` (
-  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` bigint UNSIGNED NOT NULL,
   `user_name` varchar(50) NOT NULL,
   `user_email` varchar(50) NOT NULL,
   `user_password` varchar(64) NOT NULL
@@ -1329,127 +1347,127 @@ ALTER TABLE `guzaba_users_test`
 -- AUTO_INCREMENT for table `guzaba_acl_permissions`
 --
 ALTER TABLE `guzaba_acl_permissions`
-  MODIFY `permission_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=182;
+  MODIFY `permission_id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=182;
 
 --
 -- AUTO_INCREMENT for table `guzaba_categories`
 --
 ALTER TABLE `guzaba_categories`
-  MODIFY `guzaba_categories_id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `guzaba_categories_id` int UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `guzaba_classes`
 --
 ALTER TABLE `guzaba_classes`
-  MODIFY `class_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54;
+  MODIFY `class_id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
 
 --
 -- AUTO_INCREMENT for table `guzaba_components`
 --
 ALTER TABLE `guzaba_components`
-  MODIFY `component_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `component_id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `guzaba_controllers`
 --
 ALTER TABLE `guzaba_controllers`
-  MODIFY `controller_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `controller_id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `guzaba_files`
 --
 ALTER TABLE `guzaba_files`
-  MODIFY `file_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `file_id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `guzaba_logs`
 --
 ALTER TABLE `guzaba_logs`
-  MODIFY `log_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `log_id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `guzaba_log_entries`
 --
 ALTER TABLE `guzaba_log_entries`
-  MODIFY `log_entry_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `log_entry_id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `guzaba_navigation_links`
 --
 ALTER TABLE `guzaba_navigation_links`
-  MODIFY `link_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `link_id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `guzaba_navigation_links_b1`
 --
 ALTER TABLE `guzaba_navigation_links_b1`
-  MODIFY `link_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `link_id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `guzaba_rbac_operations`
 --
 ALTER TABLE `guzaba_rbac_operations`
-  MODIFY `operation_id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `operation_id` bigint NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `guzaba_rbac_permissions`
 --
 ALTER TABLE `guzaba_rbac_permissions`
-  MODIFY `permission_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `permission_id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `guzaba_rbac_permissions_operations`
 --
 ALTER TABLE `guzaba_rbac_permissions_operations`
-  MODIFY `permission_operation_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `permission_operation_id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `guzaba_rbac_roles_permissions`
 --
 ALTER TABLE `guzaba_rbac_roles_permissions`
-  MODIFY `role_permission_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `role_permission_id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `guzaba_roles`
 --
 ALTER TABLE `guzaba_roles`
-  MODIFY `role_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `role_id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- AUTO_INCREMENT for table `guzaba_roles_hierarchy`
 --
 ALTER TABLE `guzaba_roles_hierarchy`
-  MODIFY `role_hierarchy_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `role_hierarchy_id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `guzaba_tests`
 --
 ALTER TABLE `guzaba_tests`
-  MODIFY `test_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=123;
+  MODIFY `test_id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=123;
 
 --
 -- AUTO_INCREMENT for table `guzaba_tests_temporal`
 --
 ALTER TABLE `guzaba_tests_temporal`
-  MODIFY `temporal_record_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `temporal_record_id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `guzaba_tokens`
 --
 ALTER TABLE `guzaba_tokens`
-  MODIFY `token_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `token_id` bigint UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `guzaba_users`
 --
 ALTER TABLE `guzaba_users`
-  MODIFY `user_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `user_id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `guzaba_users_test`
 --
 ALTER TABLE `guzaba_users_test`
-  MODIFY `user_id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
+  MODIFY `user_id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
 
 --
 -- Constraints for dumped tables
