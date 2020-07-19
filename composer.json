@@ -8,7 +8,7 @@
         "plugin management"
     ],
     "homepage": "https://github.com/AzonMedia/guzaba-platform",
-    "license": "BSD-3-Clause",
+    "license": "MIT",
     "minimum-stability": "dev",
     "authors": [
         {
