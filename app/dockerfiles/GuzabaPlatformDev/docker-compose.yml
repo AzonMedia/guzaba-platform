@@ -1,7 +1,7 @@
 version: '3'
 services:
   swoole:
-    image: kenashkov/php:7.4.6-swoole-4.5.2
+    image: kenashkov/php:7.4.8-swoole-4.5.2
     restart: always
     ports:
     - "8081:8081"
