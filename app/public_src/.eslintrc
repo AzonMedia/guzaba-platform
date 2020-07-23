@@ -2,7 +2,7 @@
   "parser": "babel-eslint",
   "extends": "eslint:recommended",
   "rules": {
-    "max-len": [1, 120, 2, {"ignoreComments": true}],
+    "max-len": [1, 160, 2, {"ignoreComments": true}],
     //"no-console": "off"
     //"no-console": 0
     //check only local vars, exclude globals

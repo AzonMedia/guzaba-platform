@@ -113,7 +113,10 @@ class Test extends BaseController
      */
     public function _init(?string $language = NULL)
     {
-        t::set_target_language($language, $this->get_request());
+        if ($language) {
+            t::set_target_language($language, $this->get_request());
+        }
+
     }
 
     public function trigger_exception(): ResponseInterface

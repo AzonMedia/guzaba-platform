@@ -25,9 +25,24 @@ export default {
                     ToastConfig[el] = AdditionalConfig[el];
                 }
             }
-            this.$bvToast.toast(message, ToastConfig)
 
-            //console.log(message)//also always log the messages to the console for reference
+            if (typeof message === "object") {
+                if (message.constructor.name === "Error") {
+                    if (message.response) {
+                        message = message.response.data.message;
+                    } else {
+                        message = "Network error (or API server is not running).";
+                    }
+                } else {
+                    message = "Unsupported message object of class " + message.constructor.name + " passed to show_toast()";
+                }
+            } else if (typeof message === "string") {
+                //do nothing
+            } else {
+                message = "Unsupported message of type " + (typeof message) + " passed to show_toast()";
+            }
+
+            this.$bvToast.toast(message, ToastConfig);
         }
     }
 }
