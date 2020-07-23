@@ -31,7 +31,7 @@ export default {
                     if (message.response) {
                         message = message.response.data.message;
                     } else {
-                        message = "Network error (or API server is not running).";
+                        message = "Network error";
                     }
                 } else {
                     message = "Unsupported message object of class " + message.constructor.name + " passed to show_toast()";

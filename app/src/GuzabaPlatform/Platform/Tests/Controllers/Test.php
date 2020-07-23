@@ -30,6 +30,7 @@ use GuzabaPlatform\Platform\Application\GuzabaPlatform as GP;
 use GuzabaPlatform\Platform\Application\MysqlConnectionCoroutine;
 use GuzabaPlatform\Platform\Authentication\Models\User;
 use Guzaba2\Translator\Translator as t;
+use GuzabaPlatform\Platform\Components\Models\Component;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LogLevel;
 
@@ -87,7 +88,10 @@ class Test extends BaseController
             ],
             '/trigger-exception'    => [
                 Method::HTTP_GET                        => [self::class, 'trigger_exception'],
-            ]
+            ],
+            '/fix-permissions'      => [
+                Method::HTTP_POST                       => [self::class, 'fix_permissions'],
+            ],
         ],
         'services' => [
             'ConnectionFactory',
@@ -117,6 +121,38 @@ class Test extends BaseController
             t::set_target_language($language, $this->get_request());
         }
 
+    }
+
+    public function fix_permissions(): ResponseInterface
+    {
+//        //for each record in object-meta there must be the appropriate permission records for the owner
+//        $Connection = static::get_service('ConnectionFactory')->get_connection(MysqlConnectionCoroutine::class, $SR);
+//        $q = "
+//SELECT meta_object_id, meta_class_id FROM guzaba_object_meta
+//        ";
+//        $data = $Connection->prepare($q)->execute()->fetchAll();
+//        //print_r($data);
+//        $AdminUser = new User(32);
+//        $AdminRole = $AdminUser->get_role();
+//        foreach ($data as $record) {
+//            try {
+//                $class_name = ActiveRecord::get_class_name($record['meta_class_id']);
+//                if ($class_name === Component::class) {
+//                    continue;
+//                }
+//                $Object = new $class_name($record['meta_object_id']);
+//                $object_actions = $Object::get_object_actions();
+//                foreach ($object_actions as $object_action) {
+//                    $Object->grant_permission($AdminRole, $object_action);
+//                    print 'granted '.$object_action.' on '.$class_name.PHP_EOL;
+//                }
+//
+//            } catch (\Exception $Exception) {
+//                print $Exception->getMessage().PHP_EOL;
+//            }
+//        }
+
+        return self::get_structured_ok_response( ['message' => 'ok'] );
     }
 
     public function trigger_exception(): ResponseInterface

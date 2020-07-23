@@ -11,6 +11,7 @@ import store from './store.js'
 //import Auth from './GuzabaPlatform/Platform/views/Auth.vue'
 //import Auth from '@GuzabaPlatform.Platform/views/Auth.vue'
 import Login from '@GuzabaPlatform.Platform/views/user/Login.vue'
+import Logout from '@GuzabaPlatform.Platform/views/user/Logout.vue'
 import Register from '@GuzabaPlatform.Platform/views/user/Register.vue'
 import NotFound from '@GuzabaPlatform.Platform/views/NotFound.vue'
 ///import axios from "axios";
@@ -62,12 +63,14 @@ let static_routes = [
     {
         path: '/user/logout',
         name: 'user logout',
-        component: () => {
-            store.dispatch('logout').then(() => {
-                //this.$router.push('/user/login');
-                this.$router.push('/');
-            })
-        }
+        // component: () => {
+        //     store.dispatch('logout')
+        //         .then(() => {
+        //         //this.$router.push('/user/login');
+        //             this.$router.push('/');
+        //         })
+        // }
+        component: Logout
     },
     {
         path: '/user/register',

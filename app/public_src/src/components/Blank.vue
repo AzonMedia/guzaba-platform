@@ -1,5 +1,5 @@
 <template>
-    <div>Blank</div>
+    <div>Components admin</div>
 </template>
 
 <script>

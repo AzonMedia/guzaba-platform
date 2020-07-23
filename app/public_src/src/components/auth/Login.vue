@@ -35,6 +35,9 @@
 </template>
 
 <script>
+
+//THIS
+
 //import Hook from '@/GuzabaPlatform/Platform/components/hooks/Hooks.vue'
 import Hook from '@GuzabaPlatform.Platform/components/hooks/Hooks.vue'
 import { stringify } from 'qs'
@@ -92,8 +95,8 @@ export default {
             let password = this.password;
 
             this.$store.dispatch('login', { username, password })
-            .then(() => this.$router.push('/'))
-            .catch(err => console.log('Not authorized'))
+                .then(() => this.$router.push('/'))
+                .catch(err => console.log('Not authorized'))
 
             this.username = null;
             this.password = null;
