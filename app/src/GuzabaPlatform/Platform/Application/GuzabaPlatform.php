@@ -221,9 +221,11 @@ BANNER;
      */
     public function execute() : int
     {
+        if (in_array( Kernel::get_php_sapi_name(), [ Kernel::SAPI['CLI'], Kernel::SAPI['SWOOLE'] ] ) ) {
+            $Watchdog = new \Azonmedia\Watchdog\Watchdog(new \Azonmedia\Watchdog\Backends\SwooleTableBackend());
+            Kernel::set_watchdog($Watchdog);
+        }
 
-        $Watchdog = new \Azonmedia\Watchdog\Watchdog(new \Azonmedia\Watchdog\Backends\SwooleTableBackend());
-        Kernel::set_watchdog($Watchdog);
 
         Kernel::get_di_container()->add('GuzabaPlatform', $this);
 
@@ -262,7 +264,11 @@ BANNER;
             $server_options['open_http2_protocol'] = TRUE;
         }
 
-        $HttpServer = new \Guzaba2\Swoole\Server(self::CONFIG_RUNTIME['swoole']['host'], self::CONFIG_RUNTIME['swoole']['port'], $server_options);
+//        if (in_array( Kernel::get_php_sapi_name(), [ Kernel::SAPI['CLI'], Kernel::SAPI['SWOOLE'] ] ) ) {
+//            $HttpServer = new \Guzaba2\Swoole\Server(self::CONFIG_RUNTIME['swoole']['host'], self::CONFIG_RUNTIME['swoole']['port'], $server_options);
+//        } else {
+//
+//        }
 
         // disable coroutine for debugging
         // $HttpServer->set(['enable_coroutine' => false,]);
@@ -305,7 +311,8 @@ BANNER;
         //$Router = new Router(new RoutingMapArray($routing_map));
         $Router = new Router(new GeneratedRoutingMap($routing_map, $routing_meta_data, $this->generated_files_dir));
         Kernel::get_di_container()->add('Router', $Router);//thew router may be needed outside the middlewares... for verifying routes for example
-        $RoutingMiddleware = new RoutingMiddleware($HttpServer, $Router);
+        //$RoutingMiddleware = new RoutingMiddleware($HttpServer, $Router);
+        $RoutingMiddleware = new RoutingMiddleware($Router);
 
         $cors_headers = [
             //'Access-Control-Allow-Origin'       => 'http://192.168.0.102:8080',
@@ -320,7 +327,8 @@ BANNER;
 
         //custom middleware for the app
         //$ServingMiddleware = new ServingMiddleware($HttpServer, []);//this serves all requests
-        $PlatformMiddleware = new PlatformMiddleware($this, $HttpServer);
+        //$PlatformMiddleware = new PlatformMiddleware($this, $HttpServer);
+        $PlatformMiddleware = new PlatformMiddleware();
 
         //$ExecutorMiddleware = new ExecutorMiddleware($HttpServer, self::CONFIG_RUNTIME['override_html_content_type']);
         $ExecutorMiddleware = new ExecutorMiddleware();
@@ -364,69 +372,79 @@ BANNER;
         //$RequestHandler = new \Guzaba2\Swoole\Handlers\Http\Request($HttpServer, $middlewares, $DefaultResponse);
         //$RequestHandler = new \Guzaba2\Swoole\Handlers\Http\Request($HttpServer, $Middlewares->get_middlewares(), $DefaultResponse);
         //$RequestHandler = new \Guzaba2\Swoole\Handlers\Http\Request($HttpServer, $Middlewares, $DefaultResponse, $ServerErrorReponse);
-        $RequestHandler = new \Guzaba2\Swoole\Handlers\Http\Request($HttpServer, $Middlewares);
+        if (in_array( Kernel::get_php_sapi_name(), [ Kernel::SAPI['CLI'], Kernel::SAPI['SWOOLE'] ] ) ) {
 
-        //$ConnectHandler = new WorkerConnect($HttpServer, new IpFilter());
-        //$WorkerHandler = new WorkerHandler($HttpServer);
-        $WorkerHandler = new WorkerStart($HttpServer, self::CONFIG_RUNTIME['swoole']['enable_debug_ports'], self::CONFIG_RUNTIME['swoole']['base_debug_port']);
+            $HttpServer = new \Guzaba2\Swoole\Server(self::CONFIG_RUNTIME['swoole']['host'], self::CONFIG_RUNTIME['swoole']['port'], $server_options);
 
-        $PipeMessageHandler = new PipeMessage($HttpServer, $Middlewares);
+            $RequestHandler = new \Guzaba2\Swoole\Handlers\Http\Request($HttpServer, $Middlewares);
+            //$ConnectHandler = new WorkerConnect($HttpServer, new IpFilter());
+            //$WorkerHandler = new WorkerHandler($HttpServer);
+            $WorkerHandler = new WorkerStart($HttpServer, self::CONFIG_RUNTIME['swoole']['enable_debug_ports'], self::CONFIG_RUNTIME['swoole']['base_debug_port']);
+            $PipeMessageHandler = new PipeMessage($HttpServer, $Middlewares);
+            $TaskHandler = new Task($HttpServer, $Middlewares);
+            //$HttpServer->on('Connect', $ConnectHandler);
+            $HttpServer->on('WorkerStart', $WorkerHandler);
+            $HttpServer->on('Request', $RequestHandler);
+            $HttpServer->on('PipeMessage', $PipeMessageHandler);
+            $HttpServer->on('Task', $TaskHandler);
 
-        $TaskHandler = new Task($HttpServer, $Middlewares);
+            Kernel::get_di_container()->add('Server', $HttpServer);
 
-        //$HttpServer->on('Connect', $ConnectHandler);
-        $HttpServer->on('WorkerStart', $WorkerHandler);
-        $HttpServer->on('Request', $RequestHandler);
-        $HttpServer->on('PipeMessage', $PipeMessageHandler);
-        $HttpServer->on('Task', $TaskHandler);
+            Kernel::printk(self::PLATFORM_BANNER);
+            Kernel::printk(PHP_EOL);
+            Kernel::printk(sprintf(t::_('GuzabaPlatform version %s running in %s mode at %s'), self::CONFIG_RUNTIME['version'], static::get_deployment(), $this->app_directory).PHP_EOL);
+            Kernel::printk(PHP_EOL);
+            if (self::CONFIG_RUNTIME['cors_origin'] !== self::CONFIG_DEFAULTS['cors_origin']) {
+                Kernel::printk(sprintf(t::_('CORS origin set to: %1$s'), self::CONFIG_RUNTIME['cors_origin']).PHP_EOL);
+            } else {
+                Kernel::printk(sprintf(t::_('Using the default CORS origin: %1$s'), self::CONFIG_RUNTIME['cors_origin']).PHP_EOL);
+            }
 
 
-        Kernel::get_di_container()->add('Server', $HttpServer);
+            //the translator initialization can be moved in start_server.php but then Kernel::printk() cant be used and the start time in Kernel::initialize() will be very wrong
+            //Kernel::printk(sprintf('Initializing translations').PHP_EOL);
+            //t::initialize(Packages::get_application_composer_file_path(), $packages_filter = ['/azonmedia.*/i', '/guzaba-platform.*/i', '/guzaba.*/i'] );
+            //Kernel::printk(sprintf(t::_('Loaded %1$s translations from %2$s packages.'), t::get_loaded_translations_count(), count(t::get_loaded_packages()) ).PHP_EOL);
 
-        Kernel::printk(self::PLATFORM_BANNER);
-        Kernel::printk(PHP_EOL);
-        Kernel::printk(sprintf(t::_('GuzabaPlatform version %s running in %s mode at %s'), self::CONFIG_RUNTIME['version'], static::get_deployment(), $this->app_directory).PHP_EOL);
-        Kernel::printk(PHP_EOL);
-        if (self::CONFIG_RUNTIME['cors_origin'] !== self::CONFIG_DEFAULTS['cors_origin']) {
-            Kernel::printk(sprintf(t::_('CORS origin set to: %1$s'), self::CONFIG_RUNTIME['cors_origin']).PHP_EOL);
+
+            $root_directory = realpath($this->app_directory.'/../');
+            $Manifest = json_decode(file_get_contents($root_directory.'/manifest.json'));
+            $components_info = t::_('Installed components:').PHP_EOL;
+            foreach ($Manifest->components as $Component) {
+                $components_info .= str_repeat(' ',4).'- '.$Component->name.' - '.$Component->namespace.' : '.$Component->src_dir.PHP_EOL;
+            }
+            Kernel::printk($components_info);
+            Kernel::printk(PHP_EOL);
+
+            $middlewares_info = t::_('Middlewares:').PHP_EOL;
+            //foreach ($middlewares as $Middleware) {
+            //foreach ($Middlewares->get_middlewares() as $Middleware) {
+            foreach ($Middlewares as $Middleware) {
+                $middlewares_info .= str_repeat(' ',4).'- '.get_class($Middleware).' - '.((new \ReflectionClass($Middleware))->getFileName()).PHP_EOL;
+            }
+            Kernel::printk($middlewares_info);
+
+            //close any single connections that may have been opened during this phase
+            self::get_service('ConnectionFactory')->close_all_connections();
+            //after the server is started new connections (Pools) will be created for each worker
+
+
+            $HttpServer->start();
+
         } else {
-            Kernel::printk(sprintf(t::_('Using the default CORS origin: %1$s'), self::CONFIG_RUNTIME['cors_origin']).PHP_EOL);
+            $HttpServer = new \Guzaba2\Httpd\Server($_SERVER['SERVER_NAME'], (int) $_SERVER['SERVER_PORT'], []);
+
+            $RequestHandler = new \Guzaba2\Httpd\Handlers\Request($HttpServer, $Middlewares);
+
+            $HttpServer->on('Request', $RequestHandler);
+            $HttpServer->handle('Request');
+
         }
 
 
-        //the translator initialization can be moved in start_server.php but then Kernel::printk() cant be used and the start time in Kernel::initialize() will be very wrong
-        //Kernel::printk(sprintf('Initializing translations').PHP_EOL);
-        //t::initialize(Packages::get_application_composer_file_path(), $packages_filter = ['/azonmedia.*/i', '/guzaba-platform.*/i', '/guzaba.*/i'] );
-        //Kernel::printk(sprintf(t::_('Loaded %1$s translations from %2$s packages.'), t::get_loaded_translations_count(), count(t::get_loaded_packages()) ).PHP_EOL);
 
 
-        $root_directory = realpath($this->app_directory.'/../');
-        $Manifest = json_decode(file_get_contents($root_directory.'/manifest.json'));
-        $components_info = t::_('Installed components:').PHP_EOL;
-        foreach ($Manifest->components as $Component) {
-            $components_info .= str_repeat(' ',4).'- '.$Component->name.' - '.$Component->namespace.' : '.$Component->src_dir.PHP_EOL;
-        }
-        Kernel::printk($components_info);
-        Kernel::printk(PHP_EOL);
-
-        $middlewares_info = t::_('Middlewares:').PHP_EOL;
-        //foreach ($middlewares as $Middleware) {
-        //foreach ($Middlewares->get_middlewares() as $Middleware) {
-        foreach ($Middlewares as $Middleware) {
-            $middlewares_info .= str_repeat(' ',4).'- '.get_class($Middleware).' - '.((new \ReflectionClass($Middleware))->getFileName()).PHP_EOL;
-        }
-        Kernel::printk($middlewares_info);
-
-        //close any single connections that may have been opened during this phase
-        self::get_service('ConnectionFactory')->close_all_connections();
-        //after the server is started new connections (Pools) will be created for each worker
-
-
-
-
-        $HttpServer->start();
-
-        new Event($this, '_after_execute');
+        //new Event($this, '_after_execute');//this is not reached after the server is started
 
         return Kernel::EXIT_SUCCESS;
     }
