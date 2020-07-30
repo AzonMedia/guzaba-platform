@@ -4,9 +4,9 @@ declare(strict_types=1);
 namespace GuzabaPlatform\Platform\Application;
 
 use Guzaba2\Base\Base;
-use Guzaba2\Http\Body\Stream;
+use Azonmedia\Http\Body\Stream;
 use Guzaba2\Http\Response;
-use Guzaba2\Http\StatusCode;
+use Azonmedia\Http\StatusCode;
 use Guzaba2\Swoole\Server;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;

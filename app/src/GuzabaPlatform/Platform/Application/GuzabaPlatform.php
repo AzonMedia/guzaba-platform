@@ -3,7 +3,10 @@ declare(strict_types=1);
 
 namespace GuzabaPlatform\Platform\Application;
 
+use Azonmedia\Routing\Router;
 use Azonmedia\Packages\Packages;
+use Azonmedia\Http\Body\Stream;
+use Azonmedia\Http\StatusCode;
 use Guzaba2\Base\Exceptions\RunTimeException;
 use Guzaba2\Event\Event;
 use Guzaba2\Kernel\Interfaces\ClassInitializationInterface;
@@ -14,13 +17,10 @@ use Guzaba2\Swoole\Debug\Debugger;
 use Guzaba2\Swoole\Handlers\PipeMessage;
 use Guzaba2\Swoole\Handlers\Task;
 use Guzaba2\Translator\Translator as t;
-use GuzabaPlatform\Platform\Application\PlatformMiddleware;
 use Guzaba2\Application\Application;
 use Guzaba2\Di\Container;
-use Guzaba2\Http\Body\Stream;
 use Guzaba2\Http\Response;
 use Guzaba2\Http\RewritingMiddleware;
-use Guzaba2\Http\StatusCode;
 use Guzaba2\Kernel\Kernel;
 use Guzaba2\Mvc\ExecutorMiddleware;
 use Guzaba2\Routing\RoutingMiddleware;
@@ -29,7 +29,7 @@ use Guzaba2\Swoole\Handlers\WorkerConnect;
 use Guzaba2\Authorization\Ip\IpFilter;
 use Guzaba2\Http\CorsMiddleware;
 use GuzabaPlatform\Platform\Application\AuthCheckMiddleware;
-use Azonmedia\Routing\Router;
+use GuzabaPlatform\Platform\Application\PlatformMiddleware;
 use Psr\Log\LogLevel;
 
 /**
@@ -375,6 +375,7 @@ BANNER;
         if (in_array( Kernel::get_php_sapi_name(), [ Kernel::SAPI['CLI'], Kernel::SAPI['SWOOLE'] ] ) ) {
 
             $HttpServer = new \Guzaba2\Swoole\Server(self::CONFIG_RUNTIME['swoole']['host'], self::CONFIG_RUNTIME['swoole']['port'], $server_options);
+            Kernel::get_di_container()->add('Server', $HttpServer);
 
             $RequestHandler = new \Guzaba2\Swoole\Handlers\Http\Request($HttpServer, $Middlewares);
             //$ConnectHandler = new WorkerConnect($HttpServer, new IpFilter());
@@ -388,7 +389,7 @@ BANNER;
             $HttpServer->on('PipeMessage', $PipeMessageHandler);
             $HttpServer->on('Task', $TaskHandler);
 
-            Kernel::get_di_container()->add('Server', $HttpServer);
+
 
             Kernel::printk(self::PLATFORM_BANNER);
             Kernel::printk(PHP_EOL);
@@ -433,6 +434,7 @@ BANNER;
 
         } else {
             $HttpServer = new \Guzaba2\Httpd\Server($_SERVER['SERVER_NAME'], (int) $_SERVER['SERVER_PORT'], []);
+            Kernel::get_di_container()->add('Server', $HttpServer);
 
             $RequestHandler = new \Guzaba2\Httpd\Handlers\Request($HttpServer, $Middlewares);
 

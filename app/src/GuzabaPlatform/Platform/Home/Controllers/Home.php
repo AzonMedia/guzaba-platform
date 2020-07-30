@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace GuzabaPlatform\Platform\Home\Controllers;
 
+use Guzaba2\Http\Interfaces\ServerInterface;
 use Guzaba2\Http\Method;
 use Guzaba2\Mvc\ActiveRecordController;
 use Guzaba2\Translator\Translator as t;
@@ -25,6 +26,9 @@ class Home extends BaseController
                 Method::HTTP_ALL       => [self::class, 'main'],
             ],
         ],
+        'services'  => [
+            'Server'
+        ],
     ];
 
     protected const CONFIG_RUNTIME = [];
@@ -39,7 +43,10 @@ class Home extends BaseController
 //        $Response = parent::get_structured_ok_response($struct);
         //
         //print $this->get_request()->get_server()->get_document_root();
-        $index_file_path = $this->get_request()->get_server()->get_document_root().'/index.html';
+        //$index_file_path = $this->get_request()->get_server()->get_document_root().'/index.html';
+        /** @var ServerInterface $Server */
+        $Server = self::get_service('Server');
+        $index_file_path = $Server->get_document_root().'/index.html';
         if (file_exists($index_file_path)) {
             $contents = \Swoole\Coroutine\System::readFile($index_file_path);
         } else {

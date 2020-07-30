@@ -5,7 +5,7 @@ namespace GuzabaPlatform\Platform\Authentication\Controllers;
 
 use Guzaba2\Authorization\Role;
 use Guzaba2\Http\Method;
-use Guzaba2\Http\StatusCode;
+use Azonmedia\Http\StatusCode;
 use Guzaba2\Mvc\ActiveRecordController;
 use Guzaba2\Orm\Exceptions\RecordNotFoundException;
 use Guzaba2\Translator\Translator as t;
