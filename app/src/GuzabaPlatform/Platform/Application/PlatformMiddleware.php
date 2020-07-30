@@ -4,17 +4,17 @@ declare(strict_types=1);
 namespace GuzabaPlatform\Platform\Application;
 
 // use Guzaba2\Application\Application;
+use Azonmedia\Http\Method;
+use Azonmedia\Http\StatusCode;
+use Azonmedia\Http\Body\Stream;
 use Guzaba2\Http\Body\Structured;
 use Guzaba2\Kernel\Kernel;
 use Guzaba2\Translator\Translator as t;
 use GuzabaPlatform\Platform\Authentication\Models\User;
 use Guzaba2\Base\Base;
-use Guzaba2\Http\Body\Stream;
 use Guzaba2\Http\Response;
-use Guzaba2\Http\StatusCode;
 use Guzaba2\Base\Exceptions\InvalidArgumentException;
 use Guzaba2\Base\Exceptions\RunTimeException;
-use Guzaba2\Http\Method;
 use Guzaba2\Http\Server;
 use Guzaba2\Coroutine\Coroutine;
 use Guzaba2\Kernel\Exceptions\ConfigurationException;
@@ -59,7 +59,8 @@ class PlatformMiddleware extends Base
     public function process(ServerRequestInterface $Request, RequestHandlerInterface $Handler) : ResponseInterface
     {
 
-        if ($Request->getMethodConstant() === \Guzaba2\Http\Method::HTTP_OPTIONS) {//ONLY FOR DEVELOPMENT USE
+        //if ($Request->getMethodConstant() === \Guzaba2\Http\Method::HTTP_OPTIONS) {//ONLY FOR DEVELOPMENT USE
+        if (Method::get_method_constant($Request) === \Guzaba2\Http\Method::HTTP_OPTIONS) {//ONLY FOR DEVELOPMENT USE
             $content_type = 'application/json';
 
             $Body = new Stream();
@@ -72,7 +73,8 @@ class PlatformMiddleware extends Base
 
         //disable the locking if the request does not involve updates
         //this must be the very first thing
-        if ($Request->getMethodConstant() === Method::HTTP_GET && self::CONFIG_RUNTIME['disable_locking_on_get']) {
+        //if ($Request->getMethodConstant() === Method::HTTP_GET && self::CONFIG_RUNTIME['disable_locking_on_get']) {
+        if (Method::get_method_constant($Request) === Method::HTTP_GET && self::CONFIG_RUNTIME['disable_locking_on_get']) {
 
             ActiveRecord::disable_locking();
         }

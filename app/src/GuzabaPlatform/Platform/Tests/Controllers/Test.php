@@ -5,6 +5,7 @@ namespace GuzabaPlatform\Platform\Tests\Controllers;
 
 use Azonmedia\Exceptions\InvalidArgumentException;
 use Guzaba2\Authorization\Acl\Permission;
+use Guzaba2\Authorization\Role;
 use Guzaba2\Base\Exceptions\RunTimeException;
 use Guzaba2\Coroutine\Coroutine;
 use Guzaba2\Coroutine\Resources;
@@ -15,8 +16,10 @@ use Guzaba2\Http\Method;
 use Guzaba2\Kernel\Kernel;
 use Guzaba2\Kernel\Runtime;
 use Guzaba2\Mvc\ActiveRecordController;
+use Guzaba2\Mvc\Controller;
 use Guzaba2\Mvc\ExecutorMiddleware;
 use Guzaba2\Orm\ActiveRecord;
+use Guzaba2\Orm\Interfaces\ActiveRecordInterface;
 use Guzaba2\Orm\OrmTransactionalResource;
 use Guzaba2\Orm\ScopeManager;
 use Guzaba2\Orm\Store\Memory;
@@ -92,6 +95,9 @@ class Test extends BaseController
             '/fix-permissions'      => [
                 Method::HTTP_POST                       => [self::class, 'fix_permissions'],
             ],
+            '/fix-controllers-permissions'      => [
+                Method::HTTP_POST                       => [self::class, 'fix_controllers_permissions'],
+            ],
         ],
         'services' => [
             'ConnectionFactory',
@@ -149,6 +155,26 @@ class Test extends BaseController
 //
 //            } catch (\Exception $Exception) {
 //                print $Exception->getMessage().PHP_EOL;
+//            }
+//        }
+
+        return self::get_structured_ok_response( ['message' => 'ok'] );
+    }
+
+    public function fix_controllers_permissions(): ResponseInterface
+    {
+
+//        $AdminRole = new Role(\GuzabaPlatform\Platform\Authentication\Roles\ADMINISTRATOR);
+//        $controller_classes = Controller::get_controller_classes();
+//        foreach ($controller_classes as $class) {
+//            foreach ($class::get_actions() as $action) {
+//                try {
+//                    /** @var ActiveRecordInterface */
+//                    $class::grant_class_permission($AdminRole, $action);
+//                    print 'granted '.$action.' on '.$class.PHP_EOL;
+//                } catch (\Exception $Exception) {
+//                    print $Exception->getMessage().PHP_EOL;
+//                }
 //            }
 //        }
 

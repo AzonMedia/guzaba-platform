@@ -39,13 +39,15 @@
 
             <div id="admin-view-container">
                 <router-view/>
-            </div>
+            <
         </div>
 -->
 </template>
 
 <script>
     const aliases = require('@/../components_config/webpack.components.runtime.json')
+
+    import ToastMixin from '@GuzabaPlatform.Platform/ToastMixin.js'
 
     export default {
         // computed : {
@@ -59,6 +61,10 @@
         //             })
         //     }
         // },
+        name: "Home",
+        mixins: [
+            ToastMixin,
+        ],
         data() {
             return {
                 links: [],
@@ -91,7 +97,8 @@
                     this.links = resp.data.links;
                 })
                 .catch(err => {
-                    console.log(err);
+                    //console.log(err);
+                    this.show_toast(err);
                 });
         }
     }
