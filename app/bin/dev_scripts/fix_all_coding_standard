@@ -1,0 +1,5 @@
+# Fixes the project files and the vendor files under azonmedia, guzaba & guzaba-platform coding standard against ../../../vendor/azonmedia/php-codesniffer-azonmedia-coding-standard/Azonmedia
+../../../vendor/bin/phpcbf --standard=../../../vendor/azonmedia/php-codesniffer-azonmedia-coding-standard/Azonmedia ../../src
+../../../vendor/bin/phpcbf --standard=../../../vendor/azonmedia/php-codesniffer-azonmedia-coding-standard/Azonmedia ../../../vendor/azonmedia
+../../../vendor/bin/phpcbf --standard=../../../vendor/azonmedia/php-codesniffer-azonmedia-coding-standard/Azonmedia ../../../vendor/guzaba
+../../../vendor/bin/phpcbf --standard=../../../vendor/azonmedia/php-codesniffer-azonmedia-coding-standard/Azonmedia ../../../vendor/guzaba-platform

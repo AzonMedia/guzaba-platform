@@ -1,0 +1,2 @@
+# Checks the project coding standard against ../../../vendor/azonmedia/php-codesniffer-azonmedia-coding-standard/Azonmedia
+../../../vendor/bin/phpcs --standard=../../../vendor/azonmedia/php-codesniffer-azonmedia-coding-standard/Azonmedia ../../src

@@ -1,0 +1,2 @@
+# Runs php lint for all project files and the files under the ./vendor dir and shows the files that have syntax errors
+find ../../../ -type f -name '*.php' -exec php -l {} \; | grep -v "No syntax errors detected"
