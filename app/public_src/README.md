@@ -1,5 +1,7 @@
 # guzaba-platform
 
+**IMPORTANT: Do not copy the node_modules directory between projects. If you move the whole project reinstall the modules.**
+
 ## Project setup
 ```
 npm install
