@@ -20,14 +20,13 @@ use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 use Psr\Log\LogLevel;
 
-
 (function() {
 
     $init_microtime = microtime(TRUE);//needed by the kernel
 
     error_reporting(E_ALL);
 
-    $php_min_version_required = '7.4.0';// technically 7.4.0RC5 is min required
+    $php_min_version_required = '7.4.0';
     if (version_compare(phpversion(), $php_min_version_required, '<')) {
         print sprintf('The application requires PHP %s or higher.', $php_min_version_required).PHP_EOL;
         exit(1);
@@ -49,6 +48,11 @@ use Psr\Log\LogLevel;
     // ===== begin Translator initialization ===== //
     $skip_translator = FALSE;
     if (isset($cli_options_mapping['GuzabaPlatform\\Platform\\Application\\GuzabaPlatform']['skip_translator'])) {
+        $skip_translator = TRUE;
+    }
+    //temporary fix - skip translator if SAPI === apache || cgi-fcgi
+    $sapi = kernel::get_php_sapi_name();
+    if (in_array($sapi, [Kernel::SAPI['APACHE'], Kernel::SAPI['CGI']])) {
         $skip_translator = TRUE;
     }
 
@@ -123,7 +127,12 @@ use Psr\Log\LogLevel;
     //the priority from highest to lowest is: Cli, Env, Array. Cli args override env vars, and env vars override php array config.
     //the fallback is registered first and then in increasing priority
 
-    $RegistryBackendArray = new RegistryBackendArray(realpath($app_directory . '/registry'));
+    $registry_dir = $app_directory . '/registry';
+    if (in_array($sapi, [Kernel::SAPI['APACHE'], Kernel::SAPI['CGI']])) {
+        $registry_dir = $app_directory . '/registry_httpd';
+    }
+
+    $RegistryBackendArray = new RegistryBackendArray(realpath($registry_dir));
     $Registry = new Registry($RegistryBackendArray, $generated_runtime_config_file, $generated_runtime_config_dir);
 
     $RegistryBackendEnv = new RegistryBackendEnv('');
@@ -159,7 +168,7 @@ use Psr\Log\LogLevel;
         SourceStream::class => [ //these will be passed to the SourceStream class
             'class_cache_enabled'   => !$class_cache_disabled,
             'class_cache_dir'       => $app_directory.'/startup_generated/classes',
-            'registry_dir'          => $app_directory.'/registry',//if provided it will compare the mtime of all the registry files and the cached classes
+            'registry_dir'          => $registry_dir,//if provided it will compare the mtime of all the registry files and the cached classes
         ],
     ];
     Kernel::initialize($Registry, $Logger, $options);

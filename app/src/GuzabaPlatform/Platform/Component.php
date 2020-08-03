@@ -42,9 +42,15 @@ class Component extends BaseComponent implements ComponentInterface, ComponentIn
      */
     public static function run_all_initializations() : array
     {
+        $ret = ['register_routes'];
         self::register_routes();
-        self::register_apm_event_hooks();
-        return ['register_routes'];
+        //to improve performance it is possible to switch off the Apm by removing the service Apm in the Registry for this class
+        if (self::uses_service('Apm')) {
+            $ret[] = 'register_apm_event_hooks';
+            self::register_apm_event_hooks();
+        }
+
+        return $ret;
     }
 
     public static function register_routes() : void
