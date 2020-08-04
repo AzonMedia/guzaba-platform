@@ -26,10 +26,7 @@
 
 <script>
 
-//console.log('RRR');
 //const aliases = require('@/../components_config/webpack.components.config.js').aliases
-//console.log(aliases);
-//console.log(al2);
 const aliases = require('@/../components_config/webpack.components.runtime.json')
 
 export default {

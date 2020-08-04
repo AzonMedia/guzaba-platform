@@ -43,6 +43,6 @@ export default {
             }
 
             this.$bvToast.toast(message, ToastConfig);
-        }
+        },
     }
 }
