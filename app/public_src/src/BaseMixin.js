@@ -29,7 +29,10 @@ export default {
          * @param string component
          * @return string[]
          */
-        get_template_names(component) {
+        get_parent_component_names(component) {
+            if (typeof component === 'undefined') {
+                component = this
+            }
             let arr = [];
             do {
                 arr.push(component.$options.name);//the name of the template
@@ -39,6 +42,27 @@ export default {
             return arr;
         },
 
+        /**
+         * Returns the parent component based on name (no matter how far it is)
+         * Returns null if no parent controller with the given name is found
+         * @param string parent_component_name
+         * @return null|Vue
+         */
+        get_parent_component_by_name(parent_component_name, component) {
+            if (typeof component === 'undefined') {
+                component = this
+            }
+            let parent_component = null
+            while (component.$parent) {
+                if (component.$options.name === parent_component_name) {
+                    parent_component = component
+                    break;
+                }
+                component = component.$parent
+            }
+            return parent_component
+        },
+        
         /**
          * Accepts path that contains alias and returns resolved path.
          * If the path does not contain an alias the same string is returned
@@ -70,6 +94,10 @@ export default {
             return resolved_path;
         },
 
+        /**
+         *
+         * @returns {*}
+         */
         get_aliases() {
             return aliases;
         }
