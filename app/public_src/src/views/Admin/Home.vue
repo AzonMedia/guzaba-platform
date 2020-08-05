@@ -97,8 +97,9 @@
                     this.links = resp.data.links;
                 })
                 .catch(err => {
-                    //console.log(err);
                     this.show_toast(err);
+                })
+                .finally(()=>{
                 });
         }
     }

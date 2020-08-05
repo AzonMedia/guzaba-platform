@@ -7,10 +7,12 @@
     import ToastMixin from '@GuzabaPlatform.Platform/ToastMixin.js'
     import BaseMixin from '@GuzabaPlatform.Platform/BaseMixin.js'
 
+    //const fileExists = require('file-exists');
+
     //const aliases = require('@/../components_config/webpack.components.runtime.json');
 
     export default {
-        name: "ComponentHooks",
+        name: "ComponentHook",
         mixins: [
             ToastMixin,
             BaseMixin,
@@ -33,6 +35,18 @@
                 hooked_file = hooked_file.replace('.vue','')
                 hooked_file += '/' + this.HookData.hook_name
                 //return () => import(`@/../component_hooks/guzaba-platform/navigation/app/public_src/src/components/AddLink/AfterTabs.vue`)//example hardcoded path
+                //having the real FS path does not help either as webpack still cant find it
+                //let hooked_file_real_path = `@/../component_hooks/${hooked_file}.vue`
+                //hooked_file_real_path = this.resolve_alias(hooked_file_real_path)
+
+                //nothing with the 'fs' module works - this is part of Node
+                try {
+                    //require(hooked_file_real_path) // does not work - doesnt find existing files as it is a full FS path
+                    require(`@/../component_hooks/${hooked_file}.vue`) //works because it uses partial path and the webpack preprocessor can locate it
+                } catch(err) {
+                    //the file does not exist - return nothing
+                    return '';
+                }
                 return () => import(`@/../component_hooks/${hooked_file}.vue`)
             }
         },

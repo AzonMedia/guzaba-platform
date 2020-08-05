@@ -56,9 +56,10 @@ class VueRouter extends \Azonmedia\VueRouter\VueRouter implements ConfigInterfac
      */
     public function dump_routes() : void
     {
-        $this->set_routes_dumped(TRUE);
-        $routes_str = $this->as_string();
-        Kernel::file_put_contents($this->get_router_file(), $routes_str);//replace the old file
-        Kernel::printk(sprintf(t::_('%1$s: Vue routes dumped to %2$s.'), __CLASS__, $this->get_router_file() ).PHP_EOL);
+        //$this->set_routes_dumped(TRUE);
+        //$routes_str = $this->as_string();
+        //Kernel::file_put_contents($this->get_router_file(), $routes_str);//replace the old file
+        parent::dump_routes();
+        Kernel::printk(sprintf(t::_('%1$s: Vue routes dumped to %2$s'), __CLASS__, realpath($this->get_router_file()) ).PHP_EOL);
     }
 }

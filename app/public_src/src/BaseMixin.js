@@ -51,12 +51,18 @@ export default {
                 return path_with_alias;
             }
             let resolved_path = '';
-            for (const alias in aliases) {
-                if (alias !== '@' && path_with_alias.indexOf(alias) !== -1) {
-                    resolved_path = path_with_alias.replace(alias, aliases[alias]);
-                    break;
-                }
+            let lookup_alias = path_with_alias.match(/(@.*?)\//)[1] // ? - ungreedy - must be used
+            if (typeof aliases[lookup_alias] !== 'undefined') {
+                resolved_path = path_with_alias.replace(lookup_alias, aliases[lookup_alias]);
             }
+            //return lookup_alias
+            // //this is wrong
+            // // for (const alias in aliases) {
+            // //     if (alias !== '@' && path_with_alias.indexOf(alias) !== -1) {
+            // //         resolved_path = path_with_alias.replace(alias, aliases[alias]);
+            // //         break;
+            // //     }
+            // // }
             if (!resolved_path) {
                 let unknown_alias = path_with_alias.substring(path_with_alias.indexOf('@'), path_with_alias.indexOf('/'));
                 throw new Error(`The provided path ${path_with_alias} contains an unknown alias ${unknown_alias}.`);
