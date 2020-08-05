@@ -35,6 +35,7 @@ use GuzabaPlatform\Platform\Application\VueRouter;
 use Guzaba2\Orm\BlockingStore\Nosql\MongoDB;
 use GuzabaPlatform\Platform\Application\MongoDbConnection;
 use Guzaba2\Authorization\BypassAuthorizationProvider;
+use GuzabaPlatform\Platform\Application\VueComponentHooks;
 use Guzaba2\Transaction\TransactionManager;
 use Psr\Log\LogLevel;
 
@@ -56,7 +57,7 @@ return [
             ],
         ],
         'version'       => 'dev',
-        //'cors_origin'   => 'http://localhost:8080',
+        'cors_origin'   => 'http://localhost:8080',
         'enable_http2'  => FALSE,//if enabled enable_static_handler/document_root doesnt work
         'enable_ssl'    => FALSE,
         'log_level'     => LogLevel::DEBUG,
@@ -180,8 +181,8 @@ return [
             ],
             'AuthorizationProvider'         => [
                 //'class'                         => BypassAuthorizationProvider::class,
-                //'class'                         => AclAuthorizationProvider::class,
-                'class'                         => AclCreateAuthorizationProvider::class,
+                'class'                         => AclAuthorizationProvider::class,//enforces permissions, production operation
+                //'class'                         => AclCreateAuthorizationProvider::class,//allows permissions to be created & revoked but does not enforce permissions (to be used when new controllers are created)
                 'args'                          => [],
             ],
             'CurrentUser'                   => [
@@ -255,11 +256,18 @@ return [
                     'connection_class'              => RedisConnection::class,
                 ],
             ],
-            'FrontendRouter'                     => [
+            'FrontendRouter'                => [
                 'class'                         => VueRouter::class,
                 'args'                          => [
                     'router_file'                   => './public_src/components_config/router.config.js',
                 ],
+            ],
+            'FrontendHooks'                 => [
+                'class'                         => VueComponentHooks::class,
+                'args'                          => [
+                    'component_hooks_dir'           => './public_src/component_hooks',
+                    'aliases_file'                  => './public_src/components_config/webpack.components.runtime.json',
+                ]
             ],
             'TransactionManager'           => [
                 'class'                         => TransactionManager::class,
