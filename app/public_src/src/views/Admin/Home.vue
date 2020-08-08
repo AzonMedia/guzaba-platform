@@ -97,6 +97,8 @@
                     this.links = resp.data.links;
                 })
                 .catch(err => {
+                    console.log(JSON.stringify( err))
+                    console.log(typeof err.config)
                     this.show_toast(err);
                 })
                 .finally(()=>{

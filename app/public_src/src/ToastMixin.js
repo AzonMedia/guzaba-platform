@@ -31,7 +31,11 @@ export default {
                     if (message.response) {
                         message = message.response.data.message;
                     } else {
-                        message = "Network error";
+                        let resource = 'the requiested resource';
+                        if (typeof message.config !== 'undefined') {
+                            resource = message.config.method + ' ' + message.config.baseURL + message.config.url;
+                        }
+                        message = `Not allowed to execute ${resource}, the CORS policy not configured or the API server is not running/not accessible.`
                     }
                 } else {
                     message = "Unsupported message object of class " + message.constructor.name + " passed to show_toast()";
