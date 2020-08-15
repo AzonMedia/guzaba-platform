@@ -148,6 +148,14 @@ abstract class CliOptions
             'default'           => NULL,
             'class'             => Container::class,
             'option'            => ['dependencies' => ['AuthorizationProvider' => ['class' => AclCreateAuthorizationProvider::class] ] ],
+        ],
+        'allow-no-permission-checks-in-production'      => [
+            'shortcut'          => NULL,
+            'input'             => InputOption::VALUE_NONE,
+            'description'       => 'Allows a non enforcing AuthorizationProvider to be used in production. See the --no-permission-checks and --deployment options.',
+            'default'           => NULL,
+            'class'             => GuzabaPlatform::class,
+            'option'            => 'allow_no_permission_checks_in_production',
         ]
     ];
 

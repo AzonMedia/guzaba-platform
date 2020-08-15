@@ -7,8 +7,10 @@ use Azonmedia\Routing\Router;
 use Azonmedia\Packages\Packages;
 use Azonmedia\Http\Body\Stream;
 use Azonmedia\Http\StatusCode;
+use Guzaba2\Authorization\Interfaces\AuthorizationProviderInterface;
 use Guzaba2\Base\Exceptions\RunTimeException;
 use Guzaba2\Event\Event;
+use Guzaba2\Kernel\Exceptions\ConfigurationException;
 use Guzaba2\Kernel\Interfaces\ClassInitializationInterface;
 use Guzaba2\Orm\ClassDeclarationValidation;
 use Guzaba2\Routing\ControllerDefaultRoutingMap;
@@ -41,62 +43,64 @@ use Psr\Log\LogLevel;
 class GuzabaPlatform extends Application
 {
     protected const CONFIG_DEFAULTS = [
-        'swoole'                    => [ //this array will be passed to $SwooleHttpServer->set()
-            'host'                      => '0.0.0.0',
-            'port'                      => 8081,
-            'server_options'            => [
-                'worker_num'                => NULL,//http workers NULL means Server will set this to swoole_cpu_num()*2
+        'swoole'                                    => [ //this array will be passed to $SwooleHttpServer->set()
+            'host'                                      => '0.0.0.0',
+            'port'                                      => 8081,
+            'server_options'                            => [
+                'worker_num'                                => NULL,//http workers NULL means Server will set this to swoole_cpu_num()*2
                 //Swoole\Coroutine::create(): Unable to use async-io in task processes, please set `task_enable_coroutine` to true.
                 //'task_worker_num'   => 8,//tasks workers
-                'task_worker_num'           => 0,//tasks workers,
-                'document_root'             => NULL,//to be set dynamically
-                'enable_static_handler'     => TRUE,
-                // 'open_http2_protocol'       => FALSE,//depends on enable-http2 (and enable-ssl)
-                'ssl_cert_file'             => NULL,
-                'ssl_key_file'              => NULL,
+                'task_worker_num'                           => 0,//tasks workers,
+                'document_root'                             => NULL,//to be set dynamically
+                'enable_static_handler'                     => TRUE,
+                // 'open_http2_protocol'                    => FALSE,//depends on enable-http2 (and enable-ssl)
+                'ssl_cert_file'                             => NULL,
+                'ssl_key_file'                              => NULL,
 
-                'http_parse_post'       => FALSE,
-                'upload_tmp_dir'        => NULL,//will be set by the application
+                'http_parse_post'                           => FALSE,
+                'upload_tmp_dir'                            => NULL,//will be set by the application
             ],
-            'enable_debug_ports'        => FALSE,
-            'base_debug_port'           => Debugger::DEFAULT_BASE_DEBUG_PORT,
+            'enable_debug_ports'                        => FALSE,
+            'base_debug_port'                           => Debugger::DEFAULT_BASE_DEBUG_PORT,
         ],
-        'version'                   => 'dev',
+        'version'                                   => 'dev',
 
-        'cors_origin'               => 'http://localhost:8080',
-        'enable_http2'              => FALSE,//if enabled enable_static_handler/document_root doesnt work
-        'enable_ssl'                => FALSE,
-        'disable_static_handler'    => FALSE,
-        'disable_file_upload'       => FALSE,
+        'cors_origin'                               => 'http://localhost:8080',
+        'enable_http2'                              => FALSE,//if enabled enable_static_handler/document_root doesnt work
+        'enable_ssl'                                => FALSE,
+        'disable_static_handler'                    => FALSE,
+        'disable_file_upload'                       => FALSE,
 
-        //'upload_max_filesize'       => NULL,//means get from PHP
-        //'post_max_size'             => NULL,//means get from PHP
+        //'upload_max_filesize'                     => NULL,//means get from PHP
+        //'post_max_size'                           => NULL,//means get from PHP
 
-        'log_level'                 => LogLevel::DEBUG,
-        'kernel'                    => [
-            'disable_all_class_load'            => FALSE,
-            'disable_all_class_validation'      => FALSE,
+        'log_level'                                 => LogLevel::DEBUG,
+        'kernel'                                    => [
+            'disable_all_class_load'                    => FALSE,
+            'disable_all_class_validation'              => FALSE,
         ],
 
-        'target_language'           => 'en',//this is the default target language
-        'skip_translator'           => FALSE,
-        //'supported_languages'       => ['en','bg'],
-        'supported_languages'       => ['en'],
+        'target_language'                           => 'en',//this is the default target language
+        'skip_translator'                           => FALSE,
+        //'supported_languages'                     => ['en','bg'],
+        'supported_languages'                       => ['en'],
 
+        'allow_no_permission_checks_in_production'  => false,
 
 //        'override_html_content_type' => 'json',//to facilitate debugging when opening the XHR in browser
 
-        'date_time_formats'         => [
-            'date_time_format'          => 'Y-m-d H:i:s',
-            'time_format'               => 'H:i:s',
-            'hrs_mins_format'           => 'H:i',
-            'date_format'               => 'Y-m-d',
+        'date_time_formats'                         => [
+            'date_time_format'                          => 'Y-m-d H:i:s',
+            'time_format'                               => 'H:i:s',
+            'hrs_mins_format'                           => 'H:i',
+            'date_format'                               => 'Y-m-d',
         ],
 
 
-        'services'      => [
+        'services'                                  => [
             'Middlewares',
             'ConnectionFactory',//needed to release all single connections before server start
+            'AuthorizationProvider',//needed to display the startup message which one is used
         ],
     ];
 
@@ -401,6 +405,8 @@ BANNER;
                 Kernel::printk(sprintf(t::_('Using the default CORS origin: %1$s'), self::CONFIG_RUNTIME['cors_origin']).PHP_EOL);
             }
 
+            self::authorization_provider_messages();
+
 
             //the translator initialization can be moved in start_server.php but then Kernel::printk() cant be used and the start time in Kernel::initialize() will be very wrong
             //Kernel::printk(sprintf('Initializing translations').PHP_EOL);
@@ -450,5 +456,44 @@ BANNER;
         //new Event($this, '_after_execute');//this is not reached after the server is started
 
         return Kernel::EXIT_SUCCESS;
+    }
+
+    private static function authorization_provider_messages(): void
+    {
+        /** @var AuthorizationProviderInterface $AuthorizationProvider */
+        $AuthorizationProvider = self::get_service('AuthorizationProvider');
+        Kernel::printk(sprintf(t::_('Authorization provider: %1$s'), get_class($AuthorizationProvider)));
+        Kernel::printk(PHP_EOL);
+        if (!$AuthorizationProvider::checks_permissions()) {
+            Kernel::printk(sprintf(t::_('!!!!!!!!!! The %1$s authorization provider DOES NOT check/enforce permissions !!!!!!!!!!'), get_class($AuthorizationProvider)));
+            Kernel::printk(PHP_EOL);
+            if (self::is_production()) {
+                if (!self::CONFIG_RUNTIME['allow_no_permission_checks_in_production']) {
+                    $raw_message = <<<'RAW'
+                        It is not allowed to run in production mode with authorization provider (AuthorizationProvider service) that does not check/enforce permissions.
+                        To bypass this limitation please start the server with the --allow-no-permission-checks-in-production startup option.
+                        RAW;
+                    $message = sprintf(t::_($raw_message));
+                    throw new ConfigurationException($message, 0, null, '3b0d54d3-1662-4e84-9f7a-971a30baef83');
+                } else {
+
+                    $raw_message = <<<'RAW'
+                        !!!!!!!!!! Running in PRODUCTION with AuthorizationProvider service set to %1$s which is a non-enforcing one !!!!!!!!!! 
+                        RAW;
+                    $message = sprintf(t::_($raw_message), get_class($AuthorizationProvider));
+                    Kernel::printk($message);
+                    Kernel::printk(PHP_EOL);
+
+                    $raw_message = <<<'RAW'
+                        %1$s::CONFIG_RUNTIME['allow-no-permission-checks-in-production'] = true probably set with --allow-no-permission-checks-in-production from CLI
+                        RAW;
+                    $message = sprintf(t::_($raw_message),__CLASS__);
+                    Kernel::printk($message);
+                    Kernel::printk(PHP_EOL);
+
+                }
+
+            }
+        }
     }
 }

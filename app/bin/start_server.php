@@ -38,7 +38,6 @@ use Psr\Log\LogLevel;
     require_once('CliOptions.php');
     require_once('Start.php');
     $cli_options_mapping = CliOptions::get_cli_options();
-    print_r($cli_options_mapping);
 
     Kernel::set_init_microtime($init_microtime);
     Kernel::printk(sprintf('Run start_server --help for startup options') . PHP_EOL);
