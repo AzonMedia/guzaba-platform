@@ -51,7 +51,9 @@ class Controllers extends BaseController
         } else {
             $controllers = Controller::get_controller_classes();
         }
-        $struct = ['controllers' => array_values($controllers)];
+        $controllers = array_values($controllers);
+        sort($controllers);
+        $struct = ['controllers' => $controllers];
         return self::get_structured_ok_response($struct);
     }
 
