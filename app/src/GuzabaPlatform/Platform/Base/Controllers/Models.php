@@ -57,8 +57,13 @@ class Models extends BaseController
         if (!is_a($class_name, ModelInterface::class, TRUE)) {
             throw new InvalidArgumentException(sprintf(t::_('The $class_name argument contains a class %1$s that does not implement %2$s.'), $class_name, ModelInterface::class ));
         }
-        $data = $class_name::get_data_by([], 0, 0, FALSE, $class_name::get_object_name_property() );
-        $struct = [ 'objects' => $data ];
+        $name_property = $class_name::get_object_name_property();
+        $data = $class_name::get_data_by([], 0, 0, FALSE, $name_property );
+        foreach ($data as &$_row) {
+            $_row['object_name'] = $_row[$name_property];
+        }
+        unset($_row);
+        $struct = [ 'objects' => $data, 'name_property' => $name_property ];
         return self::get_structured_ok_response($struct);
     }
 }
