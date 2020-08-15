@@ -2,6 +2,8 @@
 declare(strict_types=1);
 namespace GuzabaPlatform\bin;
 
+use Guzaba2\Authorization\Acl\AclCreateAuthorizationProvider;
+use Guzaba2\Di\Container;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\BufferedOutput;
@@ -91,7 +93,7 @@ abstract class CliOptions
 //            'class'             => GuzabaPlatform::class,
 //            'option'            => ['kernel' => ['disable_all_class_load' => NULL]],
 //        ],
-        'disable-validations'  => [
+        'disable-validations'           => [
             'shortcut'          => NULL,
             'input'             => InputOption::VALUE_NONE,
             'description'       => 'Do not run the validations at startup.',
@@ -139,6 +141,14 @@ abstract class CliOptions
             'class'             => GuzabaPlatform::class,
             'option'            => 'disable_class_cache',
         ],
+        'no-permission-checks'          => [
+            'shortcut'          => NULL,
+            'input'             => InputOption::VALUE_NONE,
+            'description'       => 'Sets the AuthorizationProvider service in the DI container to AclCreateAuthorizationProvider. This allows permission management but does not check the permissions. To be used in development.',
+            'default'           => NULL,
+            'class'             => Container::class,
+            'option'            => ['dependencies' => ['AuthorizationProvider' => ['class' => AclCreateAuthorizationProvider::class] ] ],
+        ]
     ];
 
     /**

@@ -1,5 +1,7 @@
 <?php
+
 declare(strict_types=1);
+
 namespace GuzabaPlatform\bin;
 
 use Symfony\Component\Console\Command\Command;
@@ -63,8 +65,8 @@ class Start extends Command
      */
     private static function assign_value( /* mixed */ &$options, /* mixed */ $option_name, /* mixed */ $option_value) : void
     {
+
         if (is_string($option_name)) {
-            //print $option_name.' '.$option_value;
             $options[$option_name] = $option_value;
         } elseif (is_array($option_name)) {
             if (count($option_name) > 1) {
@@ -82,8 +84,10 @@ class Start extends Command
             $option_name = $option_name[$key];
             if ($option_name === NULL) {
                 $pointer = $option_value;
-            } else {
+            } elseif (is_array($option_name)) {
                 self::assign_value($pointer, $option_name, $option_value);
+            } else {
+                $pointer = $option_name;//the option_name (the next level in the array nesting) is the actual value
             }
 
         } else {
