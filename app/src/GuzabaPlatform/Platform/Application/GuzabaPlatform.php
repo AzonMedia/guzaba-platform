@@ -450,9 +450,6 @@ BANNER;
 
         }
 
-
-
-
         //new Event($this, '_after_execute');//this is not reached after the server is started
 
         return Kernel::EXIT_SUCCESS;
@@ -490,9 +487,7 @@ BANNER;
                     $message = sprintf(t::_($raw_message),__CLASS__);
                     Kernel::printk($message);
                     Kernel::printk(PHP_EOL);
-
                 }
-
             }
         }
     }
