@@ -98,6 +98,9 @@ class Test extends BaseController
             '/fix-controllers-permissions'      => [
                 Method::HTTP_POST                       => [self::class, 'fix_controllers_permissions'],
             ],
+            '/test-str-body'        => [
+                Method::HTTP_GET                        => [__CLASS__, 'test_body_str']
+            ]
         ],
         'services' => [
             'ConnectionFactory',
@@ -127,6 +130,18 @@ class Test extends BaseController
             t::set_target_language($language, $this->get_request());
         }
 
+    }
+
+    public function test_body_str(): ResponseInterface
+    {
+        $Response = self::get_string_ok_response('');
+        $Body = $Response->getBody();
+        $Body->write('asd');
+        $Body->seek(2);
+        $Body->write('V');
+        $Body->rewind();
+        //print 'AAAAAAAAA: '.$Body->getContents();
+        return $Response;
     }
 
     public function fix_permissions(): ResponseInterface

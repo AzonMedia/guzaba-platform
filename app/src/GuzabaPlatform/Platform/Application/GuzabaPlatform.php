@@ -315,6 +315,9 @@ BANNER;
         //$Router = new Router(new RoutingMapArray($routing_map));
         $Router = new Router(new GeneratedRoutingMap($routing_map, $routing_meta_data, $this->generated_files_dir));
         Kernel::get_di_container()->add('Router', $Router);//thew router may be needed outside the middlewares... for verifying routes for example
+
+        $RoutesMap = new RoutesMap($Router, $this->app_directory.'/public_src/components_config/routes_map.config.js');
+        
         //$RoutingMiddleware = new RoutingMiddleware($HttpServer, $Router);
         $RoutingMiddleware = new RoutingMiddleware($Router);
 
@@ -363,6 +366,8 @@ BANNER;
         //there must be a way to reorder the middlewares and this order to be stored for the next restart
         new Event($Middlewares, '_after_setup');
 
+
+        
 
         /*
         $DefaultResponseBody = new Stream();

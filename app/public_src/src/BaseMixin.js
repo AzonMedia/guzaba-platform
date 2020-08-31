@@ -7,11 +7,8 @@
 //https://hackernoon.com/import-json-into-typescript-8d465beded79
 import * as aliases_json from '@/../components_config/webpack.components.runtime.json';
 const aliases = aliases_json.default
-//aliases = aliases.default
-//const word = data.name;
-//console.log(word); // output 'testing'
-//console.log(data)
-//alert(AAAA)
+
+import RoutesMap from '@/../components_config/routes_map.config.js';
 
 export default {
     name: 'BaseMixin',
@@ -22,6 +19,42 @@ export default {
 
     },
     methods: {
+
+        /**
+         * Returns theroutes map
+         * @return object
+         */
+        get_routes_map() {
+            return RoutesMap
+        },
+
+        /**
+         * Returns a route with replaced parameters in the route (if such are expected)
+         * @param class_method
+         * @param params
+         * @return string
+         */
+        get_route(class_method, ...params) {
+            if (class_method.indexOf(':') === -1) {
+                throw new Error(`The provided route ${class_method} is invalid as it does not contain ":" (used to split the method name from the class name).`)
+            }
+            if (typeof RoutesMap[class_method] === 'undefined') {
+                throw new Error(`An unknown ${class_method} is provided.`)
+            }
+            let route = RoutesMap[class_method]
+            route = route.substr(5)
+            const route_params_count = (route.match(/\{/g) || []).length
+            if (route_params_count !== params.length) {
+                throw new Error(`The route ${route} for ${class_method} expects ${route_params_count} params while ${params.length} were provided.`)
+            }
+            const params_to_replace = [...route.matchAll(/{[^/}]+}/g)];// /{([^\/}]+)}/g
+            let params_counter = 0;
+            for (const el in params_to_replace) {
+                route = route.replace(params_to_replace[el][0], params[params_counter])
+                params_counter++;
+            }
+            return route;
+        },
 
         /**
          * Returns an array of all templates up to the root one.
@@ -79,14 +112,6 @@ export default {
             if (typeof aliases[lookup_alias] !== 'undefined') {
                 resolved_path = path_with_alias.replace(lookup_alias, aliases[lookup_alias]);
             }
-            //return lookup_alias
-            // //this is wrong
-            // // for (const alias in aliases) {
-            // //     if (alias !== '@' && path_with_alias.indexOf(alias) !== -1) {
-            // //         resolved_path = path_with_alias.replace(alias, aliases[alias]);
-            // //         break;
-            // //     }
-            // // }
             if (!resolved_path) {
                 let unknown_alias = path_with_alias.substring(path_with_alias.indexOf('@'), path_with_alias.indexOf('/'));
                 throw new Error(`The provided path ${path_with_alias} contains an unknown alias ${unknown_alias}.`);
@@ -95,18 +120,11 @@ export default {
         },
 
         /**
-         *
-         * @returns {*}
+         * Returns all aliases
+         * @returns object
          */
         get_aliases() {
             return aliases;
         }
-        //perhaps try https://www.npmjs.com/package/current-script-polyfill
-        // get_component_file(component) {
-        //  //console.log(__filename)//produces index.js...
-        //console.log(document.currentScript)
-        //let scripts = document.getElementsByTagName('script');
-        //console.log(scripts)
-        // }
     }
 }

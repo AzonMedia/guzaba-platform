@@ -37,6 +37,7 @@ class Auth extends BaseController
                 Method::HTTP_POST   => [self::class, 'login_post'],
             ],
             '/user/register' => [
+                Method::HTTP_GET    => [self::class, 'register_get'],
                 Method::HTTP_POST   => [self::class, 'register_post'],
             ],
         ]
