@@ -10,6 +10,9 @@ const aliases = aliases_json.default
 
 import RoutesMap from '@/../components_config/routes_map.config.js';
 
+/**
+ * This mixin is supposed to be a global one (imported in main.js) and available to every component
+ */
 export default {
     name: 'BaseMixin',
     data() {

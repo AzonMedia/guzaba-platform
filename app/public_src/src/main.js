@@ -15,6 +15,9 @@ Vue.use(BootstrapVueIcons)
 //Vue.use(IconsPlugin)
 //css end
 
+import Fragment from 'vue-fragment'
+Vue.use(Fragment.Plugin)
+
 //axios start
 import axios from 'axios'
 axios.defaults.withCredentials = true
@@ -33,6 +36,10 @@ if (token) {
 }
 
 //axios end
+
+//add a global mixin - it will be available in EVERY component
+import BaseMixin from '@GuzabaPlatform.Platform/BaseMixin.js'
+Vue.mixin(BaseMixin)
 
 Vue.config.productionTip = false
 
