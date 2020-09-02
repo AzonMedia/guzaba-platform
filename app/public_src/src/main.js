@@ -41,6 +41,9 @@ if (token) {
 import BaseMixin from '@GuzabaPlatform.Platform/BaseMixin.js'
 Vue.mixin(BaseMixin)
 
+//add global style
+import '@GuzabaPlatform.Platform/assets/css/global.css'
+
 Vue.config.productionTip = false
 
 Vue.filter('capitalize', function (value) {
