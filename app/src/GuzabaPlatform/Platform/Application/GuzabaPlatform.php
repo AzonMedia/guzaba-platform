@@ -316,6 +316,8 @@ BANNER;
         $Router = new Router(new GeneratedRoutingMap($routing_map, $routing_meta_data, $this->generated_files_dir));
         Kernel::get_di_container()->add('Router', $Router);//thew router may be needed outside the middlewares... for verifying routes for example
 
+        //this creates a mapping between controller class:method to route
+        //so that in the front end no routes get hardcoded (but instead class:method is used)
         $RoutesMap = new RoutesMap($Router, $this->app_directory.'/public_src/components_config/routes_map.config.js');
         
         //$RoutingMiddleware = new RoutingMiddleware($HttpServer, $Router);

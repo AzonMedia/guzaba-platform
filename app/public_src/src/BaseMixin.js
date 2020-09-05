@@ -5,10 +5,11 @@
 //https://stackoverflow.com/questions/34944099/how-to-import-a-json-file-in-ecmascript-6/56668477
 //in typescript or babel importing json can be done with
 //https://hackernoon.com/import-json-into-typescript-8d465beded79
-import * as aliases_json from '@/../components_config/webpack.components.runtime.json';
+import * as aliases_json from '@/../components_config/webpack.components.runtime.json'
 const aliases = aliases_json.default
 
-import RoutesMap from '@/../components_config/routes_map.config.js';
+import RoutesMap from '@/../components_config/routes_map.config.js'
+import ModelFrontendMap from '@/../components_config/model_frontend_view_map.js'
 
 /**
  * This mixin is supposed to be a global one (imported in main.js) and available to every component
@@ -24,6 +25,22 @@ export default {
     methods: {
 
         /**
+         * Returns a Vue component for the provided server_class by using the ModelFrontendMap
+         * @param string server_class
+         */
+        get_view_component(model_class) {
+            let ret = ''
+            if (typeof ModelFrontendMap[model_class] !== 'undefined') {
+                ret = ModelFrontendMap[model_class]
+            }
+            return ret
+        },
+
+        // get_manage_component(model_class) {
+        //
+        // },
+
+        /**
          * Returns theroutes map
          * @return object
          */
@@ -33,11 +50,14 @@ export default {
 
         /**
          * Returns a route with replaced parameters in the route (if such are expected)
-         * @param class_method
-         * @param params
+         * @param string class_method
+         * @param string params
          * @return string
          */
         get_route(class_method, ...params) {
+            if (typeof class_method !== 'string') {
+                throw new Error(`The provided class_method is of type ${typeof class_method}. Only string is accepted.`)
+            }
             if (class_method.indexOf(':') === -1) {
                 throw new Error(`The provided route ${class_method} is invalid as it does not contain ":" (used to split the method name from the class name).`)
             }
@@ -98,7 +118,37 @@ export default {
             }
             return parent_component
         },
-        
+
+
+        //why resolve_alias triggers
+        // GET http://localhost:8081/api/get/@GuzabaPlatform.Cms/ViewPage.vue
+        //in AliasMatcher.vue
+        //and resolve_alias_in_path does not
+
+        /**
+         * alias of this.resolve_aliased_path
+         * @param string path_with_alias
+         * @return string
+         */
+        resolve_alias(path_with_alias) {
+            //
+            // if (path_with_alias.indexOf('@') === -1) {
+            //     return path_with_alias
+            // }
+            // let resolved_path = ''
+            // let lookup_alias = path_with_alias.match(/(@.*?)\//)[1] // ? - ungreedy - must be used
+            // if (typeof aliases[lookup_alias] !== 'undefined') {
+            //     resolved_path = path_with_alias.replace(lookup_alias, aliases[lookup_alias])
+            // }
+            // if (!resolved_path) {
+            //     let unknown_alias = path_with_alias.substring(path_with_alias.indexOf('@'), path_with_alias.indexOf('/'))
+            //     throw new Error(`The provided path ${path_with_alias} contains an unknown alias ${unknown_alias}.`)
+            // }
+            // return resolved_path
+            return this.resolve_aliased_path(path_with_alias)
+        },
+
+        //why this is not triggering
         /**
          * Accepts path that contains alias and returns resolved path.
          * If the path does not contain an alias the same string is returned
@@ -106,20 +156,28 @@ export default {
          * @param string path_with_alias
          * @return string
          */
-        resolve_alias(path_with_alias) {
+        resolve_aliased_path(path_with_alias) {
             if (path_with_alias.indexOf('@') === -1) {
-                return path_with_alias;
+                return path_with_alias
             }
-            let resolved_path = '';
-            let lookup_alias = path_with_alias.match(/(@.*?)\//)[1] // ? - ungreedy - must be used
+            let resolved_path = ''
+            //let lookup_alias = path_with_alias.match(/(@.*?)\//)[1] // ? - ungreedy - must be used
+            let matches = path_with_alias.match(/(@.*?)\//)
+            if (matches === null) {
+                throw new Error(`The provided path ${path_with_alias} contains @ but no /.`);
+                //try again a match without ending /
+                //matches = path_with_alias.match(/(@.*?)/)
+            }
+            let lookup_alias = matches[1]
+
             if (typeof aliases[lookup_alias] !== 'undefined') {
-                resolved_path = path_with_alias.replace(lookup_alias, aliases[lookup_alias]);
+                resolved_path = path_with_alias.replace(lookup_alias, aliases[lookup_alias])
             }
             if (!resolved_path) {
-                let unknown_alias = path_with_alias.substring(path_with_alias.indexOf('@'), path_with_alias.indexOf('/'));
-                throw new Error(`The provided path ${path_with_alias} contains an unknown alias ${unknown_alias}.`);
+                let unknown_alias = path_with_alias.substring(path_with_alias.indexOf('@'), path_with_alias.indexOf('/'))
+                throw new Error(`The provided path ${path_with_alias} contains an unknown alias ${unknown_alias}.`)
             }
-            return resolved_path;
+            return resolved_path
         },
 
         /**

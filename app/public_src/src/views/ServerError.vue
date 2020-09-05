@@ -1,6 +1,6 @@
 <template>
     <div class="view_page">
-        404
+        500
         <h2>{{ObjectData.page_name}}</h2>
         <span v-html="ObjectData.page_content"></span>
     </div>
@@ -8,7 +8,7 @@
 
 <script>
     export default {
-        name: "NotFound",
+        name: "ServerError",
         props: {
             ObjectData : Object
         },

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Azonmedia\Apm\NullBackend;
 use Azonmedia\Apm\Profiler;
 use Azonmedia\Lock\Backends\SwooleTableBackend;
@@ -36,6 +38,7 @@ use Guzaba2\Orm\BlockingStore\Nosql\MongoDB;
 use GuzabaPlatform\Platform\Application\MongoDbConnection;
 use Guzaba2\Authorization\BypassAuthorizationProvider;
 use GuzabaPlatform\Platform\Application\VueComponentHooks;
+use GuzabaPlatform\Platform\Application\ModelFrontendMap;
 use Guzaba2\Transaction\TransactionManager;
 use Psr\Log\LogLevel;
 
@@ -268,6 +271,18 @@ return [
                     'component_hooks_dir'           => './public_src/component_hooks',
                     'aliases_file'                  => './public_src/components_config/webpack.components.runtime.json',
                 ]
+            ],
+//            'RoutesMap'                     => [
+//                'class'                         => \GuzabaPlatform\Platform\Application\RoutesMap::class,
+//                'args'
+//            ],
+            'ModelFrontendMap'              => [
+                'class'                         => ModelFrontendMap::class,
+                'args'                          => [
+                    'frontend_view_map_file'        => './public_src/components_config/model_frontend_view_map.js',
+                    'frontend_manage_map_file'      => './public_src/components_config/model_frontend_manage_map.js',
+                ]
+
             ],
             'TransactionManager'           => [
                 'class'                         => TransactionManager::class,

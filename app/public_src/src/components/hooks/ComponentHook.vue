@@ -5,7 +5,7 @@
 <script>
 
     import ToastMixin from '@GuzabaPlatform.Platform/ToastMixin.js'
-    import BaseMixin from '@GuzabaPlatform.Platform/BaseMixin.js'
+    //import BaseMixin from '@GuzabaPlatform.Platform/BaseMixin.js'
 
     //const fileExists = require('file-exists');
 
@@ -15,7 +15,7 @@
         name: "ComponentHook",
         mixins: [
             ToastMixin,
-            BaseMixin,
+//            BaseMixin,
         ],
         props: {
             HookData : Object
@@ -88,7 +88,7 @@
                 try {
                     //require(hooked_file_real_path) // does not work - doesnt find existing files as it is a full FS path
                     require(`@/../component_hooks/${hooked_file}.vue`) //works because it uses partial path and the webpack preprocessor can locate it
-                } catch(err) {
+                } catch (err) {
                     //the file does not exist - return nothing
                     console.log(`No hooked components for ${this.HookData.hook_file}::${this.HookData.hook_name}`)
                     return '';
