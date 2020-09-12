@@ -19,6 +19,7 @@
                 ObjectData: {
                     page_name: '',
                     page_content: '',
+                    http_code: 0,
                 },
             }
         },
@@ -30,17 +31,25 @@
                 }
                 if (!alias) {
                     this.ObjectData = {
-                        page_name: 'Not Found',
+                        page_name: 'Invalid Request',
                         page_content: 'Invalid request',
+                        http_code: 400,
                     };
-                    return () => import('@GuzabaPlatform.Platform/views/NotFound.vue')
+                    return () => import('@GuzabaPlatform.Platform/views/InvalidRequest.vue')
                 }
                 if (typeof this.ObjectData === 'undefined') {
-                    this.ObjectData = {
-                        page_name: 'Not Found',
-                        page_content: `The requested content ${alias} was not found.`
-                    };
-                    return () => import('@GuzabaPlatform.Platform/views/NotFound.vue')
+                    //by default show a blank page
+                    return () => import('@GuzabaPlatform.Platform/components/Blank.vue')
+                }
+                if (typeof this.ObjectData.http_code !== 'undefined' && this.ObjectData.http_code !==0 && this.ObjectData.http_code !== 200) {
+                    //no mapping is used as import() does not support dynamic paths
+                    if (this.ObjectData.http_code === 400) {
+                        return () => import('@GuzabaPlatform.Platform/views/InvalidRequest.vue')
+                    } else if (this.ObjectData.http_code === 404) {
+                        return () => import('@GuzabaPlatform.Platform/views/NotFound.vue')
+                    } else {
+                        return () => import('@GuzabaPlatform.Platform/views/ServerError.vue')
+                    }
                 }
                 if (typeof this.ObjectData.class === 'undefined') {
                     //this is the default when the data is not yet loaded (the class is unknown)
@@ -52,8 +61,10 @@
                     let object_class = this.ObjectData.class;
                     this.ObjectData = {
                         page_name: 'Server Error',
-                        page_content: `No matching frontend component found for class ${object_class}.`
+                        page_content: `No matching frontend component found for class ${object_class}.`,
+                        http_code: 500,
                     };
+                    console.log(4)
                     return () => import('@GuzabaPlatform.Platform/views/ServerError.vue')
                 }
 
@@ -94,8 +105,31 @@
                         this.ObjectData = resp.data
                     })
                     .catch(err => {
-                        //this.show_toast(err);
-                        //this.ObjectData.page_title = 'Not found'
+                        let http_code = err.response.status
+                        //no mapping between the code and the Vue components is used because the import() cant work anyway with dynamic values
+                        if (http_code === 400) {
+                            //not expected to happen as if there is no alias provided no request should be made to the server at all
+                            this.ObjectData = {
+                                page_name: 'Invalid Request',
+                                page_content: `Invalid Request`,
+                                http_code: 400,
+                            };
+                        } else if (http_code === 404) {
+                            //the expected case when the alias can not be resovled
+                            this.ObjectData = {
+                                page_name: 'Not Found',
+                                page_content: `The requested content ${alias} was not found.`,
+                                http_code: 404,
+                            };
+                        } else {
+                            //not expected...
+                            this.ObjectData = {
+                                page_name: 'Server Error',
+                                page_content: `A server error occurred while resolving ${alias}.`,
+                                http_code: 500,
+                            };
+                        }
+
 
                     }).finally(() => {
 
