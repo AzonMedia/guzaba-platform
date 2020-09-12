@@ -13,7 +13,9 @@ import store from './store.js'
 import Login from '@GuzabaPlatform.Platform/views/user/Login.vue'
 import Logout from '@GuzabaPlatform.Platform/views/user/Logout.vue'
 import Register from '@GuzabaPlatform.Platform/views/user/Register.vue'
-import NotFound from '@GuzabaPlatform.Platform/views/NotFound.vue'
+import AliasMatcher from '@GuzabaPlatform.Platform/views/AliasMatcher.vue'
+import Redirect from '@GuzabaPlatform.Platform/views/Redirect.vue'
+//import NotFound from '@GuzabaPlatform.Platform/views/NotFound.vue'
 ///import axios from "axios";
 
 //const aliases = require('@/../components_config/webpack.components.runtime.json')
@@ -79,9 +81,15 @@ let static_routes = [
         component: Register
     },
     {
-        name: 'not found',
-        path: '*',
-        component: NotFound
+        path: '/redirect/:to',
+        name: 'Redirect',
+        //component: Auth
+        component: Redirect
+    },
+    {
+        path: '*',//also handles 404
+        name: 'AliasMatcher',
+        component: AliasMatcher
     },
 ]
 
