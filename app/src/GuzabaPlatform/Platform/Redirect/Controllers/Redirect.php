@@ -6,8 +6,8 @@ namespace GuzabaPlatform\Platform\Redirect\Controllers;
 
 use Guzaba2\Http\Method;
 use GuzabaPlatform\Platform\Application\BaseController;
-use GuzabaPlatform\Platform\Crypto\Models\Crypto;
 use Guzaba2\Translator\Translator as t;
+use GuzabaPlatform\Platform\Crypto\Models\CryptoUtil;
 use Psr\Http\Message\ResponseInterface;
 
 class Redirect extends BaseController
@@ -28,7 +28,7 @@ class Redirect extends BaseController
      */
     public function main(string $to): ResponseInterface
     {
-        $decrypted_to = Crypto::openssl_decrypt($to);
+        $decrypted_to = CryptoUtil::openssl_decrypt($to);
         $struct = [];
         if ($decrypted_to === null) {
             $struct['message'] = sprintf(t::_('Invalid redirect string.'));
