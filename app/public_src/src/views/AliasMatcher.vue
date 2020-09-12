@@ -8,7 +8,7 @@
     import ToastMixin from '@GuzabaPlatform.Platform/ToastMixin.js'
 
     export default {
-        name: 'home',
+        name: 'AliasMatcher',
         mixins: [
             ToastMixin,
 //            BaseMixin,
@@ -101,6 +101,17 @@
 
                     });
 
+            },
+
+            main_process() {
+                let alias = '';
+                if (typeof this.$route.params.pathMatch !== "undefined") {
+                    alias = this.$route.params.pathMatch
+                }
+                if (alias[0] === '/') {
+                    alias = alias.substring(1);
+                }
+                this.ObjectData = this.resolve_alias(alias)
             }
         },
         // mounted() {
@@ -112,15 +123,13 @@
         //     }
         //
         // }
+        watch: {
+            $route (to, from) { // needed because by default no class is loaded and when it is loaded the component for the two routes is the same.
+                this.main_process()
+            }
+        },
         mounted() {
-            let alias = '';
-            if (typeof this.$route.params.pathMatch !== "undefined") {
-                alias = this.$route.params.pathMatch
-            }
-            if (alias[0] === '/') {
-                alias = alias.substring(1);
-            }
-            this.ObjectData = this.resolve_alias(alias)
+            this.main_process()
         }
     }
 </script>

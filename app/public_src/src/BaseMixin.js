@@ -102,6 +102,7 @@ export default {
          * Returns the parent component based on name (no matter how far it is)
          * Returns null if no parent controller with the given name is found
          * @param string parent_component_name
+         * @param null|Vue
          * @return null|Vue
          */
         get_parent_component_by_name(parent_component_name, component) {
@@ -117,6 +118,29 @@ export default {
                 component = component.$parent
             }
             return parent_component
+        },
+
+        /**
+         *
+         * @param child_component_name
+         * @param component
+         */
+        get_child_component_by_name(child_component_name, component) {
+            if (typeof component === 'undefined') {
+                component = this
+            }
+            let child_component = null
+            let children = component.$children
+            let current_child_component = null;
+            while(children) {
+                current_child_component = children.shift();
+                if (current_child_component.$options.name === child_component_name) {
+                    child_component = current_child_component;
+                    break;
+                }
+                children.push(...current_child_component.$children)
+            }
+            return child_component
         },
 
 

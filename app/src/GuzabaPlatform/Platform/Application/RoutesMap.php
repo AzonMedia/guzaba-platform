@@ -18,6 +18,11 @@ use Guzaba2\Translator\Translator as t;
 
 class RoutesMap extends \Azonmedia\RoutesMap\RoutesMap implements ConfigInterface, ObjectInternalIdInterface, UsesServicesInterface
 {
+
+    use SupportsConfig;
+    use SupportsObjectInternalId;
+    use UsesServices;
+
     protected const CONFIG_DEFAULTS = [
         'services'      => [
             'Events',
@@ -25,10 +30,6 @@ class RoutesMap extends \Azonmedia\RoutesMap\RoutesMap implements ConfigInterfac
     ];
 
     protected const CONFIG_RUNTIME = [];
-
-    use SupportsConfig;
-    use SupportsObjectInternalId;
-    use UsesServices;
 
     /**
      * VueRouter constructor.

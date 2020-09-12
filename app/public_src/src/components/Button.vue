@@ -1,5 +1,6 @@
 <template>
     <div class="button" v-bind:class="{ active: ButtonData.is_active }" v-on:click="ButtonData.handler">{{ButtonData.label}}</div>
+
 </template>
 
 <script>
