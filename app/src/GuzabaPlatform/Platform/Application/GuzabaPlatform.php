@@ -470,7 +470,7 @@ BANNER;
         Kernel::printk(sprintf(t::_('Authorization provider: %1$s'), get_class($AuthorizationProvider)));
         Kernel::printk(PHP_EOL);
         if (!$AuthorizationProvider::checks_permissions()) {
-            Kernel::printk(sprintf(t::_('!!!!!!!!!! The %1$s authorization provider DOES NOT check/enforce permissions !!!!!!!!!!'), get_class($AuthorizationProvider)));
+            Kernel::printk(sprintf(t::_('The %1$s authorization provider DOES NOT check/enforce permissions!'), get_class($AuthorizationProvider)), LogLevel::WARNING);
             Kernel::printk(PHP_EOL);
             if (self::is_production()) {
                 if (!self::CONFIG_RUNTIME['allow_no_permission_checks_in_production']) {

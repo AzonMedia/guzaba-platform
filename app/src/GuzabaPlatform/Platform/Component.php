@@ -9,6 +9,7 @@ use Guzaba2\Event\Event;
 use Guzaba2\Event\Events;
 use Guzaba2\Http\QueueRequestHandler;
 use Guzaba2\Mvc\ExecutorMiddleware;
+use Guzaba2\Orm\ActiveRecord;
 use Guzaba2\Swoole\Handlers\Http\Request;
 use GuzabaPlatform\Components\Base\BaseComponent;
 use GuzabaPlatform\Components\Base\Interfaces\ComponentInitializationInterface;
@@ -195,4 +196,34 @@ class Component extends BaseComponent implements ComponentInterface, ComponentIn
 
         $Events->add_class_callback(ExecutorMiddleware::class, '_after_execute_controller_method_check_permissions', $CallbackEnd);
     }
+
+//this does not track the whole writing time as there are calls before _before_write
+//    protected static function register_activerecord_write_apm_hook(): void
+//    {
+//        /** @var Events $Events */
+//        $Events = self::get_service('Events');
+//
+//        $start_times = [];
+//        $CallbackStart = static function(Event $Event) use (&$start_times): void
+//        {
+//            list($Controller, $method) = $Event->get_arguments();
+//            $start_times[get_class($Controller).'::'.$method] = microtime(true);
+//
+//        };
+//
+//        $Events->add_class_callback(ActiveRecord::class, '_before_write', $CallbackStart);
+//
+//        $CallbackEnd = static function(Event $Event) use (&$start_times): void
+//        {
+//            /** @var Profiler $Apm */
+//            $Apm = self::get_service('Apm');
+//            $end_time = microtime(true);
+//            list($Controller, $method) = $Event->get_arguments();
+//            $controller_key = str_replace('\\', '_', get_class($Controller)).'_'.$method.'_check_permissions_time';
+//            $Apm->add_key($controller_key);
+//            $Apm->increment_value($controller_key, $end_time - $start_times[get_class($Controller).'::'.$method]);
+//        };
+//
+//        $Events->add_class_callback(ExecutorMiddleware::class, '_after_execute_controller_method_check_permissions', $CallbackEnd);
+//    }
 }
