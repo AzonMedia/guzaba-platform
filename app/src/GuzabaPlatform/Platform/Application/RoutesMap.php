@@ -39,7 +39,7 @@ class RoutesMap extends \Azonmedia\RoutesMap\RoutesMap implements ConfigInterfac
      */
     public function __construct(RouterInterface $Router, string $router_file)
     {
-        parent::__construct($Router, $router_file);
+        parent::__construct($Router, $router_file, BaseActiveRecord::class);
         self::get_service('Events')->add_class_callback(Server::class, '_before_start', [$this, 'dump_routes_map']);
     }
 
