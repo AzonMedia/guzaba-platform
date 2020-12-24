@@ -25,6 +25,28 @@ export default {
     methods: {
 
         /**
+         * Gets an absolute url for the provided path
+         * @param string path
+         * @returns string
+         */
+        get_absolute_url(path) {
+            // https://stackoverflow.com/questions/34887347/how-to-detect-if-webpack-dev-server-is-running
+            //const is_dev_server = process.env.WEBPACK_DEV_SERVER;
+            //process is not defined here (only in templates)
+            //and WEBPACK_DEV_SERVER is not defined in the templates
+            let url = path;
+            const is_dev_server = true;
+            if (is_dev_server) {
+                url = 'http://localhost:8081' + path;
+            } else {
+                // TODO fix
+                // get the domain name & port
+                // leave for now
+            }
+            return url;
+        },
+
+        /**
          * Returns a Vue component for the provided server_class by using the ModelFrontendMap
          * @param string server_class
          */
