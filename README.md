@@ -3,7 +3,8 @@
 ## Introduction
 
 [GuzabaPlatform](https://github.com/AzonMedia/guzaba-platform) is a plugin based system for building applications ranging from presentational websites to corporate applications.
-It is based on the [Guzaba 2 Framework](https://github.com/AzonMedia/guzaba2).
+It is the testbed for the [Guzaba 2 Framework](https://github.com/AzonMedia/guzaba2).
+It uses [Vue.js](https://vuejs.org/) for the frontend.
 
 ## Deployment in containers
 
@@ -17,7 +18,7 @@ $ composer config minimum-stability dev
 $ composer require guzaba-platform/guzaba-platform:dev-master
 ```
 This will install GuzabaPlatform and run the GuzabaPlatformInstaller package that will create the needed directories & files in the root of the project.
-While the GuzabaPlatform depends on PHP 7.4 and Swoole these requirements are not enforced in the composer.json file as it needs to be possible to bootstrap the application from any environment and the applicattion will be always started in a container which already contains everything needed.
+While the GuzabaPlatform depends on PHP 8.0 and Swoole these requirements are not enforced in the composer.json file as it needs to be possible to bootstrap the application from any environment and the applicattion will be always started in a container which already contains everything needed.
 
 To deploy the application in containers execute:
 ```

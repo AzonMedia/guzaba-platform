@@ -63,21 +63,32 @@
                         page_name: 'Server Error',
                         page_content: `No matching frontend component found for class ${object_class}.`,
                         http_code: 500,
-                    };
-                    console.log(4)
+                    }
                     return () => import('@GuzabaPlatform.Platform/views/ServerError.vue')
                 }
 
                 //@GuzabaPlatform.Cms/ViewPage.vue
                 //let resolved_component = this.resolve_alias(component);//triggers  GET http://localhost:8081/api/get/@GuzabaPlatform.Cms/ViewPage.vue 404 (Not Found) ????
                 let resolved_component = this.resolve_aliased_path(component);
-                let vendor_path = this.resolve_aliased_path('@VENDOR/')
-                let component_sub_path = resolved_component.replace(vendor_path,'')
-                component_sub_path = component_sub_path.replace('.vue','')//remove it and add it to the static import to improve the lookup speed of webpack
-                //return () => import(`@/../../../vendor${hook_name}Hook.vue`)//example from Hooks.vue
-                //return () => import(component) // webpack does not support loading completely dynamic paths
-                //return () => import('@GuzabaPlatform.Cms/ViewPage.vue')//static example
-                return () => import(`@/../../../vendor/${component_sub_path}.vue`)
+                if (resolved_component.indexOf('/vendor/') !== -1) {
+                    let vendor_path = this.resolve_aliased_path('@VENDOR/')
+                    let component_sub_path = resolved_component.replace(vendor_path,'')
+                    component_sub_path = component_sub_path.replace('.vue','')//remove it and add it to the static import to improve the lookup speed of webpack
+                    //return () => import(`@/../../../vendor${hook_name}Hook.vue`)//example from Hooks.vue
+                    //return () => import(component) // webpack does not support loading completely dynamic paths
+                    //return () => import('@GuzabaPlatform.Cms/ViewPage.vue')//static example
+                    return () => import(`@/../../../vendor/${component_sub_path}.vue`)
+                } else {
+                    let base_path = this.resolve_aliased_path('@/')
+                    let component_sub_path = resolved_component.replace(base_path,'')
+                    component_sub_path = component_sub_path.replace('.vue','')//remove it and add it to the static import to improve the lookup speed of webpack
+                    //return () => import(`@/../../../vendor${hook_name}Hook.vue`)//example from Hooks.vue
+                    //return () => import(component) // webpack does not support loading completely dynamic paths
+                    //return () => import('@GuzabaPlatform.Cms/ViewPage.vue')//static example
+                    return () => import(`@/${component_sub_path}.vue`)
+                }
+
+
 
             }
         },
