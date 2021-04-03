@@ -12,6 +12,7 @@ use Guzaba2\Base\Exceptions\RunTimeException;
 use Guzaba2\Event\Event;
 use Guzaba2\Kernel\Exceptions\ConfigurationException;
 use Guzaba2\Kernel\Interfaces\ClassInitializationInterface;
+use Guzaba2\Kernel\Runtime;
 use Guzaba2\Orm\ClassDeclarationValidation;
 use Guzaba2\Routing\ControllerDefaultRoutingMap;
 use Guzaba2\Routing\ActiveRecordDefaultRoutingMap;
@@ -63,6 +64,7 @@ class GuzabaPlatform extends Application
             'enable_debug_ports'                        => FALSE,
             'base_debug_port'                           => Debugger::DEFAULT_BASE_DEBUG_PORT,
         ],
+        'memory_limit'                              => 512,//im MB
         'version'                                   => 'dev',
 
         'cors_origin'                               => 'http://localhost:8080',
@@ -241,6 +243,8 @@ BANNER;
 
 
         Kernel::get_di_container()->add('GuzabaPlatform', $this);
+
+        Runtime::raise_memory_limit(self::CONFIG_RUNTIME['memory_limit'] * 1024 * 1024);
 
         new Event($this, '_before_execute');
 
