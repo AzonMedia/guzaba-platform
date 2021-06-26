@@ -1,13 +1,13 @@
 <template>
     <div id="admin-home-container">
-        Admin panel
+        <h4>Admin panel</h4>
         <div>
             <div id="admin-navigation">
                 <div class="admin-nav-link" v-for="link in links">
                     <router-link v-bind:to="link.route" >{{link.name}}</router-link>
                     <!-- <component :is="after_router_link_hook"/> -->
                 </div>
-                <div>
+                <div id="additional-menu">
                     additional menu
                     <keep-alive>
                         <component :is="after_router_link_hook"/>
@@ -72,6 +72,7 @@
         },
         computed: {
             after_router_link_hook: function () {
+                console.log(this.$route);
                 if (typeof this.$route.meta.additional_template !== "undefined") {
                     let additional_template = this.$route.meta.additional_template;
                     for (const alias in aliases) {
@@ -86,6 +87,10 @@
                     additional_template = additional_template.replace('Hook.vue', '');
                     //this causes the whole vendor directory to be searched for...
                     //return () => import(`@VENDOR${hook_name}Hook.vue`) // not working... TODO - fix this
+
+                    //node.parentElement.removeChild(node);
+
+
                     return () => import(`@/../../../vendor${additional_template}Hook.vue`)
                 }
 
@@ -113,7 +118,10 @@
 
     }
     #admin-navigation {
-        border: 1px solid red;
+        border: 2px solid #dfdfdf;
+        padding: 2px;
+        border-right: 0px;
+
         width: 15%;
         float: left;
     }
@@ -121,15 +129,20 @@
         display: block;
         with: 200px;
         height: 30px;
-        margin: auto;
-        border: 1px solid black;
+        margin: 1px;
+        border: 1px solid #dfdfdf;
+
     }
     #admin-view-container {
         width: 85%;
         float: right;
-        border: 1px solid green;
+        border: 2px solid #dfdfdf;
+        padding: 2px;
     }
     .router-link-active {
-        background: yellow;
+        background: #007bff;
+    }
+    #additional-menu {
+
     }
 </style>
