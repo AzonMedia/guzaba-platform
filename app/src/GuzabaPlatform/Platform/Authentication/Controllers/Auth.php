@@ -152,12 +152,13 @@ class Auth extends BaseController
      * @throws \ReflectionException
      * @throws \Guzaba2\Coroutine\Exceptions\ContextDestroyedException
      */
-    public function register_post(string $user_email, string $user_name, string $user_password, string $user_password_confirmation): ResponseInterface
+    public function register_post(string $user_email, string $user_phone, string $user_name, string $user_password, string $user_password_confirmation): ResponseInterface
     {
         $struct = [];
         $User = new User();
         $User->user_email = $user_email;
         $User->user_name = $user_name;
+        $User->user_phone = $user_phone;
         $User->set_password($user_password, $user_password_confirmation);
 //        try {
 //            $User->write();

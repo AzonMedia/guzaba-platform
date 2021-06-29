@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace GuzabaPlatform\Platform\Authentication\Models;
 
 use Azonmedia\Exceptions\InvalidArgumentException;
+use Azonmedia\Utilities\StringUtil;
 use Guzaba2\Authorization\Role;
 use Guzaba2\Base\Exceptions\RunTimeException;
 use Guzaba2\Orm\ActiveRecord;
@@ -190,7 +191,8 @@ class User extends \Guzaba2\Authorization\User
     {
         parent::_before_write();
         if ($this->is_new()) {
-            $Role = $this->get_role();
+            //$Role = $this->get_role();//this is a reaadonly
+            $Role = new Role((int) $this->role_id);
             //the anonymous role must be granted to any newly created user
             //then the application specific logic may grant more roles
             //$AnonymousRole = new Role(1);

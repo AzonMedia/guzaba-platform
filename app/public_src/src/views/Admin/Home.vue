@@ -117,6 +117,10 @@
     #admin-home-container {
 
     }
+    #admin-home-container h4 {
+        text-align: center;
+        margin-top: 5px;
+    }
     #admin-navigation {
         border: 2px solid #dfdfdf;
         padding: 2px;
@@ -129,8 +133,10 @@
         display: block;
         with: 200px;
         height: 30px;
-        margin: 1px;
+        margin: 2px;
         border: 1px solid #dfdfdf;
+        padding: 4px;
+        border-radius: 6px;
 
     }
     #admin-view-container {
@@ -138,6 +144,7 @@
         float: right;
         border: 2px solid #dfdfdf;
         padding: 2px;
+        min-height: 450px;
     }
     .router-link-active {
         background: #007bff;
