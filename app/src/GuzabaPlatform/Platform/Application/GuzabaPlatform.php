@@ -107,6 +107,7 @@ class GuzabaPlatform extends Application
 
         //this is used to set the document_root for Swoole
         'public_dir'                                => '/public',//relative to $this->get_app_dir()
+        'data_dir'                                  => '/data',//relative to $this->get_app_dir()
     ];
 
     protected const CONFIG_RUNTIME = [];
@@ -186,7 +187,18 @@ BANNER;
         return $this->app_directory;
     }
 
+    /**
+     * @return string
+     */
     public function get_public_dir(): string
+    {
+        return $this->get_app_dir().self::CONFIG_RUNTIME['public_dir'];
+    }
+
+    /**
+     * @return string
+     */
+    public function get_data_dir(): string
     {
         return $this->get_app_dir().self::CONFIG_RUNTIME['public_dir'];
     }
