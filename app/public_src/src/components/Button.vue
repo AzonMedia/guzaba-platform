@@ -20,5 +20,6 @@
     margin: 3px;
     padding: 3px;
     cursor: pointer;
+    border-radius: 6px;
 }
 </style>
