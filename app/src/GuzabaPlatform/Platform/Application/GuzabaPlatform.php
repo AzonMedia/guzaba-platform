@@ -64,6 +64,10 @@ class GuzabaPlatform extends Application
             'enable_debug_ports'                        => FALSE,
             'base_debug_port'                           => Debugger::DEFAULT_BASE_DEBUG_PORT,
         ],
+
+        'app_base_url'                              => 'localhost:8080',
+        'app_name'                                  => 'GuzabaPlatform',
+
         'memory_limit'                              => 512,//im MB
         'version'                                   => 'dev',
 
@@ -176,6 +180,16 @@ BANNER;
     public function __invoke(): int
     {
         return $this->execute();
+    }
+
+    public static function get_app_name(): string
+    {
+        return self::CONFIG_RUNTIME['app_name'];
+    }
+
+    public static function get_app_base_url(): string
+    {
+        return self::CONFIG_RUNTIME['app_base_url'];
     }
 
     /**

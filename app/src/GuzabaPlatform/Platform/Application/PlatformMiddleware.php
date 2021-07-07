@@ -7,6 +7,7 @@ namespace GuzabaPlatform\Platform\Application;
 use Azonmedia\Http\Method;
 use Azonmedia\Http\StatusCode;
 use Azonmedia\Http\Body\Stream;
+use Guzaba2\Authorization\Interfaces\UserInterface;
 use Guzaba2\Http\Body\Structured;
 use Guzaba2\Kernel\Kernel;
 use Guzaba2\Translator\Translator as t;
@@ -38,6 +39,10 @@ class PlatformMiddleware extends Base
         'disable_locking_on_get'    => TRUE,
         'services'      => [
             'CurrentUser'
+        ],
+        'class_dependencies'        => [ //dependencies on other classes
+            //interface                 => implementation
+            UserInterface::class    => User::class,
         ],
     ];
 
@@ -103,7 +108,8 @@ class PlatformMiddleware extends Base
         }
 
         if (isset($current_user_uuid)) {
-            $User = new User($current_user_uuid, TRUE, TRUE);
+            $user_class = self::CONFIG_RUNTIME['class_dependencies'][UserInterface::class];
+            $User = new $user_class($current_user_uuid, TRUE, TRUE);
             if (!$User->user_is_disabled) {
                 //if the user is not disabled set the current user
                 self::get_service('CurrentUser')->set($User);

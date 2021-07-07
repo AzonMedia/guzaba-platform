@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace GuzabaPlatform\Platform\Authentication\Controllers;
 
+use Guzaba2\Authorization\Interfaces\UserInterface;
 use Guzaba2\Authorization\Role;
 use Guzaba2\Http\Method;
 use Azonmedia\Http\StatusCode;
@@ -40,7 +41,11 @@ class Auth extends BaseController
                 Method::HTTP_GET    => [self::class, 'register_get'],
                 Method::HTTP_POST   => [self::class, 'register_post'],
             ],
-        ]
+        ],
+        'class_dependencies'        => [ //dependencies on other classes
+            //interface                 => implementation
+            UserInterface::class    => User::class,
+        ],
     ];
 
     protected const CONFIG_RUNTIME = [];
@@ -93,7 +98,8 @@ class Auth extends BaseController
         }
 
         try {
-            $User = new User([
+            $user_class = self::CONFIG_RUNTIME['class_dependencies'][UserInterface::class];
+            $User = new $user_class([
                 'user_name'         => $username,
                 //'user_is_disabled'  => 0,//prevent the login for disabled users
             ]);
@@ -118,7 +124,7 @@ class Auth extends BaseController
                 $struct['message'] = t::_('Wrong username or password!');
             }
 
-        } catch (RecordNotFoundException $exception) {
+        } catch (RecordNotFoundException $Exception) {
             $struct['message'] = t::_('Wrong username or password!');
         }
 
@@ -155,7 +161,8 @@ class Auth extends BaseController
     public function register_post(string $user_email, string $user_phone, string $user_name, string $user_password, string $user_password_confirmation): ResponseInterface
     {
         $struct = [];
-        $User = new User();
+        $user_class = self::CONFIG_RUNTIME['class_dependencies'][UserInterface::class];
+        $User = new $user_class();
         $User->user_email = $user_email;
         $User->user_name = $user_name;
         $User->user_phone = $user_phone;
