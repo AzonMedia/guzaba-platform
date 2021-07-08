@@ -214,7 +214,7 @@ BANNER;
      */
     public function get_data_dir(): string
     {
-        return $this->get_app_dir().self::CONFIG_RUNTIME['public_dir'];
+        return $this->get_app_dir().self::CONFIG_RUNTIME['data_dir'];
     }
 
     /**
