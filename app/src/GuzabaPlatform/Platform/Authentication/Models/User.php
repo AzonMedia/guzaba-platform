@@ -158,8 +158,12 @@ class User extends \Guzaba2\Authorization\User
     {
         //$ret = password_hash($password, self::CONFIG_RUNTIME['alg'], ['cost' => self::CONFIG_RUNTIME['cost']]);
         //@see https://www.php.net/manual/en/function.password-hash.php#124138
-        $peppered_password = hash_hmac("sha256", $password, self::CONFIG_RUNTIME['pepper']);
-        $ret = password_hash($peppered_password, self::CONFIG_RUNTIME['alg'], ['cost' => self::CONFIG_RUNTIME['cost']]);
+        if ($password) {
+            $peppered_password = hash_hmac("sha256", $password, self::CONFIG_RUNTIME['pepper']);
+            $ret = password_hash($peppered_password, self::CONFIG_RUNTIME['alg'], ['cost' => self::CONFIG_RUNTIME['cost']]);
+        } else {
+            $ret = $this->user_password;//if no new password was provided leave the original one
+        }
         return $ret;
     }
 
