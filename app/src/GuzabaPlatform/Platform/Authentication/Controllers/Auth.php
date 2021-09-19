@@ -8,6 +8,7 @@ use Guzaba2\Authorization\Role;
 use Guzaba2\Http\Method;
 use Azonmedia\Http\StatusCode;
 use Guzaba2\Mvc\ActiveRecordController;
+use Guzaba2\Orm\ActiveRecord;
 use Guzaba2\Orm\Exceptions\RecordNotFoundException;
 use Guzaba2\Translator\Translator as t;
 use GuzabaPlatform\Platform\Application\BaseController;
@@ -99,10 +100,14 @@ class Auth extends BaseController
 
         try {
             $user_class = self::CONFIG_RUNTIME['class_dependencies'][UserInterface::class];
-            $User = new $user_class([
-                'user_name'         => $username,
-                //'user_is_disabled'  => 0,//prevent the login for disabled users
-            ]);
+            /** @var ActiveRecord $User */
+            $User = new $user_class(
+                index: [
+                    'user_name'         => $username,
+                    'user_is_disabled'  => 0,//prevent the login for disabled users
+                ],
+                permission_checks_disabled: true
+            );
 
             if ($User->user_is_disabled) {
                 $struct['message'] = sprintf(t::_('The user %1$s is disabled.'), $User->user_name);
