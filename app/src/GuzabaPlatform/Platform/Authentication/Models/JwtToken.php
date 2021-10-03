@@ -19,6 +19,12 @@ use Psr\Http\Message\RequestInterface;
  * There is no session data stored.
  * The primary key is token_string.
  * @package GuzabaPlatform\Platform\Authentication\Models
+ *
+ * @property int token_id
+ * @property string token_uuid
+ * @property string token_string
+ * @property int user_id
+ * @property int token_expiration_time
  */
 class JwtToken extends Base implements TokenInterface
 {
