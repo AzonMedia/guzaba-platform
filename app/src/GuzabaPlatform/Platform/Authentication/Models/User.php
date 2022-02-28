@@ -225,4 +225,6 @@ class User extends \Guzaba2\Authorization\User
         return GuzabaPlatform::get_date_format();
     }
 
+
+
 }

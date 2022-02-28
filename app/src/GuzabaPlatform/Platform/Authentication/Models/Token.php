@@ -12,10 +12,6 @@ use Guzaba2\Orm\ActiveRecord;
  * There is no session data stored.
  * The primary key is token_id.
  * @package GuzabaPlatform\Platform\Authentication\Models
- *
- * @property int token_id
- * @property string token_uuid
- * @property
  */
 class Token extends ActiveRecord implements TokenInterface
 {

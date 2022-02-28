@@ -20,7 +20,7 @@ class Test extends BaseActiveRecord
 
         'object_name_column'    => 'test_name',
 
-        'load_in_memory'        => TRUE,
+        //'load_in_memory'        => TRUE,
     ];
 
     protected const CONFIG_RUNTIME = [];
