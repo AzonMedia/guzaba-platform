@@ -16,7 +16,7 @@
     "bootstrap-vue": "^2.15.0",
     "core-js": "^2.6.11",
     "he-tree-vue": "^1.0.2",
-    "jquery": "^3.5.1",
+    "jquery": "^3.5.0",
     "lodash": "^4.17.19",
     "vue": "^2.6.11",
     "vue-fragment": "^1.5.1",
